@@ -400,7 +400,7 @@
                 </a>
 
                 
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 
@@ -580,11 +580,11 @@
                     Sky Link Technologies specializes in delivering reliable software, cybersecurity, and digital transformation services to businesses across sectors.
                 </p>
                 <div class="social-footer">
-                    <a href="https://www.facebook.com/profile.php?id=61562181474117" target="_blank"><i class="fab fa-facebook"></i></a>
-                    <a href="https://www.instagram.com/skylink_technologies?igsh=NXZwMjQyMHo1bHJm&utm_source=qr" target="_blank"><i class="fab fa-instagram"></i></a>
-                    <a href="https://www.linkedin.com/company/skylinkict/" target="_blank"><i class="fab fa-linkedin"></i></a>
-                    <a href="https://www.tiktok.com/@skylink_technologies?_t=ZM-8vv40eFtXHh&_r=1" target="_blank"><i class="fab fa-tiktok"></i></a>
-                    <a href="https://www.youtube.com/@skylink_technologie" target="_blank"><i class="fab fa-youtube"></i></a>
+                    <a href="https://www.facebook.com/profile.php?id=61562181474117" target="_blank" rel="noopener noreferrer" aria-label="Sky Link on Facebook (opens in a new tab)"><i class="fab fa-facebook" aria-hidden="true"></i></a>
+                    <a href="https://www.instagram.com/skylink_technologies?igsh=NXZwMjQyMHo1bHJm&utm_source=qr" target="_blank" rel="noopener noreferrer" aria-label="Sky Link on Instagram (opens in a new tab)"><i class="fab fa-instagram" aria-hidden="true"></i></a>
+                    <a href="https://www.linkedin.com/company/skylinkict/" target="_blank" rel="noopener noreferrer" aria-label="Sky Link on LinkedIn (opens in a new tab)"><i class="fab fa-linkedin" aria-hidden="true"></i></a>
+                    <a href="https://www.tiktok.com/@skylink_technologies?_t=ZM-8vv40eFtXHh&_r=1" target="_blank" rel="noopener noreferrer" aria-label="Sky Link on TikTok (opens in a new tab)"><i class="fab fa-tiktok" aria-hidden="true"></i></a>
+                    <a href="https://www.youtube.com/@skylink_technologie" target="_blank" rel="noopener noreferrer" aria-label="Sky Link on YouTube (opens in a new tab)"><i class="fab fa-youtube" aria-hidden="true"></i></a>
 
                 </div>
             </div>

@@ -94,6 +94,16 @@ class LayoutIntegrityTest extends TestCase
         $this->assertTrue(true);
     }
 
+    public function test_icon_only_links_and_buttons_have_accessible_names(): void
+    {
+        $html = $this->get('/')->assertOk()->getContent();
+
+        $this->assertSame(5, substr_count($html, 'rel="noopener noreferrer" aria-label="Sky Link on '));
+        $this->assertStringContainsString('aria-label="Previous service"', $html);
+        $this->assertStringContainsString('aria-label="Next service"', $html);
+        $this->assertStringContainsString('aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"', $html);
+    }
+
     public function test_mega_menu_does_not_use_100vw(): void
     {
         $master = File::get(resource_path('views/layouts/master.blade.php'));

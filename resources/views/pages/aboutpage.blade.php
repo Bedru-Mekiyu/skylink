@@ -819,7 +819,7 @@ We lead the market by creating disciplined culture that will have much bigger ef
             </video>
 
             <!-- Custom Thumbnail & Play Button -->
-            <div id="videoThumbnail" class="video-thumbnail" style="cursor: pointer;" role="button" tabindex="0" aria-label="Play the Sky Link promo video">
+            <div id="videoThumbnail" class="video-thumbnail" style="cursor: pointer;" role="button" tabindex="0" aria-label="Watch video: Sky Link promo">
                 <div class="play-button">
                     <i class="fas fa-play"></i>
                 </div>

@@ -1180,7 +1180,7 @@ max-height: 20 vh;
                 <h2 class="services-title">Our Services</h2>
             </div>
             <div class="services-container">
-                <button class="carousel-nav carousel-prev">
+                <button type="button" class="carousel-nav carousel-prev" aria-label="Previous service">
                     <i class="fas fa-chevron-left"></i>
                 </button>
                 
@@ -1215,7 +1215,7 @@ max-height: 20 vh;
                     </div>
                 </div>
 
-                <button class="carousel-nav carousel-next">
+                <button type="button" class="carousel-nav carousel-next" aria-label="Next service">
                     <i class="fas fa-chevron-right"></i>
                 </button>
             </div>
