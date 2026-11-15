@@ -441,9 +441,9 @@
 
 @push('scripts')
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    {{-- Bootstrap JS comes from the layout; a second copy broke the phone menu toggle. --}}
     <script>
-        // The layout renders the scripts stack twice: run once, after the page exists.
+        // Run once, after the page exists.
         // (The old submit handler that ran before the form existed was removed;
         // the form submits normally.)
         if (!window.__skyContactPage) {

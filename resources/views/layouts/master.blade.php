@@ -385,7 +385,7 @@
 @yield('additional-styles')
    
     @stack('styles')
-    @stack('scripts')
+    {{-- The scripts stack is rendered once, before </body>, after Bootstrap. --}}
 
 </head>
 <body>
