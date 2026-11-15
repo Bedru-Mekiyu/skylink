@@ -1,0 +1,24 @@
+# Hero montage shot list for build-video.sh (see the header of that script).
+# path | start_seconds | seconds_in_final_cut | label | options
+#
+# INTERIM CUT from the company promo (public/assets/videos/PROMOVIDEO.mp4).
+# The promo cuts every 1-3 s, so each window below spans one story beat and
+# contains the promo's own hard cuts. Every window ends before the next
+# excluded range. Source used = seconds_in_final_cut x 0.85.
+# Excluded on purpose:
+#   0-4.87      CGI city animation (not real staff)
+#   14.8-21.3   3D architectural renders
+#   22.5-23.0   whip transition
+#   28.80-31.43 composite carrying a third-party "CIVIL MENTORS" watermark
+#   36.90-40.11 contract close-ups ("SMART CITY PROJECT" document = client data)
+#   45.38-end   aerials, logo, burned-in phone/address ticker
+# Replace these lines with real clips from footage/ when they are ready.
+
+# Shot 0 is 1.75 s (under the 3-5 s target): it must end before the promo's
+# zoom-blur transition at 27.73 s.
+public/assets/videos/PROMOVIDEO.mp4 | 26.20 | 1.75 | planning: staff meeting, Sky Link flag |
+public/assets/videos/PROMOVIDEO.mp4 | 4.95  | 4.8 | software: hands on laptop, team lead at desks |
+public/assets/videos/PROMOVIDEO.mp4 | 23.10 | 3.5 | cabling: ceiling cable install, Sky Link polo |
+public/assets/videos/PROMOVIDEO.mp4 | 10.08 | 4.0 | support: desk work, team, CCTV product page |
+public/assets/videos/PROMOVIDEO.mp4 | 31.45 | 4.3 | client consultation |
+public/assets/videos/PROMOVIDEO.mp4 | 40.15 | 5.0 | client handover: handshake |

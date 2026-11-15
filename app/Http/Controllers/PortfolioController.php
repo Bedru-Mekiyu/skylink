@@ -1,0 +1,99 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Portfolio;
+
+use Illuminate\Http\Request;
+
+class PortfolioController extends Controller
+{
+    
+public function index() 
+    
+{
+        
+// Banner project: the one marked "Feature on top"; else the newest project
+// with a video; else the newest project (shown with its image).
+$heroProject = Portfolio::where('is_featured', true)->newestFirst()->first()
+    ?? Portfolio::withVideo()->newestFirst()->first()
+    ?? Portfolio::newestFirst()->first();
+
+// Cards: every other project, each exactly once (the banner project is not
+// repeated under it; the same set on every page keeps pagination stable).
+$projects = Portfolio::query()
+    ->when($heroProject, fn ($q) => $q->whereKeyNot($heroProject->id))
+    ->newestFirst()
+    ->paginate(6)
+    ->withQueryString();
+
+    $categories = [
+        'all' => 'All Projects',
+        'web' => 'Web Development',
+        'mobile' => 'Mobile Apps',
+        'ecommerce' => 'E-commerce',
+        'management' => 'Management Systems'
+    ];
+
+    $stats = [
+        'total_projects' => $projects->count(),
+        'completed_projects' => $projects->where('status', 'completed')->count(),
+        'happy_clients' => 35, // optional: replace with dynamic if you track it
+        'years_experience' => 15
+    ];
+
+    return view('pages.portfolio', [
+        'pageTitle' => 'Portfolio',
+        'heroTitle' => 'Portfolio',
+        'heroDescription' => 'Explore our portfolio of successful IT projects and digital solutions delivered to clients across Ethiopia.',
+        'projects' => $projects,
+        'heroProject' => $heroProject,
+        'categories' => $categories,
+        'stats' => $stats,
+    ]);
+
+
+    }
+
+
+
+
+    public function show($id)
+    {
+        // This would typically fetch a specific project from database
+        $project = Portfolio::findOrFail($id);
+
+    return view('pages.portfolio.show', compact('project'));
+
+    }
+
+
+    public function search(Request $request)
+
+    {
+
+    $$query = $request->get('q', '');
+
+    $category = $request->get('category', null);
+
+    $results = Portfolio::query()
+        ->when($query, fn($q) => $q->where('title', 'like', '%' . $query . '%'))
+        ->when($category && $category != 'all', fn($q) => $q->where('category', $category))
+        ->get();
+
+    return response()->json([
+        'success' => true,
+        'results' => $results,
+        'total' => $results->count(),
+
+    ]);
+    }
+
+
+
+    public function apiLatest()
+{
+    $projects = Portfolio::latest()->take(5)->get(); // get latest 5
+    return response()->json($projects);
+}
+}

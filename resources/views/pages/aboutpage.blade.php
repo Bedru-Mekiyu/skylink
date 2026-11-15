@@ -1,0 +1,1438 @@
+@extends('layouts.master')
+
+@section('title', 'Sky Link - IT Services in Ethiopia')
+@section('description', 'Leading IT services company in Ethiopia, helping businesses succeed with innovative technology solutions.')
+
+@section('additional-styles')
+
+@push('styles')
+
+<style>
+    /* ===== Page banner =====
+       Uses the existing photo assets/images/about/teammember3.JPG (7008x3944)
+       with CSS only. The photo's top ~16.5% holds the room-number signs
+       (5 / 4 / 3) and the tallest head starts at ~22.6%, so the frame always
+       hides the top 19% of the displayed photo (--about-hero-cut). The zoom is
+       anchored below the top edge and the parallax moves the photo up, so both
+       only ever increase that crop; a buffer below covers the parallax. */
+    .about-hero {
+        --about-hero-h: 460px;
+        --about-hero-buffer: 36px;
+        position: relative;
+        height: var(--about-hero-h);
+        overflow: hidden;
+        isolation: isolate;
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+        background: #06122b;
+        color: #fff;
+        text-align: center;
+    }
+
+    .about-hero__media {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        --about-hero-scroll: 0;
+    }
+
+    /* Very slow, gentle, alternating zoom (no jump at either end). */
+    .about-hero__zoom {
+        position: absolute;
+        inset: 0;
+        transform-origin: 50% 40%;
+        animation: aboutHeroZoom 26s ease-in-out infinite alternate;
+    }
+
+    @keyframes aboutHeroZoom {
+        from { transform: scale(1); }
+        to { transform: scale(1.06); }
+    }
+
+    .about-hero__img {
+        /* Hidden strip above the frame = 19% of the displayed photo height:
+           10.8vw when the photo is scaled to the width, otherwise
+           0.2346 x (frame + buffer) when it is scaled to the height. */
+        --about-hero-cut: max(10.8vw, calc(0.2346 * (var(--about-hero-h) + var(--about-hero-buffer))));
+        position: absolute;
+        left: 0;
+        top: calc(-1 * var(--about-hero-cut));
+        width: 100%;
+        max-width: none;
+        height: calc(var(--about-hero-h) + var(--about-hero-buffer) + var(--about-hero-cut));
+        object-fit: cover;
+        object-position: 50% 0;
+        transform: translateY(calc(var(--about-hero-scroll) * -36px));
+        will-change: transform;
+    }
+
+    /* Navy-to-brand-blue grade, darker at the bottom where the title sits. */
+    .about-hero__tint {
+        position: absolute;
+        inset: 0;
+        background:
+            linear-gradient(115deg, rgba(59, 130, 246, 0.42) 0%, rgba(59, 130, 246, 0.12) 45%, rgba(59, 130, 246, 0) 70%),
+            linear-gradient(180deg, rgba(4, 12, 34, 0.30) 0%, rgba(4, 12, 34, 0.42) 45%, rgba(4, 12, 34, 0.82) 100%);
+    }
+
+    .about-hero__vignette {
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(ellipse at 50% 40%, rgba(4, 12, 34, 0) 50%, rgba(4, 12, 34, 0.5) 100%);
+    }
+
+    /* Same faint static grain as the homepage hero. */
+    .about-hero__grain {
+        position: absolute;
+        inset: -50%;
+        opacity: 0.06;
+        mix-blend-mode: overlay;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    /* Curved bottom edge in the next section's exact colour (.about-section #f8f9fa). */
+    .about-hero__curve {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: -1px;
+        z-index: 1;
+        width: 100%;
+        height: 56px;
+        display: block;
+        fill: #f8f9fa;
+    }
+
+    .about-hero__content {
+        position: relative;
+        z-index: 2;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 0 20px 84px;
+        transform: translateY(calc(var(--about-hero-title-shift, 0) * 1px));
+        opacity: var(--about-hero-title-opacity, 1);
+        will-change: transform, opacity;
+    }
+
+    .about-hero .hero-title {
+        color: #fff;
+        margin-bottom: 0;
+        text-shadow: 0 2px 18px rgba(4, 12, 34, 0.55);
+    }
+
+    .hero-title {
+        font-size: 72px;
+        font-weight: 700;
+        margin-bottom: 30px;
+        line-height: 1.1;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Word-by-word title reveal (same feel as the homepage). */
+    .about-reveal-pending .about-hero .hero-title {
+        opacity: 0;
+    }
+
+    .about-hero-word {
+        display: inline-block;
+        opacity: 0;
+        transform: translateY(0.45em);
+        animation: aboutHeroWordIn 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
+        animation-delay: var(--about-hero-delay, 0ms);
+    }
+
+    @keyframes aboutHeroWordIn {
+        to { opacity: 1; transform: none; }
+    }
+
+    @media (max-width: 991.98px) {
+        .about-hero { --about-hero-h: 380px; }
+    }
+
+    @media (max-width: 767.98px) {
+        .about-hero__grain { display: none; }
+        .about-hero__content { padding-bottom: 64px; }
+        .about-hero__curve { height: 40px; }
+    }
+
+    @media (max-width: 575.98px) {
+        .about-hero { --about-hero-h: 260px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .about-hero__zoom { animation: none; }
+        .about-hero__img { transform: none; }
+        .about-hero__content { transform: none; opacity: 1; }
+        .about-hero-word { animation: none; opacity: 1; transform: none; }
+    }
+
+    /* The Teams Grid row sits outside a .container, so its negative gutter
+       margins made the page ~4px wider than phone/tablet screens. */
+    .team-section {
+        overflow-x: hidden;
+        overflow-x: clip;
+    }
+
+    .about-section {
+        padding: 50px 0;
+        background: #f8f9fa;
+    }
+
+    .section-tag {
+        color: #3B82F6;
+        font-size: 14px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 15px;
+        display: block;
+    }
+
+    .section-title {
+        font-size: 32px;
+        font-weight: 700;
+        color: #333;
+        margin-bottom: 25px;
+        line-height: 1.3;
+    }
+
+    .about-text {
+        color: #666;
+        font-size: 15px;
+        line-height: 1.7;
+        margin-bottom: 30px;
+    }
+
+    .about-features-list {
+        margin-bottom: 35px;
+    }
+
+    .feature-row {
+        display: flex;
+        gap: 60px;
+        margin-bottom: 15px;
+    }
+
+    .feature-item-check {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .feature-item-check i {
+        color: #3B82F6;
+        font-size: 16px;
+        width: 16px;
+    }
+
+    .feature-item-check span {
+        font-weight: 500;
+        color: #333;
+        font-size: 15px;
+    }
+
+    .contact-info-box {
+        color: rgb(0, 30, 255);
+        padding: 20px 25px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        max-width: 280px;
+    }
+
+    .contact-icon-box {
+        width: 50px;
+        height: 50px;
+        background: rgb(7, 85, 255);
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+
+    .contact-icon-box i {
+        font-size: 20px;
+        color: white;
+    }
+
+    .contact-details h6 {
+        margin: 0 0 5px 0;
+        font-weight: 600;
+        font-size: 14px;
+        color: rgb(16, 15, 15);
+    }
+
+    .contact-details p {
+        margin: 0;
+        font-size: 16px;
+        font-weight: 600;
+        color: rgb(38, 120, 227);
+    }
+
+    .about-image-container {
+        position: relative;
+        padding-left: 20px;
+    }
+
+    .about-main-image {
+        width: 100%;
+        height: auto;
+        border-radius: 10px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Video Section */
+    .video-section {
+        padding: 70px 0;
+        background: white;
+        
+    }
+
+    .video-title {
+        color: #3B82F6;
+        font-size: 24px;
+        font-weight: 700;
+        margin-bottom: 40px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .video-container {
+        position: relative;
+
+        max-width: 100%;
+        margin: 0 auto;
+        overflow: hidden;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    }
+
+    .video-thumbnail {
+        width: 100%;
+        height: 450px;
+        background: url('{{ asset('assets/images/about/promoo1.png') }}') center/cover;
+        position: relative;
+    }
+
+    .play-button {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 80px;
+        height: 80px;
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .play-button:hover {
+        background: white;
+        transform: translate(-50%, -50%) scale(1.1);
+    }
+
+    .play-button i {
+        font-size: 24px;
+        color: #3B82F6;
+        margin-left: 3px;
+    }
+
+    .video-caption {
+        position: absolute;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(0, 0, 0, 0.7);
+        color: white;
+        padding: 8px 16px;
+        border-radius: 20px;
+        font-size: 14px;
+    }
+
+    /* Team Section */
+    .team-section {
+        padding: 100px 0;
+        background: #f8f9fa;
+    }
+
+    .team-title {
+        text-align: center;
+        margin-bottom: 60px;
+    }
+
+    .team-title .section-tag {
+        display: block;
+        text-align: center;
+    }
+
+    .team-title h2 {
+        font-size: 36px;
+        font-weight: 700;
+        color: #333;
+        margin-top: 15px;
+    }
+
+    .team-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+        margin-bottom: 30px;
+    }
+
+    .team-member {
+        background: white;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+        text-align: center;
+        max-width: 300px;
+    margin: 0 auto;
+    }
+
+    .team-member:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    .team-photo {
+    width: 100%;
+    height: 350px;
+    background: #e9ecef;
+    position: relative;
+    overflow: hidden;
+}
+
+.team-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+object-position: 50% 15%; 
+}
+    .team-info {
+        padding: 25px;
+    }
+
+    .team-name {
+        font-size: 20px;
+        font-weight: 600;
+        color: #3B82F6;
+        margin-bottom: 5px;
+    }
+
+    .team-role {
+        color: #666;
+        font-size: 14px;
+    }
+
+
+    /* Awards Section */
+    .awards-section {
+        padding: 100px 0;
+        background: #f8f9fa;
+    }
+
+    .awards-header {
+        text-align: center;
+        margin-bottom: 60px;
+    }
+
+    .awards-header .section-tag {
+        display: block;
+        text-align: center;
+    }
+
+    .awards-header h2 {
+        font-size: 36px;
+        font-weight: 700;
+        color: #333;
+        margin-top: 15px;
+    }
+
+    .awards-categories {
+        display: flex;
+        justify-content: center;
+        gap: 40px;
+        margin-bottom: 50px;
+    }
+
+    .award-category {
+        text-align: center;
+    }
+
+    .award-category h4 {
+        font-size: 18px;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 5px;
+    }
+
+    .award-category span {
+        color: #3B82F6;
+        font-size: 14px;
+        font-weight: 500;
+    }
+
+    .awards-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+        margin-bottom: 30px;
+    }
+
+    .award-item {
+        background: white;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+    }
+
+    .award-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    .award-image {
+        width: 100%;
+        height: 200px;
+        background: #e9ecef;
+    }
+
+    .award-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .award-content {
+        padding: 20px;
+    }
+
+    .award-title {
+        font-size: 16px;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 10px;
+        line-height: 1.3;
+    }
+
+    .award-year {
+        color: #666;
+        font-size: 14px;
+    }
+
+    .awards-grid-bottom {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 30px;
+    }
+
+    
+    * {
+       
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    
+    .skylink-gradient-primary {
+        background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
+    }
+    
+    .skylink-gradient-secondary {
+        background: linear-gradient(135deg, #64748b 0%, #94a3b8 100%);
+    }
+    
+    .skylink-gradient-dark {
+        background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    }
+    
+    .skylink-card {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        transition: all 0.3s ease;
+    }
+    
+    .skylink-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+    
+    .skylink-icon {
+        transition: all 0.3s ease;
+    }
+    
+    .skylink-icon:hover {
+        transform: scale(1.05);
+    }
+    
+    .skylink-text-gradient {
+        background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+    
+    @media (max-width: 768px) {
+        .skylink-timeline-desktop { display: none; }
+        .skylink-timeline-mobile { display: block; }
+    }
+    @media (min-width: 769px) {
+        .skylink-timeline-desktop { display: block; }
+        .skylink-timeline-mobile { display: none; }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 992px) {
+        .hero-title {
+            font-size: 48px;
+        }
+
+        .section-title {
+            font-size: 28px;
+        }
+
+        .team-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+        .team-photo {
+        height: 300px;
+        width: 300px;
+    }
+
+    .team-name {
+        font-size: 18px;
+    }
+
+    .team-role {
+        font-size: 13px;
+    }
+
+        .growth-content {
+            grid-template-columns: 1fr;
+            text-align: center;
+        }
+
+        .awards-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media (max-width: 768px) {
+   
+        .hero-title {
+            font-size: 36px;
+        }
+
+        .about-features {
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .team-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .awards-categories {
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .awards-grid,
+        .awards-grid-bottom {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        @media (max-width: 568px) {
+            .team-grid{
+                grid-template-columns: 1fr;
+
+            }
+            .team-photo {
+        height: 250px;
+    }
+
+    .team-name {
+        font-size: 16px;
+    }
+
+    .team-role {
+        font-size: 12px;
+    }
+            .awards-grid,
+            .awards-grid-bottom{
+                grid-template-columns: repeat(1, 1fr);
+
+            }
+
+        }
+
+</style>
+<link rel="preload" as="image" href="{{ asset('assets/images/about/teammember3.JPG') }}" fetchpriority="high">
+<script>
+    // Hide the banner title until its word-by-word reveal is ready; failsafe 3 s.
+    (function (root) {
+        if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        root.classList.add('about-reveal-pending');
+        setTimeout(function () { root.classList.remove('about-reveal-pending'); }, 3000);
+    })(document.documentElement);
+</script>
+@section('content')
+
+<!-- Hero Section -->
+<section class="hero-section about-hero" data-about-hero>
+    {{-- Breadcrumb (Home / About Us) removed: the navbar already shows where you are. --}}
+    <div class="about-hero__media" aria-hidden="true">
+        <div class="about-hero__zoom">
+            <img class="about-hero__img"
+                 src="{{ asset('assets/images/about/teammember3.JPG') }}"
+                 width="7008" height="3944" alt=""
+                 fetchpriority="high" decoding="async">
+        </div>
+        <div class="about-hero__tint"></div>
+        <div class="about-hero__vignette"></div>
+        <div class="about-hero__grain"></div>
+    </div>
+    <svg class="about-hero__curve" viewBox="0 0 1440 56" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+        <path d="M0,56 L0,24 C240,52 480,60 720,44 C960,28 1200,8 1440,22 L1440,56 Z"></path>
+    </svg>
+    <div class="about-hero__content">
+        <h1 class="hero-title">About Us</h1>
+    </div>
+</section>
+
+<!-- About Section -->
+
+<section class="about-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <div class="section-tag">About Us</div>
+                <h2 class="section-title">The Best IT Solution With Many Years of Experience</h2>
+                <p class="about-text">
+                    At Sky Link Technologies, we turn visionary concepts into cutting-edge digital solutions. With a passion for technology and a commitment to excellence, we empower businesses to thrive in the digital age.
+                </p>
+                
+                <div class="contact-info-box">
+                    <div class="contact-icon-box">
+                        <i class="fas fa-phone"></i>
+                    </div>
+                    <div class="contact-details">
+                        <h6>Call to ask any question</h6>
+                        <p>+251-974-96-7171</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="about-features-list">
+                    <div class="feature-row">
+                        <div class="feature-item-check">
+                            <i class="fas fa-check"></i>
+                            <span>Award Winning</span>
+                        </div>
+                        <div class="feature-item-check">
+                            <i class="fas fa-check"></i>
+                            <span>Dedicated Support</span>
+                        </div>
+                    </div>
+                    <div class="feature-row">
+                        <div class="feature-item-check">
+                            <i class="fas fa-check"></i>
+                            <span>Professional Staff</span>
+                        </div>
+                        <div class="feature-item-check">
+                            <i class="fas fa-check"></i>
+                            <span>Fair Prices</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="bg-light py-5 px-3 px-lg-5">
+    <div class="container">
+        <div class="row align-items-center gy-5">
+            <div class="col-lg-6 text-center text-lg-start">
+                <style>
+    .ceo-photo-mask {
+        width: 100%;
+        max-width: 450px;
+        aspect-ratio: 1 / 1;
+        object-fit: cover;
+        border-radius: 50% 50% 0 50%; 
+        overflow: hidden;
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    }
+</style>
+
+<img src="{{ asset('assets/images/about/mohammedkerem.JPG') }}"
+     alt="CEO Mohammedkerem Ahmed"
+     class="ceo-photo-mask img-fluid">
+
+
+                <blockquote class="blockquote text-muted fst-italic mt-4">
+                    “We're always here to support and continue delivering excellence.”
+                </blockquote>
+                <p class="fw-semibold text-dark">_CEO, Mohammedkerem Ahmed</p>
+            </div>
+
+            <div class="col-lg-6">
+                <h1 class="display-5 fw-bold text-dark mb-4">CEO MESSAGE</h1>
+                <p class="text-muted text-size-medium mb-4">
+                    Skylink is simply a learning organization with continuous improvement. Our  team are self-motivated and passionate about  their  career  and  purpose  in life. 
+Everyone at Skylink strives to achieve result with best performance everyday. Confidence of clients on us due to our commitment to get the job done with excellence is what  drives us to do better everyday. 
+We are not in the business of making quick money by chasing obvious opportunities and shortcuts. In-fact, we already chose to win through difficult situations   with   hard   work,   competence, consistency and integrity. 
+We lead the market by creating disciplined culture that will have much bigger effect on the work ethics of our society and  overall  technological development of  Ethiopia in long term.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Video Section -->
+<section class="video-section">
+    <div class="container">
+        <h2 class="video-title">Let's See Our Promo Video</h2>
+        <div class="video-container position-relative">
+            <!-- Video element -->
+            <video id="promoVideo" width="100%" height="auto" controls style="display: none;">
+                <source src="{{ asset('assets/videos/PROMOVIDEO.mp4') }}" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+
+            <!-- Custom Thumbnail & Play Button -->
+            <div id="videoThumbnail" class="video-thumbnail" style="cursor: pointer;">
+                <div class="play-button">
+                    <i class="fas fa-play"></i>
+                </div>
+                <div class="video-caption">Watch video</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-5 px-3 container">
+    <div class="mb-5">
+        <div class="row align-items-start g-4">
+            <div class="col-lg-6">
+                <h1 class="display-5 fw-bold text-black">
+                    Why Clients Choose Us
+                </h1>
+            </div>
+        </div>
+    </div>
+
+    <!-- Feature Cards -->
+    <div class="row g-4 mt-5">
+        <!-- Vision -->
+        <div class="col-md-4">
+            <div class="card border-0 shadow-lg h-100">
+                <div class="card-body p-4">
+                    <div class="mb-4 text-primary fs-3">
+                        <i class="fa fa-eye"></i>
+                    </div>
+                    <h5 class="card-title fw-semibold text-dark mb-3">Our Vision</h5>
+                    <p class="card-text text-muted mb-4">
+                        To be a global leader in digital innovation, empowering businesses through cutting-edge software solutions that shape a smarter, connected future.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mission -->
+        <div class="col-md-4">
+            <div class="card border-0 shadow-lg h-100">
+                <div class="card-body p-4">
+                    <div class="mb-4 text-primary fs-3">
+                        <i class="fa fa-bullseye"></i>
+                    </div>
+                    <h5 class="card-title fw-semibold text-dark mb-3">Our Mission</h5>
+                    <p class="card-text text-muted mb-4">
+                        To deliver reliable and scalable IT solutions tailored to our clients' unique needs, while maintaining a culture of integrity, innovation, and continuous improvement.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Values -->
+        <div class="col-md-4">
+            <div class="card border-0 shadow-lg h-100">
+                <div class="card-body p-4">
+                    <div class="mb-4 text-primary fs-3">
+                        <i class="fa fa-star"></i>
+                    </div>
+                    <h5 class="card-title fw-semibold text-dark mb-3">Our Values</h5>
+                    <p class="card-text text-muted mb-4">
+                        We value innovation, transparency, collaboration, and excellence. These principles drive our work and define how we build trust with our clients and team.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- Team Section -->
+<section class="team-section py-5 bg-light">
+    <div class="container">
+        <!-- Section Title -->
+        <div class="text-center mb-5">
+        <h1 class="display-5 fw-bold text-dark mb-5">Meet the People Behind the Vision</h1>
+        
+    </div
+
+        <!-- Management Team -->
+        <div class="mb-5">
+        <h2 class="h4 text-uppercase text-center fw-semibold mb-4 text-dark">Our Management Team</h2>
+        <div class="row g-4">
+            @foreach ($managementTeam as $member)
+                <div class="col-12 col-sm-6 col-md-6 col-lg-3">
+                    @include('components.team-member-card', ['member' => $member])
+                </div>
+            @endforeach
+        </div>
+    </div>
+    
+    <!-- Teams Grid -->
+        <div class="row g-5 mt-5">
+            <!-- Software Team -->
+            <div class="col-lg-6" data-aos="fade-right" data-aos-duration="1000">
+                <div class="team-showcase-card h-100 bg-white rounded-4 shadow-lg overflow-hidden position-relative">
+                    <div class="position-absolute top-0 end-0 bg-primary bg-opacity-10 rounded-circle" style="width: 100px; height: 100px; transform: translate(30%, -30%);"></div>
+                    
+                    <div class="p-4 p-lg-5">
+                        <div class="d-flex align-items-center mb-4">
+                            <div class="bg-primary bg-opacity-10 rounded-3 p-3 me-3">
+                                <i class="fas fa-code text-primary fs-4"></i>
+                            </div>
+                            <div>
+                                <h3 class="h4 fw-bold text-dark mb-1">Software Team</h3>
+                                <p class="text-muted mb-0">Building the future with code</p>
+                            </div>
+                        </div>
+                        
+                        <div class="position-relative overflow-hidden rounded-3 mb-4">
+                            <img src="{{ asset('assets/images/about/software.JPG') }}"
+                                 class="img-fluid w-100 transition-transform"
+                                 style="height: 250px; object-fit: cover; transition: transform 0.3s ease;"
+                                 alt="Software Team"
+                                 onmouseover="this.style.transform='scale(1.05)'"
+                                 onmouseout="this.style.transform='scale(1)'">
+                            <div class="position-absolute bottom-0 start-0 end-0 bg-gradient-to-top from-dark to-transparent p-3">
+                                <div class="d-flex justify-content-between align-items-center text-white">
+                                    <span class="fw-medium">Innovation Driven</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row g-3">
+                            <div class="col-6">
+                                <div class="text-center p-3 bg-light rounded-3">
+                                    <div class="fw-bold text-primary fs-5">15+</div>
+                                    <small class="text-muted">Developers</small>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="text-center p-3 bg-light rounded-3">
+                                    <div class="fw-bold text-success fs-5">50+</div>
+                                    <small class="text-muted">Projects</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Social Media & Marketing Team -->
+            <div class="col-lg-6" data-aos="fade-left" data-aos-duration="1000">
+                <div class="team-showcase-card h-100 bg-white rounded-4 shadow-lg overflow-hidden position-relative">
+                    <div class="position-absolute top-0 start-0 bg-info bg-opacity-10 rounded-circle" style="width: 80px; height: 80px; transform: translate(-30%, -30%);"></div>
+                    
+                    <div class="p-4 p-lg-5">
+                        <div class="d-flex align-items-center mb-4">
+                            <div class="bg-info bg-opacity-10 rounded-3 p-3 me-3">
+                                <i class="fas fa-bullhorn text-info fs-4"></i>
+                            </div>
+                            <div>
+                                <h3 class="h4 fw-bold text-dark mb-1">Marketing Team</h3>
+                                <p class="text-muted mb-0">Connecting brands with audiences</p>
+                            </div>
+                        </div>
+                        
+                        <div class="position-relative overflow-hidden rounded-3 mb-4">
+                            <img src="{{ asset('assets/images/about/marketing.jpg') }}"
+                                 class="img-fluid w-100 transition-transform"
+                                 style="height: 250px; object-fit: cover; transition: transform 0.3s ease;"
+                                 alt="Social Media & Marketing Team"
+                                 onmouseover="this.style.transform='scale(1.05)'"
+                                 onmouseout="this.style.transform='scale(1)'">
+                            <div class="position-absolute bottom-0 start-0 end-0 bg-gradient-to-top from-dark to-transparent p-3">
+                                <div class="d-flex justify-content-between align-items-center text-white">
+                                    <span class="fw-medium">Creative Excellence</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row g-3">
+                            <div class="col-6">
+                                <div class="text-center p-3 bg-light rounded-3">
+                                    <div class="fw-bold text-info fs-5">10+</div>
+                                    <small class="text-muted">Marketers</small>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="text-center p-3 bg-light rounded-3">
+                                    <div class="fw-bold text-warning fs-5">100+</div>
+                                    <small class="text-muted">Campaigns</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+</section>
+
+<section>
+{{-- Compact Journey Map Section --}}
+<section style="padding: 60px 0; background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+ position: relative;">
+    <div style="max-width: 1200px; margin: 0 auto; padding: 0 15px; position: relative;">
+        <div style="text-align: center; margin-bottom: 40px;">
+<h2 style="font-size: 2.5rem; font-weight: 800; color: rgb(25, 28, 35); margin-bottom: 15px; letter-spacing: -0.5px;">
+                Journey <span class="skylink-text-gradient">Timeline</span>
+            </h2>
+            <p style="font-size: 1rem; color: rgb(25, 28, 35); max-width: 500px; margin: 0 auto; line-height: 1.5;">
+                Our evolution in the technology landscape
+            </p>
+        </div>
+
+        {{-- Compact Desktop Timeline --}}
+        <div class="skylink-timeline-desktop" style="position: relative;">
+            <div style="position: absolute; left: 46%; top: 0; bottom: 0; width: 3px; background: linear-gradient(to bottom, #d0defb, #94a3b8); transform: translateX(-50%); border-radius: 2px;"></div>
+            
+            <div style="display: flex; flex-direction: column; gap: 0px;">
+                {{-- IT Consultancy --}}
+                <div style="display: flex; align-items: center;">
+                    <div style="width: 45%; text-align: right; padding-right: 25px;">
+                        <div class="skylink-card" style="border-radius: 10px; padding: 15px; position: relative; overflow: hidden;">
+                            <div style="position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);"></div>
+                            <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin-bottom: 5px;">IT Consultancy</h3>
+                            <p style="color: #2563eb; font-weight: 600; font-size: 0.9rem;">Dec 2021</p>
+                        </div>
+                    </div>
+                    <div style="width: 20px; height: 20px; background: #2563eb; border-radius: 50%; border: 3px solid #0f172a; position: relative; z-index: 10;"></div>
+                    <div style="width: 45%;"></div>
+                </div>
+
+                {{-- Real State Management --}}
+                <div style="display: flex; align-items: center;">
+                    <div style="width: 45%;"></div>
+                    <div style="width: 20px; height: 20px; background: #94a3b8; border-radius: 50%; border: 3px solid #0f172a; position: relative; z-index: 10;"></div>
+                    <div style="width: 45%; padding-left: 25px;">
+                        <div class="skylink-card" style="border-radius: 10px; padding: 15px; position: relative; overflow: hidden;">
+                            <div style="position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(135deg, #64748b 0%, #94a3b8 100%);"></div>
+                            <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin-bottom: 5px;">Network Infrastructure</h3>
+                            <p style="color: #64748b; font-weight: 600; font-size: 0.9rem;">Apr 2022</p>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- ERP Software --}}
+                <div style="display: flex; align-items: center;">
+                    <div style="width: 45%; text-align: right; padding-right: 25px;">
+                        <div class="skylink-card" style="border-radius: 10px; padding: 15px; position: relative; overflow: hidden;">
+                            <div style="position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);"></div>
+                            <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin-bottom: 5px;">ERP Software</h3>
+                            <p style="color: #2563eb; font-weight: 600; font-size: 0.9rem;">Jun 2022</p>
+                        </div>
+                    </div>
+                    <div style="width: 20px; height: 20px; background: #2563eb; border-radius: 50%; border: 3px solid #0f172a; position: relative; z-index: 10;"></div>
+                    <div style="width: 45%;"></div>
+                </div>
+
+                {{-- Software as a Service --}}
+                <div style="display: flex; align-items: center;">
+                    <div style="width: 45%;"></div>
+                    <div style="width: 20px; height: 20px; background: #94a3b8; border-radius: 50%; border: 3px solid #0f172a; position: relative; z-index: 10;"></div>
+                    <div style="width: 45%; padding-left: 25px;">
+                        <div class="skylink-card" style="border-radius: 10px; padding: 15px; position: relative; overflow: hidden;">
+                            <div style="position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(135deg, #64748b 0%, #94a3b8 100%);"></div>
+                            <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin-bottom: 5px;">Software as a Service</h3>
+                            <p style="color: #64748b; font-weight: 600; font-size: 0.9rem;">Nov 2023</p>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- Network & Cyber Security --}}
+                <div style="display: flex; align-items: center;">
+                    <div style="width: 45%; text-align: right; padding-right: 25px;">
+                        <div class="skylink-card" style="border-radius: 10px; padding: 15px; position: relative; overflow: hidden;">
+                            <div style="position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);"></div>
+                            <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin-bottom: 5px;">Network & Cyber Security</h3>
+                            <p style="color: #2563eb; font-weight: 600; font-size: 0.9rem;">July 2023</p>
+                        </div>
+                    </div>
+                    <div style="width: 20px; height: 20px; background: #2563eb; border-radius: 50%; border: 3px solid #0f172a; position: relative; z-index: 10;"></div>
+                    <div style="width: 45%;"></div>
+                </div>
+
+                {{-- Technology Training --}}
+                <div style="display: flex; align-items: center;">
+                    <div style="width: 45%;"></div>
+                    <div style="width: 20px; height: 20px; background: #94a3b8; border-radius: 50%; border: 3px solid #0f172a; position: relative; z-index: 10;"></div>
+                    <div style="width: 45%; padding-left: 25px;">
+                        <div class="skylink-card" style="border-radius: 10px; padding: 15px; position: relative; overflow: hidden;">
+                            <div style="position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(135deg, #64748b 0%, #94a3b8 100%);"></div>
+                            <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin-bottom: 5px;">Technology Training</h3>
+                            <p style="color: #64748b; font-weight: 600; font-size: 0.9rem;">Sept 2023</p>
+                        </div>
+                    </div>
+                </div>
+                 {{-- interior design --}}
+                <div style="display: flex; align-items: center;">
+                    <div style="width: 45%; text-align: right; padding-right: 25px;">
+                        <div class="skylink-card" style="border-radius: 10px; padding: 15px; position: relative; overflow: hidden;">
+                            <div style="position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);"></div>
+                            <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin-bottom: 5px;">Interior Design</h3>
+                            <p style="color: #2563eb; font-weight: 600; font-size: 0.9rem;">Sept 2024</p>
+                        </div>
+                    </div>
+                    <div style="width: 20px; height: 20px; background: #2563eb; border-radius: 50%; border: 3px solid #0f172a; position: relative; z-index: 10;"></div>
+                    <div style="width: 45%;"></div>
+                </div>
+            </div>
+        </div>
+
+        {{-- Compact Mobile Timeline --}}
+        <div class="skylink-timeline-mobile">
+            <div style="position: relative;">
+                <div style="position: absolute; left: 10px; top: 0; bottom: 0; width: 2px; background: linear-gradient(to bottom, #2563eb, #94a3b8); border-radius: 1px;"></div>
+                
+                <div style="display: flex; flex-direction: column; gap: 20px;">
+                    <div style="display: flex; align-items: flex-start;">
+                        <div style="width: 16px; height: 16px; background: #2563eb; border-radius: 50%; border: 3px solid #0f172a; position: relative; z-index: 10; flex-shrink: 0; margin-top: 5px;"></div>
+                        <div style="margin-left: 15px; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); border-radius: 8px; padding: 12px; border: 1px solid rgba(255,255,255,0.2); flex: 1;">
+                            <h3 style="font-size: 1rem; font-weight: 700; color: #0f172a; margin-bottom: 3px;">IT Consultancy</h3>
+                            <p style="color: #2563eb; font-weight: 600; font-size: 0.8rem;">Dec 2021</p>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; align-items: flex-start;">
+                        <div style="width: 16px; height: 16px; background: #94a3b8; border-radius: 50%; border: 3px solid #0f172a; position: relative; z-index: 10; flex-shrink: 0; margin-top: 5px;"></div>
+                        <div style="margin-left: 15px; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); border-radius: 8px; padding: 12px; border: 1px solid rgba(255,255,255,0.2); flex: 1;">
+                            <h3 style="font-size: 1rem; font-weight: 700; color: #0f172a; margin-bottom: 3px;">Real State Management</h3>
+                            <p style="color: #64748b; font-weight: 600; font-size: 0.8rem;">Jun 2021</p>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; align-items: flex-start;">
+                        <div style="width: 16px; height: 16px; background: #2563eb; border-radius: 50%; border: 3px solid #0f172a; position: relative; z-index: 10; flex-shrink: 0; margin-top: 5px;"></div>
+                        <div style="margin-left: 15px; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); border-radius: 8px; padding: 12px; border: 1px solid rgba(255,255,255,0.2); flex: 1;">
+                            <h3 style="font-size: 1rem; font-weight: 700; color: #0f172a; margin-bottom: 3px;">ERP Software</h3>
+                            <p style="color: #2563eb; font-weight: 600; font-size: 0.8rem;">Jun 2016</p>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; align-items: flex-start;">
+                        <div style="width: 16px; height: 16px; background: #94a3b8; border-radius: 50%; border: 3px solid #0f172a; position: relative; z-index: 10; flex-shrink: 0; margin-top: 5px;"></div>
+                        <div style="margin-left: 15px; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); border-radius: 8px; padding: 12px; border: 1px solid rgba(255,255,255,0.2); flex: 1;">
+                            <h3 style="font-size: 1rem; font-weight: 700; color: #0f172a; margin-bottom: 3px;">Software as a Service</h3>
+                            <p style="color: #64748b; font-weight: 600; font-size: 0.8rem;">Nov 2023</p>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; align-items: flex-start;">
+                        <div style="width: 16px; height: 16px; background: #2563eb; border-radius: 50%; border: 3px solid #0f172a; position: relative; z-index: 10; flex-shrink: 0; margin-top: 5px;"></div>
+                        <div style="margin-left: 15px; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); border-radius: 8px; padding: 12px; border: 1px solid rgba(255,255,255,0.2); flex: 1;">
+                            <h3 style="font-size: 1rem; font-weight: 700; color: #0f172a; margin-bottom: 3px;">Network & Cyber Security</h3>
+                            <p style="color: #2563eb; font-weight: 600; font-size: 0.8rem;">July 2023</p>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; align-items: flex-start;">
+                        <div style="width: 16px; height: 16px; background: #94a3b8; border-radius: 50%; border: 3px solid #0f172a; position: relative; z-index: 10; flex-shrink: 0; margin-top: 5px;"></div>
+                        <div style="margin-left: 15px; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); border-radius: 8px; padding: 12px; border: 1px solid rgba(255,255,255,0.2); flex: 1;">
+                            <h3 style="font-size: 1rem; font-weight: 700; color: #0f172a; margin-bottom: 3px;">Technology Training</h3>
+                            <p style="color: #64748b; font-weight: 600; font-size: 0.8rem;">Sept 2023</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{{-- Compact Our Process Section --}}
+<section style="padding: 50px 0; background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);">
+    <div style="max-width: 1200px; margin: 0 auto; padding: 0 15px;">
+        <div style="text-align: center; margin-bottom: 30px;">
+            <h2 style="font-size: 2.5rem; font-weight: 800; color: #0f172a; margin-bottom: 15px; letter-spacing: -0.5px;">
+                OUR <span class="skylink-text-gradient">PROCESS</span>
+            </h2>
+            <div style="max-width: 800px; margin: 0 auto;  backdrop-filter: blur(10px); border-radius: 10px; padding: 20px; border: 1px solid rgba(255,255,255,0.3);">
+                <p style="font-size: 1rem; color: #475569; line-height: 1.6; margin-bottom: 10px;">
+                    Master in-demand skills with SkyLink! We offer comprehensive training and support in web design, development, programming, 
+                    graphic design, and IT fundamentals.
+                </p>
+                <p style="font-size: 1rem; color: #475569; line-height: 1.6;">
+                    <span style="background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-weight: 600;">Empower yourself and your team with SkyLink.</span>
+                </p>
+            </div>
+        </div>
+
+        {{-- Compact Process Steps --}}
+        <div style="position: relative;">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; position: relative; z-index: 10;">
+                {{-- Meet & Consult --}}
+                <div style="text-align: center;">
+                    <div class="skylink-icon" style="width: 70px; height: 70px; margin: 0 auto 15px; background: linear-gradient(135deg, #4f6fc5 0%, #578af7 100%); border-radius: 15px; display: flex; align-items: center; justify-content: center; box-shadow: 0 5px 15px rgba(37, 99, 235, 0.3);">
+                        <svg style="width: 35px; height: 35px; color: white;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 style="font-size: 1rem; font-weight: 700; color: #0f172a; margin-bottom: 5px;">MEET & CONSULT</h3>
+                    <p style="color: #64748b; font-size: 0.8rem; line-height: 1.4;">Understanding your needs</p>
+                </div>
+
+                {{-- Design --}}
+                <div style="text-align: center;">
+                    <div class="skylink-icon" style="width: 70px; height: 70px; margin: 0 auto 15px; background: linear-gradient(135deg, #64748b 0%, #94a3b8 100%); border-radius: 15px; display: flex; align-items: center; justify-content: center; box-shadow: 0 5px 15px rgba(100, 116, 139, 0.3);">
+                        <svg style="width: 35px; height: 35px; color: white;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                        </svg>
+                    </div>
+                    <h3 style="font-size: 1rem; font-weight: 700; color: #0f172a; margin-bottom: 5px;">DESIGN</h3>
+                    <p style="color: #64748b; font-size: 0.8rem; line-height: 1.4;">Creating solutions</p>
+                </div>
+
+                {{-- Implement --}}
+                <div style="text-align: center;">
+                    <div class="skylink-icon" style="width: 70px; height: 70px; margin: 0 auto 15px; background: linear-gradient(135deg, #4f6fc5 0%, #578af7 100%); border-radius: 15px; display: flex; align-items: center; justify-content: center; box-shadow: 0 5px 15px rgba(37, 99, 235, 0.3);">
+                        <svg style="width: 35px; height: 35px; color: white;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 style="font-size: 1rem; font-weight: 700; color: #0f172a; margin-bottom: 5px;">IMPLEMENT</h3>
+                    <p style="color: #64748b; font-size: 0.8rem; line-height: 1.4;">Bringing vision to life</p>
+                </div>
+
+                {{-- Training --}}
+                <div style="text-align: center;">
+                    <div class="skylink-icon" style="width: 70px; height: 70px; margin: 0 auto 15px; background: linear-gradient(135deg, #64748b 0%, #94a3b8 100%); border-radius: 15px; display: flex; align-items: center; justify-content: center; box-shadow: 0 5px 15px rgba(100, 116, 139, 0.3);">
+                        <svg style="width: 35px; height: 35px; color: white;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                        </svg>
+                    </div>
+                    <h3 style="font-size: 1rem; font-weight: 700; color: #0f172a; margin-bottom: 5px;">TRAINING</h3>
+                    <p style="color: #64748b; font-size: 0.8rem; line-height: 1.4;">Empowering your team</p>
+                </div>
+
+                {{-- Support --}}
+                <div style="text-align: center;">
+                    <div class="skylink-icon" style="width: 70px; height: 70px; margin: 0 auto 15px; background: linear-gradient(135deg, #4f6fc5 0%, #578af7 100%); border-radius: 15px; display: flex; align-items: center; justify-content: center; box-shadow: 0 5px 15px rgba(37, 99, 235, 0.3);">
+                        <svg style="width: 35px; height: 35px; color: white;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192L5.636 18.364M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 style="font-size: 1rem; font-weight: 700; color: #0f172a; margin-bottom: 5px;">SUPPORT</h3>
+                    <p style="color: #64748b; font-size: 0.8rem; line-height: 1.4;">Ongoing assistance</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</section>
+<!-- Awards Section -->
+<section class="awards-section">
+    <div class="container">
+        <div class="awards-header">
+            <span class="section-tag">Our Achievements</span>
+            <h2>We Have Achieved Different<br>Milestones</h2>
+        </div>
+        
+        <div class="awards-categories">
+            <div class="award-category">
+                <h4>Achievements/Features</h4>
+                <span>Achievements</span>
+            </div>
+            
+        </div>
+        
+        <div class="awards-grid">
+            <div class="award-item">
+                <div class="award-image">
+                    <img src="{{ asset('assets/images/about/achieve1.jpg') }}" alt="Award">
+                </div>
+                <div class="award-content">
+                    <h4 class="award-title">Made a strategic partnership with Al-Faruk Multimedia Production for the development of a high-quality Audio-Visual Streaming Mobile Application.</h4>
+                    <p class="award-year">2024</p>
+                </div>
+            </div>
+            
+            <div class="award-item">
+                <div class="award-image">
+                    <img src="{{ asset('assets/images/about/achieve4.jpg') }}" alt="Award">
+                </div>
+                <div class="award-content">
+                    <h4 class="award-title">partnership agreement with Jabulani Merkatto Trading Center to develop their complete building management and other related systems.</h4>
+                    <p class="award-year">2024</p>
+                </div>
+            </div>
+            
+            <div class="award-item">
+                <div class="award-image">
+                    <img src="{{ asset('assets/images/about/achieve2.jpg') }}" alt="Award">
+                </div>
+                <div class="award-content">
+                    <h4 class="award-title">Agreement with Dire Dawa city administration for the '1st Dire International Tech Expo'.</h4>
+                    <p class="award-year">2024</p>
+                </div>
+            </div>
+            
+            <div class="award-item">
+                <div class="award-image">
+                    <img src="{{ asset('assets/images/about/achieve3.jpg') }}" alt="Award">
+                </div>
+                <div class="award-content">
+                    <h4 class="award-title">Attended 'Stride Ethiopia 2024 Expo'  with its strong focus on science, technology, innovation, and digitalization.</h4>
+                    <p class="award-year">2024</p>
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+</section>
+@endsection
+
+@push('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Video thumbnail click to show video
+        document.addEventListener("DOMContentLoaded", function () {
+            const thumbnail = document.getElementById("videoThumbnail");
+            const video = document.getElementById("promoVideo");
+
+            thumbnail.addEventListener("click", function () {
+                thumbnail.style.display = "none";
+                video.style.display = "block";
+                video.play();
+            });
+        });
+    </script>
+    <script>
+        // About banner: word-by-word title reveal + light parallax.
+        (function () {
+            // The layout renders the scripts stack twice; run once.
+            if (window.__skyAboutHero) return;
+            window.__skyAboutHero = true;
+
+            function reducedMotion() {
+                return window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+            }
+
+            function reveal(hero) {
+                var root = document.documentElement;
+                var title = hero.querySelector('.hero-title');
+                if (!title || !root.classList.contains('about-reveal-pending') || reducedMotion()) {
+                    root.classList.remove('about-reveal-pending');
+                    return;
+                }
+                var original = title.textContent;
+                var delay = 150;
+                var last = null;
+                title.textContent = '';
+                original.trim().split(/(\s+)/).forEach(function (part) {
+                    if (/^\s+$/.test(part)) {
+                        title.appendChild(document.createTextNode(' '));
+                        return;
+                    }
+                    var span = document.createElement('span');
+                    span.className = 'about-hero-word';
+                    span.style.setProperty('--about-hero-delay', delay + 'ms');
+                    span.textContent = part;
+                    title.appendChild(span);
+                    last = span;
+                    delay += 120;
+                });
+                // Restore the plain text afterwards (screen readers read it whole).
+                if (last) {
+                    last.addEventListener('animationend', function () { title.textContent = original; }, { once: true });
+                }
+                root.classList.remove('about-reveal-pending');
+            }
+
+            function parallax(hero) {
+                if (reducedMotion()) return;
+                var media = hero.querySelector('.about-hero__media');
+                var content = hero.querySelector('.about-hero__content');
+                var active = true;
+                var queued = false;
+
+                function update() {
+                    queued = false;
+                    var rect = hero.getBoundingClientRect();
+                    var p = rect.height ? Math.min(Math.max(-rect.top / rect.height, 0), 1) : 0;
+                    media.style.setProperty('--about-hero-scroll', p.toFixed(3));
+                    content.style.setProperty('--about-hero-title-shift', (p * 24).toFixed(1));
+                    content.style.setProperty('--about-hero-title-opacity', (1 - p * 0.6).toFixed(3));
+                }
+
+                // Passive listener; at most one rAF per frame, only while the banner is visible.
+                window.addEventListener('scroll', function () {
+                    if (!active || queued) return;
+                    queued = true;
+                    requestAnimationFrame(update);
+                }, { passive: true });
+
+                if ('IntersectionObserver' in window) {
+                    new IntersectionObserver(function (entries) {
+                        active = entries[entries.length - 1].isIntersecting;
+                        if (active) update();
+                    }).observe(hero);
+                }
+                update();
+            }
+
+            function init() {
+                var hero = document.querySelector('[data-about-hero]');
+                if (!hero) return;
+                reveal(hero);
+                parallax(hero);
+            }
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', init);
+            } else {
+                init();
+            }
+        })();
+    </script>
+@endpush
+

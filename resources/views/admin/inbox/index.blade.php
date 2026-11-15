@@ -1,0 +1,130 @@
+@extends('admin.layouts.master')
+
+@section('title', 'Inbox')
+@section('page-title', 'Inbox')
+
+@php
+    $tz = config('news.admin_timezone', 'Africa/Addis_Ababa');
+    $statusClass = ['new' => 'text-bg-primary', 'in_progress' => 'text-bg-warning', 'done' => 'text-bg-success', 'spam' => 'text-bg-secondary'];
+@endphp
+
+@section('content')
+<div class="card inbox-card">
+    <div class="card-header d-flex flex-wrap justify-content-between align-items-center gap-2">
+        <h2 class="h5 mb-0"><i class="fas fa-inbox me-2" aria-hidden="true"></i>Website messages <span class="text-muted fw-normal small">({{ $inquiries->total() }})</span></h2>
+        <span class="small text-muted">Emails go to <strong>{{ $inbox ?: 'not set' }}</strong> (CONTACT_INBOX)</span>
+    </div>
+
+    <div class="card-body border-bottom">
+        <form method="GET" action="{{ route('admin.inbox.index') }}" class="row g-2 align-items-end" role="search">
+            <div class="col-12 col-md-4">
+                <label for="q" class="form-label small mb-1">Search name, email, phone, reference or text</label>
+                <input type="search" id="q" name="q" value="{{ $search }}" class="form-control" maxlength="100">
+            </div>
+            <div class="col-6 col-md-2">
+                <label for="type" class="form-label small mb-1">Type</label>
+                <select id="type" name="type" class="form-select">
+                    <option value="">All types</option>
+                    @foreach (\App\Models\Inquiry::TYPES as $value => $label)
+                        <option value="{{ $value }}" @selected($type === $value)>{{ $label }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="col-6 col-md-2">
+                <label for="status" class="form-label small mb-1">Status</label>
+                <select id="status" name="status" class="form-select">
+                    <option value="">All statuses</option>
+                    @foreach (\App\Models\Inquiry::STATUSES as $value => $label)
+                        <option value="{{ $value }}" @selected($status === $value)>{{ $label }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="col-6 col-md-2">
+                <div class="form-check mt-md-4">
+                    <input class="form-check-input" type="checkbox" name="unread" value="1" id="unread" @checked($unread)>
+                    <label class="form-check-label" for="unread">Unread only ({{ $unreadCount }})</label>
+                </div>
+            </div>
+            <div class="col-6 col-md-2 d-flex gap-2">
+                <button type="submit" class="btn btn-outline-primary flex-fill"><i class="fas fa-search me-1" aria-hidden="true"></i>Filter</button>
+                @if ($search !== '' || $type || $status || $unread)
+                    <a href="{{ route('admin.inbox.index') }}" class="btn btn-light" title="Clear filters"><i class="fas fa-times" aria-hidden="true"></i><span class="visually-hidden">Clear filters</span></a>
+                @endif
+            </div>
+        </form>
+    </div>
+
+    <div class="card-body p-0">
+        <div class="table-wrapper">
+            <table class="table table-hover align-middle mb-0 table-responsive-cards">
+                <caption class="visually-hidden">Website messages, newest first</caption>
+                <thead>
+                    <tr>
+                        <th scope="col" class="ps-4">From</th>
+                        <th scope="col">Type</th>
+                        <th scope="col">Message</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Received</th>
+                        <th scope="col" class="pe-4">Email</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse ($inquiries as $item)
+                        <tr class="{{ $item->read_at ? '' : 'inbox-unread' }}">
+                            <td data-label="From" class="ps-4">
+                                <a href="{{ route('admin.inbox.show', $item) }}" class="text-body text-decoration-none fw-semibold inbox-name" lang="{{ $item->language }}">
+                                    @unless ($item->read_at)<span class="inbox-dot" aria-hidden="true"></span><span class="visually-hidden">Unread: </span>@endunless{{ $item->name }}
+                                </a>
+                                <div class="small text-muted text-break">{{ $item->email }}</div>
+                                <div class="small text-muted">{{ $item->reference }}</div>
+                            </td>
+                            <td data-label="Type">{{ $item->type_label }}@if ($item->service)<div class="small text-muted">{{ $item->service }}</div>@endif @if ($item->plan)<div class="small text-muted">Plan: {{ $item->plan }}</div>@endif</td>
+                            <td data-label="Message" class="inbox-snippet" lang="{{ $item->language }}">{{ \Illuminate\Support\Str::limit((string) $item->message, 90) ?: '—' }}</td>
+                            <td data-label="Status"><span class="badge {{ $statusClass[$item->status] ?? 'text-bg-light' }}">{{ $item->status_label }}</span></td>
+                            <td data-label="Received" class="text-nowrap">{{ $item->created_at->copy()->setTimezone($tz)->format('M j, H:i') }}</td>
+                            <td data-label="Email" class="pe-4 text-nowrap small">
+                                @if ($item->legacy_table)
+                                    <span class="text-muted">Older message</span>
+                                @elseif ($item->team_notify_error)
+                                    <span class="text-danger"><i class="fas fa-exclamation-triangle" aria-hidden="true"></i> Failed</span>
+                                @elseif ($item->team_notified_at)
+                                    <span class="text-success"><i class="fas fa-check" aria-hidden="true"></i> Sent</span>
+                                @else
+                                    <span class="text-muted"><i class="fas fa-clock" aria-hidden="true"></i> Queued</span>
+                                @endif
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="6" class="text-center py-5">
+                                <i class="fas fa-inbox fa-3x text-muted mb-3" aria-hidden="true"></i>
+                                <p class="h5 text-muted">{{ ($search !== '' || $type || $status || $unread) ? 'No messages match these filters.' : 'No messages yet.' }}</p>
+                            </td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    @if ($inquiries->hasPages())
+        <div class="card-footer d-flex justify-content-center">
+            {{ $inquiries->onEachSide(1)->links('pagination::bootstrap-5') }}
+        </div>
+    @endif
+</div>
+@endsection
+
+@push('styles')
+<style>
+    .inbox-card.card:hover { transform: none; box-shadow: none; }
+    .inbox-unread td { background: #f8fbff; }
+    .inbox-unread .inbox-name { font-weight: 700 !important; }
+    .inbox-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #2563eb; margin-right: 6px; vertical-align: middle; }
+    .inbox-name[lang="am"], .inbox-snippet[lang="am"] { font-family: 'Inter', 'Noto Sans Ethiopic', 'Nyala', sans-serif; }
+    @media (min-width: 768px) {
+        .inbox-card th, .inbox-card td[data-label="Type"], .inbox-card td[data-label="Status"] { white-space: nowrap; word-break: normal; }
+        .inbox-snippet { max-width: 360px; }
+    }
+</style>
+@endpush
