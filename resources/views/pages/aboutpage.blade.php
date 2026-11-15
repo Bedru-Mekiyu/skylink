@@ -3,8 +3,6 @@
 @section('title', 'Sky Link - IT Services in Ethiopia')
 @section('description', 'Leading IT services company in Ethiopia, helping businesses succeed with innovative technology solutions.')
 
-@section('additional-styles')
-
 @push('styles')
 
 <style>
@@ -685,6 +683,8 @@ object-position: 50% 15%;
         setTimeout(function () { root.classList.remove('about-reveal-pending'); }, 3000);
     })(document.documentElement);
 </script>
+@endpush
+
 @section('content')
 
 <!-- Hero Section -->
