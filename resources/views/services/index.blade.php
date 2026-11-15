@@ -1508,6 +1508,7 @@
 //testimonial
 document.addEventListener("DOMContentLoaded", () => {
     const track = document.getElementById("testimonialsTrack");
+    if (!track) return; // no testimonials strip on this page
     const cards = Array.from(track.children);
     const cardCount = cards.length;
 
