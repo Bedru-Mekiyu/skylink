@@ -787,7 +787,7 @@ object-position: 50% 15%;
             </div>
 
             <div class="col-lg-6">
-                <h1 class="display-5 fw-bold text-dark mb-4">CEO MESSAGE</h1>
+                <h2 class="display-5 fw-bold text-dark mb-4">CEO MESSAGE</h2>
                 <p class="text-muted text-size-medium mb-4">
                     Skylink is simply a learning organization with continuous improvement. Our  team are self-motivated and passionate about  their  career  and  purpose  in life. 
 Everyone at Skylink strives to achieve result with best performance everyday. Confidence of clients on us due to our commitment to get the job done with excellence is what  drives us to do better everyday. 
@@ -825,9 +825,9 @@ We lead the market by creating disciplined culture that will have much bigger ef
     <div class="mb-5">
         <div class="row align-items-start g-4">
             <div class="col-lg-6">
-                <h1 class="display-5 fw-bold text-black">
+                <h2 class="display-5 fw-bold text-black">
                     Why Clients Choose Us
-                </h1>
+                </h2>
             </div>
         </div>
     </div>
@@ -887,7 +887,7 @@ We lead the market by creating disciplined culture that will have much bigger ef
     <div class="container">
         <!-- Section Title -->
         <div class="text-center mb-5">
-        <h1 class="display-5 fw-bold text-dark mb-5">Meet the People Behind the Vision</h1>
+        <h2 class="display-5 fw-bold text-dark mb-5">Meet the People Behind the Vision</h2>
         
     </div
 
