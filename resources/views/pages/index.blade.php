@@ -265,6 +265,7 @@
 
         .carousel-nav {
             position: absolute;
+            z-index: 2; /* stay above the cards where the clamped arrows overlap them */
             top: 50%;
             background: var(--primary-blue);
             color: white;
