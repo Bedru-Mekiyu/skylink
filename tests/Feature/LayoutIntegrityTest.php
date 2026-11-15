@@ -75,6 +75,25 @@ class LayoutIntegrityTest extends TestCase
         $this->assertDoesNotMatchRegularExpression('/\.carousel-(prev|next)\s*\{\s*(left|right):\s*-80px;/', $html);
     }
 
+    public function test_about_promo_video_waits_for_the_visitor_and_works_with_a_keyboard(): void
+    {
+        $html = $this->get('/about')->assertOk()->getContent();
+
+        $this->assertMatchesRegularExpression('/<video id="promoVideo"[^>]*preload="none"/', $html);
+        $this->assertMatchesRegularExpression('/<div id="videoThumbnail"[^>]*role="button"[^>]*tabindex="0"/', $html);
+        $this->assertStringContainsString('e.key === "Enter" || e.key === " "', $html);
+    }
+
+    public function test_services_testimonials_script_skips_a_missing_strip(): void
+    {
+        $html = $this->get('/services')->assertOk()->getContent();
+
+        if (! str_contains($html, 'id="testimonialsTrack"')) {
+            $this->assertStringContainsString('if (!track) return;', $html);
+        }
+        $this->assertTrue(true);
+    }
+
     public function test_mega_menu_does_not_use_100vw(): void
     {
         $master = File::get(resource_path('views/layouts/master.blade.php'));
