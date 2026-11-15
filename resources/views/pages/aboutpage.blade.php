@@ -315,6 +315,13 @@
         position: relative;
     }
 
+    /* Keyboard focus ring, drawn inside because the wrapper clips overflow. */
+    .video-thumbnail:focus-visible {
+        outline: 3px solid #fff;
+        outline-offset: -6px;
+        box-shadow: inset 0 0 0 6px #0d6efd;
+    }
+
     .play-button {
         position: absolute;
         top: 50%;
@@ -805,13 +812,14 @@ We lead the market by creating disciplined culture that will have much bigger ef
         <h2 class="video-title">Let's See Our Promo Video</h2>
         <div class="video-container position-relative">
             <!-- Video element -->
-            <video id="promoVideo" width="100%" height="auto" controls style="display: none;">
+            {{-- preload="none": the 5.9 MB file loads only when the visitor presses play. --}}
+            <video id="promoVideo" width="100%" height="auto" controls preload="none" style="display: none;">
                 <source src="{{ asset('assets/videos/PROMOVIDEO.mp4') }}" type="video/mp4">
                 Your browser does not support the video tag.
             </video>
 
             <!-- Custom Thumbnail & Play Button -->
-            <div id="videoThumbnail" class="video-thumbnail" style="cursor: pointer;">
+            <div id="videoThumbnail" class="video-thumbnail" style="cursor: pointer;" role="button" tabindex="0" aria-label="Play the Sky Link promo video">
                 <div class="play-button">
                     <i class="fas fa-play"></i>
                 </div>
@@ -1339,10 +1347,18 @@ We lead the market by creating disciplined culture that will have much bigger ef
             const thumbnail = document.getElementById("videoThumbnail");
             const video = document.getElementById("promoVideo");
 
-            thumbnail.addEventListener("click", function () {
+            if (!thumbnail || !video) return;
+
+            function showVideo() {
                 thumbnail.style.display = "none";
                 video.style.display = "block";
                 video.play();
+                video.focus();
+            }
+            thumbnail.addEventListener("click", showVideo);
+            // Keyboard: the thumbnail acts as a button (Enter or Space).
+            thumbnail.addEventListener("keydown", function (e) {
+                if (e.key === "Enter" || e.key === " ") { e.preventDefault(); showVideo(); }
             });
         });
     </script>
