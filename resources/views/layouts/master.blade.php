@@ -125,7 +125,8 @@
         position: absolute;
         top: 100%;
         left: 0;
-        width: 100vw;
+        /* 100%, not 100vw: 100vw includes a classic scrollbar and would overhang it. */
+        width: 100%;
         background: rgba(255, 255, 255, 0.95);
         backdrop-filter: blur(20px);
         border: none;

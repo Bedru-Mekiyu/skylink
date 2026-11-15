@@ -284,12 +284,16 @@
             background: var(--dark-blue);
         }
 
+        /* The arrows sit up to 80px outside the 1000px card row, but never further than
+           the free space beside it: (100% - 100vw) / 2 is that space (negative), and the
+           +16px keeps them clear of a classic Windows scrollbar, which 100vw includes.
+           A fixed -80px pushed the page 12-60px sideways between ~780 and ~1160px wide. */
         .carousel-prev {
-            left: -80px;
+            left: max(-80px, calc((100% - 100vw) / 2 + 16px));
         }
 
         .carousel-next {
-            right: -80px;
+            right: max(-80px, calc((100% - 100vw) / 2 + 16px));
         }
 
         /* Latest News */
