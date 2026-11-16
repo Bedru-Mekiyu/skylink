@@ -803,19 +803,19 @@
     <!-- Tech Icons -->
     <div class="hero-icons-container">
         <div class="tech-icon laravel">
-            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/laravel/laravel-original.svg" alt="Laravel">
+            <img src="{{ asset('assets/images/services-top/laravel.svg') }}" alt="Laravel">
         </div>
         <div class="tech-icon angular">
-            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/angularjs/angularjs-original.svg" alt="Angular">
+            <img src="{{ asset('assets/images/services-top/angular.svg') }}" alt="Angular">
         </div>
         <div class="tech-icon nodejs">
-            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" alt="Node.js">
+            <img src="{{ asset('assets/images/services-top/nodedotjs.svg') }}" alt="Node.js">
         </div>
         <div class="tech-icon vuejs">
-            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vuejs/vuejs-original.svg" alt="Vue.js">
+            <img src="{{ asset('assets/images/services-top/vuedotjs.svg') }}" alt="Vue.js">
         </div>
         <div class="tech-icon dotnet">
-            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/dot-net/dot-net-original.svg" alt=".NET">
+            <img src="{{ asset('assets/images/services-top/dotnet.svg') }}" alt=".NET">
         </div>
     </div>
 </section>
