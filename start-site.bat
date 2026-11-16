@@ -27,4 +27,8 @@ if not exist "public\storage" "%PHP%" artisan storage:link
 echo.
 echo Open http://127.0.0.1:8000 in your browser. Press Ctrl+C here to stop the site.
 echo.
-"%PHP%" artisan serve --host=127.0.0.1 --port=8000
+rem --no-reload: without it Laravel strips the environment it passes to PHP and
+rem matches names case-sensitively, so Windows' "SystemRoot" is dropped and PHP
+rem fails with "Failed to listen on 127.0.0.1:8000 (reason: ?)". Side effect:
+rem after editing .env, stop (Ctrl+C) and start this script again.
+"%PHP%" artisan serve --host=127.0.0.1 --port=8000 --no-reload
