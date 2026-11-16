@@ -157,28 +157,48 @@
         border-bottom: none;
     }
 
-    /* Blue Circle Background */
-    .hero-circle {
-        position: absolute;
-        right: -30px;
-        top: 50%;
-        transform: translateY(-50%);
-        width: 700px;
-        height: 700px;
-        background: linear-gradient(135deg, #3B82F6, #1E40AF);
-        border-radius: 50%;
+    /* Technology orbit: circle, rings and logos live in one square box in the
+       right-hand column, so they stay together at every width. */
+    .tech-orbit {
+        --badge: 84px;
+        container-type: inline-size;
+        position: relative;
         z-index: 1;
+        width: min(500px, 100%);
+        aspect-ratio: 1;
+        margin: 0 auto;
     }
 
-    /* Hero Icons Container */
-    .hero-icons-container {
+    .tech-orbit__circle {
         position: absolute;
-        margin-left: 45rem;
-        top: 60%;
-        transform: translateY(-50%);
-        width: 500px;
-        height: 500px;
-        z-index: 5;
+        inset: 13%;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #3B82F6, #1E40AF);
+    }
+
+    .tech-orbit__ring {
+        position: absolute;
+        border-radius: 50%;
+        pointer-events: none;
+    }
+
+    .tech-orbit__ring--outer {
+        inset: 4%;
+        border: 1px solid rgba(59, 130, 246, 0.22);
+    }
+
+    .tech-orbit__ring--inner {
+        inset: 27%;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    /* The track turns; each badge sits on the outer ring at 72° steps. */
+    .tech-orbit__track {
+        position: absolute;
+        inset: 0;
+        margin: 0;
+        padding: 0;
+        list-style: none;
     }
 
     /* Social Icons in Hero */
@@ -231,68 +251,33 @@
         font-weight: 600;
     }
 
-    /* Tech Icons */
+    /* Tech Icons: rotate to the badge's angle, move out to the outer ring
+       (radius 46% of the box), rotate back so the logo stays upright. */
     .tech-icon {
+        --angle: calc(var(--i) * 72deg);
         position: absolute;
-        width: 100px;
-        height: 100px;
-        background: white;
+        top: 50%;
+        left: 50%;
+        width: var(--badge);
+        height: var(--badge);
+        margin: calc(var(--badge) / -2) 0 0 calc(var(--badge) / -2);
+        transform: rotate(var(--angle)) translateY(-46cqw) rotate(calc(-1 * var(--angle)));
+    }
+
+    .tech-icon__badge {
         display: flex;
         align-items: center;
         justify-content: center;
+        width: 100%;
+        height: 100%;
+        background: white;
+        border-radius: 12px;
         box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-        animation: float 6s ease-in-out infinite;
-        cursor: pointer;
-        transition: all 0.3s ease;
-    }
-
-    .tech-icon:hover {
-        transform: translateY(-5px) scale(1.05);
-        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
-        animation-play-state: paused;
     }
 
     .tech-icon img {
-        width: 50px;
-        height: 50px;
-    }
-
-    /* Specific positioning for each tech icon */
-    .tech-icon.laravel {
-        top: 40px;
-        right: 370px;
-        animation-delay: 0s;
-    }
-
-    .tech-icon.angular {
-        top: 70px;
-        right: 130px;
-        animation-delay: -2s;
-    }
-
-    .tech-icon.nodejs {
-        top: 220px;
-        right: 420px;
-        animation-delay: -4s;
-    }
-
-    .tech-icon.vuejs {
-        top: 370px;
-        right: 250px;
-        animation-delay: -1s;
-    }
-
-    .tech-icon.dotnet {
-        top: 270px;
-        right: 70px;
-        animation-delay: -3s;
-    }
-
-    @keyframes float {
-        0%, 100% { transform: translateY(0px) rotate(0deg); }
-        25% { transform: translateY(-10px) rotate(1deg); }
-        50% { transform: translateY(-5px) rotate(-1deg); }
-        75% { transform: translateY(-15px) rotate(0.5deg); }
+        width: 46%;
+        height: 46%;
     }
 
     /* Services Section */
@@ -710,8 +695,7 @@
             font-size: 32px;
         }
         
-        .hero-circle,
-        .hero-icons-container,
+        .tech-orbit-col,
         .hero-social-icons {
             display: none;
         }
@@ -741,15 +725,10 @@
     }
 
     @media (max-width: 992px) {
-        .hero-circle {
-            right: -300px;
-            width: 600px;
-            height: 600px;
-        }
-        
-        .hero-icons-container {
-            width: 400px;
-            height: 400px;
+        /* Stacked under the text: a smaller orbit, centred. */
+        .tech-orbit {
+            --badge: 68px;
+            width: min(380px, 100%);
         }
 
         .testimonial-card {
@@ -768,8 +747,6 @@
 
 <!-- Hero Section -->
 <section class="hero-section" id="home">
-    <div class="hero-circle"></div>
-    
     <div class="container">
         <div class="row align-items-center">
             <div class="col-lg-6">
@@ -795,27 +772,22 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-    
-    
-    
-    <!-- Tech Icons -->
-    <div class="hero-icons-container">
-        <div class="tech-icon laravel">
-            <img src="{{ asset('assets/images/services-top/laravel.svg') }}" alt="Laravel">
-        </div>
-        <div class="tech-icon angular">
-            <img src="{{ asset('assets/images/services-top/angular.svg') }}" alt="Angular">
-        </div>
-        <div class="tech-icon nodejs">
-            <img src="{{ asset('assets/images/services-top/nodedotjs.svg') }}" alt="Node.js">
-        </div>
-        <div class="tech-icon vuejs">
-            <img src="{{ asset('assets/images/services-top/vuedotjs.svg') }}" alt="Vue.js">
-        </div>
-        <div class="tech-icon dotnet">
-            <img src="{{ asset('assets/images/services-top/dotnet.svg') }}" alt=".NET">
+
+            <!-- Tech Icons: circle, rings and logos kept together in the right-hand column -->
+            <div class="col-lg-6 tech-orbit-col">
+                <div class="tech-orbit">
+                    <div class="tech-orbit__circle" aria-hidden="true"></div>
+                    <div class="tech-orbit__ring tech-orbit__ring--outer" aria-hidden="true"></div>
+                    <div class="tech-orbit__ring tech-orbit__ring--inner" aria-hidden="true"></div>
+                    <ul class="tech-orbit__track" aria-label="Technologies we work with">
+                        <li class="tech-icon laravel" style="--i: 0"><span class="tech-icon__badge"><img src="{{ asset('assets/images/services-top/laravel.svg') }}" alt="Laravel" width="40" height="40"></span></li>
+                        <li class="tech-icon angular" style="--i: 1"><span class="tech-icon__badge"><img src="{{ asset('assets/images/services-top/angular.svg') }}" alt="Angular" width="40" height="40"></span></li>
+                        <li class="tech-icon dotnet" style="--i: 2"><span class="tech-icon__badge"><img src="{{ asset('assets/images/services-top/dotnet.svg') }}" alt=".NET" width="40" height="40"></span></li>
+                        <li class="tech-icon vuejs" style="--i: 3"><span class="tech-icon__badge"><img src="{{ asset('assets/images/services-top/vuedotjs.svg') }}" alt="Vue.js" width="40" height="40"></span></li>
+                        <li class="tech-icon nodejs" style="--i: 4"><span class="tech-icon__badge"><img src="{{ asset('assets/images/services-top/nodedotjs.svg') }}" alt="Node.js" width="40" height="40"></span></li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
 </section>
