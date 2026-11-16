@@ -73,12 +73,14 @@
         display: inline-block;
     }
 
-    /* Keep the hero "More" button clear of the fixed contact launcher at the
-       bottom left (20px + 56px wide). The button's left edge is 20px up to a
-       1200px window, then grows with the container; this margin keeps it at
-       84px or more and shrinks to 0 by about 1343px, where it is already clear. */
+    /* Centre the hero "More" button under the text. display: table keeps the
+       button's own width (natural on desktop, 50% from the layout on smaller
+       screens) while auto margins centre it. This also keeps it clear of the
+       fixed contact launcher at the bottom left. */
     .hero .btn-get-started {
-        margin-left: clamp(0px, calc(64px - (100vw - 1215px) / 2), 64px);
+        display: table;
+        margin-left: auto;
+        margin-right: auto;
     }
 
     .btn-get-started:hover {
