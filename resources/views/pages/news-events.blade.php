@@ -183,6 +183,15 @@
             position: absolute;
             inset: 0;
         }
+        /* Landing spot for the filter links: just below the sticky navbar (56px) plus a little air. */
+        .news-list {
+            scroll-margin-top: 68px;
+        }
+
+        /* Focused by the script after paging; no outline box around the whole list. */
+        .news-list:focus {
+            outline: none;
+        }
     </style>
 @endpush
 
@@ -191,26 +200,28 @@
     {{-- Top banner: the newest video (or newest article), see partials/news/hero. --}}
     @include('partials.news.hero')
 
-    <div class="container pb-5">
-        {{-- Filters and search work through the URL (?category=&q=&page=). --}}
+    <div class="container pb-5 news-list" id="news-list">
+        {{-- Filters and search work through the URL (?category=&q=&page=). Every link
+             and form that changes the list ends in #news-list, so the browser lands
+             on the filter bar instead of the top of the page (see the script below). --}}
         <div class="news-toolbar">
             <nav aria-label="News categories">
                 <ul class="news-chips">
                     <li>
-                        <a class="news-chip" href="{{ route('content.index', array_filter(['q' => $search])) }}" @if (! $activeCategory) aria-current="page" @endif>
+                        <a class="news-chip" href="{{ route('content.index', array_filter(['q' => $search])) }}#news-list" @if (! $activeCategory) aria-current="page" @endif>
                             All Content <span class="news-chip__count">{{ $totalCount }}</span>
                         </a>
                     </li>
                     @foreach ($categories as $category)
                         <li>
-                            <a class="news-chip" href="{{ route('content.index', array_filter(['category' => $category->slug, 'q' => $search])) }}" @if ($activeCategory?->is($category)) aria-current="page" @endif>
+                            <a class="news-chip" href="{{ route('content.index', array_filter(['category' => $category->slug, 'q' => $search])) }}#news-list" @if ($activeCategory?->is($category)) aria-current="page" @endif>
                                 {{ $category->label }} <span class="news-chip__count">{{ $category->news_count }}</span>
                             </a>
                         </li>
                     @endforeach
                 </ul>
             </nav>
-            <form class="news-search" role="search" action="{{ route('content.index') }}" method="GET">
+            <form class="news-search" role="search" action="{{ route('content.index') }}#news-list" method="GET">
                 @if ($activeCategory)
                     <input type="hidden" name="category" value="{{ $activeCategory->slug }}">
                 @endif
@@ -226,7 +237,7 @@
                 @if ($resultInBanner ?? false)
                     <p class="mb-0 small text-muted">One of them is the story at the top of this page.</p>
                 @endif
-                <a href="{{ route('content.index', array_filter(['category' => $activeCategory?->slug])) }}">Clear search</a>
+                <a href="{{ route('content.index', array_filter(['category' => $activeCategory?->slug])) }}#news-list">Clear search</a>
             </div>
         @endif
 
@@ -264,7 +275,7 @@
 
             @if ($news->hasPages())
                 <nav class="news-pagination" aria-label="News pages">
-                    {{ $news->onEachSide(1)->links('pagination::bootstrap-5') }}
+                    {{ $news->fragment('news-list')->onEachSide(1)->links('pagination::bootstrap-5') }}
                 </nav>
             @endif
         @elseif (! $featured && ($resultInBanner ?? false))
@@ -272,7 +283,7 @@
             <div class="news-empty" role="status">
                 <i class="far fa-newspaper" aria-hidden="true"></i>
                 <h2 class="h5">The only matching story is the one at the top of this page.</h2>
-                <a class="news-btn" href="{{ route('content.index') }}">See all content</a>
+                <a class="news-btn" href="{{ route('content.index') }}#news-list">See all content</a>
             </div>
         @elseif (! $featured)
             <div class="news-empty" role="status">
@@ -287,7 +298,7 @@
                     <h2 class="h5">No news articles yet.</h2>
                     <p>Please check back soon.</p>
                 @endif
-                <a class="news-btn" href="{{ route('content.index') }}">See all content</a>
+                <a class="news-btn" href="{{ route('content.index') }}#news-list">See all content</a>
             </div>
         @endif
     </div>
@@ -323,3 +334,96 @@
     @endif
 </div>
 @endsection
+
+@push('scripts')
+<script>
+    // /news: change category, search or page without reloading the whole page.
+    // Fetches the new page, swaps only #news-list (the banner and the videos do
+    // not depend on the filters), updates the URL and supports Back/Forward.
+    // Any failure falls back to a normal page load, where #news-list in the
+    // URL makes the browser land on the filter bar. The layout renders the
+    // scripts stack twice: run once.
+    (function () {
+        if (window.__skyNewsList || !window.fetch || !window.history || !history.pushState || !window.DOMParser) return;
+        window.__skyNewsList = true;
+
+        function list() { return document.getElementById('news-list'); }
+
+        // Jump to the filter bar, just below the sticky navbar (its scroll-margin-top),
+        // like a normal page load. Instant: it also cancels a smooth scroll still running.
+        function placeView(target) {
+            var margin = parseFloat(getComputedStyle(target).scrollMarginTop) || 0;
+            window.scrollTo({ top: target.getBoundingClientRect().top + window.pageYOffset - margin, behavior: 'instant' });
+        }
+
+        function load(url, push, focusSelector) {
+            var target = list();
+            if (!target) { location.href = url; return; }
+            target.setAttribute('aria-busy', 'true');
+            fetch(url, { headers: { 'X-Requested-With': 'XMLHttpRequest' }, credentials: 'same-origin' })
+                .then(function (res) {
+                    if (!res.ok) throw new Error('HTTP ' + res.status);
+                    return res.text();
+                })
+                .then(function (html) {
+                    var doc = new DOMParser().parseFromString(html, 'text/html');
+                    var fresh = doc.getElementById('news-list');
+                    if (!fresh) throw new Error('no #news-list');
+                    target.innerHTML = fresh.innerHTML;
+                    target.removeAttribute('aria-busy');
+                    if (doc.title) document.title = doc.title;
+                    if (push) history.pushState({ newsList: true }, '', url);
+                    // Keep keyboard focus in the list (the clicked element was replaced):
+                    // the search box, the active category, or the list itself.
+                    var next = focusSelector === 'list' ? target
+                        : (focusSelector && target.querySelector(focusSelector)) || target.querySelector('.news-chip[aria-current="page"]') || target;
+                    if (next === target) target.setAttribute('tabindex', '-1');
+                    next.focus({ preventScroll: true });
+                    placeView(target);
+                    // Safety net: after a search sent with Enter, Chrome moves the
+                    // page once more on the next frame; put it back if it moved.
+                    requestAnimationFrame(function () {
+                        requestAnimationFrame(function () {
+                            var margin = parseFloat(getComputedStyle(target).scrollMarginTop) || 0;
+                            if (Math.abs(target.getBoundingClientRect().top - margin) > 2) placeView(target);
+                        });
+                    });
+                })
+                .catch(function () { location.href = url; });
+        }
+
+        function sameListPage(url) {
+            return url.origin === location.origin && url.pathname === location.pathname && url.hash === '#news-list';
+        }
+
+        document.addEventListener('click', function (e) {
+            if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+            var a = e.target.closest && e.target.closest('#news-list a[href]');
+            if (!a || a.target === '_blank') return;
+            var url = new URL(a.href, location.href);
+            if (!sameListPage(url)) return;
+            e.preventDefault();
+            load(url.href, true, a.closest('.pagination') ? 'list' : null);
+        });
+
+        document.addEventListener('submit', function (e) {
+            var form = e.target;
+            if (e.defaultPrevented || !form.matches || !form.matches('#news-list form.news-search')) return;
+            var url = new URL(form.action, location.href);
+            if (!sameListPage(url)) return;
+            e.preventDefault();
+            url.search = new URLSearchParams(new FormData(form)).toString();
+            load(url.href, true, '#news-search-input');
+        });
+
+        // Back/Forward between list states: reload the list for that URL. The
+        // browser's own scroll restoration would run after the swap and move the
+        // page, so this page places the view itself (on the filter bar).
+        history.scrollRestoration = 'manual';
+        history.replaceState({ newsList: true }, '', location.href);
+        window.addEventListener('popstate', function (e) {
+            if (e.state && e.state.newsList) load(location.href, false, null);
+        });
+    })();
+</script>
+@endpush

@@ -52,7 +52,8 @@ class NewsPagesTest extends TestCase
         $response->assertOk()
             ->assertSee('Opening event')
             ->assertSee('Innovation') // label shown for the "Innovations" DB row
-            ->assertSee('href="'.url('/news?category=events').'"', false);
+            // The chip lands on the filter bar (#news-list), see NewsListAnchorTest.
+            ->assertSee('href="'.url('/news?category=events').'#news-list"', false);
 
         // The filtered list holds only Events. (The top banner is page-wide and
         // may show the newest item of any category, so check the list itself.)
@@ -63,7 +64,7 @@ class NewsPagesTest extends TestCase
         // Exactly one chip is active, and it is the Events chip.
         $html = $response->getContent();
         $this->assertSame(1, preg_match_all('/<a [^>]*aria-current="page"/', $html));
-        $this->assertMatchesRegularExpression('#category=events"\s+aria-current="page"#', $html);
+        $this->assertMatchesRegularExpression('#category=events\#news-list"\s+aria-current="page"#', $html);
         $this->assertSame($this->events->id, $response->viewData('activeCategory')->id);
     }
 
