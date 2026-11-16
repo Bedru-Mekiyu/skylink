@@ -12,10 +12,17 @@
     /* Hero Section */
     .hero-section {
         background: #f8f9fa;
-        min-height: 80vh;
         position: relative;
         overflow: hidden;
-        padding: 60px 0;
+        /* Height comes from the content (was min-height: 80vh, which left
+           empty space that grew with the screen height). */
+        padding: 56px 0 48px;
+    }
+
+    @media (max-width: 991.98px) {
+        .hero-section {
+            padding: 32px 0 24px;
+        }
     }
 
     .hero-content {
