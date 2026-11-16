@@ -180,7 +180,15 @@
         position: absolute;
         inset: 13%;
         border-radius: 50%;
-        background: linear-gradient(135deg, #3B82F6, #1E40AF);
+        /* Same two blues, blended smoothly, with a soft light from the top
+           left and a soft glow around the edge. */
+        background:
+            radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0) 55%),
+            linear-gradient(135deg, #3B82F6 0%, #2F6CE5 45%, #1E40AF 100%);
+        box-shadow:
+            0 24px 60px -12px rgba(30, 64, 175, 0.38),
+            0 0 0 10px rgba(59, 130, 246, 0.06),
+            inset 0 0 0 1px rgba(255, 255, 255, 0.12);
     }
 
     .tech-orbit__ring {
@@ -191,12 +199,13 @@
 
     .tech-orbit__ring--outer {
         inset: 4%;
-        border: 1px solid rgba(59, 130, 246, 0.22);
+        border: 1px solid rgba(59, 130, 246, 0.2);
+        box-shadow: 0 0 24px rgba(59, 130, 246, 0.08);
     }
 
     .tech-orbit__ring--inner {
         inset: 27%;
-        border: 1px solid rgba(255, 255, 255, 0.3);
+        border: 1px solid rgba(255, 255, 255, 0.22);
     }
 
     /* The track turns; each badge sits on the outer ring at 72° steps. */
@@ -271,20 +280,82 @@
         transform: rotate(var(--angle)) translateY(-46cqw) rotate(calc(-1 * var(--angle)));
     }
 
+    .tech-icon {
+        border-radius: 50%;
+        outline: none;
+        cursor: default;
+    }
+
+    .tech-icon__body {
+        position: relative;
+        display: block;
+        width: 100%;
+        height: 100%;
+    }
+
+    /* Round glass-style badge: no transform on hover, so nothing jumps. */
     .tech-icon__badge {
         display: flex;
         align-items: center;
         justify-content: center;
         width: 100%;
         height: 100%;
-        background: white;
-        border-radius: 12px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        border-radius: 50%;
+        background: linear-gradient(150deg, rgba(255, 255, 255, 0.97), rgba(239, 245, 255, 0.86));
+        border: 1px solid rgba(255, 255, 255, 0.9);
+        box-shadow:
+            0 12px 28px -8px rgba(30, 64, 175, 0.28),
+            0 2px 6px rgba(15, 23, 42, 0.06),
+            inset 0 1px 0 #fff;
+        transition: box-shadow 0.3s ease;
+    }
+
+    .tech-icon:hover .tech-icon__badge,
+    .tech-icon:focus-visible .tech-icon__badge {
+        box-shadow:
+            0 16px 34px -8px rgba(30, 64, 175, 0.38),
+            0 0 0 6px rgba(59, 130, 246, 0.16),
+            inset 0 1px 0 #fff;
+    }
+
+    .tech-icon:focus-visible .tech-icon__badge {
+        outline: 2px solid #1E40AF;
+        outline-offset: 3px;
     }
 
     .tech-icon img {
-        width: 46%;
-        height: 46%;
+        width: 44%;
+        height: 44%;
+        display: block;
+    }
+
+    /* Name shown under the badge on hover or keyboard focus. */
+    .tech-icon__name {
+        position: absolute;
+        top: calc(100% + 8px);
+        left: 50%;
+        transform: translateX(-50%);
+        padding: 3px 10px;
+        border-radius: 999px;
+        background: #1E40AF;
+        color: #fff;
+        font-size: 13px;
+        font-weight: 600;
+        line-height: 1.4;
+        white-space: nowrap;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.2s ease;
+    }
+
+    .tech-icon:hover .tech-icon__name,
+    .tech-icon:focus-visible .tech-icon__name {
+        opacity: 1;
+    }
+
+    .tech-icon:hover,
+    .tech-icon:focus-visible {
+        z-index: 2;
     }
 
     /* Services Section */
@@ -787,11 +858,11 @@
                     <div class="tech-orbit__ring tech-orbit__ring--outer" aria-hidden="true"></div>
                     <div class="tech-orbit__ring tech-orbit__ring--inner" aria-hidden="true"></div>
                     <ul class="tech-orbit__track" aria-label="Technologies we work with">
-                        <li class="tech-icon laravel" style="--i: 0"><span class="tech-icon__badge"><img src="{{ asset('assets/images/services-top/laravel.svg') }}" alt="Laravel" width="40" height="40"></span></li>
-                        <li class="tech-icon angular" style="--i: 1"><span class="tech-icon__badge"><img src="{{ asset('assets/images/services-top/angular.svg') }}" alt="Angular" width="40" height="40"></span></li>
-                        <li class="tech-icon dotnet" style="--i: 2"><span class="tech-icon__badge"><img src="{{ asset('assets/images/services-top/dotnet.svg') }}" alt=".NET" width="40" height="40"></span></li>
-                        <li class="tech-icon vuejs" style="--i: 3"><span class="tech-icon__badge"><img src="{{ asset('assets/images/services-top/vuedotjs.svg') }}" alt="Vue.js" width="40" height="40"></span></li>
-                        <li class="tech-icon nodejs" style="--i: 4"><span class="tech-icon__badge"><img src="{{ asset('assets/images/services-top/nodedotjs.svg') }}" alt="Node.js" width="40" height="40"></span></li>
+                        <li class="tech-icon laravel" style="--i: 0" tabindex="0"><span class="tech-icon__body"><span class="tech-icon__badge"><img src="{{ asset('assets/images/services-top/laravel.svg') }}" alt="Laravel" width="40" height="40"></span><span class="tech-icon__name" aria-hidden="true">Laravel</span></span></li>
+                        <li class="tech-icon angular" style="--i: 1" tabindex="0"><span class="tech-icon__body"><span class="tech-icon__badge"><img src="{{ asset('assets/images/services-top/angular.svg') }}" alt="Angular" width="40" height="40"></span><span class="tech-icon__name" aria-hidden="true">Angular</span></span></li>
+                        <li class="tech-icon dotnet" style="--i: 2" tabindex="0"><span class="tech-icon__body"><span class="tech-icon__badge"><img src="{{ asset('assets/images/services-top/dotnet.svg') }}" alt=".NET" width="40" height="40"></span><span class="tech-icon__name" aria-hidden="true">.NET</span></span></li>
+                        <li class="tech-icon vuejs" style="--i: 3" tabindex="0"><span class="tech-icon__body"><span class="tech-icon__badge"><img src="{{ asset('assets/images/services-top/vuedotjs.svg') }}" alt="Vue.js" width="40" height="40"></span><span class="tech-icon__name" aria-hidden="true">Vue.js</span></span></li>
+                        <li class="tech-icon nodejs" style="--i: 4" tabindex="0"><span class="tech-icon__body"><span class="tech-icon__badge"><img src="{{ asset('assets/images/services-top/nodedotjs.svg') }}" alt="Node.js" width="40" height="40"></span><span class="tech-icon__name" aria-hidden="true">Node.js</span></span></li>
                     </ul>
                 </div>
             </div>
