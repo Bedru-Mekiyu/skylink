@@ -11,25 +11,7 @@
             --light-blue-bg: #e3f2fd;
         }
 
-        /* Contact Hero Section */
-        .contact-hero {
-            background: #e5e7eb;
-            padding: 40px 0;
-            text-align: center;
-        }
-
-        .contact-hero h1 {
-            font-size: 48px;
-            font-weight: bold;
-            margin-bottom: 20px;
-            color: #333;}
-
-        .contact-hero p {
-            font-size: 16px;
-            max-width: 600px;
-            margin: 0 auto;
-            line-height: 1.6;
-        }
+        /* Contact hero: now the shared partials/page-banner. */
 
         /* Main Contact Section */
         .contact-form-section {
@@ -207,10 +189,6 @@
 
         /* Responsive Design */
         @media (max-width: 991.98px) {
-            .contact-hero h1 {
-                font-size: 36px;
-            }
-            
             .contact-cards-row {
                 gap: 8px;
                 margin-bottom: 15px;
@@ -237,14 +215,6 @@
         }
 
         @media (max-width: 767.98px) {
-            .contact-hero h1 {
-                font-size: 28px;
-            }
-            
-            .contact-hero p {
-                font-size: 16px;
-            }
-            
             /* Hide image in mobile view */
             .operators-container {
                 display: none;
@@ -307,12 +277,21 @@
 
 @section('content')
     <!-- Contact Hero -->
-    <section class="contact-hero">
-        <div class="container">
-            <h1>Connect With Our Experts</h1>
-            <p>Have a question, business proposal, or need technical support? Our experienced team is ready to provide tailored IT solutions that help your business operate more efficiently and grow with confidence. We're just one message away.</p>
-        </div>
-    </section>
+    {{-- Same banner style as About / news / portfolio. Photo: resized copies of
+         assets/images/about/software.JPG (original unchanged); its top 19% (the
+         "217" room sign) is hidden, as on About. --}}
+    @include('partials.page-banner', [
+        'bannerTitle' => 'Connect With Our Experts',
+        'bannerText' => "Have a question, business proposal, or need technical support? Our experienced team is ready to provide tailored IT solutions that help your business operate more efficiently and grow with confidence. We're just one message away.",
+        'bannerImage' => [
+            'src' => asset('assets/images/contact/contact-hero-1920.jpg'),
+            'srcset' => asset('assets/images/contact/contact-hero-960.jpg').' 960w, '.asset('assets/images/contact/contact-hero-1920.jpg').' 1920w',
+            'width' => 1920,
+            'height' => 1253,
+        ],
+        'bannerTopCut' => 0.19,
+        'bannerCurve' => '#ffffff',
+    ])
 
     <!-- Contact Form Section -->
     <section class="contact-form-section">
