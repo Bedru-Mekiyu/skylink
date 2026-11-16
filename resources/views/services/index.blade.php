@@ -171,7 +171,7 @@
         container-type: inline-size;
         position: relative;
         z-index: 1;
-        width: min(500px, 100%);
+        width: min(500px, 100% - 56px);
         aspect-ratio: 1;
         margin: 0 auto;
     }
@@ -813,9 +813,15 @@
             font-size: 32px;
         }
         
-        .tech-orbit-col,
         .hero-social-icons {
             display: none;
+        }
+
+        /* Phones: a smaller orbit under the search box, with room left for
+           the badges so nothing reaches the screen edge. */
+        .tech-orbit {
+            --badge: 52px;
+            width: min(260px, 100% - 72px);
         }
  
         .search-container {
@@ -846,7 +852,7 @@
         /* Stacked under the text: a smaller orbit, centred. */
         .tech-orbit {
             --badge: 68px;
-            width: min(380px, 100%);
+            width: min(380px, 100% - 56px);
         }
 
         .testimonial-card {
