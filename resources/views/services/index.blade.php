@@ -385,6 +385,81 @@
         animation-play-state: var(--orbit-state, running);
     }
 
+    /* NestJS at the centre: about 1.6x an orbit badge, but never wider than
+       32% of the orbit, so it stays inside the inner ring (46%) at every
+       width. It does not rotate; only its red halo pulses. */
+    .tech-center {
+        --center: min(calc(var(--badge) * 1.6), 32cqw);
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        z-index: 1;
+        width: var(--center);
+        height: var(--center);
+        margin: calc(var(--center) / -2) 0 0 calc(var(--center) / -2);
+        border-radius: 50%;
+        outline: none;
+    }
+
+    .tech-center .tech-icon__badge {
+        position: relative;
+        z-index: 1;
+        border: 3px solid #E0234E;
+        background: linear-gradient(150deg, #fff, #fff4f6);
+        box-shadow:
+            0 0 0 5px rgba(224, 35, 78, 0.14),
+            0 0 26px rgba(224, 35, 78, 0.35),
+            0 18px 36px -10px rgba(15, 23, 42, 0.45);
+    }
+
+    .tech-center:hover .tech-icon__badge,
+    .tech-center:focus-visible .tech-icon__badge {
+        box-shadow:
+            0 0 0 7px rgba(224, 35, 78, 0.2),
+            0 0 32px rgba(224, 35, 78, 0.45),
+            0 18px 36px -10px rgba(15, 23, 42, 0.45);
+    }
+
+    .tech-center:focus-visible .tech-icon__badge {
+        outline: 2px solid #fff;
+        outline-offset: 4px;
+    }
+
+    .tech-center img {
+        width: 50%;
+        height: 50%;
+        display: block;
+    }
+
+    /* Soft red halo; it pulses only when the orbit is animated. */
+    .tech-center::before {
+        content: "";
+        position: absolute;
+        inset: -2px;
+        border-radius: 50%;
+        border: 2px solid rgba(224, 35, 78, 0.5);
+        opacity: 0;
+    }
+
+    @keyframes center-pulse {
+        0% { transform: scale(1); opacity: 0.55; }
+        100% { transform: scale(1.22); opacity: 0; }
+    }
+
+    .tech-orbit.is-animated .tech-center::before {
+        animation: center-pulse 3.2s ease-out infinite;
+        animation-play-state: var(--orbit-state, running);
+    }
+
+    .tech-center:hover .tech-icon__name,
+    .tech-center:focus-visible .tech-icon__name {
+        opacity: 1;
+    }
+
+    .tech-center .tech-icon__name {
+        z-index: 2;
+    }
+
     /* Paused while off-screen, and on hover or keyboard focus. */
     .tech-orbit.is-paused,
     .tech-orbit:hover,
@@ -393,7 +468,8 @@
     }
 
     @media (prefers-reduced-motion: reduce) {
-        .tech-orbit * {
+        .tech-orbit *,
+        .tech-orbit *::before {
             animation: none !important;
         }
     }
@@ -910,6 +986,7 @@
                         <li class="tech-icon vuejs" style="--i: 3" tabindex="0"><span class="tech-icon__body"><span class="tech-icon__badge"><img src="{{ asset('assets/images/services-top/vuedotjs.svg') }}" alt="Vue.js" width="40" height="40"></span><span class="tech-icon__name" aria-hidden="true">Vue.js</span></span></li>
                         <li class="tech-icon nodejs" style="--i: 4" tabindex="0"><span class="tech-icon__body"><span class="tech-icon__badge"><img src="{{ asset('assets/images/services-top/nodedotjs.svg') }}" alt="Node.js" width="40" height="40"></span><span class="tech-icon__name" aria-hidden="true">Node.js</span></span></li>
                     </ul>
+                    <div class="tech-center" tabindex="0"><span class="tech-icon__badge"><img src="{{ asset('assets/images/services-top/nestjs.svg') }}" alt="NestJS" width="64" height="64"></span><span class="tech-icon__name" aria-hidden="true">NestJS</span></div>
                 </div>
                 <script>
                     // Start the slow orbit only when motion is welcome, and pause it off-screen.

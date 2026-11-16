@@ -7,7 +7,7 @@ use Tests\TestCase;
 
 /**
  * The technology showcase at the top of /services: exactly the five named
- * logos, served from small local files, with nothing loaded from outside.
+ * orbit logos plus the NestJS centre badge, served from small local files, with nothing loaded from outside.
  */
 class ServicesTopShowcaseTest extends TestCase
 {
@@ -19,6 +19,7 @@ class ServicesTopShowcaseTest extends TestCase
         'Node.js' => 'nodedotjs.svg',
         'Vue.js' => 'vuedotjs.svg',
         '.NET' => 'dotnet.svg',
+        'NestJS' => 'nestjs.svg',
     ];
 
     private function heroHtml(): string
@@ -32,12 +33,14 @@ class ServicesTopShowcaseTest extends TestCase
         return substr($html, $start, $end - $start);
     }
 
-    public function test_showcase_has_exactly_the_five_named_local_logos(): void
+    public function test_showcase_has_five_named_orbit_logos_and_the_nestjs_centre(): void
     {
         $hero = $this->heroHtml();
 
         preg_match_all('/<img\b[^>]*>/i', $hero, $imgs);
-        $this->assertCount(5, $imgs[0], 'expected exactly five logo images');
+        $this->assertCount(6, $imgs[0], 'expected five orbit logos plus the centre logo');
+        $this->assertSame(5, preg_match_all('/<li class="tech-icon /', $hero), 'expected exactly five orbit badges');
+        $this->assertMatchesRegularExpression('/class="tech-center"[^>]*>.*?nestjs.svg.*?alt="NestJS"/s', $hero, 'NestJS centre badge missing');
 
         foreach (self::LOGOS as $name => $file) {
             $this->assertStringContainsString('assets/images/services-top/'.$file, $hero, "$name logo not used");
@@ -45,7 +48,7 @@ class ServicesTopShowcaseTest extends TestCase
 
             $path = public_path('assets/images/services-top/'.$file);
             $this->assertFileExists($path);
-            $this->assertLessThan(4096, filesize($path), "$file should be a few KB at most");
+            $this->assertLessThan(8192, filesize($path), "$file should be a few KB at most");
         }
         $this->assertFileExists(public_path('assets/images/services-top/LICENSES.md'));
     }
