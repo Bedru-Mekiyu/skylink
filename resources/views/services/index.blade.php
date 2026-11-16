@@ -358,6 +358,46 @@
         z-index: 2;
     }
 
+    /* Motion (transform only). It runs only when the small script below adds
+       .is-animated: never for reduced motion or Save-Data. One animation per
+       element: the track turns, each badge body turns back so the logo stays
+       upright, and the badge floats with the separate `translate` property. */
+    @keyframes orbit-spin { to { transform: rotate(360deg); } }
+    @keyframes orbit-counter { to { transform: rotate(-360deg); } }
+    @keyframes badge-float {
+        0%, 100% { translate: 0 0; }
+        50% { translate: 0 -6px; }
+    }
+
+    .tech-orbit.is-animated .tech-orbit__track {
+        animation: orbit-spin 120s linear infinite;
+        animation-play-state: var(--orbit-state, running);
+    }
+
+    .tech-orbit.is-animated .tech-icon__body {
+        animation: orbit-counter 120s linear infinite;
+        animation-play-state: var(--orbit-state, running);
+    }
+
+    .tech-orbit.is-animated .tech-icon__badge {
+        animation: badge-float 6s ease-in-out infinite;
+        animation-delay: calc(var(--i) * -1.2s);
+        animation-play-state: var(--orbit-state, running);
+    }
+
+    /* Paused while off-screen, and on hover or keyboard focus. */
+    .tech-orbit.is-paused,
+    .tech-orbit:hover,
+    .tech-orbit:focus-within {
+        --orbit-state: paused;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .tech-orbit * {
+            animation: none !important;
+        }
+    }
+
     /* Services Section */
     .services-section {
         padding: 100px 0;
@@ -865,6 +905,20 @@
                         <li class="tech-icon nodejs" style="--i: 4" tabindex="0"><span class="tech-icon__body"><span class="tech-icon__badge"><img src="{{ asset('assets/images/services-top/nodedotjs.svg') }}" alt="Node.js" width="40" height="40"></span><span class="tech-icon__name" aria-hidden="true">Node.js</span></span></li>
                     </ul>
                 </div>
+                <script>
+                    // Start the slow orbit only when motion is welcome, and pause it off-screen.
+                    (function () {
+                        var orbit = document.querySelector('.tech-orbit');
+                        if (!orbit || !('IntersectionObserver' in window)) return;
+                        var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+                        var saveData = navigator.connection && navigator.connection.saveData;
+                        if (reduced || saveData) return;
+                        orbit.classList.add('is-animated');
+                        new IntersectionObserver(function (entries) {
+                            orbit.classList.toggle('is-paused', !entries[0].isIntersecting);
+                        }).observe(orbit);
+                    })();
+                </script>
             </div>
         </div>
     </div>
