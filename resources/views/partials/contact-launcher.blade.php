@@ -12,8 +12,9 @@
     panel opens upwards from the launcher.
 --}}
 @php
-    $contactPhones = ['+251-974-967171', '+251-936-177777'];
-    $contactAddress = 'A.A, Bole Tropical Mall No. 217';
+    // One source with the navbar: config/company_contact.php
+    $contactPhones = config('company_contact.phones');
+    $contactAddress = config('company_contact.address');
     $contactSocials = [
         ['label' => 'Facebook', 'icon' => 'fab fa-facebook', 'url' => 'https://www.facebook.com/profile.php?id=61562181474117'],
         ['label' => 'TikTok', 'icon' => 'fab fa-tiktok', 'url' => 'https://www.tiktok.com/@skylink_technology?_t=ZM-8y9cFtAlBX6&_r=1'],

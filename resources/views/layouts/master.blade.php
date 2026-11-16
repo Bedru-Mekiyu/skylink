@@ -116,6 +116,80 @@
         background: #3B82F6;
     }
 
+    /* Logo = home link: visible keyboard focus. */
+    .navbar-home-link:focus-visible {
+        outline: 2px solid #3B82F6;
+        outline-offset: 3px;
+        border-radius: 10px;
+    }
+
+    /* Phones and short address. Hidden by default; shown on the right of the
+       navbar from 1200px, and inside the collapsed menu below 992px. */
+    .nav-contact {
+        display: none;
+        font-size: 12.5px;
+        line-height: 1.5;
+        color: #555;
+    }
+
+    .nav-contact__row {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        white-space: nowrap;
+    }
+
+    .nav-contact i {
+        color: #3B82F6;
+        width: 14px;
+        text-align: center;
+        font-size: 11px;
+    }
+
+    .nav-contact a {
+        color: #333;
+        text-decoration: none;
+        font-weight: 500;
+    }
+
+    .nav-contact a:hover {
+        color: #3B82F6;
+    }
+
+    .nav-contact a:focus-visible {
+        outline: 2px solid #3B82F6;
+        outline-offset: 2px;
+        border-radius: 3px;
+    }
+
+    .nav-contact__sep {
+        color: #ccc;
+    }
+
+    @media (min-width: 1200px) {
+        .nav-contact {
+            display: block;
+            flex-shrink: 0;
+            margin-left: 16px;
+        }
+    }
+
+    @media (max-width: 991.98px) {
+        .nav-contact {
+            display: block;
+            margin-top: 8px;
+            padding: 10px 0 4px;
+            border-top: 1px solid #eee;
+            font-size: 14px;
+            line-height: 1.9;
+        }
+
+        .nav-contact__row {
+            flex-wrap: wrap;
+            white-space: normal;
+        }
+    }
+
     /* Apple-style Full Width Dropdown */
     .nav-item.mega-dropdown {
         position: static;
@@ -394,8 +468,8 @@
 <!-- Main Navbar -->
         <nav class="navbar navbar-expand-lg navbar-custom" id="mainNavbar">
             <div class="container">
-                <a href="/" class="d-flex align-items-center text-decoration-none">
-                    <img src="{{ asset('assets/images/skylink-logo.svg') }}" alt="Skylink Logo" class="logo-img me-2">
+                <a href="{{ route('home') }}" class="navbar-home-link d-flex align-items-center text-decoration-none" aria-label="Sky Link ICT Solutions - Home">
+                    <img src="{{ asset('assets/images/skylink-logo.svg') }}" alt="" class="logo-img me-2">
                     
                 </a>
 
@@ -406,7 +480,8 @@
                 
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav mx-auto">
-                        <li class="nav-item">
+                        {{-- Desktop: the logo is the home link; "Home" stays in the collapsed menu. --}}
+                        <li class="nav-item d-lg-none">
                             <a class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" href="{{ route('home') }}">Home</a>
                         </li>
                         <li class="nav-item">
@@ -554,7 +629,23 @@
                             <a class="nav-link {{ request()->routeIs('contact') ? 'active' : '' }}" href="{{ route('contact') }}">Contact Us</a>
                         </li>
                     </ul>
-                    
+
+                    {{-- Phones and short address (config/company_contact.php): in the
+                         navbar from 1200px, inside the collapsed menu below 992px. --}}
+                    <div class="nav-contact">
+                        <div class="nav-contact__row">
+                            <i class="fas fa-phone" aria-hidden="true"></i>
+                            @foreach (config('company_contact.phones') as $navPhone)
+                                @if (! $loop->first)<span class="nav-contact__sep" aria-hidden="true">|</span>@endif
+                                <a href="tel:{{ preg_replace('/[^\d+]/', '', $navPhone) }}">{{ $navPhone }}</a>
+                            @endforeach
+                        </div>
+                        <div class="nav-contact__row">
+                            <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
+                            <span>{{ config('company_contact.address_short') }}</span>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </nav>
