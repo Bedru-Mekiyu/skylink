@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title', 'Homepage - Sky Link IT Solutions')
-@section('description', 'Explore our portfolio of successful IT projects and digital solutions delivered to clients across Ethiopia.')
+@section('description', \App\Support\Anniversary::shareDescription() ?? 'Explore our portfolio of successful IT projects and digital solutions delivered to clients across Ethiopia.')
 
 @push('styles')
     <style>
@@ -1143,6 +1143,10 @@ max-height: 20 vh;
         </div>
     </div>
 </section>
+
+@if (\App\Support\Anniversary::isActive() && \App\Support\Anniversary::hasSectionContent())
+    @include('partials.anniversary.section')
+@endif
 
     <!-- Trusted Partners -->
 <section class="partners-section">

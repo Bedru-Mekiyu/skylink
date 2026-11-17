@@ -4,11 +4,14 @@ namespace Tests\Feature\Anniversary;
 
 use App\Support\Anniversary;
 use Carbon\Carbon;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Config;
 use Tests\TestCase;
 
 class AnniversaryCampaignTest extends TestCase
 {
+    use RefreshDatabase;
+
     protected function setUp(): void
     {
         parent::setUp();
@@ -21,53 +24,57 @@ class AnniversaryCampaignTest extends TestCase
         Config::set('app.debug', true);
     }
 
+    public static function publicPages(): array
+    {
+        return [
+            'home' => ['/'],
+            'about' => ['/about'],
+            'services' => ['/services'],
+            'products' => ['/products'],
+            'portfolio' => ['/portfolio'],
+            'news' => ['/news'],
+            'contact' => ['/contact'],
+        ];
+    }
+
     public function test_campaign_is_inactive_before_start_date(): void
     {
-        // 1 second before start
         $before = Carbon::parse('2026-11-22 23:59:59', 'Africa/Addis_Ababa');
         $this->assertFalse(Anniversary::isActive($before));
 
-        // Well before start
         $early = Carbon::parse('2026-10-15 12:00:00', 'Africa/Addis_Ababa');
         $this->assertFalse(Anniversary::isActive($early));
     }
 
     public function test_campaign_is_active_from_first_minute_of_start_date(): void
     {
-        // Exact start instant
         $start = Carbon::parse('2026-11-23 00:00:00', 'Africa/Addis_Ababa');
         $this->assertTrue(Anniversary::isActive($start));
 
-        // One minute in
         $firstMinute = Carbon::parse('2026-11-23 00:01:00', 'Africa/Addis_Ababa');
         $this->assertTrue(Anniversary::isActive($firstMinute));
     }
 
     public function test_campaign_is_active_up_to_last_minute_before_end_date(): void
     {
-        // Middle of campaign
         $mid = Carbon::parse('2026-11-30 15:30:00', 'Africa/Addis_Ababa');
         $this->assertTrue(Anniversary::isActive($mid));
 
-        // 6 December 23:59:59 (the last second shown)
         $lastMinute = Carbon::parse('2026-12-06 23:59:59', 'Africa/Addis_Ababa');
         $this->assertTrue(Anniversary::isActive($lastMinute));
     }
 
     public function test_campaign_is_inactive_from_end_instant(): void
     {
-        // 2026-12-07 00:00:00 is exclusive
         $end = Carbon::parse('2026-12-07 00:00:00', 'Africa/Addis_Ababa');
         $this->assertFalse(Anniversary::isActive($end));
 
-        // Well after end
         $after = Carbon::parse('2026-12-10 10:00:00', 'Africa/Addis_Ababa');
         $this->assertFalse(Anniversary::isActive($after));
     }
 
     public function test_preview_flag_force_is_honored_in_local_debug(): void
     {
-        // Outside campaign window
         $outside = Carbon::parse('2026-11-01 12:00:00', 'Africa/Addis_Ababa');
         $this->assertFalse(Anniversary::isActive($outside));
 
@@ -94,7 +101,6 @@ class AnniversaryCampaignTest extends TestCase
         Config::set('anniversary.force', true);
         Config::set('app.debug', true);
 
-        // Temporarily override environment detection
         $this->app['env'] = 'production';
 
         $this->assertFalse(Anniversary::isForced());
@@ -125,8 +131,8 @@ class AnniversaryCampaignTest extends TestCase
     {
         Config::set('anniversary.milestones', [
             ['year' => 2021, 'title' => ['en' => 'Founded', 'am' => 'መሥራች']],
-            ['year' => null, 'title' => ['en' => 'Invalid no year']], // skip
-            ['year' => 2022, 'title' => ['en' => '']], // skip empty title
+            ['year' => null, 'title' => ['en' => 'Invalid no year']],
+            ['year' => 2022, 'title' => ['en' => '']],
             ['year' => 2023, 'title' => ['en' => 'Expansion'], 'text' => ['en' => 'New office']],
         ]);
 
@@ -139,8 +145,8 @@ class AnniversaryCampaignTest extends TestCase
 
         Config::set('anniversary.counters', [
             ['label' => ['en' => 'Enterprise Clients'], 'value' => 50, 'suffix' => '+'],
-            ['label' => ['en' => 'Missing value'], 'value' => null], // skip
-            ['label' => ['en' => ''], 'value' => 10], // skip empty label
+            ['label' => ['en' => 'Missing value'], 'value' => null],
+            ['label' => ['en' => ''], 'value' => 10],
         ]);
 
         $counters = Anniversary::counters('en');
@@ -148,5 +154,118 @@ class AnniversaryCampaignTest extends TestCase
         $this->assertSame('Enterprise Clients', $counters[0]['label']);
         $this->assertSame(50, $counters[0]['value']);
         $this->assertSame('+', $counters[0]['suffix']);
+    }
+
+    /**
+     * @dataProvider publicPages
+     */
+    public function test_badge_appears_exactly_once_on_every_public_page_when_active(string $uri): void
+    {
+        Config::set('anniversary.force', true);
+        Config::set('app.debug', true);
+
+        $html = $this->get($uri)->assertOk()->getContent();
+
+        $count = preg_match_all('/id="annivBadgeBtn"/i', $html);
+        $this->assertSame(1, $count, "The anniversary badge should appear exactly once on {$uri}.");
+
+        $modalCount = preg_match_all('/id="annivCelebrationModal"/i', $html);
+        $this->assertSame(1, $modalCount, "The celebration modal should be rendered on {$uri}.");
+    }
+
+    /**
+     * @dataProvider publicPages
+     */
+    public function test_nothing_shows_on_any_page_when_campaign_is_inactive(string $uri): void
+    {
+        // Explicitly deactivate
+        Config::set('anniversary.force', false);
+        Config::set('anniversary.start', '2026-11-23 00:00');
+        Config::set('anniversary.end', '2026-12-07 00:00');
+
+        // Travel before the start date
+        Carbon::setTestNow(Carbon::parse('2026-11-20 10:00:00', 'Africa/Addis_Ababa'));
+
+        $this->assertFalse(Anniversary::isActive());
+
+        $html = $this->get($uri)->assertOk()->getContent();
+
+        $this->assertStringNotContainsString('id="annivBadgeBtn"', $html);
+        $this->assertStringNotContainsString('id="annivCelebrationModal"', $html);
+        $this->assertStringNotContainsString('id="annivIntroOverlay"', $html);
+        $this->assertStringNotContainsString('id="anniversary-story"', $html);
+
+        Carbon::setTestNow();
+    }
+
+    public function test_cinematic_intro_has_accessible_skip_control(): void
+    {
+        Config::set('anniversary.force', true);
+        Config::set('app.debug', true);
+
+        $html = $this->get('/')->assertOk()->getContent();
+
+        $this->assertStringContainsString('id="annivIntroOverlay"', $html);
+        $this->assertStringContainsString('id="annivIntroSkip"', $html);
+        $this->assertStringContainsString('aria-label="Skip introduction"', $html);
+    }
+
+    public function test_homepage_section_renders_when_active_and_has_content(): void
+    {
+        Config::set('anniversary.force', true);
+        Config::set('app.debug', true);
+
+        $html = $this->get('/')->assertOk()->getContent();
+
+        $this->assertStringContainsString('id="anniversary-story"', $html);
+        $this->assertStringContainsString('5 Years of Sky Link', $html);
+        $this->assertStringContainsString('Five years of innovation, trust and growth.', $html);
+        $this->assertStringContainsString('Start a project with us', $html);
+    }
+
+    public function test_amharic_and_english_both_render(): void
+    {
+        Config::set('anniversary.force', true);
+        Config::set('app.debug', true);
+
+        // English default
+        $htmlEn = $this->get('/')->assertOk()->getContent();
+        $this->assertStringContainsString('5 Years of Sky Link', $htmlEn);
+        $this->assertStringContainsString('Five years of innovation, trust and growth.', $htmlEn);
+
+        // Amharic locale
+        app()->setLocale('am');
+        $htmlAm = $this->get('/')->assertOk()->getContent();
+        $this->assertStringContainsString('አምስት ዓመታት በስካይሊንክ', $htmlAm);
+        $this->assertStringContainsString('አምስት ዓመታት የፈጠራ፣ የአመኔታና የዕድገት ጉዞ።', $htmlAm);
+    }
+
+    public function test_section_and_modal_remain_clean_when_milestones_and_counters_are_empty(): void
+    {
+        Config::set('anniversary.force', true);
+        Config::set('app.debug', true);
+        Config::set('anniversary.milestones', []);
+        Config::set('anniversary.counters', []);
+
+        $html = $this->get('/')->assertOk()->getContent();
+
+        // Section and modal are present
+        $this->assertStringContainsString('id="anniversary-story"', $html);
+        $this->assertStringContainsString('id="annivCelebrationModal"', $html);
+
+        // But timeline and counters DOM elements are omitted
+        $this->assertStringNotContainsString('class="anniv-timeline-wrap"', $html);
+        $this->assertStringNotContainsString('class="anniv-counters-row"', $html);
+        $this->assertStringNotContainsString('class="anniv-modal__timeline"', $html);
+    }
+
+    public function test_share_description_reflects_tagline_when_active(): void
+    {
+        Config::set('anniversary.force', true);
+        Config::set('app.debug', true);
+
+        $html = $this->get('/')->assertOk()->getContent();
+
+        $this->assertStringContainsString('Celebrating 5 Years of Sky Link ICT Solutions. Five years of innovation, trust and growth.', $html);
     }
 }

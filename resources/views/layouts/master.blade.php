@@ -459,6 +459,9 @@
 @yield('additional-styles')
    
     @stack('styles')
+    @if (\App\Support\Anniversary::isActive())
+        @include('partials.anniversary.styles')
+    @endif
     {{-- The scripts stack is rendered once, before </body>, after Bootstrap. --}}
 
 </head>
@@ -468,12 +471,16 @@
 <!-- Main Navbar -->
         <nav class="navbar navbar-expand-lg navbar-custom" id="mainNavbar">
             <div class="container">
-                <a href="{{ route('home') }}" class="navbar-home-link d-flex align-items-center text-decoration-none" aria-label="Sky Link ICT Solutions - Home">
-                    <img src="{{ asset('assets/images/skylink-logo.svg') }}" alt="" class="logo-img me-2">
-                    
-                </a>
+                <div class="d-flex align-items-center">
+                    <a href="{{ route('home') }}" class="navbar-home-link d-flex align-items-center text-decoration-none" aria-label="Sky Link ICT Solutions - Home">
+                        <img src="{{ asset('assets/images/skylink-logo.svg') }}" alt="" class="logo-img me-2">
+                    </a>
 
-                
+                    @if (\App\Support\Anniversary::isActive())
+                        @include('partials.anniversary.badge')
+                    @endif
+                </div>
+
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -742,6 +749,10 @@ s0.parentNode.insertBefore(s1,s0);
 <!--End of Tawk.to Script-->
 
     
+    @if (\App\Support\Anniversary::isActive())
+        @include('partials.anniversary.intro')
+    @endif
+
     @stack('scripts')
 </body>
 </html>
