@@ -1147,10 +1147,18 @@ body.anniv-intro-playing {
     transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
+.anniv-hero-card__cta i {
+    transition: transform 0.25s ease;
+}
+
 .anniv-hero-card__cta:hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(6, 182, 212, 0.5);
     color: #ffffff !important;
+}
+
+.anniv-hero-card__cta:hover i {
+    transform: translateY(3px);
 }
 
 .anniv-hero-card__badge-trigger {
@@ -1173,9 +1181,15 @@ body.anniv-intro-playing {
 }
 
 /* Tablet & Mobile Hero Card Adaptation */
+@media (min-width: 992px) {
+    .anniv-hero-card {
+        margin-top: 8px;
+    }
+}
+
 @media (max-width: 991.98px) {
     .anniv-hero-card {
-        max-width: 480px;
+        max-width: 460px;
         margin: 24px auto 0;
         padding: 24px 20px;
     }
@@ -1194,24 +1208,49 @@ body.anniv-intro-playing {
 
 @media (max-width: 576px) {
     .anniv-hero-card {
-        padding: 20px 16px;
-        border-radius: 20px;
+        max-width: 350px;
+        padding: 16px 16px 18px;
+        border-radius: 18px;
+        margin-top: 18px;
+    }
+    .anniv-hero-card__stage {
+        width: 86px;
+        height: 86px;
+        margin-bottom: 8px;
+    }
+    .anniv-hero-card__ring--inner {
+        inset: 8px;
+    }
+    .anniv-hero-card__num-svg {
+        transform: scale(0.72);
+    }
+    .anniv-hero-card__sublabel {
+        font-size: 10px;
+        letter-spacing: 0.16em;
+        margin-bottom: 4px;
     }
     .anniv-hero-card__headline {
-        font-size: 1.15rem;
+        font-size: 1.08rem;
+        margin-bottom: 4px;
     }
     .anniv-hero-card__tagline {
-        font-size: 0.82rem;
-        margin-bottom: 14px;
+        font-size: 0.8rem;
+        margin-bottom: 12px;
+        line-height: 1.45;
     }
     .anniv-hero-card__actions {
-        flex-direction: column;
-        gap: 8px;
+        flex-direction: row;
+        gap: 6px;
     }
-    .anniv-hero-card__cta,
-    .anniv-hero-card__badge-trigger {
-        width: 100%;
+    .anniv-hero-card__cta {
+        padding: 8px 14px;
+        font-size: 12px;
+        flex: 1 1 auto;
         justify-content: center;
+    }
+    .anniv-hero-card__badge-trigger {
+        padding: 8px 12px;
+        font-size: 11px;
     }
 }
 

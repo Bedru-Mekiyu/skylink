@@ -37,6 +37,8 @@
             <path class="anniv-hero-card__path-fill" d="M72 20 H34 L28 48 C32 44 40 42 50 42 C65 42 76 52 76 68 C76 82 64 92 48 92 C34 92 24 84 22 74 Z" />
             {{-- Animated glowing trace --}}
             <path class="anniv-hero-card__path-trace" d="M72 20 H34 L28 48 C32 44 40 42 50 42 C65 42 76 52 76 68 C76 82 64 92 48 92 C34 92 24 84 22 74" />
+            {{-- Specular flare at head of trace --}}
+            <circle cx="72" cy="20" r="3.2" fill="#ffffff" filter="drop-shadow(0 0 6px #38bdf8)" />
         </svg>
     </div>
 
