@@ -1122,7 +1122,7 @@ max-height: 20 vh;
                 <div class="row text-center">
                     <div class="col-4">
                         <div class="stat-item">
-                            <div class="stat-number" data-target="4+">0</div>
+                            <div class="stat-number" data-target="5+">0</div>
                             <small>Years Experience</small>
                         </div>
                     </div>
