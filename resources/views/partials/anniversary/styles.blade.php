@@ -947,159 +947,395 @@ body.anniv-intro-playing {
 }
 
 /* ==========================================================================
-   5. HOMEPAGE HERO ANNIVERSARY CENTERPIECE
+   5. HOMEPAGE HERO CINEMATIC ORBITAL MOTION CENTERPIECE
    ========================================================================== */
-.anniv-hero-card {
+.anniv-hero-motion {
     position: relative;
-    max-width: 440px;
-    margin: 0 auto;
-    padding: 30px 26px 26px;
-    background: linear-gradient(145deg, rgba(8, 20, 48, 0.78) 0%, rgba(5, 13, 31, 0.84) 100%);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(56, 189, 248, 0.28);
-    border-radius: 24px;
-    box-shadow: 0 25px 60px rgba(2, 6, 23, 0.55),
-                inset 0 1px 0 rgba(255, 255, 255, 0.12),
-                inset 0 0 30px rgba(56, 189, 248, 0.05);
-    overflow: hidden;
+    max-width: 460px;
+    margin: 8px auto 0;
+    padding: 24px 20px 20px;
+    background: radial-gradient(ellipse at 50% 38%, rgba(8, 22, 54, 0.82) 0%, rgba(4, 12, 32, 0.45) 65%, transparent 100%);
+    border-radius: 28px;
     text-align: center;
     color: #ffffff;
     z-index: 2;
     transform: translate3d(0, 0, 0);
-    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-                border-color 0.35s ease,
-                box-shadow 0.35s ease;
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.anniv-hero-card:hover {
-    transform: translateY(-3px);
-    border-color: rgba(56, 189, 248, 0.45);
-    box-shadow: 0 30px 70px rgba(2, 6, 23, 0.65),
-                inset 0 1px 0 rgba(255, 255, 255, 0.18),
-                0 0 35px rgba(56, 189, 248, 0.15);
+.anniv-hero-motion:hover {
+    transform: translateY(-2px);
 }
 
-.anniv-hero-card__ambient-glow {
-    position: absolute;
-    top: -50px;
-    right: -50px;
-    width: 200px;
-    height: 200px;
-    background: radial-gradient(circle, rgba(56, 189, 248, 0.22) 0%, transparent 70%);
-    border-radius: 50%;
-    pointer-events: none;
-}
-
-/* Orbital Stage */
-.anniv-hero-card__stage {
+/* Open Celestial Stage */
+.anniv-motion-stage {
     position: relative;
-    width: 130px;
-    height: 130px;
-    margin: 0 auto 16px;
+    width: 290px;
+    height: 290px;
+    margin: 0 auto 12px;
     display: flex;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
+    outline: none;
+    user-select: none;
+    -webkit-user-select: none;
+    transform: translate3d(0, 0, 0);
 }
 
-.anniv-hero-card__ring {
+.anniv-motion-stage:focus-visible {
+    outline: 2px solid var(--anniv-cyan);
+    border-radius: 50%;
+}
+
+/* Ambient core glow */
+.anniv-motion__ambient-glow {
+    position: absolute;
+    inset: 20px;
+    background: radial-gradient(circle, rgba(56, 189, 248, 0.18) 0%, rgba(37, 99, 235, 0.08) 45%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    transition: opacity 0.8s ease;
+}
+
+/* Faint celestial radar grid */
+.anniv-motion__grid {
+    position: absolute;
+    inset: 10px;
+    border-radius: 50%;
+    border: 1px solid rgba(56, 189, 248, 0.08);
+    pointer-events: none;
+}
+
+.anniv-motion__grid::before,
+.anniv-motion__grid::after {
+    content: '';
+    position: absolute;
+    background: rgba(56, 189, 248, 0.12);
+    pointer-events: none;
+}
+
+.anniv-motion__grid::before {
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    transform: translateY(-50%);
+}
+
+.anniv-motion__grid::after {
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    transform: translateX(-50%);
+}
+
+/* Astronomical Coordinates / Compass Ticks */
+.anniv-motion__ticks {
+    position: absolute;
+    inset: -6px;
+    pointer-events: none;
+}
+
+.anniv-motion__tick {
+    position: absolute;
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    color: rgba(56, 189, 248, 0.65);
+    text-transform: uppercase;
+}
+
+.anniv-motion__tick--n { top: 0; left: 50%; transform: translateX(-50%); }
+.anniv-motion__tick--s { bottom: 0; left: 50%; transform: translateX(-50%); }
+.anniv-motion__tick--e { right: -4px; top: 50%; transform: translateY(-50%); }
+.anniv-motion__tick--w { left: -4px; top: 50%; transform: translateY(-50%); }
+
+/* Concentric Orbital Rings */
+.anniv-motion__ring {
     position: absolute;
     border-radius: 50%;
     pointer-events: none;
     transform-origin: center center;
 }
 
-.anniv-hero-card__ring--outer {
-    inset: 0;
-    border: 1px dashed rgba(56, 189, 248, 0.32);
+.anniv-motion__ring--outer {
+    inset: 18px;
+    border: 1px dashed rgba(56, 189, 248, 0.35);
     animation: anniv-orbit-spin 48s linear infinite;
 }
 
-.anniv-hero-card__ring--inner {
-    inset: 12px;
-    border: 1px solid rgba(37, 99, 235, 0.28);
+.anniv-motion__ring--middle {
+    inset: 48px;
+    border: 1px solid rgba(37, 99, 235, 0.25);
     animation: anniv-orbit-spin-rev 36s linear infinite;
 }
 
-.anniv-hero-card__orbit-node {
+.anniv-motion__ring--inner {
+    inset: 78px;
+    border: 1px dashed rgba(56, 189, 248, 0.18);
+    animation: anniv-orbit-spin 28s linear infinite;
+}
+
+/* Photon tracer node (visible during idle) */
+.anniv-motion__tracer {
     position: absolute;
-    top: -3px;
+    top: 15px;
     left: 50%;
-    width: 7px;
-    height: 7px;
-    margin-left: -3.5px;
+    width: 6px;
+    height: 6px;
+    margin-left: -3px;
     background: #38bdf8;
     border-radius: 50%;
-    box-shadow: 0 0 10px #38bdf8, 0 0 18px #38bdf8;
+    box-shadow: 0 0 12px #38bdf8, 0 0 20px #38bdf8;
     pointer-events: none;
-    transform-origin: 3.5px 68px;
-    animation: anniv-orbit-spin 18s linear infinite;
+    transform-origin: 3px 130px;
+    animation: anniv-orbit-spin 14s linear infinite;
+    opacity: 0;
+    transition: opacity 0.8s ease;
 }
 
-@keyframes anniv-orbit-spin {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
+.is-settled .anniv-motion__tracer {
+    opacity: 1;
 }
 
-@keyframes anniv-orbit-spin-rev {
-    from { transform: rotate(360deg); }
-    to { transform: rotate(0deg); }
+/* Kinetic Year Nodes (01 -> 02 -> 03 -> 04 -> 05) */
+.anniv-motion__nodes {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
 }
 
-/* SVG Numeral 5 in hero card */
-.anniv-hero-card__num-svg {
+.anniv-motion__node {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 44px;
+    height: 44px;
+    margin-top: -22px;
+    margin-left: -22px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transform: scale(0.4);
+    pointer-events: none;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.anniv-motion__node-core {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #38bdf8;
+    box-shadow: 0 0 10px #38bdf8, 0 0 18px #0284c7;
+    margin-bottom: 2px;
+}
+
+.anniv-motion__node-num {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    color: #ffffff;
+    text-shadow: 0 0 8px rgba(56, 189, 248, 0.8);
+}
+
+/* Staggered Orbital Entrance & Convergence Animations */
+.is-animating .anniv-motion__node--1 { animation: anniv-node-track-1 5.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+.is-animating .anniv-motion__node--2 { animation: anniv-node-track-2 5.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+.is-animating .anniv-motion__node--3 { animation: anniv-node-track-3 5.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+.is-animating .anniv-motion__node--4 { animation: anniv-node-track-4 5.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+.is-animating .anniv-motion__node--5 { animation: anniv-node-track-5 5.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+
+@keyframes anniv-node-track-1 {
+    0% { opacity: 0; transform: rotate(0deg) translateY(-126px) rotate(0deg) scale(0.3); }
+    12% { opacity: 1; transform: rotate(45deg) translateY(-126px) rotate(-45deg) scale(1.1); }
+    38% { opacity: 1; transform: rotate(180deg) translateY(-126px) rotate(-180deg) scale(1.0); }
+    58% { opacity: 1; transform: rotate(320deg) translateY(-60px) rotate(-320deg) scale(0.85); }
+    68% { opacity: 0; transform: rotate(360deg) translateY(0) scale(0.2); }
+    100% { opacity: 0; transform: rotate(360deg) translateY(0) scale(0); }
+}
+
+@keyframes anniv-node-track-2 {
+    0%, 14% { opacity: 0; transform: rotate(72deg) translateY(-126px) rotate(-72deg) scale(0.3); }
+    24% { opacity: 1; transform: rotate(115deg) translateY(-126px) rotate(-115deg) scale(1.1); }
+    45% { opacity: 1; transform: rotate(240deg) translateY(-126px) rotate(-240deg) scale(1.0); }
+    60% { opacity: 1; transform: rotate(330deg) translateY(-50px) rotate(-330deg) scale(0.8); }
+    68% { opacity: 0; transform: rotate(360deg) translateY(0) scale(0.2); }
+    100% { opacity: 0; transform: rotate(360deg) translateY(0) scale(0); }
+}
+
+@keyframes anniv-node-track-3 {
+    0%, 25% { opacity: 0; transform: rotate(144deg) translateY(-126px) rotate(-144deg) scale(0.3); }
+    34% { opacity: 1; transform: rotate(185deg) translateY(-126px) rotate(-185deg) scale(1.1); }
+    50% { opacity: 1; transform: rotate(290deg) translateY(-126px) rotate(-290deg) scale(1.0); }
+    62% { opacity: 1; transform: rotate(340deg) translateY(-40px) rotate(-340deg) scale(0.75); }
+    68% { opacity: 0; transform: rotate(360deg) translateY(0) scale(0.2); }
+    100% { opacity: 0; transform: rotate(360deg) translateY(0) scale(0); }
+}
+
+@keyframes anniv-node-track-4 {
+    0%, 35% { opacity: 0; transform: rotate(216deg) translateY(-126px) rotate(-216deg) scale(0.3); }
+    44% { opacity: 1; transform: rotate(255deg) translateY(-126px) rotate(-255deg) scale(1.1); }
+    55% { opacity: 1; transform: rotate(330deg) translateY(-100px) rotate(-330deg) scale(0.95); }
+    63% { opacity: 1; transform: rotate(350deg) translateY(-30px) rotate(-350deg) scale(0.7); }
+    68% { opacity: 0; transform: rotate(360deg) translateY(0) scale(0.2); }
+    100% { opacity: 0; transform: rotate(360deg) translateY(0) scale(0); }
+}
+
+@keyframes anniv-node-track-5 {
+    0%, 45% { opacity: 0; transform: rotate(288deg) translateY(-126px) rotate(-288deg) scale(0.3); }
+    52% { opacity: 1; transform: rotate(320deg) translateY(-126px) rotate(-320deg) scale(1.15); }
+    62% { opacity: 1; transform: rotate(355deg) translateY(-60px) rotate(-355deg) scale(0.9); }
+    68% { opacity: 0; transform: rotate(360deg) translateY(0) scale(0.2); }
+    100% { opacity: 0; transform: rotate(360deg) translateY(0) scale(0); }
+}
+
+/* Controlled Radial Light Burst Flare */
+.anniv-motion__burst {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    margin-top: 0;
+    margin-left: 0;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.95) 0%, rgba(56, 189, 248, 0.8) 35%, rgba(37, 99, 235, 0.4) 65%, transparent 100%);
+    box-shadow: 0 0 60px rgba(56, 189, 248, 0.9);
+    pointer-events: none;
+    opacity: 0;
+}
+
+.is-animating .anniv-motion__burst {
+    animation: anniv-motion-flare 5.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes anniv-motion-flare {
+    0%, 65% { opacity: 0; width: 0; height: 0; margin-top: 0; margin-left: 0; }
+    68% { opacity: 1; width: 260px; height: 260px; margin-top: -130px; margin-left: -130px; }
+    76% { opacity: 0.15; width: 310px; height: 310px; margin-top: -155px; margin-left: -155px; }
+    84%, 100% { opacity: 0; width: 340px; height: 340px; margin-top: -170px; margin-left: -170px; }
+}
+
+/* Central Grand Numeral 5 Container */
+.anniv-motion__numeral-wrap {
     position: relative;
-    z-index: 1;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transform: scale(0.75);
+    transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.is-settled .anniv-motion__numeral-wrap {
+    opacity: 1;
+    transform: scale(1);
+    animation: anniv-cinematic-breathe 4s ease-in-out infinite;
+}
+
+.is-animating .anniv-motion__numeral-wrap {
+    animation: anniv-numeral-reveal 5.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes anniv-numeral-reveal {
+    0%, 66% { opacity: 0; transform: scale(0.6); }
+    72% { opacity: 1; transform: scale(1.08); }
+    80%, 100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes anniv-cinematic-breathe {
+    0%, 100% { transform: scale(1); filter: drop-shadow(0 0 12px rgba(56, 189, 248, 0.7)); }
+    50% { transform: scale(1.02); filter: drop-shadow(0 0 20px rgba(56, 189, 248, 0.95)); }
+}
+
+/* SVG Paths */
+.anniv-motion__num-svg {
     overflow: visible;
 }
 
-.anniv-hero-card__path-bg {
-    stroke: rgba(56, 189, 248, 0.12);
+.anniv-motion__path-bg {
+    stroke: rgba(56, 189, 248, 0.14);
     stroke-width: 5;
     fill: none;
 }
 
-.anniv-hero-card__path-fill {
-    fill: url(#hero5BloomGrad);
+.anniv-motion__path-fill {
+    fill: url(#cinematic5BloomGrad);
 }
 
-.anniv-hero-card__path-trace {
+.anniv-motion__path-trace {
     fill: none;
-    stroke: url(#hero5TraceGrad);
-    stroke-width: 5.2;
+    stroke: url(#cinematic5TraceGrad);
+    stroke-width: 5.5;
     stroke-linecap: round;
     stroke-linejoin: round;
-    filter: drop-shadow(0 0 10px rgba(56, 189, 248, 0.85));
+    filter: drop-shadow(0 0 14px rgba(56, 189, 248, 0.9));
 }
 
-/* Card Content */
-.anniv-hero-card__badge-row {
+.anniv-motion__specular-flare {
+    animation: anniv-flare-pulse 3s ease-in-out infinite;
+}
+
+@keyframes anniv-flare-pulse {
+    0%, 100% { r: 3.4; opacity: 1; }
+    50% { r: 4.2; opacity: 0.85; }
+}
+
+/* Content Hierarchy & Reveal */
+.anniv-motion__content {
+    position: relative;
+    z-index: 2;
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.is-settled .anniv-motion__content {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.is-animating .anniv-motion__content {
+    animation: anniv-content-stagger 5.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes anniv-content-stagger {
+    0%, 75% { opacity: 0; transform: translateY(14px); }
+    86%, 100% { opacity: 1; transform: translateY(0); }
+}
+
+.anniv-motion__badge-row {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
 }
 
-.anniv-hero-card__kicker {
+.anniv-motion__kicker {
     font-size: 11px;
     font-weight: 800;
-    letter-spacing: 0.3em;
+    letter-spacing: 0.32em;
     text-transform: uppercase;
     color: #38bdf8;
     background: rgba(56, 189, 248, 0.12);
-    padding: 3px 10px;
+    padding: 3px 12px;
     border-radius: 999px;
-    border: 1px solid rgba(56, 189, 248, 0.28);
+    border: 1px solid rgba(56, 189, 248, 0.3);
 }
 
-.anniv-hero-card__years {
+.anniv-motion__years {
     font-size: 11px;
     font-weight: 600;
     color: #94a3b8;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.08em;
 }
 
-.anniv-hero-card__sublabel {
+.anniv-motion__sublabel {
     font-size: 11px;
     font-weight: 700;
     letter-spacing: 0.22em;
@@ -1108,15 +1344,15 @@ body.anniv-intro-playing {
     margin: 0 0 6px;
 }
 
-.anniv-hero-card__headline {
-    font-size: clamp(1.2rem, 2vw, 1.4rem);
+.anniv-motion__headline {
+    font-size: clamp(1.2rem, 2vw, 1.45rem);
     font-weight: 700;
     color: #ffffff;
-    margin: 0 0 8px;
+    margin: 0 0 6px;
     line-height: 1.3;
 }
 
-.anniv-hero-card__tagline {
+.anniv-motion__tagline {
     font-size: 0.88rem;
     color: #94a3b8;
     line-height: 1.55;
@@ -1124,7 +1360,7 @@ body.anniv-intro-playing {
     max-width: 360px;
 }
 
-.anniv-hero-card__actions {
+.anniv-motion__actions {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1132,11 +1368,11 @@ body.anniv-intro-playing {
     flex-wrap: wrap;
 }
 
-.anniv-hero-card__cta {
+.anniv-motion__cta {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    padding: 9px 18px;
+    padding: 10px 20px;
     border-radius: 999px;
     background: linear-gradient(135deg, #2563eb, #0284c7);
     color: #ffffff !important;
@@ -1147,21 +1383,21 @@ body.anniv-intro-playing {
     transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
-.anniv-hero-card__cta i {
+.anniv-motion__cta i {
     transition: transform 0.25s ease;
 }
 
-.anniv-hero-card__cta:hover {
+.anniv-motion__cta:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(6, 182, 212, 0.5);
+    box-shadow: 0 6px 22px rgba(6, 182, 212, 0.55);
     color: #ffffff !important;
 }
 
-.anniv-hero-card__cta:hover i {
+.anniv-motion__cta:hover i {
     transform: translateY(3px);
 }
 
-.anniv-hero-card__badge-trigger {
+.anniv-motion__overview-trigger {
     display: inline-flex;
     align-items: center;
     padding: 9px 14px;
@@ -1175,80 +1411,78 @@ body.anniv-intro-playing {
     transition: background 0.2s ease, border-color 0.2s ease;
 }
 
-.anniv-hero-card__badge-trigger:hover {
+.anniv-motion__overview-trigger:hover {
     background: rgba(56, 189, 248, 0.15);
     border-color: rgba(56, 189, 248, 0.5);
 }
 
-/* Tablet & Mobile Hero Card Adaptation */
-@media (min-width: 992px) {
-    .anniv-hero-card {
-        margin-top: 8px;
-    }
-}
-
+/* Tablet & Mobile Motion Stage Adaptation */
 @media (max-width: 991.98px) {
-    .anniv-hero-card {
-        max-width: 460px;
-        margin: 24px auto 0;
-        padding: 24px 20px;
+    .anniv-hero-motion {
+        max-width: 440px;
+        margin: 20px auto 0;
+        padding: 20px 16px;
     }
-    .anniv-hero-card__stage {
-        width: 110px;
-        height: 110px;
-        margin-bottom: 12px;
+    .anniv-motion-stage {
+        width: 230px;
+        height: 230px;
     }
-    .anniv-hero-card__ring--inner {
-        inset: 10px;
+    .anniv-motion__ring--outer { inset: 12px; }
+    .anniv-motion__ring--middle { inset: 36px; }
+    .anniv-motion__ring--inner { inset: 60px; }
+    .anniv-motion__tracer {
+        top: 10px;
+        transform-origin: 3px 105px;
     }
-    .anniv-hero-card__num-svg {
-        transform: scale(0.88);
+    .anniv-motion__num-svg {
+        transform: scale(0.85);
     }
 }
 
 @media (max-width: 576px) {
-    .anniv-hero-card {
-        max-width: 350px;
-        padding: 16px 16px 18px;
-        border-radius: 18px;
-        margin-top: 18px;
+    .anniv-hero-motion {
+        max-width: 340px;
+        margin: 16px auto 0;
+        padding: 16px 14px;
     }
-    .anniv-hero-card__stage {
-        width: 86px;
-        height: 86px;
+    .anniv-motion-stage {
+        width: 180px;
+        height: 180px;
         margin-bottom: 8px;
     }
-    .anniv-hero-card__ring--inner {
-        inset: 8px;
+    .anniv-motion__ticks { display: none; }
+    .anniv-motion__ring--outer { inset: 8px; }
+    .anniv-motion__ring--middle { inset: 26px; }
+    .anniv-motion__ring--inner { inset: 46px; }
+    .anniv-motion__tracer {
+        top: 6px;
+        transform-origin: 3px 84px;
     }
-    .anniv-hero-card__num-svg {
+    .anniv-motion__num-svg {
         transform: scale(0.72);
     }
-    .anniv-hero-card__sublabel {
+    .anniv-motion__sublabel {
         font-size: 10px;
         letter-spacing: 0.16em;
-        margin-bottom: 4px;
     }
-    .anniv-hero-card__headline {
-        font-size: 1.08rem;
-        margin-bottom: 4px;
+    .anniv-motion__headline {
+        font-size: 1.1rem;
     }
-    .anniv-hero-card__tagline {
+    .anniv-motion__tagline {
         font-size: 0.8rem;
-        margin-bottom: 12px;
-        line-height: 1.45;
+        margin-bottom: 14px;
     }
-    .anniv-hero-card__actions {
+    .anniv-motion__actions {
         flex-direction: row;
         gap: 6px;
     }
-    .anniv-hero-card__cta {
+    .anniv-motion__cta {
         padding: 8px 14px;
         font-size: 12px;
         flex: 1 1 auto;
         justify-content: center;
     }
-    .anniv-hero-card__badge-trigger {
+    .anniv-motion__overview-trigger {
         padding: 8px 12px;
         font-size: 11px;
     }
@@ -1260,12 +1494,13 @@ body.anniv-intro-playing {
 .anniv-news-card {
     position: relative;
     margin: 10px 0 26px;
-    padding: 20px 24px;
-    background: linear-gradient(135deg, rgba(8, 20, 48, 0.95) 0%, rgba(15, 28, 54, 0.92) 100%);
-    border: 1px solid rgba(56, 189, 248, 0.26);
-    border-radius: 18px;
-    box-shadow: 0 10px 30px rgba(2, 6, 23, 0.22),
-                inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    padding: 22px 26px;
+    background: linear-gradient(135deg, rgba(8, 20, 48, 0.96) 0%, rgba(15, 28, 56, 0.94) 100%);
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    border-radius: 20px;
+    box-shadow: 0 12px 35px rgba(2, 6, 23, 0.28),
+                inset 0 1px 0 rgba(255, 255, 255, 0.12),
+                inset 0 0 20px rgba(56, 189, 248, 0.05);
     overflow: hidden;
     color: #ffffff;
     transition: transform 0.25s ease, border-color 0.25s ease;
@@ -1273,18 +1508,30 @@ body.anniv-intro-playing {
 
 .anniv-news-card:hover {
     transform: translateY(-2px);
-    border-color: rgba(56, 189, 248, 0.45);
-    box-shadow: 0 14px 35px rgba(2, 6, 23, 0.3), 0 0 25px rgba(56, 189, 248, 0.12);
+    border-color: rgba(56, 189, 248, 0.5);
+    box-shadow: 0 16px 40px rgba(2, 6, 23, 0.35), 0 0 25px rgba(56, 189, 248, 0.15);
 }
 
 .anniv-news-card__glow {
     position: absolute;
     top: -40px;
     left: -40px;
-    width: 160px;
-    height: 160px;
+    width: 170px;
+    height: 170px;
     background: radial-gradient(circle, rgba(56, 189, 248, 0.25) 0%, transparent 70%);
     border-radius: 50%;
+    pointer-events: none;
+}
+
+.anniv-news-card__sheen {
+    position: absolute;
+    top: 0;
+    left: -120%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+    transform: skewX(-20deg);
+    animation: anniv-badge-sheen 8s ease-in-out infinite;
     pointer-events: none;
 }
 
@@ -1293,37 +1540,70 @@ body.anniv-intro-playing {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 20px;
+    gap: 22px;
     flex-wrap: wrap;
     z-index: 1;
 }
 
-.anniv-news-card__emblem-wrap {
+/* Distinct Circular Orbital 5 Emblem with Sequential Year Markers */
+.anniv-news-card__emblem-stage {
     position: relative;
-    width: 52px;
-    height: 52px;
+    width: 58px;
+    height: 58px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 60%, #06b6d4 100%);
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    box-shadow: 0 0 16px rgba(6, 182, 212, 0.4);
 }
 
-.anniv-news-card__emblem-orbit {
+.anniv-news-card__orbit-ring {
     position: absolute;
-    inset: -4px;
-    border: 1px dashed rgba(56, 189, 248, 0.5);
+    inset: -3px;
+    border: 1px dashed rgba(56, 189, 248, 0.45);
     border-radius: 50%;
-    animation: anniv-orbit-spin 24s linear infinite;
+    animation: anniv-orbit-spin 26s linear infinite;
+}
+
+.anniv-news-card__dot-year {
+    position: absolute;
+    font-size: 7px;
+    font-weight: 800;
+    color: #38bdf8;
+    line-height: 1;
+}
+
+.anniv-news-card__dot-year--1 { top: -6px; left: 50%; transform: translateX(-50%); }
+.anniv-news-card__dot-year--2 { top: 12px; right: -8px; }
+.anniv-news-card__dot-year--3 { bottom: 2px; right: -4px; }
+.anniv-news-card__dot-year--4 { bottom: 2px; left: -4px; }
+.anniv-news-card__dot-year--5 { top: 12px; left: -8px; }
+
+.anniv-news-card__emblem-core {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 60%, #06b6d4 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 16px rgba(6, 182, 212, 0.45);
 }
 
 .anniv-news-card__emblem-num {
-    font-size: 26px;
+    font-size: 20px;
     font-weight: 800;
     color: #ffffff;
     line-height: 1;
+}
+
+.anniv-news-card__emblem-unit {
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: #38bdf8;
+    margin-top: -1px;
 }
 
 .anniv-news-card__text {
@@ -1336,13 +1616,13 @@ body.anniv-intro-playing {
     gap: 6px;
     font-size: 11px;
     text-transform: uppercase;
-    letter-spacing: 0.12em;
+    letter-spacing: 0.14em;
     color: #38bdf8;
     font-weight: 700;
     margin-bottom: 4px;
 }
 
-.anniv-news-card__dot {
+.anniv-news-card__sep {
     opacity: 0.5;
 }
 
@@ -1351,7 +1631,7 @@ body.anniv-intro-playing {
 }
 
 .anniv-news-card__title {
-    font-size: 1.15rem;
+    font-size: 1.18rem;
     font-weight: 700;
     color: #ffffff;
     margin: 0 0 4px;
@@ -1373,7 +1653,7 @@ body.anniv-intro-playing {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    padding: 8px 18px;
+    padding: 9px 20px;
     border-radius: 999px;
     background: rgba(56, 189, 248, 0.12);
     border: 1px solid rgba(56, 189, 248, 0.35);
@@ -1384,12 +1664,20 @@ body.anniv-intro-playing {
     transition: all 0.25s ease;
 }
 
+.anniv-news-card__cta i {
+    transition: transform 0.25s ease;
+}
+
 .anniv-news-card__cta:hover {
     background: linear-gradient(135deg, #2563eb, #0284c7);
     border-color: transparent;
     color: #ffffff !important;
     transform: translateX(3px);
     box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4);
+}
+
+.anniv-news-card__cta:hover i {
+    transform: translateX(3px);
 }
 
 @media (max-width: 767.98px) {
@@ -1567,17 +1855,29 @@ body.anniv-intro-playing {
     .anniv-badge__sheen,
     .anniv-modal__emblem-rings,
     .anniv-intro,
-    .anniv-hero-card__ring,
-    .anniv-hero-card__orbit-node,
-    .anniv-news-card__emblem-orbit {
+    .anniv-motion__ring,
+    .anniv-motion__tracer,
+    .anniv-motion__burst,
+    .anniv-motion__node,
+    .anniv-motion__numeral-wrap,
+    .anniv-motion__content,
+    .anniv-news-card__sheen,
+    .anniv-news-card__orbit-ring {
         animation: none !important;
     }
-    .anniv-intro {
+    .anniv-intro,
+    .anniv-motion__burst,
+    .anniv-motion__nodes {
         display: none !important;
+    }
+    .anniv-motion__numeral-wrap,
+    .anniv-motion__content {
+        opacity: 1 !important;
+        transform: none !important;
     }
     .anniv-badge:hover,
     .anniv-counter-card:hover,
-    .anniv-hero-card:hover,
+    .anniv-hero-motion:hover,
     .anniv-news-card:hover,
     .anniv-about-feature:hover {
         transform: none !important;
