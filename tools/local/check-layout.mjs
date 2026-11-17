@@ -126,6 +126,9 @@ async function contextFor(z, touch) {
     if (!contexts.has(key)) {
         const ctx = await browser.newContext({ viewport: { width: 800, height: 600 }, deviceScaleFactor: z, isMobile: touch, hasTouch: touch });
         await ctx.route(/tawk\.to/, r => r.abort());
+        // Videos are sized by CSS and cannot change the layout; skipping them keeps
+        // the single-threaded local server fast. (The speed check does load them.)
+        await ctx.route(/\.(mp4|webm)(\?|$)/i, r => r.abort());
         if (!touch) await ctx.addInitScript(css => { document.addEventListener('DOMContentLoaded', () => { const s = document.createElement('style'); s.textContent = css; document.head.appendChild(s); }); }, SCROLLBAR_CSS);
         contexts.set(key, { ctx, page: await ctx.newPage() });
     }
