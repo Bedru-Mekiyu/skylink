@@ -1684,35 +1684,38 @@ body.anniv-intro-playing {
 }
 
 .is-animating .anniv-circ__ignite-core {
-    animation: anniv-ignite-core 6.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation: anniv-ignite-core 9.6s cubic-bezier(0.16, 1, 0.3, 1) infinite;
 }
 
 .is-animating .anniv-circ__pulse-ring {
-    animation: anniv-ignite-pulse 6.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation: anniv-ignite-pulse 9.6s cubic-bezier(0.16, 1, 0.3, 1) infinite;
 }
 
 .is-animating .anniv-circ__perimeter {
-    animation: anniv-ignite-perimeter 6.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation: anniv-ignite-perimeter 9.6s cubic-bezier(0.16, 1, 0.3, 1) infinite;
 }
 
 @keyframes anniv-ignite-core {
     0% { opacity: 0; transform: scale(0.2); }
-    4%, 12% { opacity: 1; transform: scale(1.4); }
-    18% { opacity: 0.7; transform: scale(1); }
-    32% { opacity: 0; transform: scale(0.4); }
+    2.5%, 8% { opacity: 1; transform: scale(1.4); }
+    12% { opacity: 0.7; transform: scale(1); }
+    16% { opacity: 0; transform: scale(0.4); }
     100% { opacity: 0; transform: scale(0); }
 }
 
 @keyframes anniv-ignite-pulse {
-    0%, 2% { opacity: 0; transform: scale(0.5); }
-    8% { opacity: 0.9; transform: scale(2.2); }
-    16% { opacity: 0; transform: scale(4); }
+    0%, 1% { opacity: 0; transform: scale(0.5); }
+    5% { opacity: 0.9; transform: scale(2.2); }
+    11% { opacity: 0; transform: scale(4); }
     100% { opacity: 0; transform: scale(4); }
 }
 
 @keyframes anniv-ignite-perimeter {
-    0%, 4% { opacity: 0; transform: scale(0.92); }
-    14%, 100% { opacity: 1; transform: scale(1); }
+    0%, 2% { opacity: 0.2; transform: scale(0.92); }
+    8% { opacity: 1; transform: scale(1); }
+    90% { opacity: 1; transform: scale(1); }
+    96% { opacity: 0.4; transform: scale(0.96); }
+    100% { opacity: 0.2; transform: scale(0.92); }
 }
 
 /* Phase 02: Three Concentric Orbital Rings */
@@ -1828,47 +1831,47 @@ body.anniv-intro-playing {
 }
 
 .is-animating .anniv-circ__seq-num--1 {
-    animation: anniv-seq-step1 6.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation: anniv-seq-step1 9.6s cubic-bezier(0.16, 1, 0.3, 1) infinite;
 }
 
 .is-animating .anniv-circ__seq-num--2 {
-    animation: anniv-seq-step2 6.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation: anniv-seq-step2 9.6s cubic-bezier(0.16, 1, 0.3, 1) infinite;
 }
 
 .is-animating .anniv-circ__seq-num--3 {
-    animation: anniv-seq-step3 6.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation: anniv-seq-step3 9.6s cubic-bezier(0.16, 1, 0.3, 1) infinite;
 }
 
 .is-animating .anniv-circ__seq-num--4 {
-    animation: anniv-seq-step4 6.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation: anniv-seq-step4 9.6s cubic-bezier(0.16, 1, 0.3, 1) infinite;
 }
 
 @keyframes anniv-seq-step1 {
-    0%, 31% { opacity: 0; transform: scale(0.3) rotate(-20deg); }
-    33% { opacity: 1; transform: scale(1.15) rotate(0deg); }
-    38% { opacity: 0.95; transform: scale(1) rotate(5deg); }
-    40%, 100% { opacity: 0; transform: scale(0.6) translateY(-25px); }
+    0%, 19.5% { opacity: 0; transform: scale(0.3) rotate(-20deg); }
+    21.5% { opacity: 1; transform: scale(1.15) rotate(0deg); }
+    24.5% { opacity: 0.95; transform: scale(1) rotate(5deg); }
+    26.5%, 100% { opacity: 0; transform: scale(0.6) translateY(-25px); }
 }
 
 @keyframes anniv-seq-step2 {
-    0%, 39% { opacity: 0; transform: scale(0.3) rotate(-20deg); }
-    41% { opacity: 1; transform: scale(1.15) rotate(0deg); }
-    46% { opacity: 0.95; transform: scale(1) rotate(5deg); }
-    48%, 100% { opacity: 0; transform: scale(0.6) translateY(-25px); }
+    0%, 25.5% { opacity: 0; transform: scale(0.3) rotate(-20deg); }
+    27.5% { opacity: 1; transform: scale(1.15) rotate(0deg); }
+    30.5% { opacity: 0.95; transform: scale(1) rotate(5deg); }
+    32.5%, 100% { opacity: 0; transform: scale(0.6) translateY(-25px); }
 }
 
 @keyframes anniv-seq-step3 {
-    0%, 47% { opacity: 0; transform: scale(0.3) rotate(-20deg); }
-    49% { opacity: 1; transform: scale(1.15) rotate(0deg); }
-    53% { opacity: 0.95; transform: scale(1) rotate(5deg); }
-    55%, 100% { opacity: 0; transform: scale(0.6) translateY(-25px); }
+    0%, 31.5% { opacity: 0; transform: scale(0.3) rotate(-20deg); }
+    33.5% { opacity: 1; transform: scale(1.15) rotate(0deg); }
+    36.5% { opacity: 0.95; transform: scale(1) rotate(5deg); }
+    38.5%, 100% { opacity: 0; transform: scale(0.6) translateY(-25px); }
 }
 
 @keyframes anniv-seq-step4 {
-    0%, 54% { opacity: 0; transform: scale(0.3) rotate(-20deg); }
-    56% { opacity: 1; transform: scale(1.18) rotate(0deg); }
-    60% { opacity: 0.95; transform: scale(1) rotate(5deg); }
-    62%, 100% { opacity: 0; transform: scale(0.5) translateY(-30px); }
+    0%, 37.5% { opacity: 0; transform: scale(0.3) rotate(-20deg); }
+    39.5% { opacity: 1; transform: scale(1.18) rotate(0deg); }
+    42.5% { opacity: 0.95; transform: scale(1) rotate(5deg); }
+    45%, 100% { opacity: 0; transform: scale(0.5) translateY(-30px); }
 }
 
 /* Phase 04: Final Convergence Energy Core */
@@ -1888,13 +1891,13 @@ body.anniv-intro-playing {
 }
 
 .is-animating .anniv-circ__converge-core {
-    animation: anniv-converge 6.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation: anniv-converge 9.6s cubic-bezier(0.16, 1, 0.3, 1) infinite;
 }
 
 @keyframes anniv-converge {
-    0%, 61% { opacity: 0; transform: scale(0.2); }
-    65% { opacity: 1; transform: scale(1.8); filter: brightness(1.6); }
-    70%, 100% { opacity: 0; transform: scale(0.1); }
+    0%, 43% { opacity: 0; transform: scale(0.2); }
+    47% { opacity: 1; transform: scale(1.8); filter: brightness(1.6); }
+    51.5%, 100% { opacity: 0; transform: scale(0.1); }
 }
 
 /* Phase 05: Grand Numeral 5 Reveal */
@@ -1939,13 +1942,17 @@ body.anniv-intro-playing {
 }
 
 .is-animating .anniv-circ__numeral-wrap {
-    animation: anniv-numeral5-reveal 6.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation: anniv-numeral5-reveal 9.6s cubic-bezier(0.16, 1, 0.3, 1) infinite;
 }
 
 @keyframes anniv-numeral5-reveal {
-    0%, 69% { opacity: 0; transform: scale(0.4); }
-    74% { opacity: 1; transform: scale(1.12); filter: drop-shadow(0 0 30px var(--anniv-cyan)); }
-    82%, 100% { opacity: 1; transform: scale(1); }
+    0%, 49% { opacity: 0; transform: scale(0.4); }
+    53.5% { opacity: 1; transform: scale(1.14); filter: drop-shadow(0 0 32px var(--anniv-cyan)); }
+    57% { opacity: 1; transform: scale(1); filter: drop-shadow(0 0 16px var(--anniv-cyan)); }
+    62% { opacity: 1; transform: scale(1.05); filter: drop-shadow(0 0 28px var(--anniv-cyan)); }
+    68%, 88% { opacity: 1; transform: scale(1); filter: drop-shadow(0 0 14px var(--anniv-cyan)); }
+    94% { opacity: 0.5; transform: scale(0.96); filter: drop-shadow(0 0 8px var(--anniv-cyan)); }
+    98.5%, 100% { opacity: 0; transform: scale(0.85); filter: none; }
 }
 
 /* Phase 06: Controlled Multi-Color Celebration Energy Burst */
@@ -1970,24 +1977,24 @@ body.anniv-intro-playing {
 }
 
 .is-animating .anniv-circ__burst-wave--cyan {
-    animation: anniv-burst-cyan 6.2s cubic-bezier(0.08, 0.9, 0.2, 1) forwards;
+    animation: anniv-burst-cyan 9.6s cubic-bezier(0.08, 0.9, 0.2, 1) infinite;
 }
 
 .is-animating .anniv-circ__burst-wave--blue {
-    animation: anniv-burst-blue 6.2s cubic-bezier(0.08, 0.9, 0.2, 1) forwards;
+    animation: anniv-burst-blue 9.6s cubic-bezier(0.08, 0.9, 0.2, 1) infinite;
 }
 
 @keyframes anniv-burst-cyan {
-    0%, 72% { opacity: 0; width: 0; height: 0; margin-top: 0; margin-left: 0; }
-    74.5% { opacity: 1; width: 220px; height: 220px; margin-top: -110px; margin-left: -110px; }
-    80% { opacity: 0.25; width: 310px; height: 310px; margin-top: -155px; margin-left: -155px; }
-    88%, 100% { opacity: 0; width: 330px; height: 330px; margin-top: -165px; margin-left: -165px; }
+    0%, 58% { opacity: 0; width: 0; height: 0; margin-top: 0; margin-left: 0; }
+    60.5% { opacity: 1; width: 220px; height: 220px; margin-top: -110px; margin-left: -110px; }
+    65.5% { opacity: 0.25; width: 310px; height: 310px; margin-top: -155px; margin-left: -155px; }
+    72%, 100% { opacity: 0; width: 330px; height: 330px; margin-top: -165px; margin-left: -165px; }
 }
 
 @keyframes anniv-burst-blue {
-    0%, 73% { opacity: 0; width: 0; height: 0; margin-top: 0; margin-left: 0; }
-    76% { opacity: 0.9; width: 260px; height: 260px; margin-top: -130px; margin-left: -130px; }
-    84%, 100% { opacity: 0; width: 320px; height: 320px; margin-top: -160px; margin-left: -160px; }
+    0%, 59% { opacity: 0; width: 0; height: 0; margin-top: 0; margin-left: 0; }
+    61.5% { opacity: 0.9; width: 260px; height: 260px; margin-top: -130px; margin-left: -130px; }
+    68%, 100% { opacity: 0; width: 320px; height: 320px; margin-top: -160px; margin-left: -160px; }
 }
 
 /* 8 Radial Spark Rays (Violet & Magenta) */
@@ -2022,13 +2029,13 @@ body.anniv-intro-playing {
 .anniv-circ__ray--8 { transform: rotate(315deg) translateY(-85px); }
 
 .is-animating .anniv-circ__ray {
-    animation: anniv-ray-burst 6.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation: anniv-ray-burst 9.6s cubic-bezier(0.16, 1, 0.3, 1) infinite;
 }
 
 @keyframes anniv-ray-burst {
-    0%, 73% { opacity: 0; height: 0; }
-    75.5% { opacity: 1; height: 45px; filter: drop-shadow(0 0 10px var(--anniv-magenta)); }
-    83%, 100% { opacity: 0; height: 60px; transform-origin: center 120px; }
+    0%, 59.5% { opacity: 0; height: 0; }
+    61.5% { opacity: 1; height: 45px; filter: drop-shadow(0 0 10px var(--anniv-magenta)); }
+    67.5%, 100% { opacity: 0; height: 60px; transform-origin: center 120px; }
 }
 
 /* Gold celebratory embers */
@@ -2057,13 +2064,13 @@ body.anniv-intro-playing {
 .anniv-circ__ember--6 { top: 50%; right: 18%; }
 
 .is-animating .anniv-circ__ember {
-    animation: anniv-ember-burst 6.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation: anniv-ember-burst 9.6s cubic-bezier(0.16, 1, 0.3, 1) infinite;
 }
 
 @keyframes anniv-ember-burst {
-    0%, 73% { opacity: 0; transform: scale(0.2); }
-    76% { opacity: 1; transform: scale(1.4); }
-    86%, 100% { opacity: 0; transform: scale(0.4) translateY(-14px); }
+    0%, 59.5% { opacity: 0; transform: scale(0.2); }
+    62% { opacity: 1; transform: scale(1.4); }
+    70%, 100% { opacity: 0; transform: scale(0.4) translateY(-14px); }
 }
 
 /* Phase 07: Settled Resting State */
@@ -2111,12 +2118,14 @@ body.anniv-intro-playing {
 }
 
 .is-animating .anniv-circ__label-box {
-    animation: anniv-label-reveal 6.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation: anniv-label-reveal 9.6s cubic-bezier(0.16, 1, 0.3, 1) infinite;
 }
 
 @keyframes anniv-label-reveal {
-    0%, 82% { opacity: 0; transform: translateY(10px); }
-    88%, 100% { opacity: 1; transform: translateY(0); }
+    0%, 65% { opacity: 0; transform: translateY(10px); }
+    70%, 88% { opacity: 1; transform: translateY(0); }
+    94% { opacity: 0.5; transform: translateY(4px); }
+    98.5%, 100% { opacity: 0; transform: translateY(8px); }
 }
 
 .anniv-circ__kicker {
@@ -2456,8 +2465,57 @@ body.anniv-intro-playing {
 }
 
 /* ==========================================================================
-   7. ABOUT PAGE JOURNEY ANNIVERSARY CULMINATION
+   7. ABOUT PAGE JOURNEY ANNIVERSARY CULMINATION (FULL CIRCULAR SHOWCASE)
    ========================================================================== */
+.anniv-about-showcase {
+    position: relative;
+    max-width: 920px;
+    margin: 50px auto 0;
+    padding: 40px 24px;
+    background: radial-gradient(circle at 50% 25%, rgba(26, 42, 86, 0.75) 0%, rgba(16, 26, 53, 0.95) 65%, #0d1527 100%);
+    border-radius: 24px;
+    border: 1px solid rgba(34, 211, 238, 0.35);
+    box-shadow: 0 20px 50px rgba(10, 16, 32, 0.6), inset 0 0 40px rgba(34, 211, 238, 0.08);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+}
+
+.anniv-about-showcase__badge-strip {
+    margin-bottom: 24px;
+}
+
+.anniv-about-showcase__pill {
+    display: inline-block;
+    padding: 6px 18px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--anniv-cyan);
+    background: rgba(34, 211, 238, 0.12);
+    border: 1px solid rgba(34, 211, 238, 0.4);
+    border-radius: 999px;
+    box-shadow: 0 0 16px rgba(34, 211, 238, 0.2);
+}
+
+.anniv-about-showcase__centerpiece {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+@media (max-width: 768px) {
+    .anniv-about-showcase {
+        margin: 35px auto 0;
+        padding: 30px 16px;
+        border-radius: 18px;
+    }
+}
+
 .anniv-about-feature {
     position: relative;
     max-width: 820px;

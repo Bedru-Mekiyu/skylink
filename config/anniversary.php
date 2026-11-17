@@ -24,20 +24,20 @@ return [
     // Shown as "Since <year>" when set.
     'founded' => null,
 
-    // Professional Corporate Copy.
+    // Ceremony-Focused Campaign Copy.
     // Each text: 'en' and 'am'; leave one null to show only the other.
     'text' => [
         'headline' => [
-            'en' => 'Five Years of Practical Technology Solutions',
-            'am' => 'አምስት ዓመታት በምህንድስና እና ቴክኖሎጂ',
+            'en' => 'Celebrating Five Years of Sky Link ICT Solutions',
+            'am' => 'የስካይ ሊንክ አይሲቲ ሶሉሽንስ 5ኛ ዓመት የምሥረታ በዓል',
         ],
         'tagline' => [
-            'en' => 'Five years of engineering solutions, advancing technology, and building for what comes next.',
-            'am' => 'አምስት ዓመታት የምህንድስና መፍትሄዎች፣ የቴክኖሎጂ እድገት እና የቀጣዩ ጉዞ ግንባታ።',
+            'en' => 'Join us as we commemorate five years of dedication, progress, and meaningful contributions to the technology industry. We look forward to celebrating this milestone with our team, clients, partners, and community.',
+            'am' => 'በቴክኖሎጂው ዘርፍ ላለፉት አምስት ዓመታት ያሳየነውን ቁርጠኝነት፣ ዕድገት እና አስተዋጽኦ ስናከብር አብረውን ይሁኑ። ይህንን ትልቅ ምዕራፍ ከቡድናችን፣ ደንበኞቻችን፣ አጋሮቻችን እና ማህበረሰባችን ጋር በጋራ ለማክበር በጉጉት እንጠብቃለን።',
         ],
         'thanks' => [
-            'en' => 'Thank you for five years of technology partnership and trust.',
-            'am' => 'ለአምስት ዓመታት ላሳያችሁን የቴክኖሎጂ አጋርነት እና አመኔታ እናመሰግናለን።',
+            'en' => 'Thank you for five years of dedication, partnership, and shared progress.',
+            'am' => 'ላለፉት አምስት ዓመታት አብረውን ለተጓዙ ደንበኞቻችን፣ አጋሮቻችን እና መላው ቡድናችን የከበረ ምስጋና እናቀርባለን።',
         ],
         // Button under the homepage section; opens the quote form on /services.
         'cta' => [

@@ -475,10 +475,6 @@
                     <a href="{{ route('home') }}" class="navbar-home-link d-flex align-items-center text-decoration-none" aria-label="Sky Link ICT Solutions - Home">
                         <img src="{{ asset('assets/images/skylink-logo.svg') }}" alt="" class="logo-img me-2">
                     </a>
-
-                    @if (\App\Support\Anniversary::isActive())
-                        @include('partials.anniversary.badge')
-                    @endif
                 </div>
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">

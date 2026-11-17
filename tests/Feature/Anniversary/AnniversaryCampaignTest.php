@@ -117,14 +117,14 @@ class AnniversaryCampaignTest extends TestCase
 
     public function test_amharic_and_english_texts_resolve_correctly(): void
     {
-        $this->assertSame('Five Years of Practical Technology Solutions', Anniversary::headline('en'));
-        $this->assertSame('አምስት ዓመታት በምህንድስና እና ቴክኖሎጂ', Anniversary::headline('am'));
+        $this->assertSame('Celebrating Five Years of Sky Link ICT Solutions', Anniversary::headline('en'));
+        $this->assertSame('የስካይ ሊንክ አይሲቲ ሶሉሽንስ 5ኛ ዓመት የምሥረታ በዓል', Anniversary::headline('am'));
 
-        $this->assertSame('Five years of engineering solutions, advancing technology, and building for what comes next.', Anniversary::tagline('en'));
-        $this->assertSame('አምስት ዓመታት የምህንድስና መፍትሄዎች፣ የቴክኖሎጂ እድገት እና የቀጣዩ ጉዞ ግንባታ።', Anniversary::tagline('am'));
+        $this->assertSame('Join us as we commemorate five years of dedication, progress, and meaningful contributions to the technology industry. We look forward to celebrating this milestone with our team, clients, partners, and community.', Anniversary::tagline('en'));
+        $this->assertSame('በቴክኖሎጂው ዘርፍ ላለፉት አምስት ዓመታት ያሳየነውን ቁርጠኝነት፣ ዕድገት እና አስተዋጽኦ ስናከብር አብረውን ይሁኑ። ይህንን ትልቅ ምዕራፍ ከቡድናችን፣ ደንበኞቻችን፣ አጋሮቻችን እና ማህበረሰባችን ጋር በጋራ ለማክበር በጉጉት እንጠብቃለን።', Anniversary::tagline('am'));
 
-        $this->assertSame('Thank you for five years of technology partnership and trust.', Anniversary::thanks('en'));
-        $this->assertSame('ለአምስት ዓመታት ላሳያችሁን የቴክኖሎጂ አጋርነት እና አመኔታ እናመሰግናለን።', Anniversary::thanks('am'));
+        $this->assertSame('Thank you for five years of dedication, partnership, and shared progress.', Anniversary::thanks('en'));
+        $this->assertSame('ላለፉት አምስት ዓመታት አብረውን ለተጓዙ ደንበኞቻችን፣ አጋሮቻችን እና መላው ቡድናችን የከበረ ምስጋና እናቀርባለን።', Anniversary::thanks('am'));
     }
 
     public function test_milestone_and_counter_filtering_skips_invalid_entries(): void
@@ -159,18 +159,14 @@ class AnniversaryCampaignTest extends TestCase
     /**
      * @dataProvider publicPages
      */
-    public function test_badge_appears_exactly_once_on_every_public_page_when_active(string $uri): void
+    public function test_navbar_has_no_anniversary_promotional_button_when_active(string $uri): void
     {
         Config::set('anniversary.force', true);
         Config::set('app.debug', true);
 
         $html = $this->get($uri)->assertOk()->getContent();
 
-        $count = preg_match_all('/id="annivBadgeBtn"/i', $html);
-        $this->assertSame(1, $count, "The anniversary badge should appear exactly once on {$uri}.");
-
-        $modalCount = preg_match_all('/id="annivCelebrationModal"/i', $html);
-        $this->assertSame(1, $modalCount, "The celebration modal should be rendered on {$uri}.");
+        $this->assertStringNotContainsString('id="annivBadgeBtn"', $html, "The navbar on {$uri} should not contain any anniversary promotional button.");
     }
 
     /**
@@ -223,8 +219,8 @@ class AnniversaryCampaignTest extends TestCase
         $html = $this->get('/')->assertOk()->getContent();
 
         $this->assertStringContainsString('id="anniversary-story"', $html);
-        $this->assertStringContainsString('Five Years of Practical Technology Solutions', $html);
-        $this->assertStringContainsString('Five years of engineering solutions, advancing technology, and building for what comes next.', $html);
+        $this->assertStringContainsString('Celebrating Five Years of Sky Link ICT Solutions', $html);
+        $this->assertStringContainsString('Join us as we commemorate five years of dedication, progress, and meaningful contributions', $html);
         $this->assertStringContainsString('Start a project with us', $html);
     }
 
@@ -235,14 +231,14 @@ class AnniversaryCampaignTest extends TestCase
 
         // English default
         $htmlEn = $this->get('/')->assertOk()->getContent();
-        $this->assertStringContainsString('Five Years of Practical Technology Solutions', $htmlEn);
-        $this->assertStringContainsString('Five years of engineering solutions, advancing technology, and building for what comes next.', $htmlEn);
+        $this->assertStringContainsString('Celebrating Five Years of Sky Link ICT Solutions', $htmlEn);
+        $this->assertStringContainsString('Join us as we commemorate five years of dedication, progress, and meaningful contributions', $htmlEn);
 
         // Amharic locale
         app()->setLocale('am');
         $htmlAm = $this->get('/')->assertOk()->getContent();
-        $this->assertStringContainsString('አምስት ዓመታት በምህንድስና እና ቴክኖሎጂ', $htmlAm);
-        $this->assertStringContainsString('አምስት ዓመታት የምህንድስና መፍትሄዎች፣ የቴክኖሎጂ እድገት እና የቀጣዩ ጉዞ ግንባታ።', $htmlAm);
+        $this->assertStringContainsString('የስካይ ሊንክ አይሲቲ ሶሉሽንስ 5ኛ ዓመት የምሥረታ በዓል', $htmlAm);
+        $this->assertStringContainsString('በቴክኖሎጂው ዘርፍ ላለፉት አምስት ዓመታት ያሳየነውን ቁርጠኝነት፣ ዕድገት እና አስተዋጽኦ ስናከብር አብረውን ይሁኑ።', $htmlAm);
     }
 
     public function test_section_and_modal_remain_clean_when_milestones_and_counters_are_empty(): void
@@ -254,9 +250,8 @@ class AnniversaryCampaignTest extends TestCase
 
         $html = $this->get('/')->assertOk()->getContent();
 
-        // Section and modal are present
+        // Section is present
         $this->assertStringContainsString('id="anniversary-story"', $html);
-        $this->assertStringContainsString('id="annivCelebrationModal"', $html);
 
         // But timeline and counters DOM elements are omitted
         $this->assertStringNotContainsString('class="anniv-timeline-wrap"', $html);
@@ -271,7 +266,7 @@ class AnniversaryCampaignTest extends TestCase
 
         $html = $this->get('/')->assertOk()->getContent();
 
-        $this->assertStringContainsString('Celebrating 5 Years of Sky Link ICT Solutions. Five years of engineering solutions, advancing technology, and building for what comes next.', $html);
+        $this->assertStringContainsString('Celebrating 5 Years of Sky Link ICT Solutions. Join us as we commemorate five years of dedication, progress, and meaningful contributions to the technology industry. We look forward to celebrating this milestone with our team, clients, partners, and community.', $html);
     }
 
     public function test_homepage_hero_feature_renders_when_active(): void
@@ -306,6 +301,8 @@ class AnniversaryCampaignTest extends TestCase
 
         $this->assertStringContainsString('id="annivAboutCard"', $html);
         $this->assertStringContainsString('id="annivAboutCenterpiece"', $html);
+        $this->assertStringContainsString('anniv-circ-wrap--hero', $html);
+        $this->assertStringContainsString('Celebrating Five Years of Sky Link ICT Solutions', $html);
     }
 
     public function test_products_page_feature_renders_when_active(): void

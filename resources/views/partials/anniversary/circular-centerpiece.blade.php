@@ -1,10 +1,10 @@
 {{--
     Sky Link ICT Solutions 5-Year Anniversary
-    Reusable Cinematic Circular Animated Centerpiece
+    Reusable Cinematic Circular Animated Centerpiece (Continuous 7-Phase Loop)
 
     Props:
-    - $size: 'hero' (default, ~300px), 'compact' (~250px), 'inline' (~220px)
-    - $id: unique element id (defaults to 'annivCircHero')
+    - $size: 'hero' (default, ~310px), 'compact' (~250px), 'inline' (~220px)
+    - $id: unique element id (defaults to 'annivCirc' + uniqid)
     - $headline: optional string
     - $tagline: optional string
     - $showCopy: boolean (default: true if headline or tagline present)
@@ -113,7 +113,7 @@
         </div>
     </div>
 
-    {{-- Supporting Corporate Copy (When enabled) --}}
+    {{-- Supporting Ceremony Copy (When enabled) --}}
     @if ($displayCopy && ($primaryHeadline || $primaryTagline))
         <div class="anniv-circ__copy-wrap">
             @if ($primaryHeadline)
@@ -140,46 +140,44 @@
         return;
     }
 
-    var isRunning = false;
-    var timer = null;
-
-    function playSevenPhases() {
-        if (isRunning) return;
-        isRunning = true;
+    function startLoop() {
         wrap.classList.remove('is-settled');
-        wrap.classList.remove('is-animating');
-        void wrap.offsetWidth; // Force CSS reflow
         wrap.classList.add('is-animating');
+    }
 
-        clearTimeout(timer);
-        // The 7-phase sequence completes at 6.2s, then gracefully settles into Phase 07
-        timer = setTimeout(function() {
-            wrap.classList.remove('is-animating');
-            wrap.classList.add('is-settled');
-            isRunning = false;
-        }, 6200);
+    function stopLoop() {
+        wrap.classList.remove('is-animating');
+    }
+
+    function restartCycle() {
+        wrap.classList.remove('is-animating');
+        void wrap.offsetWidth; // Clean reflow to restart CSS timeline from 0s
+        wrap.classList.add('is-animating');
     }
 
     if ('IntersectionObserver' in window) {
         var obs = new IntersectionObserver(function(entries) {
-            if (entries[0].isIntersecting) {
-                playSevenPhases();
-                obs.disconnect();
-            }
-        }, { threshold: 0.15 });
+            entries.forEach(function(entry) {
+                if (entry.isIntersecting) {
+                    startLoop();
+                } else {
+                    stopLoop();
+                }
+            });
+        }, { threshold: 0.1 });
         obs.observe(wrap);
     } else {
-        playSevenPhases();
+        startLoop();
     }
 
-    // Interactive replay on click or Enter/Space key
+    // User interaction: clicking or pressing Enter/Space smoothly restarts the cycle from Phase 01
     stage.addEventListener('click', function() {
-        playSevenPhases();
+        restartCycle();
     });
     stage.addEventListener('keydown', function(e) {
         if (e.key === 'Enter' || e.key === ' ') {
             e.preventDefault();
-            playSevenPhases();
+            restartCycle();
         }
     });
 })();
