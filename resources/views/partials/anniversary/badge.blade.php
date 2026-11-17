@@ -24,7 +24,7 @@
     </span>
     <span class="anniv-badge__copy">
         <span class="anniv-badge__label" lang="{{ $locale }}">{{ $locale === 'am' ? 'ዓመታት' : 'YEARS' }}</span>
-        <span class="anniv-badge__sub" lang="{{ $locale }}">{{ $locale === 'am' ? 'በስካይሊንክ' : 'OF TRUST' }}</span>
+        <span class="anniv-badge__sub" lang="{{ $locale }}">{{ $locale === 'am' ? 'ስካይሊንክ' : 'SKY LINK' }}</span>
     </span>
 </button>
 
@@ -48,7 +48,7 @@
                 {{ $locale === 'am' ? 'የ5ኛ ዓመት የምሥረታ በዓል' : '5-YEAR ANNIVERSARY' }}
             </p>
             <h2 class="anniv-modal__title" id="annivModalTitle" lang="{{ $locale }}">
-                {{ $headline ?? ($locale === 'am' ? 'አምስት ዓመታት በስካይሊንክ' : '5 Years of Sky Link') }}
+                {{ $headline ?? ($locale === 'am' ? 'አምስት ዓመታት በምህንድስና እና ቴክኖሎጂ' : 'Five Years of Practical Technology Solutions') }}
             </h2>
             @if ($tagline)
                 <p class="anniv-modal__tagline" lang="{{ $locale }}">{{ $tagline }}</p>

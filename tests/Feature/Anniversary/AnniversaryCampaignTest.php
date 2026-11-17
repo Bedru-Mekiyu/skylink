@@ -117,14 +117,14 @@ class AnniversaryCampaignTest extends TestCase
 
     public function test_amharic_and_english_texts_resolve_correctly(): void
     {
-        $this->assertSame('5 Years of Sky Link', Anniversary::headline('en'));
-        $this->assertSame('አምስት ዓመታት በስካይሊንክ', Anniversary::headline('am'));
+        $this->assertSame('Five Years of Practical Technology Solutions', Anniversary::headline('en'));
+        $this->assertSame('አምስት ዓመታት በምህንድስና እና ቴክኖሎጂ', Anniversary::headline('am'));
 
-        $this->assertSame('Five years of innovation, trust and growth.', Anniversary::tagline('en'));
-        $this->assertSame('አምስት ዓመታት የፈጠራ፣ የአመኔታና የዕድገት ጉዞ።', Anniversary::tagline('am'));
+        $this->assertSame('Five years of engineering solutions, advancing technology, and building for what comes next.', Anniversary::tagline('en'));
+        $this->assertSame('አምስት ዓመታት የምህንድስና መፍትሄዎች፣ የቴክኖሎጂ እድገት እና የቀጣዩ ጉዞ ግንባታ።', Anniversary::tagline('am'));
 
-        $this->assertSame('Thank you for five years of trust.', Anniversary::thanks('en'));
-        $this->assertSame('ለአምስት ዓመታት ላሳያችሁን አመኔታ እናመሰግናለን።', Anniversary::thanks('am'));
+        $this->assertSame('Thank you for five years of technology partnership and trust.', Anniversary::thanks('en'));
+        $this->assertSame('ለአምስት ዓመታት ላሳያችሁን የቴክኖሎጂ አጋርነት እና አመኔታ እናመሰግናለን።', Anniversary::thanks('am'));
     }
 
     public function test_milestone_and_counter_filtering_skips_invalid_entries(): void
@@ -197,6 +197,8 @@ class AnniversaryCampaignTest extends TestCase
         $this->assertStringNotContainsString('id="annivHeroCard"', $html);
         $this->assertStringNotContainsString('id="annivNewsCard"', $html);
         $this->assertStringNotContainsString('id="annivAboutCard"', $html);
+        $this->assertStringNotContainsString('id="annivProductCard"', $html);
+        $this->assertStringNotContainsString('anniv-circ-stage', $html);
 
         Carbon::setTestNow();
     }
@@ -221,8 +223,8 @@ class AnniversaryCampaignTest extends TestCase
         $html = $this->get('/')->assertOk()->getContent();
 
         $this->assertStringContainsString('id="anniversary-story"', $html);
-        $this->assertStringContainsString('5 Years of Sky Link', $html);
-        $this->assertStringContainsString('Five years of innovation, trust and growth.', $html);
+        $this->assertStringContainsString('Five Years of Practical Technology Solutions', $html);
+        $this->assertStringContainsString('Five years of engineering solutions, advancing technology, and building for what comes next.', $html);
         $this->assertStringContainsString('Start a project with us', $html);
     }
 
@@ -233,14 +235,14 @@ class AnniversaryCampaignTest extends TestCase
 
         // English default
         $htmlEn = $this->get('/')->assertOk()->getContent();
-        $this->assertStringContainsString('5 Years of Sky Link', $htmlEn);
-        $this->assertStringContainsString('Five years of innovation, trust and growth.', $htmlEn);
+        $this->assertStringContainsString('Five Years of Practical Technology Solutions', $htmlEn);
+        $this->assertStringContainsString('Five years of engineering solutions, advancing technology, and building for what comes next.', $htmlEn);
 
         // Amharic locale
         app()->setLocale('am');
         $htmlAm = $this->get('/')->assertOk()->getContent();
-        $this->assertStringContainsString('አምስት ዓመታት በስካይሊንክ', $htmlAm);
-        $this->assertStringContainsString('አምስት ዓመታት የፈጠራ፣ የአመኔታና የዕድገት ጉዞ።', $htmlAm);
+        $this->assertStringContainsString('አምስት ዓመታት በምህንድስና እና ቴክኖሎጂ', $htmlAm);
+        $this->assertStringContainsString('አምስት ዓመታት የምህንድስና መፍትሄዎች፣ የቴክኖሎጂ እድገት እና የቀጣዩ ጉዞ ግንባታ።', $htmlAm);
     }
 
     public function test_section_and_modal_remain_clean_when_milestones_and_counters_are_empty(): void
@@ -269,7 +271,7 @@ class AnniversaryCampaignTest extends TestCase
 
         $html = $this->get('/')->assertOk()->getContent();
 
-        $this->assertStringContainsString('Celebrating 5 Years of Sky Link ICT Solutions. Five years of innovation, trust and growth.', $html);
+        $this->assertStringContainsString('Celebrating 5 Years of Sky Link ICT Solutions. Five years of engineering solutions, advancing technology, and building for what comes next.', $html);
     }
 
     public function test_homepage_hero_feature_renders_when_active(): void
@@ -281,8 +283,7 @@ class AnniversaryCampaignTest extends TestCase
 
         $this->assertStringContainsString('id="annivHeroCard"', $html);
         $this->assertStringContainsString('5 YEARS', $html);
-        $this->assertStringContainsString('OF SKY LINK ICT SOLUTIONS', $html);
-        $this->assertStringContainsString('Explore Our Journey', $html);
+        $this->assertStringContainsString('anniv-circ-stage', $html);
     }
 
     public function test_news_page_feature_card_renders_when_active(): void
@@ -293,8 +294,7 @@ class AnniversaryCampaignTest extends TestCase
         $html = $this->get('/news')->assertOk()->getContent();
 
         $this->assertStringContainsString('id="annivNewsCard"', $html);
-        $this->assertStringContainsString('Sky Link — 5 Years', $html);
-        $this->assertStringContainsString('Company Milestone', $html);
+        $this->assertStringContainsString('id="annivNewsCenterpiece"', $html);
     }
 
     public function test_about_page_journey_feature_renders_when_active(): void
@@ -305,6 +305,17 @@ class AnniversaryCampaignTest extends TestCase
         $html = $this->get('/about')->assertOk()->getContent();
 
         $this->assertStringContainsString('id="annivAboutCard"', $html);
-        $this->assertStringContainsString('2026 Milestone', $html);
+        $this->assertStringContainsString('id="annivAboutCenterpiece"', $html);
+    }
+
+    public function test_products_page_feature_renders_when_active(): void
+    {
+        Config::set('anniversary.force', true);
+        Config::set('app.debug', true);
+
+        $html = $this->get('/products')->assertOk()->getContent();
+
+        $this->assertStringContainsString('id="annivProductCard"', $html);
+        $this->assertStringContainsString('id="annivProductCenterpiece"', $html);
     }
 }

@@ -24,20 +24,20 @@ return [
     // Shown as "Since <year>" when set.
     'founded' => null,
 
-    // DRAFT FOR APPROVAL. The Amharic needs a native speaker's review.
+    // Professional Corporate Copy.
     // Each text: 'en' and 'am'; leave one null to show only the other.
     'text' => [
         'headline' => [
-            'en' => '5 Years of Sky Link',
-            'am' => 'አምስት ዓመታት በስካይሊንክ',
+            'en' => 'Five Years of Practical Technology Solutions',
+            'am' => 'አምስት ዓመታት በምህንድስና እና ቴክኖሎጂ',
         ],
         'tagline' => [
-            'en' => 'Five years of innovation, trust and growth.',
-            'am' => 'አምስት ዓመታት የፈጠራ፣ የአመኔታና የዕድገት ጉዞ።',
+            'en' => 'Five years of engineering solutions, advancing technology, and building for what comes next.',
+            'am' => 'አምስት ዓመታት የምህንድስና መፍትሄዎች፣ የቴክኖሎጂ እድገት እና የቀጣዩ ጉዞ ግንባታ።',
         ],
         'thanks' => [
-            'en' => 'Thank you for five years of trust.',
-            'am' => 'ለአምስት ዓመታት ላሳያችሁን አመኔታ እናመሰግናለን።',
+            'en' => 'Thank you for five years of technology partnership and trust.',
+            'am' => 'ለአምስት ዓመታት ላሳያችሁን የቴክኖሎጂ አጋርነት እና አመኔታ እናመሰግናለን።',
         ],
         // Button under the homepage section; opens the quote form on /services.
         'cta' => [

@@ -11,11 +11,15 @@
     --anniv-navy-deep: #060d19;
     --anniv-navy-dark: #0a1628;
     --anniv-navy-card: #0e1e36;
-    --anniv-navy-glass: rgba(10, 22, 40, 0.88);
-    --anniv-blue: #2563eb;
-    --anniv-blue-light: #3b82f6;
-    --anniv-cyan: #06b6d4;
+    --anniv-navy-glass: rgba(16, 26, 53, 0.88);
+    --anniv-blue: #3B82F6;
+    --anniv-blue-light: #60A5FA;
+    --anniv-cyan: #22D3EE;
     --anniv-cyan-glow: #38bdf8;
+    --anniv-violet: #8B5CF6;
+    --anniv-magenta: #EC4899;
+    --anniv-gold: #F5C451;
+    --anniv-midnight: #101A35;
     --anniv-text-light: #e2e8f0;
     --anniv-text-muted: #94a3b8;
     --anniv-font-ethiopic: 'Noto Sans Ethiopic', 'Nyala', 'Poppins', sans-serif;
@@ -25,20 +29,24 @@
     font-family: var(--anniv-font-ethiopic) !important;
 }
 
-[lang="am"] .anniv-motion__headline {
+[lang="am"] .anniv-motion__headline,
+[lang="am"] .anniv-circ__headline {
     line-height: 1.48;
     letter-spacing: 0.02em;
 }
 
-[lang="am"] .anniv-motion__tagline {
+[lang="am"] .anniv-motion__tagline,
+[lang="am"] .anniv-circ__tagline {
     line-height: 1.65;
 }
 
-[lang="am"] .anniv-motion__kicker {
+[lang="am"] .anniv-motion__kicker,
+[lang="am"] .anniv-circ__kicker {
     letter-spacing: 0.14em;
 }
 
-[lang="am"] .anniv-motion__sublabel {
+[lang="am"] .anniv-motion__sublabel,
+[lang="am"] .anniv-circ__brand {
     letter-spacing: 0.12em;
 }
 
@@ -1570,6 +1578,672 @@ body.anniv-intro-playing {
 }
 
 /* ==========================================================================
+   5b. REUSABLE CIRCULAR CINEMATIC ANNIVERSARY CENTERPIECE (7-PHASE STORY)
+   ========================================================================== */
+.anniv-circ-wrap {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #ffffff;
+    z-index: 2;
+    transform: translate3d(0, 0, 0);
+}
+
+.anniv-circ-stage {
+    position: relative;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    outline: none;
+    user-select: none;
+    -webkit-user-select: none;
+    overflow: hidden;
+    transform: translate3d(0, 0, 0);
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease;
+}
+
+/* Sizing profiles */
+.anniv-circ-wrap--hero .anniv-circ-stage {
+    width: 310px;
+    height: 310px;
+    box-shadow: 0 10px 40px rgba(16, 26, 53, 0.6), inset 0 0 35px rgba(34, 211, 238, 0.12);
+}
+
+.anniv-circ-wrap--compact .anniv-circ-stage {
+    width: 250px;
+    height: 250px;
+    box-shadow: 0 8px 30px rgba(16, 26, 53, 0.55), inset 0 0 25px rgba(34, 211, 238, 0.1);
+}
+
+.anniv-circ-wrap--inline .anniv-circ-stage {
+    width: 220px;
+    height: 220px;
+    box-shadow: 0 6px 25px rgba(16, 26, 53, 0.5), inset 0 0 20px rgba(34, 211, 238, 0.08);
+}
+
+.anniv-circ-stage:focus-visible {
+    outline: 2px solid var(--anniv-cyan);
+    outline-offset: 4px;
+}
+
+.anniv-circ-stage:hover {
+    transform: scale(1.02);
+}
+
+/* Atmosphere background */
+.anniv-circ__atmosphere {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: radial-gradient(circle at 50% 50%, rgba(16, 26, 53, 0.95) 0%, rgba(8, 14, 30, 0.98) 75%, rgba(6, 10, 22, 1) 100%);
+    pointer-events: none;
+}
+
+/* Phase 01: Initial ignition core & pulse */
+.anniv-circ__ignite-core {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 14px;
+    height: 14px;
+    margin-top: -7px;
+    margin-left: -7px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #ffffff 0%, var(--anniv-cyan) 60%, transparent 100%);
+    box-shadow: 0 0 18px var(--anniv-cyan), 0 0 30px var(--anniv-blue);
+    pointer-events: none;
+    opacity: 0;
+}
+
+.anniv-circ__pulse-ring {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin-top: -10px;
+    margin-left: -10px;
+    border-radius: 50%;
+    border: 1px solid var(--anniv-cyan);
+    pointer-events: none;
+    opacity: 0;
+}
+
+.anniv-circ__perimeter {
+    position: absolute;
+    inset: 6px;
+    border-radius: 50%;
+    border: 1px solid rgba(34, 211, 238, 0.2);
+    pointer-events: none;
+    opacity: 0;
+}
+
+.is-animating .anniv-circ__ignite-core {
+    animation: anniv-ignite-core 6.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.is-animating .anniv-circ__pulse-ring {
+    animation: anniv-ignite-pulse 6.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.is-animating .anniv-circ__perimeter {
+    animation: anniv-ignite-perimeter 6.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes anniv-ignite-core {
+    0% { opacity: 0; transform: scale(0.2); }
+    4%, 12% { opacity: 1; transform: scale(1.4); }
+    18% { opacity: 0.7; transform: scale(1); }
+    32% { opacity: 0; transform: scale(0.4); }
+    100% { opacity: 0; transform: scale(0); }
+}
+
+@keyframes anniv-ignite-pulse {
+    0%, 2% { opacity: 0; transform: scale(0.5); }
+    8% { opacity: 0.9; transform: scale(2.2); }
+    16% { opacity: 0; transform: scale(4); }
+    100% { opacity: 0; transform: scale(4); }
+}
+
+@keyframes anniv-ignite-perimeter {
+    0%, 4% { opacity: 0; transform: scale(0.92); }
+    14%, 100% { opacity: 1; transform: scale(1); }
+}
+
+/* Phase 02: Three Concentric Orbital Rings */
+.anniv-circ__ring {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    transform-origin: center center;
+    opacity: 0;
+    transition: opacity 0.6s ease;
+}
+
+.anniv-circ__ring--outer {
+    inset: 18px;
+    border: 1px dashed rgba(34, 211, 238, 0.4);
+    animation: anniv-orbit-spin 48s linear infinite;
+}
+
+.anniv-circ__ring--middle {
+    inset: 48px;
+    border: 1px solid rgba(59, 130, 246, 0.35);
+    animation: anniv-orbit-spin-rev 36s linear infinite;
+}
+
+.anniv-circ__ring--inner {
+    inset: 78px;
+    border: 1px dashed rgba(139, 92, 246, 0.3);
+    animation: anniv-orbit-spin 28s linear infinite;
+}
+
+.is-animating .anniv-circ__ring,
+.is-settled .anniv-circ__ring {
+    opacity: 1;
+}
+
+/* Traveling photon nodes */
+.anniv-circ__traveler {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    pointer-events: none;
+    opacity: 0;
+}
+
+.anniv-circ__traveler--cyan {
+    top: 15px;
+    left: 50%;
+    margin-left: -3px;
+    background: var(--anniv-cyan);
+    box-shadow: 0 0 10px var(--anniv-cyan), 0 0 18px var(--anniv-blue);
+    transform-origin: 3px 140px;
+    animation: anniv-orbit-spin 12s linear infinite;
+}
+
+.anniv-circ__traveler--violet {
+    top: 45px;
+    left: 50%;
+    margin-left: -3px;
+    background: var(--anniv-violet);
+    box-shadow: 0 0 10px var(--anniv-violet), 0 0 16px var(--anniv-magenta);
+    transform-origin: 3px 110px;
+    animation: anniv-orbit-spin-rev 10s linear infinite;
+}
+
+.is-animating .anniv-circ__traveler {
+    opacity: 1;
+}
+
+/* Phase 03: Sequential Number Stages 1 -> 2 -> 3 -> 4 */
+.anniv-circ__seq {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+
+.anniv-circ__seq-num {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 60px;
+    height: 60px;
+    margin-top: -30px;
+    margin-left: -30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.2rem;
+    font-weight: 800;
+    line-height: 1;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.anniv-circ__seq-num--1 {
+    color: var(--anniv-cyan);
+    text-shadow: 0 0 16px var(--anniv-cyan);
+}
+
+.anniv-circ__seq-num--2 {
+    color: var(--anniv-blue);
+    text-shadow: 0 0 16px var(--anniv-blue);
+}
+
+.anniv-circ__seq-num--3 {
+    color: var(--anniv-violet);
+    text-shadow: 0 0 16px var(--anniv-violet);
+}
+
+.anniv-circ__seq-num--4 {
+    color: var(--anniv-magenta);
+    text-shadow: 0 0 18px var(--anniv-magenta);
+}
+
+.is-animating .anniv-circ__seq-num--1 {
+    animation: anniv-seq-step1 6.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.is-animating .anniv-circ__seq-num--2 {
+    animation: anniv-seq-step2 6.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.is-animating .anniv-circ__seq-num--3 {
+    animation: anniv-seq-step3 6.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.is-animating .anniv-circ__seq-num--4 {
+    animation: anniv-seq-step4 6.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes anniv-seq-step1 {
+    0%, 31% { opacity: 0; transform: scale(0.3) rotate(-20deg); }
+    33% { opacity: 1; transform: scale(1.15) rotate(0deg); }
+    38% { opacity: 0.95; transform: scale(1) rotate(5deg); }
+    40%, 100% { opacity: 0; transform: scale(0.6) translateY(-25px); }
+}
+
+@keyframes anniv-seq-step2 {
+    0%, 39% { opacity: 0; transform: scale(0.3) rotate(-20deg); }
+    41% { opacity: 1; transform: scale(1.15) rotate(0deg); }
+    46% { opacity: 0.95; transform: scale(1) rotate(5deg); }
+    48%, 100% { opacity: 0; transform: scale(0.6) translateY(-25px); }
+}
+
+@keyframes anniv-seq-step3 {
+    0%, 47% { opacity: 0; transform: scale(0.3) rotate(-20deg); }
+    49% { opacity: 1; transform: scale(1.15) rotate(0deg); }
+    53% { opacity: 0.95; transform: scale(1) rotate(5deg); }
+    55%, 100% { opacity: 0; transform: scale(0.6) translateY(-25px); }
+}
+
+@keyframes anniv-seq-step4 {
+    0%, 54% { opacity: 0; transform: scale(0.3) rotate(-20deg); }
+    56% { opacity: 1; transform: scale(1.18) rotate(0deg); }
+    60% { opacity: 0.95; transform: scale(1) rotate(5deg); }
+    62%, 100% { opacity: 0; transform: scale(0.5) translateY(-30px); }
+}
+
+/* Phase 04: Final Convergence Energy Core */
+.anniv-circ__converge-core {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 24px;
+    height: 24px;
+    margin-top: -12px;
+    margin-left: -12px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #ffffff 0%, var(--anniv-cyan) 45%, var(--anniv-violet) 80%, transparent 100%);
+    box-shadow: 0 0 25px var(--anniv-cyan), 0 0 45px var(--anniv-magenta);
+    pointer-events: none;
+    opacity: 0;
+}
+
+.is-animating .anniv-circ__converge-core {
+    animation: anniv-converge 6.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes anniv-converge {
+    0%, 61% { opacity: 0; transform: scale(0.2); }
+    65% { opacity: 1; transform: scale(1.8); filter: brightness(1.6); }
+    70%, 100% { opacity: 0; transform: scale(0.1); }
+}
+
+/* Phase 05: Grand Numeral 5 Reveal */
+.anniv-circ__numeral-wrap {
+    position: relative;
+    z-index: 4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transform: scale(0.7);
+    transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.anniv-circ__num-svg {
+    overflow: visible;
+}
+
+.anniv-circ__path-bg {
+    stroke: rgba(34, 211, 238, 0.15);
+    stroke-width: 5;
+    fill: none;
+}
+
+.anniv-circ__path-trace {
+    fill: none;
+    stroke-width: 5.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    filter: drop-shadow(0 0 12px var(--anniv-cyan)) drop-shadow(0 0 20px rgba(59, 130, 246, 0.8));
+}
+
+.anniv-circ__specular-flare {
+    filter: drop-shadow(0 0 6px #ffffff) drop-shadow(0 0 12px var(--anniv-cyan));
+    animation: anniv-flare-pulse 3s ease-in-out infinite;
+}
+
+.is-settled .anniv-circ__numeral-wrap {
+    opacity: 1;
+    transform: scale(1);
+    animation: anniv-cinematic-breathe 4s ease-in-out infinite;
+}
+
+.is-animating .anniv-circ__numeral-wrap {
+    animation: anniv-numeral5-reveal 6.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes anniv-numeral5-reveal {
+    0%, 69% { opacity: 0; transform: scale(0.4); }
+    74% { opacity: 1; transform: scale(1.12); filter: drop-shadow(0 0 30px var(--anniv-cyan)); }
+    82%, 100% { opacity: 1; transform: scale(1); }
+}
+
+/* Phase 06: Controlled Multi-Color Celebration Energy Burst */
+.anniv-circ__burst-wave {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    border-radius: 50%;
+    pointer-events: none;
+    opacity: 0;
+    z-index: 3;
+}
+
+.anniv-circ__burst-wave--cyan {
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.95) 0%, rgba(34, 211, 238, 0.85) 30%, rgba(59, 130, 246, 0.4) 65%, transparent 100%);
+    box-shadow: 0 0 50px var(--anniv-cyan);
+}
+
+.anniv-circ__burst-wave--blue {
+    border: 2px solid var(--anniv-blue);
+    box-shadow: 0 0 35px var(--anniv-violet);
+}
+
+.is-animating .anniv-circ__burst-wave--cyan {
+    animation: anniv-burst-cyan 6.2s cubic-bezier(0.08, 0.9, 0.2, 1) forwards;
+}
+
+.is-animating .anniv-circ__burst-wave--blue {
+    animation: anniv-burst-blue 6.2s cubic-bezier(0.08, 0.9, 0.2, 1) forwards;
+}
+
+@keyframes anniv-burst-cyan {
+    0%, 72% { opacity: 0; width: 0; height: 0; margin-top: 0; margin-left: 0; }
+    74.5% { opacity: 1; width: 220px; height: 220px; margin-top: -110px; margin-left: -110px; }
+    80% { opacity: 0.25; width: 310px; height: 310px; margin-top: -155px; margin-left: -155px; }
+    88%, 100% { opacity: 0; width: 330px; height: 330px; margin-top: -165px; margin-left: -165px; }
+}
+
+@keyframes anniv-burst-blue {
+    0%, 73% { opacity: 0; width: 0; height: 0; margin-top: 0; margin-left: 0; }
+    76% { opacity: 0.9; width: 260px; height: 260px; margin-top: -130px; margin-left: -130px; }
+    84%, 100% { opacity: 0; width: 320px; height: 320px; margin-top: -160px; margin-left: -160px; }
+}
+
+/* 8 Radial Spark Rays (Violet & Magenta) */
+.anniv-circ__spark-rays {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 3;
+}
+
+.anniv-circ__ray {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 2px;
+    height: 38px;
+    margin-left: -1px;
+    margin-top: -19px;
+    background: linear-gradient(to top, transparent, var(--anniv-violet), var(--anniv-magenta), #ffffff);
+    opacity: 0;
+    transform-origin: center center;
+    border-radius: 999px;
+}
+
+.anniv-circ__ray--1 { transform: rotate(0deg) translateY(-85px); }
+.anniv-circ__ray--2 { transform: rotate(45deg) translateY(-85px); }
+.anniv-circ__ray--3 { transform: rotate(90deg) translateY(-85px); }
+.anniv-circ__ray--4 { transform: rotate(135deg) translateY(-85px); }
+.anniv-circ__ray--5 { transform: rotate(180deg) translateY(-85px); }
+.anniv-circ__ray--6 { transform: rotate(225deg) translateY(-85px); }
+.anniv-circ__ray--7 { transform: rotate(270deg) translateY(-85px); }
+.anniv-circ__ray--8 { transform: rotate(315deg) translateY(-85px); }
+
+.is-animating .anniv-circ__ray {
+    animation: anniv-ray-burst 6.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes anniv-ray-burst {
+    0%, 73% { opacity: 0; height: 0; }
+    75.5% { opacity: 1; height: 45px; filter: drop-shadow(0 0 10px var(--anniv-magenta)); }
+    83%, 100% { opacity: 0; height: 60px; transform-origin: center 120px; }
+}
+
+/* Gold celebratory embers */
+.anniv-circ__embers {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 3;
+}
+
+.anniv-circ__ember {
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--anniv-gold);
+    box-shadow: 0 0 10px var(--anniv-gold), 0 0 16px #ffffff;
+    opacity: 0;
+}
+
+.anniv-circ__ember--1 { top: 28%; left: 32%; }
+.anniv-circ__ember--2 { top: 24%; right: 30%; }
+.anniv-circ__ember--3 { top: 68%; left: 26%; }
+.anniv-circ__ember--4 { top: 72%; right: 28%; }
+.anniv-circ__ember--5 { top: 48%; left: 18%; }
+.anniv-circ__ember--6 { top: 50%; right: 18%; }
+
+.is-animating .anniv-circ__ember {
+    animation: anniv-ember-burst 6.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes anniv-ember-burst {
+    0%, 73% { opacity: 0; transform: scale(0.2); }
+    76% { opacity: 1; transform: scale(1.4); }
+    86%, 100% { opacity: 0; transform: scale(0.4) translateY(-14px); }
+}
+
+/* Phase 07: Settled Resting State */
+.anniv-circ__tracer {
+    position: absolute;
+    top: 15px;
+    left: 50%;
+    width: 6px;
+    height: 6px;
+    margin-left: -3px;
+    background: var(--anniv-cyan);
+    border-radius: 50%;
+    box-shadow: 0 0 12px var(--anniv-cyan), 0 0 20px var(--anniv-cyan);
+    pointer-events: none;
+    transform-origin: 3px 140px;
+    animation: anniv-orbit-spin 16s linear infinite;
+    opacity: 0;
+    transition: opacity 0.8s ease;
+    z-index: 2;
+}
+
+.is-settled .anniv-circ__tracer {
+    opacity: 1;
+}
+
+.anniv-circ__label-box {
+    position: absolute;
+    bottom: 22px;
+    left: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 5;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    pointer-events: none;
+}
+
+.is-settled .anniv-circ__label-box {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.is-animating .anniv-circ__label-box {
+    animation: anniv-label-reveal 6.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes anniv-label-reveal {
+    0%, 82% { opacity: 0; transform: translateY(10px); }
+    88%, 100% { opacity: 1; transform: translateY(0); }
+}
+
+.anniv-circ__kicker {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.32em;
+    color: var(--anniv-cyan);
+    text-transform: uppercase;
+    background: rgba(34, 211, 238, 0.12);
+    border: 1px solid rgba(34, 211, 238, 0.35);
+    padding: 2px 10px;
+    border-radius: 999px;
+    margin-bottom: 2px;
+}
+
+.anniv-circ__brand {
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    color: #94a3b8;
+    text-transform: uppercase;
+}
+
+/* Supporting Corporate Copy Wrap */
+.anniv-circ__copy-wrap {
+    margin-top: 14px;
+    max-width: 420px;
+    text-align: center;
+}
+
+.anniv-circ__headline {
+    font-size: clamp(1.15rem, 2vw, 1.38rem);
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0 0 6px;
+    line-height: 1.32;
+}
+
+.anniv-circ__tagline {
+    font-size: 0.88rem;
+    color: #94a3b8;
+    line-height: 1.55;
+    margin: 0 auto;
+}
+
+/* Responsive adjustments for the circular centerpiece */
+@media (max-width: 991.98px) {
+    .anniv-circ-wrap--hero .anniv-circ-stage {
+        width: 250px;
+        height: 250px;
+    }
+    .anniv-circ-wrap--hero .anniv-circ__tracer {
+        transform-origin: 3px 110px;
+    }
+    .anniv-circ-wrap--hero .anniv-circ__num-svg {
+        transform: scale(0.85);
+    }
+}
+
+@media (max-width: 576px) {
+    .anniv-circ-wrap--hero .anniv-circ-stage,
+    .anniv-circ-wrap--compact .anniv-circ-stage {
+        width: 210px;
+        height: 210px;
+    }
+    .anniv-circ-wrap--hero .anniv-circ__ring--outer,
+    .anniv-circ-wrap--compact .anniv-circ__ring--outer { inset: 10px; }
+    .anniv-circ-wrap--hero .anniv-circ__ring--middle,
+    .anniv-circ-wrap--compact .anniv-circ__ring--middle { inset: 32px; }
+    .anniv-circ-wrap--hero .anniv-circ__ring--inner,
+    .anniv-circ-wrap--compact .anniv-circ__ring--inner { inset: 54px; }
+    .anniv-circ-wrap--hero .anniv-circ__tracer,
+    .anniv-circ-wrap--compact .anniv-circ__tracer {
+        top: 8px;
+        transform-origin: 3px 97px;
+    }
+    .anniv-circ-wrap--hero .anniv-circ__num-svg,
+    .anniv-circ-wrap--compact .anniv-circ__num-svg {
+        transform: scale(0.72);
+    }
+    .anniv-circ__label-box {
+        bottom: 14px;
+    }
+    .anniv-circ__kicker {
+        font-size: 9.5px;
+        letter-spacing: 0.22em;
+    }
+    .anniv-circ__brand {
+        display: none;
+    }
+    .anniv-circ__headline {
+        font-size: 1.05rem;
+    }
+    .anniv-circ__tagline {
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 360px) {
+    .anniv-circ-wrap--hero .anniv-circ-stage,
+    .anniv-circ-wrap--compact .anniv-circ-stage {
+        width: 175px;
+        height: 175px;
+    }
+    .anniv-circ-wrap--hero .anniv-circ__ring--outer,
+    .anniv-circ-wrap--compact .anniv-circ__ring--outer { inset: 6px; }
+    .anniv-circ-wrap--hero .anniv-circ__ring--middle,
+    .anniv-circ-wrap--compact .anniv-circ__ring--middle { inset: 24px; }
+    .anniv-circ-wrap--hero .anniv-circ__ring--inner,
+    .anniv-circ-wrap--compact .anniv-circ__ring--inner { inset: 42px; }
+    .anniv-circ-wrap--hero .anniv-circ__tracer,
+    .anniv-circ-wrap--compact .anniv-circ__tracer {
+        top: 5px;
+        transform-origin: 3px 82px;
+    }
+    .anniv-circ-wrap--hero .anniv-circ__num-svg,
+    .anniv-circ-wrap--compact .anniv-circ__num-svg {
+        transform: scale(0.62);
+    }
+    .anniv-circ__kicker {
+        font-size: 8.5px;
+        letter-spacing: 0.16em;
+        padding: 1px 6px;
+    }
+}
+
+/* ==========================================================================
    6. NEWS PAGE EDITORIAL ANNIVERSARY CARD
    ========================================================================== */
 .anniv-news-card {
@@ -1936,6 +2610,88 @@ body.anniv-intro-playing {
 }
 
 /* ==========================================================================
+   7b. PRODUCTS PAGE ANNIVERSARY FEATURE
+   ========================================================================== */
+.anniv-product-feature {
+    position: relative;
+    margin: 10px 0 28px;
+    padding: 24px 28px;
+    background: radial-gradient(ellipse at 80% 50%, rgba(16, 26, 53, 0.96) 0%, rgba(10, 18, 38, 0.94) 100%);
+    border: 1px solid rgba(34, 211, 238, 0.3);
+    border-radius: 24px;
+    box-shadow: 0 12px 35px rgba(2, 6, 23, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    color: #ffffff;
+    overflow: hidden;
+    transition: transform 0.25s ease, border-color 0.25s ease;
+}
+
+.anniv-product-feature:hover {
+    transform: translateY(-2px);
+    border-color: rgba(34, 211, 238, 0.5);
+}
+
+.anniv-product-feature__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 28px;
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 1;
+}
+
+.anniv-product-feature__text {
+    flex: 1 1 360px;
+}
+
+.anniv-product-feature__kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--anniv-cyan);
+    background: rgba(34, 211, 238, 0.12);
+    border: 1px solid rgba(34, 211, 238, 0.3);
+    padding: 3px 12px;
+    border-radius: 999px;
+    margin-bottom: 8px;
+}
+
+.anniv-product-feature__title {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0 0 6px;
+    line-height: 1.3;
+}
+
+.anniv-product-feature__desc {
+    font-size: 0.92rem;
+    color: #cbd5e1;
+    margin: 0;
+    line-height: 1.55;
+}
+
+.anniv-product-feature__centerpiece {
+    flex-shrink: 0;
+}
+
+@media (max-width: 767.98px) {
+    .anniv-product-feature {
+        padding: 18px 16px;
+    }
+    .anniv-product-feature__inner {
+        flex-direction: column-reverse;
+        align-items: center;
+        text-align: center;
+        gap: 16px;
+    }
+}
+
+/* ==========================================================================
    8. REDUCED MOTION SAFEGUARDS
    ========================================================================== */
 @media (prefers-reduced-motion: reduce) {
@@ -1949,16 +2705,38 @@ body.anniv-intro-playing {
     .anniv-motion__numeral-wrap,
     .anniv-motion__content,
     .anniv-news-card__sheen,
-    .anniv-news-card__orbit-ring {
+    .anniv-news-card__orbit-ring,
+    .anniv-circ__ring,
+    .anniv-circ__traveler,
+    .anniv-circ__tracer,
+    .anniv-circ__burst-wave,
+    .anniv-circ__ray,
+    .anniv-circ__ember,
+    .anniv-circ__ignite-core,
+    .anniv-circ__pulse-ring,
+    .anniv-circ__perimeter,
+    .anniv-circ__converge-core,
+    .anniv-circ__seq-num,
+    .anniv-circ__numeral-wrap,
+    .anniv-circ__label-box {
         animation: none !important;
     }
     .anniv-intro,
     .anniv-motion__burst,
-    .anniv-motion__nodes {
+    .anniv-motion__nodes,
+    .anniv-circ__seq,
+    .anniv-circ__spark-rays,
+    .anniv-circ__embers,
+    .anniv-circ__burst-wave,
+    .anniv-circ__ignite-core,
+    .anniv-circ__pulse-ring,
+    .anniv-circ__converge-core {
         display: none !important;
     }
     .anniv-motion__numeral-wrap,
-    .anniv-motion__content {
+    .anniv-motion__content,
+    .anniv-circ__numeral-wrap,
+    .anniv-circ__label-box {
         opacity: 1 !important;
         transform: none !important;
     }
@@ -1966,7 +2744,9 @@ body.anniv-intro-playing {
     .anniv-counter-card:hover,
     .anniv-hero-motion:hover,
     .anniv-news-card:hover,
-    .anniv-about-feature:hover {
+    .anniv-about-feature:hover,
+    .anniv-product-feature:hover,
+    .anniv-circ-stage:hover {
         transform: none !important;
     }
 }

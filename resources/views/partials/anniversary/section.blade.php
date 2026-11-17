@@ -21,7 +21,7 @@
                 {{ $locale === 'am' ? 'የ5ኛ ዓመት የምሥረታ በዓል' : '5-YEAR ANNIVERSARY' }}
             </span>
             <h2 class="anniv-home-title" id="annivSectionHeading" lang="{{ $locale }}">
-                <span class="highlight">{{ $headline ?? ($locale === 'am' ? 'አምስት ዓመታት በስካይሊንክ' : '5 Years of Sky Link') }}</span>
+                <span class="highlight">{{ $headline ?? ($locale === 'am' ? 'አምስት ዓመታት በምህንድስና እና ቴክኖሎጂ' : 'Five Years of Practical Technology Solutions') }}</span>
             </h2>
             @if ($tagline)
                 <p class="anniv-home-tagline" lang="{{ $locale }}">{{ $tagline }}</p>
