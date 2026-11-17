@@ -1178,6 +1178,10 @@ We lead the market by creating disciplined culture that will have much bigger ef
                 </div>
             </div>
         </div>
+
+        @if (\App\Support\Anniversary::isActive())
+            @include('partials.anniversary.about-feature')
+        @endif
     </div>
 </section>
 

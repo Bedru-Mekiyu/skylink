@@ -194,6 +194,9 @@ class AnniversaryCampaignTest extends TestCase
         $this->assertStringNotContainsString('id="annivCelebrationModal"', $html);
         $this->assertStringNotContainsString('id="annivIntroOverlay"', $html);
         $this->assertStringNotContainsString('id="anniversary-story"', $html);
+        $this->assertStringNotContainsString('id="annivHeroCard"', $html);
+        $this->assertStringNotContainsString('id="annivNewsCard"', $html);
+        $this->assertStringNotContainsString('id="annivAboutCard"', $html);
 
         Carbon::setTestNow();
     }
@@ -267,5 +270,41 @@ class AnniversaryCampaignTest extends TestCase
         $html = $this->get('/')->assertOk()->getContent();
 
         $this->assertStringContainsString('Celebrating 5 Years of Sky Link ICT Solutions. Five years of innovation, trust and growth.', $html);
+    }
+
+    public function test_homepage_hero_feature_renders_when_active(): void
+    {
+        Config::set('anniversary.force', true);
+        Config::set('app.debug', true);
+
+        $html = $this->get('/')->assertOk()->getContent();
+
+        $this->assertStringContainsString('id="annivHeroCard"', $html);
+        $this->assertStringContainsString('5 YEARS', $html);
+        $this->assertStringContainsString('OF SKY LINK ICT SOLUTIONS', $html);
+        $this->assertStringContainsString('Explore Our Journey', $html);
+    }
+
+    public function test_news_page_feature_card_renders_when_active(): void
+    {
+        Config::set('anniversary.force', true);
+        Config::set('app.debug', true);
+
+        $html = $this->get('/news')->assertOk()->getContent();
+
+        $this->assertStringContainsString('id="annivNewsCard"', $html);
+        $this->assertStringContainsString('Sky Link — 5 Years', $html);
+        $this->assertStringContainsString('Company Milestone', $html);
+    }
+
+    public function test_about_page_journey_feature_renders_when_active(): void
+    {
+        Config::set('anniversary.force', true);
+        Config::set('app.debug', true);
+
+        $html = $this->get('/about')->assertOk()->getContent();
+
+        $this->assertStringContainsString('id="annivAboutCard"', $html);
+        $this->assertStringContainsString('2026 Milestone', $html);
     }
 }

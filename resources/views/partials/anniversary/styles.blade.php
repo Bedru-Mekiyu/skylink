@@ -947,21 +947,600 @@ body.anniv-intro-playing {
 }
 
 /* ==========================================================================
-   5. REDUCED MOTION SAFEGUARDS
+   5. HOMEPAGE HERO ANNIVERSARY CENTERPIECE
+   ========================================================================== */
+.anniv-hero-card {
+    position: relative;
+    max-width: 440px;
+    margin: 0 auto;
+    padding: 30px 26px 26px;
+    background: linear-gradient(145deg, rgba(8, 20, 48, 0.78) 0%, rgba(5, 13, 31, 0.84) 100%);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(56, 189, 248, 0.28);
+    border-radius: 24px;
+    box-shadow: 0 25px 60px rgba(2, 6, 23, 0.55),
+                inset 0 1px 0 rgba(255, 255, 255, 0.12),
+                inset 0 0 30px rgba(56, 189, 248, 0.05);
+    overflow: hidden;
+    text-align: center;
+    color: #ffffff;
+    z-index: 2;
+    transform: translate3d(0, 0, 0);
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                border-color 0.35s ease,
+                box-shadow 0.35s ease;
+}
+
+.anniv-hero-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(56, 189, 248, 0.45);
+    box-shadow: 0 30px 70px rgba(2, 6, 23, 0.65),
+                inset 0 1px 0 rgba(255, 255, 255, 0.18),
+                0 0 35px rgba(56, 189, 248, 0.15);
+}
+
+.anniv-hero-card__ambient-glow {
+    position: absolute;
+    top: -50px;
+    right: -50px;
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, rgba(56, 189, 248, 0.22) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+/* Orbital Stage */
+.anniv-hero-card__stage {
+    position: relative;
+    width: 130px;
+    height: 130px;
+    margin: 0 auto 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.anniv-hero-card__ring {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    transform-origin: center center;
+}
+
+.anniv-hero-card__ring--outer {
+    inset: 0;
+    border: 1px dashed rgba(56, 189, 248, 0.32);
+    animation: anniv-orbit-spin 48s linear infinite;
+}
+
+.anniv-hero-card__ring--inner {
+    inset: 12px;
+    border: 1px solid rgba(37, 99, 235, 0.28);
+    animation: anniv-orbit-spin-rev 36s linear infinite;
+}
+
+.anniv-hero-card__orbit-node {
+    position: absolute;
+    top: -3px;
+    left: 50%;
+    width: 7px;
+    height: 7px;
+    margin-left: -3.5px;
+    background: #38bdf8;
+    border-radius: 50%;
+    box-shadow: 0 0 10px #38bdf8, 0 0 18px #38bdf8;
+    pointer-events: none;
+    transform-origin: 3.5px 68px;
+    animation: anniv-orbit-spin 18s linear infinite;
+}
+
+@keyframes anniv-orbit-spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+@keyframes anniv-orbit-spin-rev {
+    from { transform: rotate(360deg); }
+    to { transform: rotate(0deg); }
+}
+
+/* SVG Numeral 5 in hero card */
+.anniv-hero-card__num-svg {
+    position: relative;
+    z-index: 1;
+    overflow: visible;
+}
+
+.anniv-hero-card__path-bg {
+    stroke: rgba(56, 189, 248, 0.12);
+    stroke-width: 5;
+    fill: none;
+}
+
+.anniv-hero-card__path-fill {
+    fill: url(#hero5BloomGrad);
+}
+
+.anniv-hero-card__path-trace {
+    fill: none;
+    stroke: url(#hero5TraceGrad);
+    stroke-width: 5.2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    filter: drop-shadow(0 0 10px rgba(56, 189, 248, 0.85));
+}
+
+/* Card Content */
+.anniv-hero-card__badge-row {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.anniv-hero-card__kicker {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: #38bdf8;
+    background: rgba(56, 189, 248, 0.12);
+    padding: 3px 10px;
+    border-radius: 999px;
+    border: 1px solid rgba(56, 189, 248, 0.28);
+}
+
+.anniv-hero-card__years {
+    font-size: 11px;
+    font-weight: 600;
+    color: #94a3b8;
+    letter-spacing: 0.06em;
+}
+
+.anniv-hero-card__sublabel {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    color: #cbd5e1;
+    text-transform: uppercase;
+    margin: 0 0 6px;
+}
+
+.anniv-hero-card__headline {
+    font-size: clamp(1.2rem, 2vw, 1.4rem);
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0 0 8px;
+    line-height: 1.3;
+}
+
+.anniv-hero-card__tagline {
+    font-size: 0.88rem;
+    color: #94a3b8;
+    line-height: 1.55;
+    margin: 0 auto 18px;
+    max-width: 360px;
+}
+
+.anniv-hero-card__actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.anniv-hero-card__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 18px;
+    border-radius: 999px;
+    background: linear-gradient(135deg, #2563eb, #0284c7);
+    color: #ffffff !important;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    box-shadow: 0 4px 16px rgba(37, 99, 235, 0.4);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.anniv-hero-card__cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(6, 182, 212, 0.5);
+    color: #ffffff !important;
+}
+
+.anniv-hero-card__badge-trigger {
+    display: inline-flex;
+    align-items: center;
+    padding: 9px 14px;
+    border-radius: 999px;
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid rgba(56, 189, 248, 0.28);
+    color: #38bdf8;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.anniv-hero-card__badge-trigger:hover {
+    background: rgba(56, 189, 248, 0.15);
+    border-color: rgba(56, 189, 248, 0.5);
+}
+
+/* Tablet & Mobile Hero Card Adaptation */
+@media (max-width: 991.98px) {
+    .anniv-hero-card {
+        max-width: 480px;
+        margin: 24px auto 0;
+        padding: 24px 20px;
+    }
+    .anniv-hero-card__stage {
+        width: 110px;
+        height: 110px;
+        margin-bottom: 12px;
+    }
+    .anniv-hero-card__ring--inner {
+        inset: 10px;
+    }
+    .anniv-hero-card__num-svg {
+        transform: scale(0.88);
+    }
+}
+
+@media (max-width: 576px) {
+    .anniv-hero-card {
+        padding: 20px 16px;
+        border-radius: 20px;
+    }
+    .anniv-hero-card__headline {
+        font-size: 1.15rem;
+    }
+    .anniv-hero-card__tagline {
+        font-size: 0.82rem;
+        margin-bottom: 14px;
+    }
+    .anniv-hero-card__actions {
+        flex-direction: column;
+        gap: 8px;
+    }
+    .anniv-hero-card__cta,
+    .anniv-hero-card__badge-trigger {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+/* ==========================================================================
+   6. NEWS PAGE EDITORIAL ANNIVERSARY CARD
+   ========================================================================== */
+.anniv-news-card {
+    position: relative;
+    margin: 10px 0 26px;
+    padding: 20px 24px;
+    background: linear-gradient(135deg, rgba(8, 20, 48, 0.95) 0%, rgba(15, 28, 54, 0.92) 100%);
+    border: 1px solid rgba(56, 189, 248, 0.26);
+    border-radius: 18px;
+    box-shadow: 0 10px 30px rgba(2, 6, 23, 0.22),
+                inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    overflow: hidden;
+    color: #ffffff;
+    transition: transform 0.25s ease, border-color 0.25s ease;
+}
+
+.anniv-news-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(56, 189, 248, 0.45);
+    box-shadow: 0 14px 35px rgba(2, 6, 23, 0.3), 0 0 25px rgba(56, 189, 248, 0.12);
+}
+
+.anniv-news-card__glow {
+    position: absolute;
+    top: -40px;
+    left: -40px;
+    width: 160px;
+    height: 160px;
+    background: radial-gradient(circle, rgba(56, 189, 248, 0.25) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.anniv-news-card__inner {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+    z-index: 1;
+}
+
+.anniv-news-card__emblem-wrap {
+    position: relative;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 60%, #06b6d4 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 0 16px rgba(6, 182, 212, 0.4);
+}
+
+.anniv-news-card__emblem-orbit {
+    position: absolute;
+    inset: -4px;
+    border: 1px dashed rgba(56, 189, 248, 0.5);
+    border-radius: 50%;
+    animation: anniv-orbit-spin 24s linear infinite;
+}
+
+.anniv-news-card__emblem-num {
+    font-size: 26px;
+    font-weight: 800;
+    color: #ffffff;
+    line-height: 1;
+}
+
+.anniv-news-card__text {
+    flex: 1 1 320px;
+}
+
+.anniv-news-card__meta {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #38bdf8;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.anniv-news-card__dot {
+    opacity: 0.5;
+}
+
+.anniv-news-card__edition {
+    color: #94a3b8;
+}
+
+.anniv-news-card__title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0 0 4px;
+    line-height: 1.35;
+}
+
+.anniv-news-card__tagline {
+    font-size: 0.88rem;
+    color: #cbd5e1;
+    margin: 0;
+    line-height: 1.5;
+}
+
+.anniv-news-card__action {
+    flex-shrink: 0;
+}
+
+.anniv-news-card__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 18px;
+    border-radius: 999px;
+    background: rgba(56, 189, 248, 0.12);
+    border: 1px solid rgba(56, 189, 248, 0.35);
+    color: #ffffff !important;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.25s ease;
+}
+
+.anniv-news-card__cta:hover {
+    background: linear-gradient(135deg, #2563eb, #0284c7);
+    border-color: transparent;
+    color: #ffffff !important;
+    transform: translateX(3px);
+    box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4);
+}
+
+@media (max-width: 767.98px) {
+    .anniv-news-card {
+        padding: 16px 18px;
+    }
+    .anniv-news-card__action {
+        width: 100%;
+        margin-top: 6px;
+    }
+    .anniv-news-card__cta {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+/* ==========================================================================
+   7. ABOUT PAGE JOURNEY ANNIVERSARY CULMINATION
+   ========================================================================== */
+.anniv-about-feature {
+    position: relative;
+    max-width: 820px;
+    margin: 40px auto 0;
+    padding: 22px 28px;
+    background: linear-gradient(145deg, rgba(8, 20, 48, 0.94) 0%, rgba(15, 28, 54, 0.9) 100%);
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    border-radius: 18px;
+    box-shadow: 0 12px 36px rgba(2, 6, 23, 0.32),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    overflow: hidden;
+    color: #ffffff;
+    transition: transform 0.25s ease, border-color 0.25s ease;
+}
+
+.anniv-about-feature:hover {
+    transform: translateY(-2px);
+    border-color: rgba(56, 189, 248, 0.5);
+    box-shadow: 0 16px 45px rgba(2, 6, 23, 0.4), 0 0 28px rgba(56, 189, 248, 0.15);
+}
+
+.anniv-about-feature__glow {
+    position: absolute;
+    top: -50px;
+    right: -50px;
+    width: 180px;
+    height: 180px;
+    background: radial-gradient(circle, rgba(56, 189, 248, 0.2) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.anniv-about-feature__inner {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 22px;
+    flex-wrap: wrap;
+    z-index: 1;
+}
+
+.anniv-about-feature__badge {
+    width: 58px;
+    height: 58px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 60%, #06b6d4 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 0 18px rgba(6, 182, 212, 0.45);
+}
+
+.anniv-about-feature__num {
+    font-size: 26px;
+    font-weight: 800;
+    color: #ffffff;
+    line-height: 1;
+}
+
+.anniv-about-feature__unit {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    color: #38bdf8;
+    margin-top: -2px;
+}
+
+.anniv-about-feature__text {
+    flex: 1 1 320px;
+}
+
+.anniv-about-feature__tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: #38bdf8;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.anniv-about-feature__sep {
+    opacity: 0.5;
+}
+
+.anniv-about-feature__year {
+    background: rgba(56, 189, 248, 0.15);
+    padding: 2px 8px;
+    border-radius: 999px;
+}
+
+.anniv-about-feature__title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0 0 4px;
+    line-height: 1.35;
+}
+
+.anniv-about-feature__desc {
+    font-size: 0.88rem;
+    color: #cbd5e1;
+    margin: 0;
+    line-height: 1.5;
+}
+
+.anniv-about-feature__cta-wrap {
+    flex-shrink: 0;
+}
+
+.anniv-about-feature__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 18px;
+    border-radius: 999px;
+    background: linear-gradient(135deg, #2563eb, #0284c7);
+    color: #ffffff !important;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.anniv-about-feature__cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(6, 182, 212, 0.45);
+    color: #ffffff !important;
+}
+
+@media (max-width: 767.98px) {
+    .anniv-about-feature {
+        padding: 18px 18px;
+        margin-top: 26px;
+    }
+    .anniv-about-feature__cta-wrap {
+        width: 100%;
+        margin-top: 6px;
+    }
+    .anniv-about-feature__cta {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+/* ==========================================================================
+   8. REDUCED MOTION SAFEGUARDS
    ========================================================================== */
 @media (prefers-reduced-motion: reduce) {
     .anniv-badge__sheen,
     .anniv-modal__emblem-rings,
-    .anniv-intro {
+    .anniv-intro,
+    .anniv-hero-card__ring,
+    .anniv-hero-card__orbit-node,
+    .anniv-news-card__emblem-orbit {
         animation: none !important;
     }
     .anniv-intro {
         display: none !important;
     }
-    .anniv-badge:hover {
-        transform: none !important;
-    }
-    .anniv-counter-card:hover {
+    .anniv-badge:hover,
+    .anniv-counter-card:hover,
+    .anniv-hero-card:hover,
+    .anniv-news-card:hover,
+    .anniv-about-feature:hover {
         transform: none !important;
     }
 }

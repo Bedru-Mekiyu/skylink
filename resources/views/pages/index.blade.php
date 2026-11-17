@@ -1094,8 +1094,8 @@ max-height: 20 vh;
     <!-- Hero Section -->
     <section class="hero" id="home">
         <div class="container">
-            <div class="row">
-                <div class="col-lg-8">
+            <div class="row align-items-center">
+                <div class="{{ \App\Support\Anniversary::isActive() ? 'col-lg-7 col-xl-7' : 'col-lg-8' }}">
                     <div class="hero-content">
                         
                         <h1>Helping businesses succeed with the best IT services in Ethiopia</h1>
@@ -1103,6 +1103,11 @@ max-height: 20 vh;
                         <a href="#services" class="btn-get-started">More</a>
                     </div>
                 </div>
+                @if (\App\Support\Anniversary::isActive())
+                    <div class="col-lg-5 col-xl-5 mt-4 mt-lg-0">
+                        @include('partials.anniversary.hero-feature')
+                    </div>
+                @endif
             </div>
         </div>
         @include('partials.hero-media')
