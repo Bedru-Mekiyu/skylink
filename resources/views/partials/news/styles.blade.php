@@ -352,7 +352,7 @@
         margin: 0;
         font-size: clamp(1.15rem, 1.8vw, 1.45rem);
         font-weight: 700;
-        line-height: 1.35;
+        line-height: 1.5;
         display: -webkit-box;
         -webkit-line-clamp: 3;
         -webkit-box-orient: vertical;
@@ -392,6 +392,11 @@
         color: #fff;
         font-weight: 600;
         text-decoration: none;
+    }
+
+    /* Clear space between the title and the date line. */
+    .news-featured .news-meta {
+        margin-top: 8px;
     }
 
     .news-featured .news-btn {
