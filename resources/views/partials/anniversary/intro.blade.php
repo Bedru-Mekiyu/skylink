@@ -33,9 +33,15 @@
                     <stop offset="40%" stop-color="#38bdf8" />
                     <stop offset="100%" stop-color="#2563eb" />
                 </linearGradient>
+                <radialGradient id="annivFillGrad" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" stop-color="#38bdf8" />
+                    <stop offset="100%" stop-color="#1e40af" />
+                </radialGradient>
             </defs>
             {{-- Background guide track --}}
             <path class="anniv-intro__path-bg" d="M72 20 H34 L28 48 C32 44 40 42 50 42 C65 42 76 52 76 68 C76 82 64 92 48 92 C34 92 24 84 22 74" />
+            {{-- Inner bloom fill --}}
+            <path class="anniv-intro__path-fill" d="M72 20 H34 L28 48 C32 44 40 42 50 42 C65 42 76 52 76 68 C76 82 64 92 48 92 C34 92 24 84 22 74 Z" />
             {{-- Animated glowing trace --}}
             <path class="anniv-intro__path-trace" d="M72 20 H34 L28 48 C32 44 40 42 50 42 C65 42 76 52 76 68 C76 82 64 92 48 92 C34 92 24 84 22 74" />
         </svg>

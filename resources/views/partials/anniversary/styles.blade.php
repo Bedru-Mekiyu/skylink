@@ -134,6 +134,13 @@
 @media (max-width: 576px) {
     .anniv-badge {
         margin-left: 6px;
+        padding: 3px 10px 3px 6px;
+        gap: 6px;
+    }
+}
+@media (max-width: 400px) {
+    .anniv-badge {
+        margin-left: 4px;
         padding: 3px 8px 3px 5px;
         gap: 5px;
     }
@@ -142,6 +149,7 @@
     }
     .anniv-badge__label {
         font-size: 9px;
+        letter-spacing: 0.08em;
     }
 }
 
@@ -244,6 +252,15 @@ body.anniv-modal-open {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.anniv-modal__emblem::before {
+    content: '';
+    position: absolute;
+    inset: -14px;
+    background: radial-gradient(circle, rgba(56, 189, 248, 0.22) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
 }
 
 .anniv-modal__emblem-num {
@@ -715,6 +732,8 @@ body.anniv-intro-playing {
     overflow: hidden;
     user-select: none;
     -webkit-user-select: none;
+    contain: strict;
+    will-change: transform, opacity;
     animation: anniv-intro-stage 5.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
@@ -727,6 +746,7 @@ body.anniv-intro-playing {
     background-size: 40px 40px;
     pointer-events: none;
     opacity: 0;
+    will-change: opacity;
     animation: anniv-fade-in 0.8s 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
@@ -734,6 +754,7 @@ body.anniv-intro-playing {
     position: absolute;
     inset: 0;
     pointer-events: none;
+    transform: translate3d(0, 0, 0);
 }
 
 .anniv-intro__particle {
@@ -742,6 +763,7 @@ body.anniv-intro-playing {
     background: #38bdf8;
     box-shadow: 0 0 10px #38bdf8;
     opacity: 0;
+    will-change: transform, opacity;
 }
 
 .anniv-intro__particle:nth-child(1) { width: 3px; height: 3px; top: 25%; left: 30%; animation: anniv-float 4s 0.3s ease-in-out infinite; }
@@ -788,6 +810,7 @@ body.anniv-intro-playing {
     text-align: center;
     max-width: 600px;
     padding: 0 24px;
+    will-change: transform, opacity;
 }
 
 /* Concentric rings expanding in intro */
@@ -801,6 +824,7 @@ body.anniv-intro-playing {
     transform: translate(-50%, -50%) scale(0.4);
     opacity: 0;
     pointer-events: none;
+    will-change: transform, opacity;
 }
 
 .anniv-intro__ring--1 {
@@ -828,24 +852,37 @@ body.anniv-intro-playing {
     margin: 0 auto 12px;
     display: block;
     overflow: visible;
+    will-change: transform, opacity;
 }
 
 .anniv-intro__path-bg {
-    stroke: rgba(56, 189, 248, 0.15);
-    stroke-width: 6;
+    stroke: rgba(56, 189, 248, 0.12);
+    stroke-width: 5;
     fill: none;
+}
+
+.anniv-intro__path-fill {
+    fill: url(#annivFillGrad);
+    opacity: 0;
+    will-change: opacity;
+    animation: anniv-fill-bloom 1.2s 2.0s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes anniv-fill-bloom {
+    to { opacity: 0.20; }
 }
 
 .anniv-intro__path-trace {
     fill: none;
     stroke: url(#annivTraceGrad);
-    stroke-width: 6;
+    stroke-width: 5.5;
     stroke-linecap: round;
     stroke-linejoin: round;
     stroke-dasharray: 400;
     stroke-dashoffset: 400;
+    will-change: stroke-dashoffset;
     animation: anniv-stroke-draw 1.6s 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    filter: drop-shadow(0 0 10px rgba(56, 189, 248, 0.85));
+    filter: drop-shadow(0 0 12px rgba(56, 189, 248, 0.85));
 }
 
 @keyframes anniv-stroke-draw {
@@ -853,35 +890,40 @@ body.anniv-intro-playing {
 }
 
 .anniv-intro__years-kicker {
-    font-size: clamp(14px, 2.5vw, 18px);
-    font-weight: 800;
-    letter-spacing: 0.35em;
+    font-size: clamp(13px, 2.2vw, 16px);
+    font-weight: 700;
+    letter-spacing: 0.38em;
     text-transform: uppercase;
     color: #38bdf8;
-    margin-bottom: 4px;
+    margin-bottom: 6px;
     opacity: 0;
     transform: translateY(10px);
+    will-change: transform, opacity;
     animation: anniv-text-reveal 0.9s 2.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .anniv-intro__brand {
-    font-size: clamp(18px, 3.2vw, 24px);
+    font-size: clamp(20px, 3.4vw, 26px);
     font-weight: 700;
+    letter-spacing: -0.01em;
     color: #ffffff;
-    margin-bottom: 12px;
+    margin-bottom: 16px;
+    line-height: 1.3;
     opacity: 0;
     transform: translateY(10px);
+    will-change: transform, opacity;
     animation: anniv-text-reveal 0.9s 2.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .anniv-intro__tagline {
-    font-size: clamp(13px, 2vw, 16px);
-    color: #94a3b8;
-    line-height: 1.5;
-    max-width: 480px;
+    font-size: clamp(14px, 2.2vw, 17px);
+    color: #cbd5e1;
+    line-height: 1.6;
+    max-width: 520px;
     margin: 0 auto;
     opacity: 0;
     transform: translateY(10px);
+    will-change: transform, opacity;
     animation: anniv-text-reveal 0.9s 3.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
