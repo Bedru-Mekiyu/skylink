@@ -21,7 +21,7 @@ class NewsDisplayController extends Controller
      */
     public function index(Request $request)
     {
-        $categories = NewsCategory::withCount(['news' => fn ($q) => $q->visible()])->get()
+        $categories = NewsCategory::get()
             ->sortBy(fn ($c) => array_search($c->name, NewsCategory::DISPLAY_ORDER, true) === false
                 ? 99
                 : array_search($c->name, NewsCategory::DISPLAY_ORDER, true))
@@ -79,7 +79,6 @@ class NewsDisplayController extends Controller
             'search' => $search,
             'featured' => $featured,
             'news' => $news,
-            'totalCount' => News::visible()->count(),
             'resultCount' => $news->total() + ($lead ? 1 : 0) + ($resultInBanner ? 1 : 0),
             'resultInBanner' => $resultInBanner,
             'videos' => $videos,

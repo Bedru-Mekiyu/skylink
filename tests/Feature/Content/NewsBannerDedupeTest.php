@@ -145,9 +145,14 @@ class NewsBannerDedupeTest extends TestCase
 
         $first = $this->get('/news')->assertOk();
         $this->assertSame('Story 21', $first->viewData('heroArticle')->title);
-        $this->assertSame(21, $first->viewData('totalCount'), '"All Content" counts all content, incl. the banner article');
-        $counts = $first->viewData('categories')->mapWithKeys(fn ($c) => [$c->name => $c->news_count])->all();
-        $this->assertSame(['News' => 14, 'Innovations' => 0, 'Events' => 7], $counts);
+        // The category links show only their names, no article counts.
+        $first->assertDontSee('news-chip__count', false);
+        $chips = preg_match_all('/<a class="news-chip"[^>]*>(.*?)<\/a>/s', $first->getContent(), $m) ? array_map('trim', $m[1]) : [];
+        $this->assertNotEmpty($chips);
+        $this->assertSame('All Content', $chips[0]);
+        foreach ($chips as $chip) {
+            $this->assertDoesNotMatchRegularExpression('/\d/', $chip, "no count in category link \"{$chip}\"");
+        }
 
         $seen = [];
         $lastPage = $first->viewData('news')->lastPage();

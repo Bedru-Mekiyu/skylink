@@ -209,13 +209,13 @@
                 <ul class="news-chips">
                     <li>
                         <a class="news-chip" href="{{ route('content.index', array_filter(['q' => $search])) }}#news-list" @if (! $activeCategory) aria-current="page" @endif>
-                            All Content <span class="news-chip__count">{{ $totalCount }}</span>
+                            All Content
                         </a>
                     </li>
                     @foreach ($categories as $category)
                         <li>
                             <a class="news-chip" href="{{ route('content.index', array_filter(['category' => $category->slug, 'q' => $search])) }}#news-list" @if ($activeCategory?->is($category)) aria-current="page" @endif>
-                                {{ $category->label }} <span class="news-chip__count">{{ $category->news_count }}</span>
+                                {{ $category->label }}
                             </a>
                         </li>
                     @endforeach
