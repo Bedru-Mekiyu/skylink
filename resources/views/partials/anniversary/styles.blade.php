@@ -25,6 +25,23 @@
     font-family: var(--anniv-font-ethiopic) !important;
 }
 
+[lang="am"] .anniv-motion__headline {
+    line-height: 1.48;
+    letter-spacing: 0.02em;
+}
+
+[lang="am"] .anniv-motion__tagline {
+    line-height: 1.65;
+}
+
+[lang="am"] .anniv-motion__kicker {
+    letter-spacing: 0.14em;
+}
+
+[lang="am"] .anniv-motion__sublabel {
+    letter-spacing: 0.12em;
+}
+
 /* ==========================================================================
    1. NAVBAR BADGE EMBLEM
    ========================================================================== */
@@ -988,6 +1005,10 @@ body.anniv-intro-playing {
     border-radius: 50%;
 }
 
+.anniv-motion-stage:hover .anniv-motion__ring--outer {
+    border-color: rgba(56, 189, 248, 0.6);
+}
+
 /* Ambient core glow */
 .anniv-motion__ambient-glow {
     position: absolute;
@@ -995,7 +1016,16 @@ body.anniv-intro-playing {
     background: radial-gradient(circle, rgba(56, 189, 248, 0.18) 0%, rgba(37, 99, 235, 0.08) 45%, transparent 70%);
     border-radius: 50%;
     pointer-events: none;
-    transition: opacity 0.8s ease;
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.is-settled .anniv-motion__ambient-glow {
+    animation: anniv-ambient-breathe 6s ease-in-out infinite;
+}
+
+@keyframes anniv-ambient-breathe {
+    0%, 100% { opacity: 0.85; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.06); }
 }
 
 /* Faint celestial radar grid */
@@ -1215,9 +1245,10 @@ body.anniv-intro-playing {
 
 @keyframes anniv-motion-flare {
     0%, 65% { opacity: 0; width: 0; height: 0; margin-top: 0; margin-left: 0; }
-    68% { opacity: 1; width: 260px; height: 260px; margin-top: -130px; margin-left: -130px; }
-    76% { opacity: 0.15; width: 310px; height: 310px; margin-top: -155px; margin-left: -155px; }
-    84%, 100% { opacity: 0; width: 340px; height: 340px; margin-top: -170px; margin-left: -170px; }
+    67.5% { opacity: 1; width: 190px; height: 190px; margin-top: -95px; margin-left: -95px; }
+    70% { opacity: 0.85; width: 280px; height: 280px; margin-top: -140px; margin-left: -140px; }
+    76% { opacity: 0.2; width: 330px; height: 330px; margin-top: -165px; margin-left: -165px; }
+    84%, 100% { opacity: 0; width: 350px; height: 350px; margin-top: -175px; margin-left: -175px; }
 }
 
 /* Central Grand Numeral 5 Container */
@@ -1278,12 +1309,13 @@ body.anniv-intro-playing {
 }
 
 .anniv-motion__specular-flare {
+    filter: drop-shadow(0 0 6px #ffffff) drop-shadow(0 0 12px #38bdf8);
     animation: anniv-flare-pulse 3s ease-in-out infinite;
 }
 
 @keyframes anniv-flare-pulse {
-    0%, 100% { r: 3.4; opacity: 1; }
-    50% { r: 4.2; opacity: 0.85; }
+    0%, 100% { r: 3.4; opacity: 1; filter: drop-shadow(0 0 6px #ffffff) drop-shadow(0 0 12px #38bdf8); }
+    50% { r: 4.4; opacity: 0.9; filter: drop-shadow(0 0 9px #ffffff) drop-shadow(0 0 18px #0ea5e9); }
 }
 
 /* Content Hierarchy & Reveal */
@@ -1488,6 +1520,55 @@ body.anniv-intro-playing {
     }
 }
 
+@media (max-width: 360px) {
+    .anniv-hero-motion {
+        max-width: 290px;
+        padding: 12px 10px;
+    }
+    .anniv-motion-stage {
+        width: 156px;
+        height: 156px;
+        margin-bottom: 6px;
+    }
+    .anniv-motion__ring--outer { inset: 6px; }
+    .anniv-motion__ring--middle { inset: 20px; }
+    .anniv-motion__ring--inner { inset: 36px; }
+    .anniv-motion__tracer {
+        top: 4px;
+        transform-origin: 3px 74px;
+    }
+    .anniv-motion__num-svg {
+        transform: scale(0.62);
+    }
+    .anniv-motion__kicker {
+        font-size: 9.5px;
+        letter-spacing: 0.2em;
+        padding: 2px 8px;
+    }
+    .anniv-motion__sublabel {
+        font-size: 9px;
+        letter-spacing: 0.12em;
+    }
+    .anniv-motion__headline {
+        font-size: 1.02rem;
+    }
+    .anniv-motion__tagline {
+        font-size: 0.78rem;
+        margin-bottom: 12px;
+    }
+    .anniv-motion__actions {
+        flex-direction: column;
+        gap: 6px;
+        width: 100%;
+    }
+    .anniv-motion__cta,
+    .anniv-motion__overview-trigger {
+        width: 100%;
+        justify-content: center;
+        padding: 8px 12px;
+    }
+}
+
 /* ==========================================================================
    6. NEWS PAGE EDITORIAL ANNIVERSARY CARD
    ========================================================================== */
@@ -1531,7 +1612,7 @@ body.anniv-intro-playing {
     height: 100%;
     background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
     transform: skewX(-20deg);
-    animation: anniv-badge-sheen 8s ease-in-out infinite;
+    animation: anniv-badge-sheen 10s ease-in-out infinite;
     pointer-events: none;
 }
 
@@ -1571,6 +1652,12 @@ body.anniv-intro-playing {
     font-weight: 800;
     color: #38bdf8;
     line-height: 1;
+    transition: color 0.25s ease, text-shadow 0.25s ease;
+}
+
+.anniv-news-card:hover .anniv-news-card__dot-year {
+    color: #ffffff;
+    text-shadow: 0 0 6px #38bdf8;
 }
 
 .anniv-news-card__dot-year--1 { top: -6px; left: 50%; transform: translateX(-50%); }

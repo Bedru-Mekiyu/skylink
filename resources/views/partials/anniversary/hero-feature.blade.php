@@ -70,8 +70,9 @@
                         <stop offset="100%" stop-color="#2563eb" />
                     </linearGradient>
                     <radialGradient id="cinematic5BloomGrad" cx="50%" cy="50%" r="50%">
-                        <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.32" />
-                        <stop offset="60%" stop-color="#1e40af" stop-opacity="0.12" />
+                        <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.36" />
+                        <stop offset="50%" stop-color="#2563eb" stop-opacity="0.16" />
+                        <stop offset="85%" stop-color="#1e40af" stop-opacity="0.06" />
                         <stop offset="100%" stop-color="#0f172a" stop-opacity="0" />
                     </radialGradient>
                 </defs>
