@@ -306,7 +306,7 @@
     .news-featured {
         display: grid;
         grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
-        height: clamp(260px, 45vh, 420px);
+        min-height: clamp(260px, 45vh, 420px);
         background: #fff;
         border-radius: var(--news-radius);
         overflow: hidden;
@@ -336,8 +336,12 @@
         flex-direction: column;
         justify-content: center;
         gap: 10px;
-        min-height: 0;
         padding: 24px 28px;
+    }
+
+    /* Never squeeze the text lines when the card is short; the card grows instead. */
+    .news-featured__body > * {
+        flex-shrink: 0;
     }
 
     .news-featured__label {
@@ -407,7 +411,7 @@
     @media (max-width: 991.98px) {
         .news-featured {
             grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
-            height: auto;
+            min-height: 0;
         }
 
         .news-featured__media {
