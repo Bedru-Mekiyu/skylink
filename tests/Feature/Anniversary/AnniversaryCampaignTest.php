@@ -32,6 +32,7 @@ class AnniversaryCampaignTest extends TestCase
             'services' => ['/services'],
             'products' => ['/products'],
             'portfolio' => ['/portfolio'],
+            'projects' => ['/projects'],
             'news' => ['/news'],
             'contact' => ['/contact'],
         ];
@@ -314,5 +315,44 @@ class AnniversaryCampaignTest extends TestCase
 
         $this->assertStringContainsString('id="annivProductCard"', $html);
         $this->assertStringContainsString('id="annivProductCenterpiece"', $html);
+    }
+
+    public function test_services_page_feature_renders_when_active(): void
+    {
+        Config::set('anniversary.force', true);
+        Config::set('app.debug', true);
+
+        $html = $this->get('/services')->assertOk()->getContent();
+
+        $this->assertStringContainsString('id="annivServicesCard"', $html);
+        $this->assertStringContainsString('id="annivServicesCenterpiece"', $html);
+        $this->assertStringContainsString('anniv-circ-stage', $html);
+        $this->assertStringContainsString('5 YEARS', $html);
+    }
+
+    public function test_portfolio_page_feature_renders_when_active(): void
+    {
+        Config::set('anniversary.force', true);
+        Config::set('app.debug', true);
+
+        $html = $this->get('/portfolio')->assertOk()->getContent();
+
+        $this->assertStringContainsString('id="annivPortfolioCard"', $html);
+        $this->assertStringContainsString('id="annivPortfolioCenterpiece"', $html);
+        $this->assertStringContainsString('anniv-circ-stage', $html);
+        $this->assertStringContainsString('5 YEARS', $html);
+    }
+
+    public function test_projects_page_feature_renders_when_active(): void
+    {
+        Config::set('anniversary.force', true);
+        Config::set('app.debug', true);
+
+        $html = $this->get('/projects')->assertOk()->getContent();
+
+        $this->assertStringContainsString('id="annivPortfolioCard"', $html);
+        $this->assertStringContainsString('id="annivPortfolioCenterpiece"', $html);
+        $this->assertStringContainsString('anniv-circ-stage', $html);
+        $this->assertStringContainsString('5 YEARS', $html);
     }
 }

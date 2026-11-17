@@ -36,8 +36,9 @@ Route::get('/contact', fn() => view('pages.contact'))->name('contact');
 Route::get('/products', [ProductController::class, 'index'])->name('products');
 Route::get('/products/{category}/{slug}', [ProductController::class, 'show'])->name('products.detail');
 
-// Portfolio (public)
+// Portfolio & Projects (public)
 Route::get('/portfolio', [PublicPortfolioController::class, 'index'])->name('portfolio');
+Route::get('/projects', [PublicPortfolioController::class, 'index'])->name('projects');
 
 // News (public)
 Route::get('/news', [NewsDisplayController::class, 'index'])->name('content.index');

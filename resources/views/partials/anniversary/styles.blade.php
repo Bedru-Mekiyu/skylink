@@ -2668,9 +2668,11 @@ body.anniv-intro-playing {
 }
 
 /* ==========================================================================
-   7b. PRODUCTS PAGE ANNIVERSARY FEATURE
+   7b. PRODUCTS, SERVICES & PORTFOLIO / PROJECTS ANNIVERSARY FEATURES
    ========================================================================== */
-.anniv-product-feature {
+.anniv-product-feature,
+.anniv-services-feature,
+.anniv-portfolio-feature {
     position: relative;
     margin: 10px 0 28px;
     padding: 24px 28px;
@@ -2683,12 +2685,16 @@ body.anniv-intro-playing {
     transition: transform 0.25s ease, border-color 0.25s ease;
 }
 
-.anniv-product-feature:hover {
+.anniv-product-feature:hover,
+.anniv-services-feature:hover,
+.anniv-portfolio-feature:hover {
     transform: translateY(-2px);
     border-color: rgba(34, 211, 238, 0.5);
 }
 
-.anniv-product-feature__inner {
+.anniv-product-feature__inner,
+.anniv-services-feature__inner,
+.anniv-portfolio-feature__inner {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -2698,11 +2704,15 @@ body.anniv-intro-playing {
     z-index: 1;
 }
 
-.anniv-product-feature__text {
+.anniv-product-feature__text,
+.anniv-services-feature__text,
+.anniv-portfolio-feature__text {
     flex: 1 1 360px;
 }
 
-.anniv-product-feature__kicker {
+.anniv-product-feature__kicker,
+.anniv-services-feature__kicker,
+.anniv-portfolio-feature__kicker {
     display: inline-flex;
     align-items: center;
     gap: 8px;
@@ -2718,7 +2728,9 @@ body.anniv-intro-playing {
     margin-bottom: 8px;
 }
 
-.anniv-product-feature__title {
+.anniv-product-feature__title,
+.anniv-services-feature__title,
+.anniv-portfolio-feature__title {
     font-size: 1.35rem;
     font-weight: 700;
     color: #ffffff;
@@ -2726,22 +2738,30 @@ body.anniv-intro-playing {
     line-height: 1.3;
 }
 
-.anniv-product-feature__desc {
+.anniv-product-feature__desc,
+.anniv-services-feature__desc,
+.anniv-portfolio-feature__desc {
     font-size: 0.92rem;
     color: #cbd5e1;
     margin: 0;
     line-height: 1.55;
 }
 
-.anniv-product-feature__centerpiece {
+.anniv-product-feature__centerpiece,
+.anniv-services-feature__centerpiece,
+.anniv-portfolio-feature__centerpiece {
     flex-shrink: 0;
 }
 
 @media (max-width: 767.98px) {
-    .anniv-product-feature {
+    .anniv-product-feature,
+    .anniv-services-feature,
+    .anniv-portfolio-feature {
         padding: 18px 16px;
     }
-    .anniv-product-feature__inner {
+    .anniv-product-feature__inner,
+    .anniv-services-feature__inner,
+    .anniv-portfolio-feature__inner {
         flex-direction: column-reverse;
         align-items: center;
         text-align: center;
@@ -2804,6 +2824,8 @@ body.anniv-intro-playing {
     .anniv-news-card:hover,
     .anniv-about-feature:hover,
     .anniv-product-feature:hover,
+    .anniv-services-feature:hover,
+    .anniv-portfolio-feature:hover,
     .anniv-circ-stage:hover {
         transform: none !important;
     }
