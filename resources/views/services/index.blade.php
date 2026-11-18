@@ -1017,17 +1017,9 @@
 <div class="text-center mb-4 py-3 bg-white">
   <div class="d-inline-flex flex-wrap justify-content-center gap-1 filter-bar">
     @php
-      $categories = [
-        'all' => 'All',
-        'software-service' => 'Software Service',
-        'smart-city' => 'Infrastructure',
-        'safety-security' => 'Security',
-        'enterprise-network' => 'Networking',
-        'consulting-training' => 'Consulting',
-        'ict-support' => 'ICT Support',
-        'gps-tracking' => 'GPS Tracking',
-        'datacenter-facility' => 'Data Center',
-      ];
+      // Filter buttons: "All" + one per published category (Admin > Service Categories).
+      $serviceCards = $serviceCards ?? collect();
+      $categories = ['all' => 'All'] + $serviceCards->mapWithKeys(fn ($c) => [$c->slug => $c->filter_text])->all();
     @endphp
 
     @foreach($categories as $key => $name)
@@ -1044,56 +1036,13 @@
 <div class="container">
   <div class="row" id="service-cards">
     @php
-      $services = [
-        [
-          'title' => 'Software Service',
-          'desc' => 'Custom software solutions like web, mobile and enterprise platforms.',
-            'img' => asset('assets/images/services/software service.jpg'),
-          'category' => 'software-service',
-        ],
-        [
-          'title' => 'Smart City & Infrastructure',
-          'desc' => 'Innovative infrastructure with EV charging, IoT and city automation.',
-            'img' => asset('assets/images/services/smart city.jpg'),
-          'category' => 'smart-city',
-        ],
-        [
-          'title' => 'Safety & Security',
-          'desc' => 'Cybersecurity, surveillance systems, and access control solutions.',
-            'img' => asset('assets/images/services/security.jpg'),
-          'category' => 'safety-security',
-        ],
-        [
-          'title' => 'Enterprise Network',
-          'desc' => 'Secure, scalable LAN/WAN and cloud network infrastructure.',
-          'category' => 'enterprise-network',
-          'img' => asset('assets/images/services/enterprise networking.png'),
-        ],
-        [
-          'title' => 'Consulting & Training',
-          'desc' => 'IT consulting, professional training, and strategy workshops.',
-          'img' => asset('assets/images/services/training-consulting.jpg'),
-          'category' => 'consulting-training',
-        ],
-        [
-          'title' => 'ICT Support',
-          'desc' => '24/7 technical support and remote system troubleshooting.',
-          'img' => asset('assets/images/services/ict support.jpg'),
-          'category' => 'ict-support',
-        ],
-        [
-          'title' => 'GPS Tracking',
-          'desc' => 'Fleet and asset tracking with real-time GPS and analytics.',
-          'img' => asset('assets/images/services/gps-tracking.png'),
-          'category' => 'gps-tracking',
-        ],
-        [
-          'title' => 'Data Center & Power',
-          'desc' => 'Secure data centers with backup power and climate control.',
-          'img' => asset('assets/images/services/datacenter.png'),
-          'category' => 'datacenter-facility',
-        ],
-      ];
+      // Cards: published categories in the admin's order (Admin > Service Categories).
+      $services = $serviceCards->map(fn ($c) => [
+        'title' => $c->card_heading,
+        'desc' => $c->description,
+        'img' => $c->image_url,
+        'category' => $c->slug,
+      ]);
     @endphp
 
     @foreach($services as $service)

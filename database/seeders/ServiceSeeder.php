@@ -11,12 +11,15 @@ class ServiceSeeder extends Seeder
         $servicesData = json_decode(file_get_contents(database_path('seeders/services.json')), true);
 
         foreach ($servicesData as $categorySlug => $category) {
-            $categoryId = DB::table('service_categories')->insertGetId([
-                'slug' => $categorySlug,
-                'name' => $category['category'],
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
+            // The category may already exist (the service-category migration creates the
+            // eight /services cards): reuse it instead of inserting a duplicate slug.
+            $categoryId = DB::table('service_categories')->where('slug', $categorySlug)->value('id')
+                ?? DB::table('service_categories')->insertGetId([
+                    'slug' => $categorySlug,
+                    'name' => $category['category'],
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
 
             foreach ($category['items'] as $item) {
                 DB::table('services')->insert([

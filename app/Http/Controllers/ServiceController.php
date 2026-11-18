@@ -73,6 +73,8 @@ class ServiceController extends Controller
                     ]
                 ],
                 'portfolioItems' => $portfolioItems,
+                // Cards + filter buttons, managed in Admin > Service Categories.
+                'serviceCards' => ServiceCategory::forServicesPage()->get(),
                 
                 'quoteSection' => [
                     'title' => 'Need A Free Quote? Please Feel Free to Contact Us',

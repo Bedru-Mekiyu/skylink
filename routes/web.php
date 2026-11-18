@@ -11,6 +11,7 @@ use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\Admin\ServiceadminController; 
+use App\Http\Controllers\Admin\ServiceCategoryAdminController;
 use App\Http\Controllers\Admin\AdminVideoController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\AdminController;
@@ -134,6 +135,11 @@ Route::resource('services', ServiceadminController::class);
     Route::get('/services/{services}/edit', [ServiceadminController::class, 'edit'])->name('services.edit');
     Route::put('/services/{services}', [ServiceadminController::class, 'update'])->name('services.update');
 Route::delete('/services/{services}', [ServiceadminController::class, 'destroy'])->name('services.destroy');
+
+    // Service categories: the cards and filter buttons on /services
+    Route::resource('service-categories', ServiceCategoryAdminController::class)
+        ->except('show')
+        ->parameters(['service-categories' => 'serviceCategory']);
 
 
 Route::resource('products', ProductadminController::class);
