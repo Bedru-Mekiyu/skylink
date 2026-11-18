@@ -3,6 +3,10 @@
     The burst is synced to the seal's CSS loop (the "anniv5-five" keyframe, impact at 50% = 4.0s),
     so CSS and canvas never drift. Off-screen or hidden tab: the CSS loop pauses and the canvas stops.
     Reduced motion or no JS: no canvas; the CSS keeps its still / CSS-only fallback.
+
+    Budgets are large (thousands of sparks on a desktop homepage). Each seal keeps the page responsive
+    on its own: it times its frames during every burst and scales the next burst down when the device
+    struggles (or back up when it copes), so a slow phone settles on what it can draw smoothly.
 --}}
 <script>
 (function () {
@@ -11,19 +15,25 @@
 
     var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var small = window.matchMedia && window.matchMedia('(max-width: 575.98px), (pointer: coarse)').matches;
-    var COLORS = ['#22D3EE', '#3B82F6', '#8B5CF6', '#EC4899', '#F5C451'];
+    // Palette by index: cyan, blue, violet, magenta, gold, white.
+    var COLORS = ['#22D3EE', '#3B82F6', '#8B5CF6', '#EC4899', '#F5C451', '#FFFFFF'];
+    var MAIN = [0, 1, 2, 3, 4], ECHO = [4, 5, 4, 0, 3];
     // Cycle moments (ms in the 8s loop): anticipation, impact, glitter window, quiet after.
     var GATHER = 3300, IMPACT = 4000, GLITTER_FROM = 4250, GLITTER_TO = 6200, QUIET = 7700;
 
-    // Particle budgets per variant and device (live cap includes crackle and glitter).
+    // Full-quality budgets per variant and device; the live cap includes crackle and glitter.
     var CONFIG = {
         feature: small
-            ? { primary: 75, echo: 30, crackle: 0.2, crackleEach: 2, glitter: 24, inward: 8, cap: 115, rings: 3, speed: 2.5, streak: 2.2, reach: 0.65, side: 0.7 }
-            : { primary: 220, echo: 90, crackle: 0.3, crackleEach: 3, glitter: 70, inward: 12, cap: 320, rings: 3, speed: 2.6, streak: 2.6, reach: 0.8, side: 0.85 },
+            ? { primary: 750, echo: 300, crackle: 0.2, crackleEach: 2, glitter: 240, inward: 10, cap: 1500, rings: 3, speed: 2.5, streak: 2.2, reach: 0.65, side: 0.7 }
+            : { primary: 2200, echo: 900, crackle: 0.3, crackleEach: 2, glitter: 700, inward: 16, cap: 4200, rings: 3, speed: 2.6, streak: 2.6, reach: 0.8, side: 0.85 },
         compact: small
-            ? { primary: 30, echo: 12, crackle: 0.15, crackleEach: 2, glitter: 10, inward: 5, cap: 50, rings: 2, speed: 2.1, streak: 1.5 }
-            : { primary: 50, echo: 20, crackle: 0.2, crackleEach: 2, glitter: 16, inward: 6, cap: 85, rings: 2, speed: 2.2, streak: 1.7 }
+            ? { primary: 300, echo: 120, crackle: 0.15, crackleEach: 2, glitter: 100, inward: 5, cap: 650, rings: 2, speed: 2.1, streak: 1.5 }
+            : { primary: 500, echo: 200, crackle: 0.2, crackleEach: 2, glitter: 160, inward: 6, cap: 1100, rings: 2, speed: 2.2, streak: 1.7 }
     };
+    // Starting quality (share of the budget): phones and low-core machines start lower, then adapt.
+    var START_QUALITY = (small ? 0.3 : 0.6) * ((navigator.hardwareConcurrency || 8) <= 4 ? 0.6 : 1);
+    // Per-frame work budget (ms) for this effect; above it the burst is thinned at once.
+    var WORK_BUDGET = small ? 6 : 8;
 
     function rand(a, b) { return a + Math.random() * (b - a); }
     function crossed(prev, now, at) { return prev <= now ? (prev < at && at <= now) : (at > prev || at <= now); }
@@ -46,7 +56,11 @@
         var duration = anim.effect.getTiming().duration || 8000;
         var parts = [], rings = [], flashes = [], inward = [];
         var W = 0, H = 0, cx = 0, cy = 0, s = 0;
-        var raf = 0, timer = 0, lastT = -1, lastNow = 0, running = false, glitterLeft = 0;
+        var raf = 0, timer = 0, lastT = -1, lastNow = 0, running = false, glitterLeft = 0, glitterRate = 0;
+        var quality = START_QUALITY, ceiling = 1, frameTimes = [], baseFrames = [], baseline = 16.7, slowRun = 0, spawnAt = 0;
+        // Draw buckets reused every frame: [colour][fade level 1..4][thin|thick], glitter by fade level.
+        var buckets = [], glitterBuckets = [[], [], [], [], []];
+        for (var bi = 0; bi < COLORS.length * 10; bi++) buckets.push([]);
 
         // Place the canvas: homepage = the seal plus the empty space above and beside it (never over
         // the copy below or outside the panel column); strip = left part of the strip, clear of the text.
@@ -78,65 +92,73 @@
         }
 
         function cycleTime() { var t = anim.currentTime || 0; return ((t % duration) + duration) % duration; }
+        function budget(n) { return Math.round(n * quality); }
+
+        function add(x, y, vx, vy, life, r, ci, kind, crackle) {
+            if (parts.length >= budget(cfg.cap)) return;
+            parts.push({ x: x, y: y, vx: vx, vy: vy, age: 0, life: life, r: r, ci: ci, kind: kind, crackle: crackle, seed: rand(0, 6) });
+        }
 
         function impact() {
             var k = s / 148; // tuned on the 148px homepage seal, scaled for the others
+            // The page's own pace, measured during the anticipation just before this burst.
+            if (baseFrames.length >= 5) baseline = Math.max(8, median(baseFrames));
+            baseFrames.length = 0;
             flashes.push({ kind: 'bloom', age: 0, life: 0.38, r: s * 0.62 });
             flashes.push({ kind: 'streak', age: 0, life: 0.5, r: s * cfg.streak / 2 });
-            var ringColors = ['#22D3EE', '#3B82F6', '#8B5CF6'];
             for (var i = 0; i < cfg.rings; i++) {
-                rings.push({ age: -i * 0.08, life: 0.75 + i * 0.18, r0: s * 0.2, r1: s * (variant === 'feature' ? 1.15 - i * 0.18 : 0.78 - i * 0.12), w: (3.2 - i * 0.8) * Math.max(k, 0.55), c: ringColors[i] });
+                rings.push({ age: -i * 0.08, life: 0.75 + i * 0.18, r0: s * 0.2, r1: s * (variant === 'feature' ? 1.15 - i * 0.18 : 0.78 - i * 0.12), w: (3.2 - i * 0.8) * Math.max(k, 0.55), ci: i });
             }
-            spray(cfg.primary, COLORS, function () { return s * cfg.speed * Math.pow(Math.random(), 0.55); });
-            glitterLeft = cfg.glitter;
+            spray(budget(cfg.primary), MAIN, function () { return s * cfg.speed * Math.pow(Math.random(), 0.55); });
+            glitterLeft = budget(cfg.glitter);
+            glitterRate = glitterLeft / ((GLITTER_TO - GLITTER_FROM) / 1000);
+            frameTimes.length = 0;
         }
 
         // Second bang a beat later: a wider, more even ring of mostly gold and white sparks.
-        function echo() {
-            var echoColors = ['#F5C451', '#FFFFFF', '#F5C451', '#22D3EE', '#EC4899'];
-            spray(cfg.echo, echoColors, function () { return s * cfg.speed * rand(0.75, 1.05); });
-        }
+        function echo() { spray(budget(cfg.echo), ECHO, function () { return s * cfg.speed * rand(0.75, 1.05); }); }
 
         function spray(count, palette, speed) {
-            var k = s / 148;
-            for (var j = 0; j < count && parts.length < cfg.cap; j++) {
+            // Many sparks: finer strokes so the burst stays sparkly rather than a solid blob.
+            var k = Math.max(s / 148, 0.6) * (count > 400 ? 0.7 : 1);
+            for (var j = 0; j < count; j++) {
                 var a = rand(0, Math.PI * 2), v = speed();
-                parts.push({ x: cx, y: cy, vx: Math.cos(a) * v, vy: Math.sin(a) * v, age: 0, life: rand(1.4, 2.4),
-                    r: rand(1.4, 3) * Math.max(k, 0.6), c: palette[j % palette.length], crackle: Math.random() < cfg.crackle, popped: false, kind: 'p' });
+                add(cx, cy, Math.cos(a) * v, Math.sin(a) * v, rand(1.4, 2.4), rand(1.2, 2.8) * k, palette[j % palette.length], 0, Math.random() < cfg.crackle);
             }
         }
 
         function gather() {
             for (var i = 0; i < cfg.inward; i++) {
-                inward.push({ a: (i / cfg.inward) * Math.PI * 2 + rand(-0.2, 0.2), r0: s * rand(0.85, 1.05), c: COLORS[i % 5] });
+                inward.push({ a: (i / cfg.inward) * Math.PI * 2 + rand(-0.2, 0.2), r0: s * rand(0.85, 1.05), ci: i % 5 });
             }
         }
 
+        // kind: 0 = spark, 1 = crackle, 2 = glitter. Dead particles are swap-removed (no array shifting).
         function step(dt, t) {
-            var drag = Math.exp(-1.7 * dt), g = s * 0.55;
+            var drag = Math.exp(-1.7 * dt), g = s * 0.55, sway = s * 0.06 * dt;
             for (var i = parts.length - 1; i >= 0; i--) {
                 var p = parts[i];
                 p.age += dt;
-                if (p.age >= p.life) { parts.splice(i, 1); continue; }
-                if (p.kind === 'glitter') {
-                    p.y += p.vy * dt; p.x += Math.sin((p.age + p.seed) * 2.2) * s * 0.06 * dt;
-                    continue;
-                }
-                p.vx *= drag; p.vy = p.vy * drag + (p.kind === 'c' ? g * 0.6 : g) * dt;
+                if (p.age >= p.life) { parts[i] = parts[parts.length - 1]; parts.pop(); continue; }
+                if (p.kind === 2) { p.y += p.vy * dt; p.x += Math.sin((p.age + p.seed) * 2.2) * sway; continue; }
+                p.vx *= drag; p.vy = p.vy * drag + (p.kind === 1 ? g * 0.6 : g) * dt;
                 p.x += p.vx * dt; p.y += p.vy * dt;
                 // Secondary crackle: small sparks pop near the end of some trails.
-                if (p.crackle && !p.popped && p.age > p.life * 0.62) {
-                    p.popped = true;
-                    for (var c = 0; c < cfg.crackleEach && parts.length < cfg.cap; c++) {
+                if (p.crackle && p.age > p.life * 0.62) {
+                    p.crackle = false;
+                    for (var c = 0; c < cfg.crackleEach; c++) {
                         var a = rand(0, Math.PI * 2), v = s * rand(0.25, 0.6);
-                        parts.push({ x: p.x, y: p.y, vx: Math.cos(a) * v, vy: Math.sin(a) * v, age: 0, life: rand(0.25, 0.45), r: p.r * 0.7, c: c % 2 ? '#FFFFFF' : '#F5C451', kind: 'c' });
+                        add(p.x, p.y, Math.cos(a) * v, Math.sin(a) * v, rand(0.25, 0.45), p.r * 0.7, c % 2 ? 5 : 4, 1, false);
                     }
                 }
             }
             // Gold glitter drifting down while "5 YEARS" settles.
-            if (t >= GLITTER_FROM && t < GLITTER_TO && glitterLeft > 0 && parts.length < cfg.cap && Math.random() < dt * cfg.glitter / 1.6) {
-                glitterLeft--;
-                parts.push({ x: cx + rand(-s * 0.7, s * 0.7), y: cy - s * rand(0.35, 0.85), vy: s * rand(0.14, 0.24), age: 0, life: rand(1.6, 2.4), r: rand(0.7, 1.5), c: '#F5C451', kind: 'glitter', seed: rand(0, 6) });
+            if (t >= GLITTER_FROM && t < GLITTER_TO && glitterLeft > 0) {
+                var n = Math.min(glitterLeft, Math.floor(glitterRate * dt + Math.random()));
+                for (var gi = 0; gi < n; gi++) {
+                    glitterLeft--;
+                    add(cx + rand(-s * 0.8, s * 0.8), cy - s * rand(0.3, 0.95), 0, s * rand(0.14, 0.24), rand(1.6, 2.4), rand(0.6, 1.4), 4, 2, false);
+                }
             }
             for (var r = rings.length - 1; r >= 0; r--) { rings[r].age += dt; if (rings[r].age >= rings[r].life) rings.splice(r, 1); }
             for (var f = flashes.length - 1; f >= 0; f--) { flashes[f].age += dt; if (flashes[f].age >= flashes[f].life) flashes.splice(f, 1); }
@@ -148,9 +170,10 @@
             // Anticipation: light streaks race inward and a core glow gathers.
             if (t >= GATHER && t < IMPACT && inward.length) {
                 var q = (t - GATHER) / (IMPACT - GATHER), e = Math.pow(q, 2.2);
+                ctx.lineWidth = 1.6;
                 for (var i = 0; i < inward.length; i++) {
                     var n = inward[i], r = n.r0 * (1 - e), tail = s * 0.16 * (0.3 + q);
-                    ctx.globalAlpha = 0.25 + 0.6 * q; ctx.strokeStyle = n.c; ctx.lineWidth = 1.6;
+                    ctx.globalAlpha = 0.25 + 0.6 * q; ctx.strokeStyle = COLORS[n.ci];
                     ctx.beginPath();
                     ctx.moveTo(cx + Math.cos(n.a) * r, cy + Math.sin(n.a) * r);
                     ctx.lineTo(cx + Math.cos(n.a) * (r + tail), cy + Math.sin(n.a) * (r + tail));
@@ -175,56 +198,108 @@
                 }
             }
             // Shockwaves: different speeds, thinning and fading as they grow.
-            for (var r = 0; r < rings.length; r++) {
-                var rg = rings[r]; if (rg.age < 0) continue;
+            for (var rr = 0; rr < rings.length; rr++) {
+                var rg = rings[rr]; if (rg.age < 0) continue;
                 var p = rg.age / rg.life, ease = 1 - Math.pow(1 - p, 3);
-                ctx.globalAlpha = 0.85 * Math.pow(1 - p, 1.4); ctx.strokeStyle = rg.c; ctx.lineWidth = Math.max(0.4, rg.w * (1 - p));
+                ctx.globalAlpha = 0.85 * Math.pow(1 - p, 1.4); ctx.strokeStyle = COLORS[rg.ci]; ctx.lineWidth = Math.max(0.4, rg.w * (1 - p));
                 ctx.beginPath(); ctx.arc(cx, cy, rg.r0 + (rg.r1 - rg.r0) * ease, 0, 6.2832); ctx.stroke();
             }
-            // Particles with short motion trails; glitter as twinkling points. Batched into one path per
-            // colour / fade level / width, so a 300-particle frame is ~20 draw calls, not 300.
-            var batches = {};
+            // Particles: sorted into reused buckets, then one path per bucket (~60 draw calls whatever the count).
+            for (var c0 = 0; c0 < buckets.length; c0++) buckets[c0].length = 0;
+            for (var g0 = 0; g0 < 5; g0++) glitterBuckets[g0].length = 0;
+            var thick = 2 * Math.max(s / 148, 0.6);
+            // Keep the gold 5 readable: sparks fade in only once they leave the numeral's zone, and
+            // each spark is dimmer when thousands overlap (additive blending would otherwise glare white).
+            var inner = s * 0.26, outer = s * 0.48, inner2 = inner * inner, span = outer - inner;
+            var density = Math.min(1, Math.sqrt(400 / Math.max(400, parts.length)) * 1.6);
             for (var j = 0; j < parts.length; j++) {
-                var pt = parts[j], life = 1 - pt.age / pt.life, glit = pt.kind === 'glitter';
-                var alpha = glit ? Math.min(1, life * 1.6) * (0.6 + 0.4 * Math.sin((pt.age + pt.seed) * 5)) : Math.pow(life, 1.3);
-                var key = pt.c + '|' + Math.ceil(alpha * 4) + '|' + (glit ? 'g' : (pt.r > 2.2 ? 3 : 1.8));
-                (batches[key] || (batches[key] = [])).push(pt);
-            }
-            ctx.lineCap = 'round';
-            for (var key2 in batches) {
-                var bits = key2.split('|'), list = batches[key2];
-                ctx.globalAlpha = Number(bits[1]) / 4;
-                ctx.strokeStyle = ctx.fillStyle = bits[0];
-                ctx.beginPath();
-                if (bits[2] === 'g') {
-                    for (var g2 = 0; g2 < list.length; g2++) { var q2 = list[g2]; ctx.rect(q2.x - q2.r, q2.y - q2.r, q2.r * 2, q2.r * 2); }
-                    ctx.fill();
+                var pt = parts[j], life = 1 - pt.age / pt.life;
+                if (pt.kind === 2) {
+                    var ga = Math.min(1, life * 1.6) * (0.6 + 0.4 * Math.sin((pt.age + pt.seed) * 5));
+                    glitterBuckets[Math.min(4, Math.ceil(ga * 4))].push(pt);
                 } else {
-                    ctx.lineWidth = Number(bits[2]) * Math.max(s / 148, 0.6);
-                    for (var p2 = 0; p2 < list.length; p2++) { var q3 = list[p2]; ctx.moveTo(q3.x, q3.y); ctx.lineTo(q3.x - q3.vx * 0.07, q3.y - q3.vy * 0.07); }
-                    ctx.stroke();
+                    var dx = pt.x - cx, dy = pt.y - cy, d2 = dx * dx + dy * dy;
+                    if (d2 < inner2) continue;
+                    var zone = d2 >= outer * outer ? 1 : (Math.sqrt(d2) - inner) / span;
+                    var level = Math.min(4, Math.ceil(Math.pow(life, 1.3) * zone * density * 4));
+                    buckets[pt.ci * 10 + level * 2 + (pt.r > thick ? 1 : 0)].push(pt);
                 }
             }
+            ctx.lineCap = 'butt'; // flat ends: much cheaper than round caps at thousands of strokes
+            var widths = [1.4 * Math.max(s / 148, 0.6), 2.6 * Math.max(s / 148, 0.6)];
+            for (var bk = 0; bk < buckets.length; bk++) {
+                var list = buckets[bk]; if (!list.length) continue;
+                ctx.globalAlpha = ((bk % 10) >> 1) / 4;
+                ctx.strokeStyle = COLORS[(bk / 10) | 0];
+                ctx.lineWidth = widths[bk & 1];
+                ctx.beginPath();
+                for (var p2 = 0; p2 < list.length; p2++) { var q3 = list[p2]; ctx.moveTo(q3.x, q3.y); ctx.lineTo(q3.x - q3.vx * 0.07, q3.y - q3.vy * 0.07); }
+                ctx.stroke();
+            }
+            ctx.fillStyle = COLORS[4];
+            for (var gl = 1; gl < 5; gl++) {
+                var gls = glitterBuckets[gl]; if (!gls.length) continue;
+                ctx.globalAlpha = gl / 4;
+                ctx.beginPath();
+                for (var g2 = 0; g2 < gls.length; g2++) { var q2 = gls[g2]; ctx.rect(q2.x - q2.r, q2.y - q2.r, q2.r * 2, q2.r * 2); }
+                ctx.fill();
+            }
             ctx.globalAlpha = 1; ctx.globalCompositeOperation = 'source-over';
+        }
+
+        // The burst is judged by how much it slows frames compared with the page's own pace just
+        // before it (measured during the anticipation), so a page that already runs slowly is not
+        // blamed on the burst, and drawing cost the browser pays later (rasterising) is counted.
+        function median(list) { var a = list.slice().sort(function (x, y) { return x - y; }); return a[a.length >> 1]; }
+
+        // After each burst: noticeable slowdown -> smaller next burst; none -> grow towards full.
+        function adapt() {
+            if (frameTimes.length < 20) return;
+            var sorted = frameTimes.slice().sort(function (a, b) { return a - b; });
+            var ratio = sorted[Math.floor(sorted.length * 0.9)] / baseline;
+            // A level that proved too heavy becomes a ceiling, so the burst never probes back into jank.
+            if (ratio > 1.45) { ceiling = Math.max(0.03, quality * 0.9); quality = Math.max(0.03, quality * (ratio > 2.2 ? 0.5 : 0.75)); }
+            else if (ratio < 1.15) quality = Math.min(ceiling, quality * 1.35);
+            frameTimes.length = 0;
+        }
+
+        // Instant guard: a costly frame (long JS work, or a long gap between frames) thins the live
+        // burst right away, so the page stays responsive even during the very first burst.
+        function guard(work, elapsed, now) {
+            // Ignore the frames right after sparks are created and one-off hiccups (e.g. garbage
+            // collection): act on two slow frames in a row.
+            var slow = parts.length && now - spawnAt > 60 && (work > WORK_BUDGET || elapsed > Math.max(34, baseline * 2.2));
+            slowRun = slow ? slowRun + 1 : 0;
+            if (slowRun < 2) return;
+            slowRun = 0;
+            parts.length = Math.floor(parts.length * 0.65);
+            glitterLeft = Math.floor(glitterLeft * 0.5);
+            quality = Math.max(0.03, quality * 0.8);
         }
 
         function frame(now) {
             raf = 0;
             if (!running) return;
             var t = cycleTime();
-            var dt = Math.min((now - (lastNow || now)) / 1000, 0.05);
+            var elapsed = lastNow ? now - lastNow : 16.7;
+            var dt = Math.min(elapsed / 1000, 0.05);
             lastNow = now;
             if (lastT >= 0) {
                 if (crossed(lastT, t, GATHER)) gather();
-                if (crossed(lastT, t, IMPACT)) { inward.length = 0; impact(); }
-                if (crossed(lastT, t, IMPACT + 300)) echo();
+                if (crossed(lastT, t, IMPACT)) { inward.length = 0; impact(); spawnAt = now; }
+                if (crossed(lastT, t, IMPACT + 300)) { echo(); spawnAt = now; }
             }
             lastT = t;
+            var w0 = performance.now();
             step(dt, t);
             draw(t);
+            var work = performance.now() - w0;
+            if (parts.length) frameTimes.push(elapsed);
+            else if (t >= GATHER && t < IMPACT) baseFrames.push(elapsed);
+            guard(work, elapsed, now);
             var busy = parts.length || rings.length || flashes.length || (t >= GATHER - 150 && t < QUIET);
             if (busy) raf = requestAnimationFrame(frame);
-            else { ctx.clearRect(0, 0, W, H); inward.length = 0; schedule(t); }
+            else { ctx.clearRect(0, 0, W, H); inward.length = 0; adapt(); schedule(t); }
         }
 
         // Idle between bursts: one timer until the next anticipation, no animation frames.
@@ -245,11 +320,12 @@
                 running = false;
                 if (raf) cancelAnimationFrame(raf); raf = 0;
                 clearTimeout(timer); timer = 0;
-                parts.length = rings.length = flashes.length = inward.length = 0;
+                parts.length = rings.length = flashes.length = inward.length = frameTimes.length = baseFrames.length = 0;
                 ctx.clearRect(0, 0, W, H);
             },
             relayout: function () { if (running) layout(); },
-            particleCount: function () { return parts.length; }
+            particleCount: function () { return parts.length; },
+            quality: function () { return quality; }
         };
     }
 
