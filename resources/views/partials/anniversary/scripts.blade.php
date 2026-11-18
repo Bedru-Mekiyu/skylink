@@ -18,11 +18,11 @@
     // Particle budgets per variant and device (live cap includes crackle and glitter).
     var CONFIG = {
         feature: small
-            ? { primary: 64, crackle: 0.25, crackleEach: 2, glitter: 20, inward: 6, cap: 80, rings: 3, speed: 2.5, streak: 2.2, reach: 0.65, side: 0.7 }
-            : { primary: 140, crackle: 0.3, crackleEach: 3, glitter: 46, inward: 10, cap: 180, rings: 3, speed: 2.6, streak: 2.6, reach: 0.8, side: 0.85 },
+            ? { primary: 75, echo: 30, crackle: 0.2, crackleEach: 2, glitter: 24, inward: 8, cap: 115, rings: 3, speed: 2.5, streak: 2.2, reach: 0.65, side: 0.7 }
+            : { primary: 220, echo: 90, crackle: 0.3, crackleEach: 3, glitter: 70, inward: 12, cap: 320, rings: 3, speed: 2.6, streak: 2.6, reach: 0.8, side: 0.85 },
         compact: small
-            ? { primary: 18, crackle: 0, crackleEach: 0, glitter: 6, inward: 4, cap: 26, rings: 2, speed: 2.1, streak: 1.5 }
-            : { primary: 30, crackle: 0.15, crackleEach: 2, glitter: 10, inward: 5, cap: 44, rings: 2, speed: 2.2, streak: 1.7 }
+            ? { primary: 30, echo: 12, crackle: 0.15, crackleEach: 2, glitter: 10, inward: 5, cap: 50, rings: 2, speed: 2.1, streak: 1.5 }
+            : { primary: 50, echo: 20, crackle: 0.2, crackleEach: 2, glitter: 16, inward: 6, cap: 85, rings: 2, speed: 2.2, streak: 1.7 }
     };
 
     function rand(a, b) { return a + Math.random() * (b - a); }
@@ -42,7 +42,7 @@
         seal.appendChild(canvas);
         seal.classList.add('has-fx');
         var ctx = canvas.getContext('2d');
-        var dpr = Math.min(window.devicePixelRatio || 1, 2);
+        var dpr = Math.min(window.devicePixelRatio || 1, small ? 1.5 : 2); // phones: less pixel fill per frame
         var duration = anim.effect.getTiming().duration || 8000;
         var parts = [], rings = [], flashes = [], inward = [];
         var W = 0, H = 0, cx = 0, cy = 0, s = 0;
@@ -87,12 +87,23 @@
             for (var i = 0; i < cfg.rings; i++) {
                 rings.push({ age: -i * 0.08, life: 0.75 + i * 0.18, r0: s * 0.2, r1: s * (variant === 'feature' ? 1.15 - i * 0.18 : 0.78 - i * 0.12), w: (3.2 - i * 0.8) * Math.max(k, 0.55), c: ringColors[i] });
             }
-            for (var j = 0; j < cfg.primary && parts.length < cfg.cap; j++) {
-                var a = rand(0, Math.PI * 2), v = s * cfg.speed * Math.pow(Math.random(), 0.55);
-                parts.push({ x: cx, y: cy, vx: Math.cos(a) * v, vy: Math.sin(a) * v, age: 0, life: rand(1.4, 2.4),
-                    r: rand(1.4, 3) * Math.max(k, 0.6), c: COLORS[j % 5], crackle: Math.random() < cfg.crackle, popped: false, kind: 'p' });
-            }
+            spray(cfg.primary, COLORS, function () { return s * cfg.speed * Math.pow(Math.random(), 0.55); });
             glitterLeft = cfg.glitter;
+        }
+
+        // Second bang a beat later: a wider, more even ring of mostly gold and white sparks.
+        function echo() {
+            var echoColors = ['#F5C451', '#FFFFFF', '#F5C451', '#22D3EE', '#EC4899'];
+            spray(cfg.echo, echoColors, function () { return s * cfg.speed * rand(0.75, 1.05); });
+        }
+
+        function spray(count, palette, speed) {
+            var k = s / 148;
+            for (var j = 0; j < count && parts.length < cfg.cap; j++) {
+                var a = rand(0, Math.PI * 2), v = speed();
+                parts.push({ x: cx, y: cy, vx: Math.cos(a) * v, vy: Math.sin(a) * v, age: 0, life: rand(1.4, 2.4),
+                    r: rand(1.4, 3) * Math.max(k, 0.6), c: palette[j % palette.length], crackle: Math.random() < cfg.crackle, popped: false, kind: 'p' });
+            }
         }
 
         function gather() {
@@ -123,7 +134,7 @@
                 }
             }
             // Gold glitter drifting down while "5 YEARS" settles.
-            if (t >= GLITTER_FROM && t < GLITTER_TO && glitterLeft > 0 && Math.random() < dt * cfg.glitter / 1.6) {
+            if (t >= GLITTER_FROM && t < GLITTER_TO && glitterLeft > 0 && parts.length < cfg.cap && Math.random() < dt * cfg.glitter / 1.6) {
                 glitterLeft--;
                 parts.push({ x: cx + rand(-s * 0.7, s * 0.7), y: cy - s * rand(0.35, 0.85), vy: s * rand(0.14, 0.24), age: 0, life: rand(1.6, 2.4), r: rand(0.7, 1.5), c: '#F5C451', kind: 'glitter', seed: rand(0, 6) });
             }
@@ -170,17 +181,29 @@
                 ctx.globalAlpha = 0.85 * Math.pow(1 - p, 1.4); ctx.strokeStyle = rg.c; ctx.lineWidth = Math.max(0.4, rg.w * (1 - p));
                 ctx.beginPath(); ctx.arc(cx, cy, rg.r0 + (rg.r1 - rg.r0) * ease, 0, 6.2832); ctx.stroke();
             }
-            // Particles with short motion trails; glitter as twinkling points.
+            // Particles with short motion trails; glitter as twinkling points. Batched into one path per
+            // colour / fade level / width, so a 300-particle frame is ~20 draw calls, not 300.
+            var batches = {};
             for (var j = 0; j < parts.length; j++) {
-                var pt = parts[j], life = 1 - pt.age / pt.life;
-                ctx.strokeStyle = ctx.fillStyle = pt.c;
-                if (pt.kind === 'glitter') {
-                    ctx.globalAlpha = Math.min(1, life * 1.6) * (0.6 + 0.4 * Math.sin((pt.age + pt.seed) * 5));
-                    ctx.beginPath(); ctx.arc(pt.x, pt.y, pt.r, 0, 6.2832); ctx.fill();
-                    continue;
+                var pt = parts[j], life = 1 - pt.age / pt.life, glit = pt.kind === 'glitter';
+                var alpha = glit ? Math.min(1, life * 1.6) * (0.6 + 0.4 * Math.sin((pt.age + pt.seed) * 5)) : Math.pow(life, 1.3);
+                var key = pt.c + '|' + Math.ceil(alpha * 4) + '|' + (glit ? 'g' : (pt.r > 2.2 ? 3 : 1.8));
+                (batches[key] || (batches[key] = [])).push(pt);
+            }
+            ctx.lineCap = 'round';
+            for (var key2 in batches) {
+                var bits = key2.split('|'), list = batches[key2];
+                ctx.globalAlpha = Number(bits[1]) / 4;
+                ctx.strokeStyle = ctx.fillStyle = bits[0];
+                ctx.beginPath();
+                if (bits[2] === 'g') {
+                    for (var g2 = 0; g2 < list.length; g2++) { var q2 = list[g2]; ctx.rect(q2.x - q2.r, q2.y - q2.r, q2.r * 2, q2.r * 2); }
+                    ctx.fill();
+                } else {
+                    ctx.lineWidth = Number(bits[2]) * Math.max(s / 148, 0.6);
+                    for (var p2 = 0; p2 < list.length; p2++) { var q3 = list[p2]; ctx.moveTo(q3.x, q3.y); ctx.lineTo(q3.x - q3.vx * 0.07, q3.y - q3.vy * 0.07); }
+                    ctx.stroke();
                 }
-                ctx.globalAlpha = Math.pow(life, 1.3); ctx.lineWidth = pt.r; ctx.lineCap = 'round';
-                ctx.beginPath(); ctx.moveTo(pt.x, pt.y); ctx.lineTo(pt.x - pt.vx * 0.07, pt.y - pt.vy * 0.07); ctx.stroke();
             }
             ctx.globalAlpha = 1; ctx.globalCompositeOperation = 'source-over';
         }
@@ -194,6 +217,7 @@
             if (lastT >= 0) {
                 if (crossed(lastT, t, GATHER)) gather();
                 if (crossed(lastT, t, IMPACT)) { inward.length = 0; impact(); }
+                if (crossed(lastT, t, IMPACT + 300)) echo();
             }
             lastT = t;
             step(dt, t);
