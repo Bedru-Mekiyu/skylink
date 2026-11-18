@@ -4,10 +4,6 @@
 <div class="container my-5">
     <h1 class="text-center mb-4">Explore Our Products</h1>
 
-    @if (\App\Support\Anniversary::isActive())
-        @include('partials.anniversary.product-feature')
-    @endif
-
     <!-- Search and Filter Controls -->
     <div class="row mb-4 g-3">
         <div class="col-md-6">

@@ -201,10 +201,6 @@
     @include('partials.news.hero')
 
     <div class="container pb-5 news-list" id="news-list">
-        @if (\App\Support\Anniversary::isActive())
-            @include('partials.anniversary.news-feature')
-        @endif
-
         {{-- Filters and search work through the URL (?category=&q=&page=). Every link
              and form that changes the list ends in #news-list, so the browser lands
              on the filter bar instead of the top of the page (see the script below). --}}

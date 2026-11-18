@@ -20,7 +20,7 @@ class LayoutIntegrityTest extends TestCase
     {
         return [
             'home' => ['/'], 'about' => ['/about'], 'services' => ['/services'],
-            'products' => ['/products'], 'portfolio' => ['/portfolio'], 'projects' => ['/projects'],
+            'products' => ['/products'], 'portfolio' => ['/portfolio'],
             'news' => ['/news'], 'contact' => ['/contact'],
         ];
     }

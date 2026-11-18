@@ -29,10 +29,6 @@
     @include('partials.portfolio.hero', ['heroProject' => $heroProject ?? null])
 
     <div class="container pb-5">
-        @if (\App\Support\Anniversary::isActive())
-            @include('partials.anniversary.portfolio-feature')
-        @endif
-
         <div class="news-toolbar">
             <form id="portfolioSearchForm" class="news-search" role="search">
                 <label for="portfolioSearchInput" class="visually-hidden">Search projects</label>

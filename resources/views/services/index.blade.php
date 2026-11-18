@@ -1009,10 +1009,6 @@
 
 <section class="services-section py-5" id="services">
   <div class="container">
-    @if (\App\Support\Anniversary::isActive())
-        @include('partials.anniversary.services-feature')
-    @endif
-
     <h2 class=" mb-4">Let's Check Out Services</h2>
 
 <!-- Filter Buttons -->

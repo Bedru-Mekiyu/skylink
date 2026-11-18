@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title', 'Homepage - Sky Link IT Solutions')
-@section('description', \App\Support\Anniversary::shareDescription() ?? 'Explore our portfolio of successful IT projects and digital solutions delivered to clients across Ethiopia.')
+@section('description', 'Explore our portfolio of successful IT projects and digital solutions delivered to clients across Ethiopia.')
 
 @push('styles')
     <style>
@@ -1094,8 +1094,8 @@ max-height: 20 vh;
     <!-- Hero Section -->
     <section class="hero" id="home">
         <div class="container">
-            <div class="row align-items-center">
-                <div class="{{ \App\Support\Anniversary::isActive() ? 'col-lg-7 col-xl-7' : 'col-lg-8' }}">
+            <div class="row">
+                <div class="col-lg-8">
                     <div class="hero-content">
                         
                         <h1>Helping businesses succeed with the best IT services in Ethiopia</h1>
@@ -1103,11 +1103,6 @@ max-height: 20 vh;
                         <a href="#services" class="btn-get-started">More</a>
                     </div>
                 </div>
-                @if (\App\Support\Anniversary::isActive())
-                    <div class="col-lg-5 col-xl-5 mt-4 mt-lg-0">
-                        @include('partials.anniversary.hero-feature')
-                    </div>
-                @endif
             </div>
         </div>
         @include('partials.hero-media')
@@ -1127,7 +1122,7 @@ max-height: 20 vh;
                 <div class="row text-center">
                     <div class="col-4">
                         <div class="stat-item">
-                            <div class="stat-number" data-target="5+">0</div>
+                            <div class="stat-number" data-target="4+">0</div>
                             <small>Years Experience</small>
                         </div>
                     </div>
@@ -1148,10 +1143,6 @@ max-height: 20 vh;
         </div>
     </div>
 </section>
-
-@if (\App\Support\Anniversary::isActive() && \App\Support\Anniversary::hasSectionContent())
-    @include('partials.anniversary.section')
-@endif
 
     <!-- Trusted Partners -->
 <section class="partners-section">
