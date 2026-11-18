@@ -1091,6 +1091,9 @@ max-height: 20 vh;
 
 
 
+    @php
+        $anniversaryHome = \App\Support\Anniversary::isActive();
+    @endphp
     <!-- Hero Section -->
     <section class="hero" id="home">
         <div class="container">
@@ -1103,10 +1106,24 @@ max-height: 20 vh;
                         <a href="#services" class="btn-get-started">More</a>
                     </div>
                 </div>
+                @if ($anniversaryHome)
+                    <div class="col-lg-4 d-none d-lg-block anniv5-hero-slot">
+                        <x-anniversary.seal variant="feature" />
+                    </div>
+                @endif
             </div>
         </div>
         @include('partials.hero-media')
     </section>
+
+    {{-- Below lg the hero is a fixed 100vh with overflow hidden, so the panel follows it instead. --}}
+    @if ($anniversaryHome)
+        <div class="anniv5-home-band d-lg-none">
+            <div class="container">
+                <x-anniversary.seal variant="feature" />
+            </div>
+        </div>
+    @endif
 
 
 

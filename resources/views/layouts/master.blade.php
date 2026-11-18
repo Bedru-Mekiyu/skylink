@@ -459,10 +459,19 @@
 @yield('additional-styles')
    
     @stack('styles')
+    @php
+        $anniversaryActive = \App\Support\Anniversary::isActive();
+    @endphp
+    @if ($anniversaryActive)
+        @include('partials.anniversary.head')
+    @endif
     {{-- The scripts stack is rendered once, before </body>, after Bootstrap. --}}
 
 </head>
 <body>
+    @if ($anniversaryActive)
+        @include('partials.anniversary.intro')
+    @endif
     {{-- Top bar removed: its phone numbers, address, social links and the "Service Active" badge now live in the contact launcher (partials/contact-launcher). --}}
 
 <!-- Main Navbar -->
@@ -650,6 +659,10 @@
             </div>
         </nav>
 
+    {{-- 5-year ceremony strip; the homepage shows the full panel beside its hero instead. --}}
+    @if ($anniversaryActive && ! request()->routeIs('home'))
+        <x-anniversary.seal variant="compact" />
+    @endif
 
     <!-- Main Content -->
     <main>
@@ -742,6 +755,9 @@ s0.parentNode.insertBefore(s1,s0);
 <!--End of Tawk.to Script-->
 
     
+    @if ($anniversaryActive)
+        @include('partials.anniversary.scripts')
+    @endif
     @stack('scripts')
 </body>
 </html>
