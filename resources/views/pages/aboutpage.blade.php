@@ -162,11 +162,18 @@
        or parallax shift, no blue grade; only the bottom, behind the title, is
        darkened so it stays readable. */
     /* At most one screen: viewport minus the navbar and any strip under it (--top-strip-h,
-       set by that strip while it is shown). When that caps the height, the whole photo
-       scales down, centred on navy. */
+       set by that strip while it is shown). The photo always runs edge to edge; when the
+       height is capped only the top/bottom are trimmed, keeping the logo and faces (focal
+       point ~18% down). Scrolling past the banner slides the photo up to reveal the rest. */
     .about-hero { width: 100%; height: auto; aspect-ratio: 4271 / 2809; max-height: calc(100svh - 56px - var(--top-strip-h, 0px)); }
     .about-hero__zoom { animation: none; }
-    .about-hero__img { top: 0; height: 100%; transform: none; object-fit: contain; object-position: 50% 50%; }
+    .about-hero__img { top: 0; height: 100%; transform: none; object-fit: cover; object-position: 50% 18%; }
+    @supports (animation-timeline: scroll(root)) {
+        @media (prefers-reduced-motion: no-preference) {
+            .about-hero__img { animation: aboutHeroReveal linear both; animation-timeline: scroll(root); animation-range: 0 80svh; }
+            @keyframes aboutHeroReveal { from { object-position: 50% 18%; } to { object-position: 50% 85%; } }
+        }
+    }
     .about-hero__tint { background: linear-gradient(0deg, rgba(6, 18, 43, 0.85) 0%, rgba(6, 18, 43, 0.5) 20%, rgba(6, 18, 43, 0) 42%); }
     .about-hero__vignette, .about-hero__grain { display: none; }
     @media (max-width: 575.98px) {

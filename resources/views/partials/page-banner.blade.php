@@ -210,11 +210,18 @@
 
     /* ---- bannerFit 'whole': the entire photo, natural colours ---- */
     /* At most one screen: viewport minus the navbar and any strip under it (--top-strip-h,
-       set by that strip while it is shown). When that caps the height, the whole photo
-       scales down, centred on navy. */
+       set by that strip while it is shown). The photo always runs edge to edge; when the
+       height is capped only the top/bottom are trimmed, keeping the logo and faces
+       (--pb-focus, ~22% down). Scrolling past the banner slides the photo up to reveal the rest. */
     .page-banner--whole { width: 100%; min-height: 0; aspect-ratio: var(--pb-ratio); max-height: calc(100svh - 56px - var(--top-strip-h, 0px)); padding: 0 0 84px; }
     .page-banner--whole .page-banner__zoom { animation: none; }
-    .page-banner--whole .page-banner__img { top: 0; height: 100%; object-fit: contain; object-position: 50% 50%; }
+    .page-banner--whole .page-banner__img { top: 0; height: 100%; object-fit: cover; object-position: 50% 22%; }
+    @supports (animation-timeline: scroll(root)) {
+        @media (prefers-reduced-motion: no-preference) and (min-width: 768px) {
+            .page-banner--whole .page-banner__img { animation: pageBannerReveal linear both; animation-timeline: scroll(root); animation-range: 0 80svh; }
+            @keyframes pageBannerReveal { from { object-position: 50% 22%; } to { object-position: 50% 85%; } }
+        }
+    }
     .page-banner--whole .page-banner__tint {
         background: linear-gradient(0deg, rgba(4, 12, 34, 0.88) 0%, rgba(4, 12, 34, 0.72) 26%, rgba(4, 12, 34, 0.25) 46%, rgba(4, 12, 34, 0) 60%);
     }
