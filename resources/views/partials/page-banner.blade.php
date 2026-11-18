@@ -209,9 +209,12 @@
     }
 
     /* ---- bannerFit 'whole': the entire photo, natural colours ---- */
-    .page-banner--whole { min-height: 0; aspect-ratio: var(--pb-ratio); padding: 0 0 84px; }
+    /* At most one screen: viewport minus the navbar and any strip under it (--top-strip-h,
+       set by that strip while it is shown). When that caps the height, the whole photo
+       scales down, centred on navy. */
+    .page-banner--whole { width: 100%; min-height: 0; aspect-ratio: var(--pb-ratio); max-height: calc(100svh - 56px - var(--top-strip-h, 0px)); padding: 0 0 84px; }
     .page-banner--whole .page-banner__zoom { animation: none; }
-    .page-banner--whole .page-banner__img { top: 0; height: 100%; object-position: 50% 50%; }
+    .page-banner--whole .page-banner__img { top: 0; height: 100%; object-fit: contain; object-position: 50% 50%; }
     .page-banner--whole .page-banner__tint {
         background: linear-gradient(0deg, rgba(4, 12, 34, 0.88) 0%, rgba(4, 12, 34, 0.72) 26%, rgba(4, 12, 34, 0.25) 46%, rgba(4, 12, 34, 0) 60%);
     }

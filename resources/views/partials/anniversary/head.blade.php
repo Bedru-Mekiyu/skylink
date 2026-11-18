@@ -128,6 +128,8 @@
     .anniv5 .anniv5__line:lang(am) { font-style: normal; font-size: 1rem; }
 
     /* ---------- Compact strip (all public pages except home) ---------- */
+    /* Pages that size their banner to one screen subtract this strip's height. */
+    :root { --top-strip-h: 84px; }
     .anniv5--compact {
         position: relative; overflow: hidden; color: var(--anniv5-ink); /* keeps the burst inside the strip */
         background:
