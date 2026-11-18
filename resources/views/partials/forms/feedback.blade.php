@@ -51,7 +51,7 @@
             .form-feedback--ok { background: #ecfdf5; border: 1px solid #6ee7b7; color: #065f46; }
             .form-feedback--error { background: #fef2f2; border: 1px solid #fca5a5; color: #991b1b; }
             .form-feedback:focus { outline: 3px solid #3B82F6; outline-offset: 2px; }
-            .form-feedback span[lang="am"] { font-family: var(--font-reading); }
+            .form-feedback span[lang="am"] { font-family: var(--font-ui); }
         </style>
     @endpush
     @push('scripts')

@@ -23,7 +23,7 @@
         }
 
         body {
-            font-family: var(--font-reading);
+            font-family: var(--font-body);
             line-height: 1.6;
             color: #333;
         }
