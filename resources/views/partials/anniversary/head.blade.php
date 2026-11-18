@@ -15,10 +15,11 @@
     .anniv5-mark { display: block; flex: none; overflow: visible; }
     .anniv5-mark * { transform-box: view-box; transform-origin: 100px 100px; }
     .anniv5-mark__ring { fill: none; stroke-width: 2.5; }
-    .anniv5-mark__orbit {
-        fill: none; stroke: rgba(232, 238, 250, 0.28); stroke-width: 1.2; stroke-dasharray: 1.5 9;
-        animation: anniv5-spin 24s linear infinite;
-    }
+    .anniv5-mark__orbit { fill: none; stroke: rgba(232, 238, 250, 0.28); stroke-width: 1.2; stroke-dasharray: 1.5 9; }
+    /* Orbit: calm drift, speeds up and tightens before the 5, celebrates after, eases back (360deg = seamless). */
+    .anniv5-mark__orbit-g { animation: anniv5-orbit var(--anniv5-cycle) linear infinite; }
+    .anniv5-mark__node { opacity: .85; animation: anniv5-node-a var(--anniv5-cycle) cubic-bezier(.55, 0, .85, .4) infinite; }
+    .anniv5-mark__node--b { animation-name: anniv5-node-b; }
     .anniv5-mark__flash { fill: #fff; opacity: 0; animation: anniv5-flash var(--anniv5-cycle) ease-out infinite; }
     .anniv5-mark__rays line {
         stroke-width: 3; stroke-linecap: round; stroke-dasharray: 32 64; stroke-dashoffset: 32; opacity: 0;
@@ -44,40 +45,73 @@
         animation: anniv5-years var(--anniv5-cycle) ease-out infinite;
     }
 
-    /* Timeline (8s): 1-4 at 0/12/24/36%, 5 lands at 48%, burst 48-66%, settled 56-92%, crossfade to 1. */
+    /* Timeline (8s): 1-4 at 0/12/24/36%; anticipation 42-50% (orbit tightens, nodes race in);
+       IMPACT at 50% (4.0s): 5 punches 1 -> 1.08 -> 1, flash, rays; the canvas burst in the scripts
+       partial is synced to this keyframe; settled "5 YEARS" 56-92%; crossfade back to 1. */
     @keyframes anniv5-count {
         0% { opacity: 0; transform: translateY(16px) scale(.92); }
         3%, 9% { opacity: 1; transform: none; }
         12%, 100% { opacity: 0; transform: translateY(-16px) scale(1.04); }
     }
     @keyframes anniv5-five {
-        0%, 47% { opacity: 0; transform: scale(1.7); }
-        51% { opacity: 1; transform: scale(.95); }
-        55%, 92% { opacity: 1; transform: translateY(-10px) scale(.86); }
+        0%, 47% { opacity: 0; transform: scale(1.6); }
+        50% { opacity: 1; transform: scale(1); }
+        51.2% { opacity: 1; transform: scale(1.08); }
+        53% { opacity: 1; transform: scale(1); }
+        57%, 92% { opacity: 1; transform: translateY(-10px) scale(.86); }
         100% { opacity: 0; transform: translateY(-10px) scale(.86); }
     }
     @keyframes anniv5-years {
-        0%, 54% { opacity: 0; }
-        60%, 92% { opacity: 1; }
+        0%, 56% { opacity: 0; }
+        61%, 92% { opacity: 1; }
         100% { opacity: 0; }
     }
     @keyframes anniv5-flash {
-        0%, 48% { opacity: 0; transform: scale(.4); }
-        51% { opacity: .32; }
-        60%, 100% { opacity: 0; transform: scale(1.25); }
+        0%, 49.5% { opacity: 0; transform: scale(.4); }
+        50.5% { opacity: .42; }
+        58%, 100% { opacity: 0; transform: scale(1.3); }
     }
     @keyframes anniv5-ray {
-        0%, 48% { opacity: 0; stroke-dashoffset: 32; }
+        0%, 50% { opacity: 0; stroke-dashoffset: 32; }
         51% { opacity: 1; }
-        56% { stroke-dashoffset: 0; }
+        55% { stroke-dashoffset: 0; }
         64%, 100% { opacity: 0; stroke-dashoffset: -32; }
     }
     @keyframes anniv5-spark {
-        0%, 49% { opacity: 0; transform: rotate(var(--a)) translateY(-18px); }
+        0%, 50% { opacity: 0; transform: rotate(var(--a)) translateY(-18px); }
         52% { opacity: 1; }
         68%, 100% { opacity: 0; transform: rotate(var(--a)) translateY(-90px); }
     }
-    @keyframes anniv5-spin { to { transform: rotate(360deg); } }
+    @keyframes anniv5-orbit {
+        0% { transform: rotate(0deg); }
+        42% { transform: rotate(50deg); }
+        50% { transform: rotate(150deg) scale(.9); }
+        62% { transform: rotate(290deg) scale(1.02); }
+        70% { transform: rotate(315deg) scale(1); }
+        100% { transform: rotate(360deg); }
+    }
+    @keyframes anniv5-node-a {
+        0%, 42% { opacity: .85; transform: none; }
+        49.5% { opacity: 1; transform: translateY(72px) scale(.5); }
+        50%, 55% { opacity: 0; transform: none; }
+        62%, 100% { opacity: .85; transform: none; }
+    }
+    @keyframes anniv5-node-b {
+        0%, 42% { opacity: .85; transform: none; }
+        49.5% { opacity: 1; transform: translateY(-72px) scale(.5); }
+        50%, 55% { opacity: 0; transform: none; }
+        62%, 100% { opacity: .85; transform: none; }
+    }
+
+    /* The canvas burst (scripts partial) replaces the CSS sparks when JS runs; without JS they stay. */
+    .anniv5.has-fx .anniv5-mark__sparks { display: none; }
+    .anniv5__fx {
+        position: absolute; pointer-events: none; z-index: 1;
+        /* Soft edges so particles fade out instead of being cut at the layer's border. */
+        -webkit-mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, #000 66%, transparent 100%);
+                mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, #000 66%, transparent 100%);
+    }
+    .anniv5.is-paused .anniv5__fx { visibility: hidden; }
 
     /* Off-screen or hidden tab: freeze (scripts partial toggles the class). */
     .anniv5.is-paused .anniv5-mark * { animation-play-state: paused; }
@@ -95,7 +129,7 @@
 
     /* ---------- Compact strip (all public pages except home) ---------- */
     .anniv5--compact {
-        position: relative; color: var(--anniv5-ink);
+        position: relative; overflow: hidden; color: var(--anniv5-ink); /* keeps the burst inside the strip */
         background:
             radial-gradient(120% 220% at 0% 50%, rgba(34, 211, 238, .16), transparent 55%),
             radial-gradient(90% 200% at 100% 50%, rgba(139, 92, 246, .18), transparent 60%),
@@ -215,5 +249,7 @@
         .anniv5-mark *, .anniv5-mark__n { animation: none !important; }
         .anniv5-mark__n--5 { opacity: 1; transform: translateY(-10px) scale(.86); }
         .anniv5-mark__years { opacity: 1; }
+        .anniv5-mark__flash { opacity: .1; transform: none; } /* soft static glow behind the still 5 */
+        .anniv5__fx { display: none; }
     }
 </style>

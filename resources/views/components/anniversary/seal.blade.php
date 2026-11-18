@@ -29,7 +29,12 @@
             </defs>
             <circle class="anniv5-mark__disc" cx="100" cy="100" r="92" fill="url(#{{ $uid }}-core)"/>
             <circle class="anniv5-mark__flash" cx="100" cy="100" r="64"/>
-            <circle class="anniv5-mark__orbit" cx="100" cy="100" r="80"/>
+            {{-- Orbit with two photon nodes: they race inward before the 5 lands, then circle again. --}}
+            <g class="anniv5-mark__orbit-g">
+                <circle class="anniv5-mark__orbit" cx="100" cy="100" r="80"/>
+                <circle class="anniv5-mark__node anniv5-mark__node--a" cx="100" cy="20" r="3.2" fill="#22D3EE"/>
+                <circle class="anniv5-mark__node anniv5-mark__node--b" cx="100" cy="180" r="2.6" fill="#EC4899"/>
+            </g>
             <circle class="anniv5-mark__ring" cx="100" cy="100" r="92" stroke="url(#{{ $uid }}-ring)"/>
             <g class="anniv5-mark__rays">
                 @for ($i = 0; $i < 12; $i++)
