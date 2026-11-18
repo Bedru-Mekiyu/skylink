@@ -30,11 +30,10 @@ class NewsDisplayController extends Controller
         $activeCategory = $categories->firstWhere('slug', (string) $request->query('category'));
         $search = mb_substr(trim((string) $request->query('q')), 0, 100);
 
-        // Top banner: always the newest video (switches by itself when one is
-        // added in the admin); with no videos at all, the newest article.
-        // Whatever the banner shows is shown nowhere else on this page.
-        $heroVideo = Video::with('category')->newestFirst()->first();
-        $heroArticle = $heroVideo ? null : News::visible()->with('category')->newestFirst()->first();
+        // Top banner: the single newest published item of either kind (switches by
+        // itself whenever anything newer is published). Whatever the banner shows
+        // is shown nowhere else on this page.
+        [$heroVideo, $heroArticle] = $this->bannerItem();
 
         // Every visible article that matches the filter/search (for the result count).
         $matching = News::query()
@@ -85,6 +84,31 @@ class NewsDisplayController extends Controller
             'heroVideo' => $heroVideo,
             'heroArticle' => $heroArticle,
         ]);
+    }
+
+    /**
+     * The banner item as [video, article] (one of them null): the newest visible
+     * article (published, or scheduled and due; soft-deleted ones never count)
+     * against the newest video (videos are public from the moment they are saved,
+     * so created_at is their publish time). Ties: newer created_at, then higher id.
+     *
+     * @return array{0: ?Video, 1: ?News}
+     */
+    private function bannerItem(): array
+    {
+        $video = Video::with('category')->newestFirst()->first();
+        $article = News::visible()->with('category')
+            ->orderByDesc('published_at')->orderByDesc('created_at')->orderByDesc('id')
+            ->first();
+
+        if (! $video || ! $article) {
+            return [$video, $article];
+        }
+
+        $articleKey = [$article->published_at?->getTimestamp() ?? 0, $article->created_at?->getTimestamp() ?? 0, $article->id];
+        $videoKey = [$video->created_at?->getTimestamp() ?? 0, $video->created_at?->getTimestamp() ?? 0, $video->id];
+
+        return $articleKey > $videoKey ? [null, $article] : [$video, null];
     }
 
     /**

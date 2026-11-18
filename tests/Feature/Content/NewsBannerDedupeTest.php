@@ -82,7 +82,8 @@ class NewsBannerDedupeTest extends TestCase
 
     public function test_a_video_banner_does_not_change_the_article_listing(): void
     {
-        $this->video('A video', '2025-01-01 10:00:00');
+        // The banner is the newest item of either kind, so the video is the newest here.
+        $this->video('A video', '2025-04-01 10:00:00');
         $a = $this->article('Newest article', $this->news, '2025-03-01');
         $this->article('Older article', $this->news, '2025-02-01');
 

@@ -228,7 +228,9 @@ class AdminNewsFormTest extends TestCase
     public function test_featuring_a_draft_or_scheduled_article_keeps_the_current_featured_story(): void
     {
         // A video fills the /news banner (as on the real site), so the listing starts with the newest article.
-        \App\Models\Video::create(['title' => 'Banner video', 'slug' => 'banner-video', 'video_url' => 'https://youtu.be/G_ci2p1-3N4', 'news_category_id' => \App\Models\NewsCategory::first()->id]);
+        // The banner shows the newest item of either kind, so the video stays newest through the time travel below.
+        \App\Models\Video::create(['title' => 'Banner video', 'slug' => 'banner-video', 'video_url' => 'https://youtu.be/G_ci2p1-3N4', 'news_category_id' => \App\Models\NewsCategory::first()->id])
+            ->forceFill(['created_at' => now()->addDays(5)])->save();
         $this->store(['title' => 'Live featured story about servers', 'is_featured' => '1'])->assertSessionHasNoErrors();
         $this->store(['title' => 'Draft featured piece on cables', 'is_featured' => '1', 'status' => 'draft'])->assertSessionHasNoErrors();
         $this->store(['title' => 'Scheduled featured piece on networks', 'is_featured' => '1', 'status' => 'scheduled',
