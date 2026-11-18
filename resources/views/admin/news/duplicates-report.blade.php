@@ -34,6 +34,6 @@
 @push('styles')
 <style>
     .news-report-card.card:hover { transform: none; box-shadow: none; }
-    .news-report { white-space: pre-wrap; word-break: normal; overflow-wrap: anywhere; background: #f8f9fa; border: 1px solid var(--border-color); border-radius: 0.5rem; padding: 1rem; font-size: 0.85rem; font-family: 'Inter', 'Noto Sans Ethiopic', 'Nyala', ui-monospace, monospace; max-height: 70vh; overflow: auto; }
+    .news-report { white-space: pre-wrap; word-break: normal; overflow-wrap: anywhere; background: #f8f9fa; border: 1px solid var(--border-color); border-radius: 0.5rem; padding: 1rem; font-size: 0.85rem; font-family: var(--font-ui); max-height: 70vh; overflow: auto; }
 </style>
 @endpush

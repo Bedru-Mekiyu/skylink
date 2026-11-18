@@ -8,7 +8,9 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["'Instrument Sans'", 'ui-sans-serif', 'system-ui'],
+        sans: ['var(--font-ui)'],
+        serif: ['var(--font-reading)'],
+        mono: ['var(--font-mono)'],
       },
     },
   },

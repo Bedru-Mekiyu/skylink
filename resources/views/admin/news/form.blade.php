@@ -176,8 +176,6 @@
 </div>
 
 @push('styles')
-{{-- Ethiopic letters; Latin text keeps the admin's Inter font. --}}
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Ethiopic:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
     .news-panel { border: 1px solid var(--border-color); border-radius: 0.75rem; padding: 1rem 1.1rem; background: #fff; }
     .news-panel__title { float: none; width: auto; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-muted); margin-bottom: 0.6rem; padding: 0; }
@@ -190,7 +188,7 @@
     .news-editor__toolbar .btn:focus-visible { outline: 3px solid #3B82F6; outline-offset: 1px; }
     .news-editor__sep { width: 1px; background: #dee2e6; margin: 4px 2px; }
     .news-editor__area { min-height: 320px; max-height: 70vh; overflow-y: auto; padding: 14px 16px; line-height: 1.75; outline: none; }
-    .news-editor__area[lang="am"] { font-family: 'Inter', 'Noto Sans Ethiopic', 'Nyala', sans-serif; font-size: 1.05rem; line-height: 1.95; }
+    .news-editor__area[lang="am"] { font-family: var(--font-ui); font-size: 1.05rem; line-height: 1.95; }
     .news-editor__area:empty::before { content: 'Write the article here…'; color: #9ca3af; }
     .news-editor__area h2 { font-size: 1.4rem; margin: 1rem 0 0.5rem; }
     .news-editor__area h3 { font-size: 1.2rem; margin: 1rem 0 0.5rem; }

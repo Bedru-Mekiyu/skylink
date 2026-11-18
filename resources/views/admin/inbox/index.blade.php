@@ -121,7 +121,7 @@
     .inbox-unread td { background: #f8fbff; }
     .inbox-unread .inbox-name { font-weight: 700 !important; }
     .inbox-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #2563eb; margin-right: 6px; vertical-align: middle; }
-    .inbox-name[lang="am"], .inbox-snippet[lang="am"] { font-family: 'Inter', 'Noto Sans Ethiopic', 'Nyala', sans-serif; }
+    .inbox-name[lang="am"], .inbox-snippet[lang="am"] { font-family: var(--font-ui); }
     @media (min-width: 768px) {
         .inbox-card th, .inbox-card td[data-label="Type"], .inbox-card td[data-label="Status"] { white-space: nowrap; word-break: normal; }
         .inbox-snippet { max-width: 360px; }

@@ -117,6 +117,6 @@
 <style>
     .inbox-card.card:hover { transform: none; box-shadow: none; }
     .inbox-message { white-space: pre-wrap; overflow-wrap: anywhere; background: #f9fafb; border: 1px solid var(--border-color); border-radius: 0.5rem; padding: 1rem; line-height: 1.7; }
-    [lang="am"] { font-family: 'Inter', 'Noto Sans Ethiopic', 'Nyala', sans-serif; }
+    [lang="am"] { font-family: var(--font-ui); }
 </style>
 @endpush

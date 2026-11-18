@@ -1023,7 +1023,7 @@ max-height: 20 vh;
     }
 
     .service-content p {
-        font-size: 0.85rem;
+        font-size: 0.875rem;
         line-height: 1.6;
     }
 

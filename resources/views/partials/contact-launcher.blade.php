@@ -30,7 +30,7 @@
         /* Same 20px corner inset as the Tawk bubble on the opposite side. */
         --sk-left: calc(20px + env(safe-area-inset-left, 0px));
         --sk-bottom: calc(20px + env(safe-area-inset-bottom, 0px));
-        font-family: 'Poppins', sans-serif;
+        font-family: var(--font-ui);
     }
 
     .sk-contact__launcher {

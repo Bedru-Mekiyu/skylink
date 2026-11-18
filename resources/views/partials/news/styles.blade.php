@@ -1,7 +1,4 @@
 {{-- Shared styles for /news and /news/{slug}. Included inside @push('styles'). --}}
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Ethiopic:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
     .news-page {
         --news-blue: #3B82F6;
@@ -15,12 +12,6 @@
         --news-shadow-hover: 0 14px 34px rgba(30, 64, 175, 0.16);
         background: var(--news-bg);
         color: var(--news-ink);
-    }
-
-    /* Amharic: Ge'ez glyphs from Noto Sans Ethiopic, Latin stays Poppins. */
-    .news-page,
-    .news-page h1, .news-page h2, .news-page h3, .news-page p, .news-page a, .news-page input, .news-page button {
-        font-family: 'Poppins', 'Noto Sans Ethiopic', sans-serif;
     }
 
     [lang="am"] {
@@ -275,7 +266,6 @@
         color: var(--news-ink);
         text-decoration: none;
     }
-
     /* The whole card is clickable through the title link. */
     .news-card__title a::after {
         content: '';
@@ -367,7 +357,6 @@
         color: var(--news-ink);
         text-decoration: none;
     }
-
     .news-featured__title a::after {
         content: '';
         position: absolute;

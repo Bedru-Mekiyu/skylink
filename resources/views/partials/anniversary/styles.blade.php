@@ -1,7 +1,4 @@
 {{-- Sky Link 5-Year Anniversary Styles --}}
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Ethiopic:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
 /* ==========================================================================
@@ -22,11 +19,6 @@
     --anniv-midnight: #101A35;
     --anniv-text-light: #e2e8f0;
     --anniv-text-muted: #94a3b8;
-    --anniv-font-ethiopic: 'Noto Sans Ethiopic', 'Nyala', 'Poppins', sans-serif;
-}
-
-[lang="am"] {
-    font-family: var(--anniv-font-ethiopic) !important;
 }
 
 [lang="am"] .anniv-motion__headline,

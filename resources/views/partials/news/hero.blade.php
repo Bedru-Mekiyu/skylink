@@ -247,7 +247,7 @@
         overflow: hidden;
     }
 
-    .news-hero__title[lang="am"] { font-family: 'Noto Sans Ethiopic', 'Poppins', sans-serif; line-height: 1.35; }
+    .news-hero__title[lang="am"] { font-family: var(--font-ui); line-height: 1.35; }
 
     .news-hero__meta {
         display: flex;
@@ -326,7 +326,7 @@
         text-overflow: ellipsis;
     }
 
-    .news-player__title[lang="am"] { font-family: 'Noto Sans Ethiopic', 'Poppins', sans-serif; }
+    .news-player__title[lang="am"] { font-family: var(--font-ui); }
 
     .news-player__close {
         flex: 0 0 auto;

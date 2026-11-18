@@ -16,15 +16,10 @@
 
     <title>{{ config('app.name', 'Laravel') }} - Admin Portal</title>
 
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-
-    <!-- ✅ Google Font: Instrument Sans -->
-    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans&display=swap" rel="stylesheet">
 
     <!-- Scripts & Styles -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @include('partials.typography')
 
     <!-- Optional: Custom Animations -->
     <style>
