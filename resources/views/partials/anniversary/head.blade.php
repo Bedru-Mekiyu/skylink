@@ -109,20 +109,19 @@
     .anniv5--compact .anniv5-mark { width: 64px; height: 64px; }
     .anniv5--compact .anniv5__copy { min-width: 0; }
 
-    /* ---------- Feature panel (homepage) ---------- */
+    /* ---------- Feature panel (homepage): no card, it sits straight on the hero / page ---------- */
     .anniv5--feature {
         position: relative; z-index: 2; width: 100%; max-width: 400px; margin-inline: auto;
-        padding: 1.75rem 1.6rem 1.9rem; text-align: center; color: var(--anniv5-ink);
-        background: linear-gradient(160deg, rgba(27, 42, 85, .92), rgba(16, 26, 53, .94));
-        border: 1px solid rgba(232, 238, 250, .14); border-radius: 22px;
-        box-shadow: 0 24px 60px rgba(4, 10, 28, .45), inset 0 1px 0 rgba(255, 255, 255, .06);
+        text-align: center; color: var(--anniv5-ink);
     }
-    .anniv5--feature::before {
-        content: ''; position: absolute; inset: 0; border-radius: inherit; padding: 1px; pointer-events: none;
-        background: linear-gradient(135deg, var(--anniv5-cyan), transparent 35%, transparent 65%, var(--anniv5-gold));
-        -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-        -webkit-mask-composite: xor; mask-composite: exclude; opacity: .7;
+    /* On the hero photo: light text, with a soft shadow so it stays readable over any frame. */
+    .anniv5-hero-slot .anniv5--feature .anniv5__kicker,
+    .anniv5-hero-slot .anniv5--feature .anniv5__title,
+    .anniv5-hero-slot .anniv5--feature .anniv5__message {
+        text-shadow: 0 0 1px rgba(4, 10, 28, 1), 0 1px 3px rgba(4, 10, 28, .95), 0 0 10px rgba(4, 10, 28, .85), 0 0 24px rgba(4, 10, 28, .7);
     }
+    .anniv5-hero-slot .anniv5--feature .anniv5__kicker { color: #FFD97A; }
+    .anniv5-hero-slot .anniv5--feature .anniv5__message { color: #fff; }
     .anniv5--feature .anniv5-mark { width: 148px; height: 148px; margin: 0 auto 1rem; }
     .anniv5--feature .anniv5__title {
         margin: .55rem 0 .7rem; font-family: var(--font-card-title, 'Bodoni Moda', serif); font-optical-sizing: auto;
@@ -135,6 +134,10 @@
     }
     .anniv5--feature .anniv5__message:lang(am), .anniv5--feature .anniv5__title:lang(am) { line-height: 1.75; }
     .anniv5-home-band { padding: 1.75rem 0 .5rem; }
+    /* Below the hero (phones/tablets) the panel sits on the light page: dark text for AA contrast. */
+    .anniv5-home-band .anniv5--feature .anniv5__kicker { color: #7A5200; }
+    .anniv5-home-band .anniv5--feature .anniv5__title { color: var(--anniv5-midnight); }
+    .anniv5-home-band .anniv5--feature .anniv5__message { color: #334155; }
     /* Hero slot: the panel is centred on the hero text without setting the row height,
        so a web-font swap inside the panel never moves the hero text (no layout shift). */
     @media (min-width: 992px) {
@@ -150,7 +153,6 @@
         .anniv5--compact .anniv5-mark { width: 52px; height: 52px; }
         .anniv5 .anniv5__kicker { font-size: .66rem; letter-spacing: .2em; }
         .anniv5 .anniv5__line { font-size: 1rem; }
-        .anniv5--feature { padding: 1.5rem 1.15rem 1.6rem; }
         .anniv5--feature .anniv5-mark { width: 120px; height: 120px; }
     }
 
