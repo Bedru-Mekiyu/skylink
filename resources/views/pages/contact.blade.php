@@ -21,15 +21,14 @@
         /* Left Side - Operators Image */
         .operators-container {
             position: relative;
-            height: 100%;
-            min-height: 600px;
             display: flex;
             flex-direction: column;
         }
 
+        /* The whole team photo, at its own height (no crop). */
         .operators-image {
             width: 100%;
-            height: 100%;
+            height: auto;
             object-fit: cover;
             border-radius: 8px;
             box-shadow: 0 20px 40px rgba(0,0,0,0.1);
@@ -277,19 +276,20 @@
 
 @section('content')
     <!-- Contact Hero -->
-    {{-- Same banner style as About / news / portfolio. Photo: resized copies of
-         assets/images/about/software.JPG (original unchanged); its top 19% (the
-         "217" room sign) is hidden, as on About. --}}
+    {{-- Same banner style as About / news / portfolio. Photo: the Sky Link team at
+         the logo wall (assets/images/contact/team-contact-banner.jpg + WebP sizes). --}}
     @include('partials.page-banner', [
         'bannerTitle' => 'Connect With Our Experts',
         'bannerText' => "Have a question, business proposal, or need technical support? Our experienced team is ready to provide tailored IT solutions that help your business operate more efficiently and grow with confidence. We're just one message away.",
         'bannerImage' => [
-            'src' => asset('assets/images/contact/contact-hero-1920.jpg'),
-            'srcset' => asset('assets/images/contact/contact-hero-960.jpg').' 960w, '.asset('assets/images/contact/contact-hero-1920.jpg').' 1920w',
-            'width' => 1920,
-            'height' => 1253,
+            'src' => asset('assets/images/contact/team-contact-banner.jpg'),
+            'srcset' => \App\Support\ResponsiveImage::webpSrcset('assets/images/contact/team-contact-banner.jpg'),
+            'width' => \App\Support\ResponsiveImage::size('assets/images/contact/team-contact-banner.jpg')[0] ?? 1920,
+            'height' => \App\Support\ResponsiveImage::size('assets/images/contact/team-contact-banner.jpg')[1] ?? 1235,
         ],
-        'bannerTopCut' => 0.19,
+        // Show the whole team photo in its natural colours.
+        'bannerTopCut' => 0,
+        'bannerFit' => 'whole',
         'bannerCurve' => '#ffffff',
     ])
 
@@ -300,7 +300,12 @@
                 <!-- Left Column: Operators Image -->
                 <div class="col-lg-5 mb-4">
                     <div class="operators-container">
-                        <img src="{{ asset('assets/images/operators.jpg') }}" alt="Our Professional IT Support Team" class="operators-image">
+                        <img src="{{ asset('assets/images/contact/team-support.jpg') }}"
+                             srcset="{{ \App\Support\ResponsiveImage::webpSrcset('assets/images/contact/team-support.jpg') }}"
+                             sizes="(max-width: 991px) 100vw, 42vw" loading="lazy" decoding="async"
+                             width="{{ \App\Support\ResponsiveImage::size('assets/images/contact/team-support.jpg')[0] ?? 1920 }}"
+                             height="{{ \App\Support\ResponsiveImage::size('assets/images/contact/team-support.jpg')[1] ?? 1344 }}"
+                             alt="Sky Link team members smiling in front of the Sky Link Technologies logo wall" class="operators-image">
                         <div class="image-overlay">
                             <h4>Expert Support Team</h4>
                             <p>Available Monday to Friday, 8:00 AM - 5:00 PM</p>

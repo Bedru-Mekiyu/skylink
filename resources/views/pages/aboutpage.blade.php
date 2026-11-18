@@ -7,12 +7,11 @@
 
 <style>
     /* ===== Page banner =====
-       Uses the existing photo assets/images/about/teammember3.JPG (7008x3944)
-       with CSS only. The photo's top ~16.5% holds the room-number signs
-       (5 / 4 / 3) and the tallest head starts at ~22.6%, so the frame always
-       hides the top 19% of the displayed photo (--about-hero-cut). The zoom is
-       anchored below the top edge and the parallax moves the photo up, so both
-       only ever increase that crop; a buffer below covers the parallax. */
+       Photo: assets/images/about/team-banner.jpg (team at the Sky Link logo wall),
+       WebP sizes from tools/local/optimize-images.php. Its top holds the logo,
+       so nothing is hidden at the top (--about-hero-cut: 0). The zoom is
+       anchored below the top edge and the parallax moves the photo up; a buffer
+       below covers the parallax. */
     .about-hero {
         --about-hero-h: 460px;
         --about-hero-buffer: 36px;
@@ -53,7 +52,7 @@
         /* Hidden strip above the frame = 19% of the displayed photo height:
            10.8vw when the photo is scaled to the width, otherwise
            0.2346 x (frame + buffer) when it is scaled to the height. */
-        --about-hero-cut: max(10.8vw, calc(0.2346 * (var(--about-hero-h) + var(--about-hero-buffer))));
+        --about-hero-cut: 0px;
         position: absolute;
         left: 0;
         top: calc(-1 * var(--about-hero-cut));
@@ -157,6 +156,19 @@
 
     @media (max-width: 575.98px) {
         .about-hero { --about-hero-h: 260px; }
+    }
+
+    /* The whole team photo in its own shape and natural colours: no crop, zoom
+       or parallax shift, no blue grade; only the bottom, behind the title, is
+       darkened so it stays readable. */
+    .about-hero { height: auto; aspect-ratio: 4271 / 2809; }
+    .about-hero__zoom { animation: none; }
+    .about-hero__img { top: 0; height: 100%; transform: none; object-position: 50% 50%; }
+    .about-hero__tint { background: linear-gradient(0deg, rgba(6, 18, 43, 0.85) 0%, rgba(6, 18, 43, 0.5) 20%, rgba(6, 18, 43, 0) 42%); }
+    .about-hero__vignette, .about-hero__grain { display: none; }
+    @media (max-width: 575.98px) {
+        /* Short phone banner: the title covers more of the photo, so the shade reaches higher. */
+        .about-hero__tint { background: linear-gradient(0deg, rgba(6, 18, 43, 0.88) 0%, rgba(6, 18, 43, 0.6) 35%, rgba(6, 18, 43, 0) 65%); }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -681,7 +693,7 @@ object-position: 50% 15%;
         }
 
 </style>
-<link rel="preload" as="image" href="{{ asset('assets/images/about/teammember3.JPG') }}" fetchpriority="high">
+<link rel="preload" as="image" href="{{ asset('assets/images/about/team-banner.jpg') }}" imagesrcset="{{ \App\Support\ResponsiveImage::webpSrcset('assets/images/about/team-banner.jpg') }}" imagesizes="100vw" fetchpriority="high">
 <script>
     // Hide the banner title until its word-by-word reveal is ready; failsafe 3 s.
     (function (root) {
@@ -700,8 +712,10 @@ object-position: 50% 15%;
     <div class="about-hero__media" aria-hidden="true">
         <div class="about-hero__zoom">
             <img class="about-hero__img"
-                 src="{{ asset('assets/images/about/teammember3.JPG') }}"
-                 width="7008" height="3944" alt=""
+                 src="{{ asset('assets/images/about/team-banner.jpg') }}"
+                 srcset="{{ \App\Support\ResponsiveImage::webpSrcset('assets/images/about/team-banner.jpg') }}" sizes="100vw"
+                 width="{{ \App\Support\ResponsiveImage::size('assets/images/about/team-banner.jpg')[0] ?? 1920 }}"
+                 height="{{ \App\Support\ResponsiveImage::size('assets/images/about/team-banner.jpg')[1] ?? 1263 }}" alt=""
                  fetchpriority="high" decoding="async">
         </div>
         <div class="about-hero__tint"></div>
@@ -930,10 +944,14 @@ We lead the market by creating disciplined culture that will have much bigger ef
                         </div>
                         
                         <div class="position-relative overflow-hidden rounded-3 mb-4">
-                            <img src="{{ asset('assets/images/about/software.JPG') }}"
+                            <img src="{{ asset('assets/images/about/team-software.jpg') }}"
+                                 srcset="{{ \App\Support\ResponsiveImage::webpSrcset('assets/images/about/team-software.jpg') }}"
+                                 sizes="(max-width: 767px) 100vw, 50vw" loading="lazy" decoding="async"
+                                 width="{{ \App\Support\ResponsiveImage::size('assets/images/about/team-software.jpg')[0] ?? 1920 }}"
+                                 height="{{ \App\Support\ResponsiveImage::size('assets/images/about/team-software.jpg')[1] ?? 1315 }}"
                                  class="img-fluid w-100 transition-transform"
-                                 style="height: 250px; object-fit: cover; transition: transform 0.3s ease;"
-                                 alt="Software Team"
+                                 style="height: auto; transition: transform 0.3s ease;"
+                                 alt="Sky Link team members standing in front of the Sky Link Technologies logo wall"
                                  onmouseover="this.style.transform='scale(1.05)'"
                                  onmouseout="this.style.transform='scale(1)'">
                             <div class="position-absolute bottom-0 start-0 end-0 bg-gradient-to-top from-dark to-transparent p-3">

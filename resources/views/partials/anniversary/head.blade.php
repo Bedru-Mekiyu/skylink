@@ -167,7 +167,7 @@
         color: rgba(232, 238, 250, .88); opacity: 1; text-wrap: pretty;
     }
     .anniv5--feature .anniv5__message:lang(am), .anniv5--feature .anniv5__title:lang(am) { line-height: 1.75; }
-    .anniv5-home-band { padding: 1.75rem 0 .5rem; }
+    .anniv5-home-band { padding: 1.75rem 0 .5rem; overflow-x: clip; }
     /* Below the hero (phones/tablets) the panel sits on the light page: dark text for AA contrast. */
     .anniv5-home-band .anniv5--feature .anniv5__kicker { color: #7A5200; }
     .anniv5-home-band .anniv5--feature .anniv5__title { color: var(--anniv5-midnight); }

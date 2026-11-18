@@ -80,6 +80,8 @@
                 top = host.top;
                 bottom = host.bottom;
             }
+            // Never wider than the viewport (a burst layer must not make the page scroll sideways).
+            left = Math.max(left, 0); right = Math.min(right, document.documentElement.clientWidth);
             W = right - left; H = bottom - top;
             canvas.style.left = (left - host.left) + 'px';
             canvas.style.top = (top - host.top) + 'px';

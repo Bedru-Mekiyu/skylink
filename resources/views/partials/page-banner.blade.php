@@ -11,6 +11,9 @@
       $bannerTopCut  share of the photo hidden at the top (default 0.19, as on About:
                      it hides the room-number signs above the heads)
       $bannerCurve   colour of the curved edge = background of the next section
+      $bannerFit     'whole' = show the entire photo in its own shape and natural colours
+                     (no crop, zoom or blue grade); only the area behind the text is darkened.
+                     Phones: the photo sits on top and the text below it on navy.
 
     Motion: a very slow zoom (CSS only). Static for prefers-reduced-motion
     and for Save-Data (a tiny inline check adds .page-banner--static).
@@ -19,11 +22,12 @@
     $bannerImage = $bannerImage ?? null;
     $bannerTopCut = $bannerTopCut ?? 0.19;
     $bannerCurve = $bannerCurve ?? '#ffffff';
+    $bannerWhole = $bannerImage && ($bannerFit ?? null) === 'whole';
     $bannerRatio = $bannerImage ? $bannerImage['height'] / $bannerImage['width'] : 0;
 @endphp
 
-<section class="page-banner {{ $bannerImage ? '' : 'page-banner--plain' }}"
-         style="--pb-cut-w: {{ round($bannerTopCut * $bannerRatio * 100, 2) }}vw; --pb-cut-k: {{ round($bannerTopCut / (1 - $bannerTopCut), 4) }}; --pb-curve: {{ $bannerCurve }};">
+<section class="page-banner {{ $bannerImage ? '' : 'page-banner--plain' }} {{ $bannerWhole ? 'page-banner--whole' : '' }}"
+         style="@if ($bannerWhole)--pb-ratio: {{ $bannerImage['width'] }} / {{ $bannerImage['height'] }}; @endif--pb-cut-w: {{ round($bannerTopCut * $bannerRatio * 100, 2) }}vw; --pb-cut-k: {{ round($bannerTopCut / (1 - $bannerTopCut), 4) }}; --pb-curve: {{ $bannerCurve }};">
     <div class="page-banner__media" aria-hidden="true">
         @if ($bannerImage)
             <div class="page-banner__zoom">
@@ -202,6 +206,23 @@
 
     @media (prefers-reduced-motion: reduce) {
         .page-banner__zoom { animation: none; }
+    }
+
+    /* ---- bannerFit 'whole': the entire photo, natural colours ---- */
+    .page-banner--whole { min-height: 0; aspect-ratio: var(--pb-ratio); padding: 0 0 84px; }
+    .page-banner--whole .page-banner__zoom { animation: none; }
+    .page-banner--whole .page-banner__img { top: 0; height: 100%; object-position: 50% 50%; }
+    .page-banner--whole .page-banner__tint {
+        background: linear-gradient(0deg, rgba(4, 12, 34, 0.88) 0%, rgba(4, 12, 34, 0.72) 26%, rgba(4, 12, 34, 0.25) 46%, rgba(4, 12, 34, 0) 60%);
+    }
+    .page-banner--whole .page-banner__vignette,
+    .page-banner--whole .page-banner__grain { display: none; }
+    /* Phones and short landscape screens: the photo in full on top, the text below it on navy. */
+    @media (max-width: 767.98px), (max-height: 500px) and (orientation: landscape) {
+        .page-banner--whole { aspect-ratio: auto; display: block; padding: 0 0 56px; }
+        .page-banner--whole .page-banner__media { position: relative; aspect-ratio: var(--pb-ratio); }
+        .page-banner--whole .page-banner__tint { display: none; }
+        .page-banner--whole .page-banner__content { padding-top: 24px; }
     }
 </style>
 @endpush
