@@ -9,7 +9,7 @@ import path from 'node:path';
 
 const base = (process.argv[2] || 'http://127.0.0.1:8081').replace(/\/$/, '');
 const label = process.argv[3] || 'after';
-const out = path.resolve('storage/app/anniversary-captures/intro-upgrade', label);
+const out = process.env.OUT_DIR ? path.resolve(process.env.OUT_DIR) : path.resolve('storage/app/anniversary-captures/intro-upgrade', label);
 fs.mkdirSync(out, { recursive: true });
 
 const sizes = [[1440, 900], [1024, 768], [768, 1024], [390, 844], [320, 640]];
@@ -42,10 +42,18 @@ async function runIntro([w, h], { throttle = 1, video = true, shots = true } = {
     });
     await ctx.route(/tawk\.to|\.(mp4|webm)(\?|$)/i, (r) => r.abort());
     await ctx.addInitScript(initProbe);
+    if (process.env.AM_INTRO) { // the site has no locale switch: put the Amharic strings into the intro before it reveals them
+        await ctx.addInitScript(([k, h]) => document.addEventListener('DOMContentLoaded', () => {
+            const kick = document.querySelector('.anniv5-intro__kicker'), head = document.querySelector('.anniv5-intro__headline');
+            if (!kick || !head) return;
+            kick.textContent = k; kick.setAttribute('lang', 'am'); head.setAttribute('lang', 'am');
+            head.innerHTML = h.split(' ').map((w, i) => `<span class="anniv5-intro__w" style="--i: ${i}">${w}</span> `).join('');
+        }), [process.env.AM_KICKER, process.env.AM_HEADLINE]);
+    }
     const page = await ctx.newPage();
     const cdp = await ctx.newCDPSession(page);
     if (throttle > 1) await cdp.send('Emulation.setCPUThrottlingRate', { rate: throttle });
-    const tag = `${w}${throttle > 1 ? `-cpu${throttle}x` : ''}`;
+    const tag = `${w}${throttle > 1 ? `-cpu${throttle}x` : ''}${process.env.AM_INTRO ? '-am' : ''}`;
     const started = Date.now();
     await page.goto(base + '/', { waitUntil: 'commit' });
     const run = { width: w, throttle, shots: [] };
@@ -61,7 +69,8 @@ async function runIntro([w, h], { throttle = 1, video = true, shots = true } = {
             if (await page.waitForFunction((p) => window.__phases.includes(p), phase, { timeout: 30000, polling: 20 }).then(() => true, () => false)) { // history, not current: fast machines pass a phase before we ask
                 if (phase === 'title' && !run.introHeadline) run.introHeadline = await measure();
                 if (await page.evaluate(() => !document.getElementById('anniv5-intro'))) break;
-                await page.waitForTimeout(delay);
+                if (name === 'headline') await page.waitForFunction(() => { const w = document.querySelectorAll('.anniv5-intro__w'); const l = w[w.length - 1]; return l && getComputedStyle(l).opacity >= 0.99; }, null, { polling: 30, timeout: 20000 }).catch(() => {});
+                else await page.waitForTimeout(delay);
                 await page.screenshot({ path: path.join(out, `${tag}-${name}.png`) }).catch(() => {});
                 run.shots.push(name);
             }
@@ -80,6 +89,19 @@ async function runIntro([w, h], { throttle = 1, video = true, shots = true } = {
     // Leftovers: no canvas, no overlay in the DOM.
     run.leftovers = await page.evaluate(() => ({ overlay: !!document.getElementById('anniv5-intro'), introCanvas: document.querySelectorAll('.anniv5-intro__sky').length }));
     if (run.leftovers.overlay || run.leftovers.introCanvas) fail(`${tag}: intro DOM not released`);
+    // Headline on the homepage panel, in English and with the Amharic strings swapped in (the site has no locale switch).
+    const am = process.env.AM_KICKER && process.env.AM_HEADLINE;
+    const panelEl = page.locator('.anniv5--feature:visible').first();
+    if (shots && await panelEl.count()) {
+        await panelEl.scrollIntoViewIfNeeded();
+        await page.waitForTimeout(400);
+        await page.screenshot({ path: path.join(out, `${tag}-panel.png`) }).catch(() => {});
+        if (am) {
+            await page.evaluate(([k, h]) => { for (const [sel, t] of [['.anniv5--feature .anniv5__kicker', k], ['.anniv5--feature .anniv5__title', h]]) { const e = [...document.querySelectorAll(sel)].find((x) => x.getBoundingClientRect().width > 0); if (e) { e.textContent = t; e.setAttribute('lang', 'am'); } } }, [process.env.AM_KICKER, process.env.AM_HEADLINE]);
+            await page.waitForTimeout(300);
+            await page.screenshot({ path: path.join(out, `${tag}-panel-am.png`) }).catch(() => {});
+        }
+    }
     // Headline on the homepage panel.
     run.panel = await page.evaluate(() => {
         const t = [...document.querySelectorAll('.anniv5--feature .anniv5__title')].find((e) => e.getBoundingClientRect().width > 0);

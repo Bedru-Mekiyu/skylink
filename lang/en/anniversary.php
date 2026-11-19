@@ -3,8 +3,8 @@
 return [
     'seal' => '5 Years · Sky Link',
     'years' => 'Years',
-    'kicker' => '5th Anniversary Celebration',
-    'headline' => 'Sky Link ICT Solutions Turns Five',
+    'kicker' => 'Celebrating Hard Work, Dedication & Excellence',
+    'headline' => 'Happy 5th Anniversary, Sky Link Technologies plc!',
     'message' => 'Join us as we commemorate five years of dedication, progress, and meaningful contributions to the technology industry. We look forward to celebrating this milestone with our team, clients, partners, and community.',
 
     'context' => [

@@ -298,6 +298,7 @@
         text-shadow: 0 0 22px rgba(245, 196, 81, .4), 0 2px 12px rgba(4, 10, 28, .8);
     }
     .anniv5-intro__headline:lang(am) { line-height: 1.4; }
+    .anniv5-intro__kicker:lang(am) { font-size: clamp(.85rem, 2.8vw, 1.05rem); letter-spacing: .06em; }
     /* Words rise in one after another with a soft gold glow; the kicker lands just before them. */
     .anniv5-intro__w {
         display: inline-block; opacity: 0; transform: translateY(.7em); filter: blur(6px);
