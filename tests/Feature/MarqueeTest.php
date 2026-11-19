@@ -37,7 +37,10 @@ class MarqueeTest extends TestCase
         $html = $this->get('/')->assertOk()->getContent();
 
         $this->assertStringContainsString('.service-card.is-center {', $html);
-        $this->assertStringContainsString('background: #1e40af;', $html); // white on #1e40af is 8.7:1, above the 4.5:1 AA minimum
+        // The site's sky-blue button gradient, each stop darkened until white text is 4.6:1 (AA needs 4.5:1).
+        $this->assertStringContainsString('--hl-from: #3775ca;', $html);
+        $this->assertStringContainsString('--hl-to: #0074d9;', $html);
+        $this->assertStringContainsString('background: linear-gradient(135deg, var(--hl-from), var(--hl-to));', $html);
         $this->assertStringContainsString("classList.toggle('is-center'", $html);
         // Reduced motion: the script never starts, so nothing is highlighted or animated.
         $this->assertMatchesRegularExpression("/if \(!track \|\| \(window\.matchMedia && matchMedia\('\(prefers-reduced-motion: reduce\)'\)\.matches\)\) return;/", $html);

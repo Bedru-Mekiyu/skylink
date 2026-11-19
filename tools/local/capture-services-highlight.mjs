@@ -62,15 +62,18 @@ const contrast = (page) => page.evaluate(() => {
     const ratio = (a, b) => { const [x, y] = [lum(a), lum(b)].sort((p, q) => q - p); return +((x + 0.05) / (y + 0.05)).toFixed(2); };
     const card = document.querySelector('.service-card.is-center');
     if (!card) return null;
-    const cardBg = parse(getComputedStyle(card).backgroundColor).slice(0, 3);
-    const imgBg = blend(parse(getComputedStyle(card.querySelector('.service-image')).backgroundColor), cardBg);
-    const res = { cardBackground: getComputedStyle(card).backgroundColor };
+    // The card is a gradient: measure against both stops and keep the worse ratio.
+    const cs0 = getComputedStyle(card);
+    const stops = [cs0.getPropertyValue('--hl-from').trim(), cs0.getPropertyValue('--hl-to').trim()].map((h) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16)));
+    const res = { gradient: stops.map((c) => '#' + c.map((v) => v.toString(16).padStart(2, '0')).join('')) };
+    const worst = (fn) => Math.min(...stops.map(fn));
     for (const [k, el] of [['title', card.querySelector('h4')], ['paragraph', card.querySelector('p')]]) {
         const cs = getComputedStyle(el); const col = parse(cs.color); const op = Number(cs.opacity);
-        res[k] = ratio(blend([col[0], col[1], col[2], (col[3] ?? 1) * op], cardBg), cardBg);
+        res[k] = worst((bg) => ratio(blend([col[0], col[1], col[2], (col[3] ?? 1) * op], bg), bg));
     }
-    const icon = getComputedStyle(card.querySelector('.service-image i')).color; const ic = parse(icon);
-    res.icon = ratio(blend(ic, imgBg), imgBg);
+    const ic = parse(getComputedStyle(card.querySelector('.service-image i')).color);
+    const imgOver = parse(getComputedStyle(card.querySelector('.service-image')).backgroundColor);
+    res.icon = worst((bg) => { const ib = blend(imgOver, bg); return ratio(blend(ic, ib), ib); });
     return res;
 });
 

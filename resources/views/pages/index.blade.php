@@ -265,14 +265,17 @@
         }
 
         /* The card passing through the middle of the section (set by the script below, one at a time).
-           #1e40af is the deep blue this page already uses for the card glow; white on it is 8.7:1.
-           Only transform, colours and shadow change, so nothing moves in the layout. */
+           Same sky-blue gradient as the site's buttons (.btn-view-more: #3a7bd5 -> rgb(0,136,255)), each stop darkened
+           just enough that white text reaches 4.6:1 (AA needs 4.5:1). Only transform, colours and shadow change,
+           so nothing moves in the layout. */
         .service-card.is-center {
-            background: #1e40af;
+            --hl-from: #3775ca;
+            --hl-to: #0074d9;
+            background: linear-gradient(135deg, var(--hl-from), var(--hl-to));
             color: #fff;
             transform: translateY(-6px) scale(1.12); /* steps forward out of the row */
             z-index: 3;
-            box-shadow: 0 14px 28px rgba(30, 64, 175, 0.4); /* stays inside the section's 44px padding, which clips overflow */
+            box-shadow: 0 14px 28px rgba(0, 116, 217, 0.4); /* stays inside the section's padding, which clips overflow */
         }
 
         .service-card.is-center .service-image {
