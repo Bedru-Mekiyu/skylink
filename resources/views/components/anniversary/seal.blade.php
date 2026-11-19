@@ -53,7 +53,7 @@
         </svg>
 
         <div class="anniv5__copy">
-            <p class="anniv5__kicker">{{ __('anniversary.seal') }}</p>
+            <p class="anniv5__kicker">{{ __($isFeature ? 'anniversary.kicker' : 'anniversary.seal') }}</p>
             @if ($isFeature)
                 <h2 class="anniv5__title" id="{{ $uid }}-title">{{ __('anniversary.headline') }}</h2>
                 <p class="anniv5__message">{{ __('anniversary.message') }}</p>

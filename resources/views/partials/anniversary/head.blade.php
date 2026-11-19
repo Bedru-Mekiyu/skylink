@@ -200,6 +200,13 @@
     }
     .anniv5-intro[hidden] { display: none; }
     .anniv5-intro[data-phase="out"], .anniv5-intro.is-leaving { opacity: 0; }
+    /* Everything that moves with the detonation shake lives in the world layer (skip button and copy stay still). */
+    .anniv5-intro__world { position: absolute; inset: 0; }
+    .anniv5-intro.is-boom .anniv5-intro__world { animation: anniv5-shake .28s steps(1, end) 1; }
+    @keyframes anniv5-shake {
+        0% { transform: translate(3px, -2px); } 17% { transform: translate(-3px, 2px); } 34% { transform: translate(2px, 3px); }
+        51% { transform: translate(-2px, -3px); } 68% { transform: translate(2px, -1px); } 85% { transform: translate(-1px, 1px); } 100% { transform: none; }
+    }
     .anniv5-intro__sky { position: absolute; inset: 0; width: 100%; height: 100%; }
     .anniv5-intro__rocket {
         position: absolute; left: 50%; top: 0; width: 14px; height: 46px; opacity: 0; will-change: transform;
@@ -211,6 +218,58 @@
         content: ''; position: absolute; left: 50%; top: 100%; width: 8px; height: 26px; transform: translateX(-50%);
         border-radius: 0 0 50% 50%; background: linear-gradient(180deg, var(--anniv5-gold), rgba(236, 72, 153, 0));
     }
+    /* Build-up: the screen dims toward the edges and light gathers into the core. */
+    .anniv5-intro__dim {
+        position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity .5s ease;
+        background: radial-gradient(circle at 50% 36%, transparent 18%, rgba(3, 6, 18, .7) 100%);
+    }
+    .anniv5-intro.is-build .anniv5-intro__dim { opacity: 1; }
+    .anniv5-intro.is-boom .anniv5-intro__dim { opacity: 0; transition-duration: 1.2s; }
+    .anniv5-intro__core, .anniv5-intro__flare, .anniv5-intro__rays, .anniv5-intro__ring {
+        position: absolute; left: 50%; top: 36%; pointer-events: none; opacity: 0;
+    }
+    .anniv5-intro__core {
+        width: min(60vmin, 520px); aspect-ratio: 1; border-radius: 50%; transform: translate(-50%, -50%) scale(1.6);
+        background: radial-gradient(circle, rgba(245, 196, 81, .85) 0, rgba(236, 72, 153, .4) 30%, rgba(59, 130, 246, .18) 52%, transparent 70%);
+    }
+    .anniv5-intro.is-boom .anniv5-intro__core { opacity: 0 !important; transition: opacity .4s ease; }
+    /* Bloom of colour (never white), once, at detonation. */
+    .anniv5-intro__bloom {
+        position: absolute; inset: 0; pointer-events: none; opacity: 0;
+        background:
+            radial-gradient(circle at 50% 36%, rgba(245, 196, 81, .5) 0, rgba(236, 72, 153, .3) 14%, rgba(139, 92, 246, .22) 32%, rgba(34, 211, 238, .12) 55%, transparent 75%);
+    }
+    .anniv5-intro.is-boom .anniv5-intro__bloom { animation: anniv5-bloom 1s ease-out 1 both; }
+    @keyframes anniv5-bloom { 0% { opacity: 0; transform: scale(.6); } 18% { opacity: 1; } 100% { opacity: 0; transform: scale(1.25); } }
+    /* Light rays turning slowly behind the 5. */
+    .anniv5-intro__rays {
+        width: 120vmax; height: 120vmax; translate: -50% -50%; border-radius: 50%;
+        background: repeating-conic-gradient(from 0deg, rgba(34, 211, 238, .38) 0deg 2.4deg, transparent 2.4deg 18deg, rgba(139, 92, 246, .34) 18deg 20.4deg, transparent 20.4deg 36deg, rgba(236, 72, 153, .3) 36deg 38.4deg, transparent 38.4deg 54deg);
+        -webkit-mask-image: radial-gradient(circle, #000 0, rgba(0, 0, 0, .5) 26%, transparent 60%);
+        mask-image: radial-gradient(circle, #000 0, rgba(0, 0, 0, .5) 26%, transparent 60%);
+    }
+    .anniv5-intro.is-boom .anniv5-intro__rays { animation: anniv5-rays 2.8s ease-out 1 both; }
+    @keyframes anniv5-rays { 0% { opacity: 0; rotate: 0deg; } 15% { opacity: .9; } 100% { opacity: 0; rotate: 28deg; } }
+    /* Lens flare: a long horizontal streak. */
+    .anniv5-intro__flare {
+        width: min(96vw, 1400px); height: 10px; transform: translate(-50%, -50%);
+        background: linear-gradient(90deg, transparent, rgba(34, 211, 238, .55) 25%, rgba(245, 196, 81, .85) 50%, rgba(236, 72, 153, .55) 75%, transparent);
+        filter: blur(3px);
+    }
+    .anniv5-intro.is-boom .anniv5-intro__flare { animation: anniv5-flare 1.3s cubic-bezier(.2, .7, .3, 1) 1 both; }
+    @keyframes anniv5-flare { 0% { opacity: 0; transform: translate(-50%, -50%) scaleX(.1); } 20% { opacity: 1; } 100% { opacity: 0; transform: translate(-50%, -50%) scaleX(1); } }
+    /* Shockwaves: four rings, each reaching the screen edges. */
+    .anniv5-intro__ring {
+        width: 160vmax; aspect-ratio: 1; border-radius: 50%; transform: translate(-50%, -50%) scale(.02);
+        border: 3px solid var(--rc, var(--anniv5-cyan)); box-shadow: 0 0 12px var(--rc, var(--anniv5-cyan));
+        will-change: transform, opacity;
+    }
+    .anniv5-intro__ring[data-ring="1"] { --rc: var(--anniv5-violet); }
+    .anniv5-intro__ring[data-ring="2"] { --rc: var(--anniv5-magenta); }
+    .anniv5-intro__ring[data-ring="3"] { --rc: var(--anniv5-gold); }
+    .anniv5-intro__ring.go { animation: anniv5-ring 1.5s cubic-bezier(.15, .6, .3, 1) 1 both; }
+    @keyframes anniv5-ring { 0% { opacity: .85; transform: translate(-50%, -50%) scale(.02); } 100% { opacity: 0; transform: translate(-50%, -50%) scale(1); } }
+
     .anniv5-intro__stage {
         position: absolute; left: 0; right: 0; top: 36%; transform: translateY(-50%);
         display: grid; place-items: center; pointer-events: none;
@@ -224,26 +283,39 @@
     .anniv5-intro[data-phase="n1"] [data-n="1"], .anniv5-intro[data-phase="n2"] [data-n="2"],
     .anniv5-intro[data-phase="n3"] [data-n="3"], .anniv5-intro[data-phase="n4"] [data-n="4"] { opacity: 1; transform: none; }
     .anniv5-intro [data-n="5"] { color: var(--anniv5-gold); text-shadow: 0 0 40px rgba(245, 196, 81, .55); }
-    .anniv5-intro[data-phase="five"] [data-n="5"] { opacity: 1; transform: scale(1.06); transition-duration: .1s, .5s; }
-    .anniv5-intro__title { text-align: center; opacity: 0; transform: translateY(12px); transition: opacity .6s ease, transform .8s cubic-bezier(.2, .7, .3, 1); }
-    .anniv5-intro[data-phase="title"] .anniv5-intro__title, .anniv5-intro[data-phase="out"] .anniv5-intro__title { opacity: 1; transform: none; }
-    .anniv5-intro__big {
-        display: block; font-family: var(--font-card-title, 'Bodoni Moda', Georgia, serif); font-optical-sizing: auto;
-        font-size: clamp(3rem, 11vw, 6.5rem); font-weight: 600; line-height: 1.05; color: #fff;
-    }
-    .anniv5-intro__big b { color: var(--anniv5-gold); font-weight: inherit; }
+    /* Detonation: the 5 punches in (1.0 -> 1.15 -> 1.0); it then gives way to the headline. */
+    .anniv5-intro[data-phase="five"] [data-n="5"] { opacity: 1; animation: anniv5-punch .5s cubic-bezier(.2, .7, .3, 1) 1 both; transition-duration: .08s; }
+    @keyframes anniv5-punch { 0% { transform: scale(1); } 40% { transform: scale(1.15); } 100% { transform: scale(1); } }
+    .anniv5-intro__title { text-align: center; width: min(94vw, 1100px); padding: 0 .5rem; }
     .anniv5-intro__kicker {
-        display: block; margin-top: .9rem; font-family: var(--font-ui, 'Manrope', sans-serif); font-size: clamp(.7rem, 2.4vw, .9rem);
-        font-weight: 700; letter-spacing: .34em; text-transform: uppercase; color: var(--anniv5-cyan);
+        margin: 0 0 clamp(.6rem, 2vw, 1.1rem); font-family: var(--font-ui, 'Manrope', sans-serif); font-size: clamp(.68rem, 2.2vw, .95rem);
+        font-weight: 700; letter-spacing: .3em; text-transform: uppercase; color: var(--anniv5-cyan); line-height: 1.5; text-wrap: balance;
+        opacity: 0; transform: translateY(10px); transition: opacity .6s ease, transform .7s cubic-bezier(.2, .7, .3, 1);
+    }
+    .anniv5-intro__headline {
+        margin: 0; font-family: var(--font-card-title, 'Bodoni Moda', Georgia, serif); font-optical-sizing: auto;
+        font-size: clamp(1.75rem, 1.1rem + 3.6vw, 4.25rem); font-weight: 600; line-height: 1.12; color: #fff; text-wrap: balance;
+        text-shadow: 0 0 22px rgba(245, 196, 81, .4), 0 2px 12px rgba(4, 10, 28, .8);
+    }
+    .anniv5-intro__headline:lang(am) { line-height: 1.4; }
+    /* Words rise in one after another with a soft gold glow; the kicker lands just before them. */
+    .anniv5-intro__w {
+        display: inline-block; opacity: 0; transform: translateY(.7em); filter: blur(6px);
+        transition: opacity .7s ease, transform .8s cubic-bezier(.2, .7, .3, 1), filter .7s ease;
+    }
+    .anniv5-intro[data-phase="title"] .anniv5-intro__kicker, .anniv5-intro[data-phase="out"] .anniv5-intro__kicker { opacity: 1; transform: none; }
+    .anniv5-intro[data-phase="title"] .anniv5-intro__w, .anniv5-intro[data-phase="out"] .anniv5-intro__w {
+        opacity: 1; transform: none; filter: none; transition-delay: calc(.3s + var(--i) * .11s);
     }
     .anniv5-intro__skip {
-        position: absolute; top: max(16px, env(safe-area-inset-top)); right: max(16px, env(safe-area-inset-right));
+        position: absolute; z-index: 3; top: max(16px, env(safe-area-inset-top)); right: max(16px, env(safe-area-inset-right));
         min-height: 44px; padding: .55rem 1.1rem; border-radius: 999px; cursor: pointer;
         font-family: var(--font-ui, 'Manrope', sans-serif); font-size: .85rem; font-weight: 600; letter-spacing: .04em;
         color: var(--anniv5-ink); background: rgba(16, 26, 53, .6); border: 1px solid rgba(232, 238, 250, .35);
     }
     .anniv5-intro__skip:hover { background: rgba(59, 130, 246, .35); }
     .anniv5-intro__skip:focus-visible { outline: 3px solid var(--anniv5-gold); outline-offset: 3px; }
+    @media (max-width: 575.98px) { .anniv5-intro__kicker { letter-spacing: .2em; } }
 
     /* ---------- Reduced motion: no intro, a still and settled seal ---------- */
     @media (prefers-reduced-motion: reduce) {

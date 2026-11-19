@@ -3,7 +3,9 @@
 return [
     'seal' => '5 ዓመታት · ስካይ ሊንክ',
     'years' => 'ዓመታት',
-    'headline' => 'የስካይ ሊንክ አይሲቲ ሶሉሽንስ 5ኛ ዓመት የምሥረታ በዓል',
+    // NEEDS NATIVE-SPEAKER REVIEW: kicker and headline were written for the 2026 intro upgrade.
+    'kicker' => '5ኛ ዓመት የምሥረታ በዓል',
+    'headline' => 'ስካይ ሊንክ አይሲቲ ሶሉሽንስ አምስት ዓመት ሞላው',
     'message' => 'በቴክኖሎጂው ዘርፍ ላለፉት አምስት ዓመታት ያሳየነውን ቁርጠኝነት፣ ዕድገት እና አስተዋጽኦ ስናከብር አብረውን ይሁኑ። ይህንን ትልቅ ምዕራፍ ከቡድናችን፣ ደንበኞቻችን፣ አጋሮቻችን እና ማህበረሰባችን ጋር በጋራ ለማክበር በጉጉት እንጠብቃለን።',
 
     'context' => [

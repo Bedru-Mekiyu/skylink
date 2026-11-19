@@ -44,7 +44,7 @@ for (const [label, viewport] of [['desktop', { width: 1440, height: 900 }], ['ph
     await page.waitForSelector('#anniv5-intro', { state: 'detached', timeout: 8000 }).catch(() => fail(`${label}: intro did not dismiss itself`));
     const phases = await page.evaluate(() => window.__phases);
     report.intro[label] = { secondsUntilDismissed: (Date.now() - started) / 1000, phases };
-    if (phases.join() !== 'launch,n1,n2,n3,n4,five,title,out') fail(`${label}: intro beats out of order: ${phases.join()}`);
+    if (phases.join() !== 'launch,n1,n2,n3,n4,build,five,title,out') fail(`${label}: intro beats out of order: ${phases.join()}`);
     const seal = page.locator('[data-anniv5-seal]:visible').first();
     await seal.scrollIntoViewIfNeeded();
     await page.waitForTimeout(24500); // three 8s loops
