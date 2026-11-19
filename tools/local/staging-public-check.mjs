@@ -8,7 +8,7 @@ import path from 'node:path';
 
 const access = fs.readFileSync('deploy/STAGING-ACCESS.txt', 'utf8');
 const pw = access.match(/user\s+staging\s+password\s+(\S+)/)[1];
-const base = 'https://staging.skylinkict.com';
+const base = 'https://bedru.skylinkict.com';
 const out = path.resolve('storage/app/staging-checks');
 const widths = [1440, 768, 390];
 const report = [];
@@ -64,7 +64,7 @@ for (const [name, url] of targets) {
         await page.screenshot({ path: path.join(dir, `${w}.png`), fullPage: false });
         const row = { page: name, url, width: w, status: r.status(), overflowPx: m.overflow, ceremony: m.ceremony, fontsOk: Object.fromEntries(m.fonts), problems: [...new Set(problems)] };
         const expected = name === 'not-found-404' ? 404 : 200;
-        const isExternal404 = (p) => /^http 404: https?:\/\//.test(p) && !p.includes('staging.skylinkict.com');
+        const isExternal404 = (p) => /^http 404: https?:\/\//.test(p) && !p.includes('bedru.skylinkict.com');
         row.warnings = row.problems.filter(isExternal404); // dead third-party images (the page swaps in the placeholder)
         const relevant = row.problems.filter((p) => !(name === 'not-found-404' && /404/.test(p)) && !isExternal404(p) && !(row.warnings.length && /Failed to load resource: the server responded with a status of 404/.test(p)));
         row.fontsLoaded = Object.values(row.fontsOk).every(Boolean);

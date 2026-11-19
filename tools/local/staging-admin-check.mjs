@@ -9,7 +9,7 @@ import path from 'node:path';
 const access = fs.readFileSync('deploy/STAGING-ACCESS.txt', 'utf8');
 const basicPw = access.match(/user\s+staging\s+password\s+(\S+)/)[1];
 const adminPw = access.match(/email\s+staging-admin@skylinkict\.test\s+password\s+(\S+)/)[1];
-const base = 'https://staging.skylinkict.com';
+const base = 'https://bedru.skylinkict.com';
 const out = path.resolve('storage/app/staging-checks');
 const part = process.argv[2] || 'all';
 const results = [];
@@ -28,6 +28,7 @@ const errors = []; admin.on('pageerror', (e) => errors.push(e.message));
 
 async function login() {
     await go(admin, '/login');
+    if (/\/admin\//.test(admin.url())) return true; // already logged in
     await admin.fill('input[name=email]', 'staging-admin@skylinkict.test');
     await admin.fill('input[name=password]', adminPw);
     await Promise.all([admin.waitForNavigation({ timeout: 150000 }), admin.click('button[type=submit]')]);
@@ -47,7 +48,13 @@ if (part === 'all' || part === 'guard') {
     await shot(admin, 'auth', 'dashboard-1440');
     const out2 = await admin.evaluate(() => { const f = [...document.querySelectorAll('form')].find((x) => /logout/.test(x.action)); return !!f; });
     rec('auth', 'logout control present', out2);
-    if (out2) { await admin.evaluate(() => [...document.querySelectorAll('form')].find((x) => /logout/.test(x.action)).submit()); await settle(admin); rec('auth', 'logout works', !/admin/.test(admin.url()) || /login|\/$/.test(admin.url()), admin.url().replace(base, '')); }
+    if (out2) {
+        await Promise.all([admin.waitForNavigation({ timeout: 150000 }), admin.evaluate(() => [...document.querySelectorAll('form')].find((x) => /logout/.test(x.action)).submit())]);
+        await settle(admin);
+        // logged out for real = the admin area now bounces to /login
+        await admin.goto(base + '/admin/dashboard', { waitUntil: 'domcontentloaded' });
+        rec('auth', 'logout works (admin area asks for login again)', /\/login/.test(admin.url()), admin.url().replace(base, ''));
+    }
     rec('auth', 'login again', await login());
 }
 else await login();
@@ -97,28 +104,41 @@ const sections = [
 const imageFile = path.resolve('public/assets/images/placeholder.png');
 
 async function fillForm(page, title) {
+    const radioDone = new Set();
     const fields = await page.evaluate(() => [...document.querySelectorAll('form:not([action*="logout"]) :is(input,textarea,select)')].filter((e) => e.name && !['_token', '_method', 'hidden'].includes(e.type) && e.offsetParent !== null || e.type === 'file').map((e) => ({ name: e.name, tag: e.tagName, type: e.type, required: e.required, options: e.tagName === 'SELECT' ? [...e.options].map((o) => o.value).filter(Boolean) : [] })));
     for (const f of fields) {
         const sel = `[name="${f.name}"]`;
         try {
             if (f.type === 'file') { if (/image|thumb|photo|cover/i.test(f.name) || f.required) await page.setInputFiles(sel, imageFile); }
             else if (f.tag === 'SELECT') { if (f.options.length) await page.selectOption(sel, f.options[0]); }
-            else if (f.type === 'checkbox' || f.type === 'radio' || f.type === 'submit') continue;
+            else if (f.type === 'radio') { if (!radioDone.has(f.name)) { radioDone.add(f.name); const v = await page.evaluate((n) => { const r = [...document.querySelectorAll('input[type=radio][name="' + n + '"]')]; const pub = r.find((x) => /^(published|active|1)$/i.test(x.value)); return (pub || r[0]).value; }, f.name); await page.check('input[type=radio][name="' + f.name + '"][value="' + v + '"]').catch(() => {}); } }
+            else if (f.type === 'checkbox' || f.type === 'submit') continue;
             else if (f.type === 'url') await page.fill(sel, 'https://example.test/staging');
             else if (f.type === 'email') await page.fill(sel, 'staging@example.test');
             else if (f.type === 'number') await page.fill(sel, '1');
             else if (f.type === 'date') await page.fill(sel, '2026-11-19');
             else if (f.type === 'datetime-local') await page.fill(sel, '2026-11-19T10:00');
             else if (f.tag === 'TEXTAREA') await page.fill(sel, `${title}. Staging test content, written by the automated check. `.repeat(3));
-            else if (/slug/i.test(f.name)) await page.fill(sel, '');
+            else if (/slug/i.test(f.name)) await page.fill(sel, 'staging-test-' + Date.now());
             else await page.fill(sel, title);
         } catch (e) { /* field not fillable (hidden/rich editor); the submit tells us if it mattered */ }
     }
+    // rich-text article body: the real <textarea> may be hidden behind an editor; fill both so the form sends it
+    await page.evaluate((txt) => { document.querySelectorAll('textarea[name=content]').forEach((x) => { if (!x.value.trim()) { x.value = txt; x.dispatchEvent(new Event('input', { bubbles: true })); } }); const ce = document.querySelector('[contenteditable=true]'); if (ce && !ce.textContent.trim()) { ce.focus(); ce.textContent = txt; ce.dispatchEvent(new Event('input', { bubbles: true })); } }, title + '. Staging test article body written by the automated check. '.repeat(4));
     return fields.map((f) => f.name);
 }
 
+async function purge(s) { // remove leftover test rows of an interrupted run (STAGING database only, only rows named STAGING TEST)
+    for (let n = 0; n < 10; n++) {
+        await go(admin, s.list);
+        const hit = await admin.evaluate(() => { const row = [...document.querySelectorAll('tr, .card, li, .list-group-item')].find((r) => r.textContent.includes('STAGING TEST') && r.querySelector('form input[name=_method][value=DELETE]')); if (!row) return false; row.querySelector('form input[name=_method][value=DELETE]').closest('form').requestSubmit(); return true; });
+        if (!hit) return n; await admin.waitForNavigation({ timeout: 150000 }).catch(() => {}); await settle(admin);
+    }
+}
 if (part === 'all' || part === 'crud') {
-    for (const s of sections) {
+    const only = (process.env.SECTIONS || '').split(',').filter(Boolean);
+    for (const s of sections.filter((x) => !only.length || only.includes(x.key))) {
+        const leftovers = await purge(s); if (leftovers) rec(s.key, 'removed ' + leftovers + ' leftover STAGING TEST row(s) of an interrupted run', true);
         const title = `STAGING TEST ${s.key} ${Date.now() % 100000}`;
         try {
             await go(admin, s.create);
@@ -136,7 +156,9 @@ if (part === 'all' || part === 'crud') {
             // public site
             const pub = await adminCtx.newPage(); pub.setDefaultTimeout(150000);
             let found = false;
-            for (const u of [s.publicUrl, s.publicUrl + '?page=1']) { await pub.goto(base + u, { waitUntil: 'domcontentloaded' }); await pub.waitForLoadState('load', { timeout: 60000 }).catch(() => {}); if ((await pub.content()).includes(title)) { found = true; break; } }
+            let urls = [s.publicUrl, s.publicUrl + '?page=1'];
+            if (s.key === 'services') { await pub.goto(base + '/services', { waitUntil: 'domcontentloaded' }); urls = await pub.evaluate(() => [...new Set([...document.querySelectorAll('a[href*="/services/category/"]')].map((a) => a.getAttribute('href')))]); urls = urls.map((h) => h.replace(base, '')); }
+            for (const u of urls) { await pub.goto(base + u, { waitUntil: 'domcontentloaded' }); await pub.waitForLoadState('load', { timeout: 60000 }).catch(() => {}); if ((await pub.content()).includes(title)) { found = true; break; } }
             rec(s.key, `appears on the public site (${s.publicUrl})`, found, found ? '' : 'title not found on that page (it may be on another page/section)');
             if (found) await shot(pub, s.key, 'public-1440');
             await pub.close();
@@ -146,8 +168,7 @@ if (part === 'all' || part === 'crud') {
             if (editHref) {
                 await go(admin, editHref.replace(base, ''));
                 const t2 = title + ' EDITED';
-                const first = await admin.$('input[name=title], input[name=name]');
-                if (first) await first.fill(t2);
+                for (const el of await admin.$$('input[name=title], input[name=name], input[name=card_title]')) await el.fill(t2);
                 const sub = await admin.$('form:not([action*="logout"]) button[type=submit]:visible');
                 await Promise.all([admin.waitForNavigation({ timeout: 150000 }).catch(() => {}), sub.click()]); await settle(admin);
                 await go(admin, s.list);
@@ -165,9 +186,12 @@ if (part === 'all' || part === 'crud') {
 
 // ---------------------------------------------------------------- anniversary control
 if (part === 'all' || part === 'anniversary') {
+  let saveRef;
+  try {
     const guestCtx = await newCtx(); await hook(guestCtx);
     const guest = await guestCtx.newPage(); guest.setDefaultTimeout(150000);
-    const guestSees = async (u = '/') => { await guest.goto(base + u, { waitUntil: 'domcontentloaded' }); await guest.evaluate(() => sessionStorage.clear()); await guest.goto(base + u, { waitUntil: 'domcontentloaded' }); await settle(guest); return (await guest.content()).includes('anniv5'); };
+    const nav = async (p, u) => { for (let a = 0; a < 4; a++) { try { return await p.goto(base + u, { waitUntil: 'domcontentloaded', timeout: 90000 }); } catch (e) { if (a === 3) throw e; } } };
+    const guestSees = async (u = '/') => { await nav(guest, u); await guest.evaluate(() => { try { sessionStorage.clear(); } catch (e) {} }); await nav(guest, u); await settle(guest); return (await guest.content()).includes('anniv5'); };
     const save = async ({ mode, start, end, preview }) => {
         await go(admin, '/admin/anniversary');
         await admin.check('#mode-' + mode);
@@ -177,6 +201,7 @@ if (part === 'all' || part === 'anniversary') {
         await Promise.all([admin.waitForNavigation({ timeout: 150000 }), admin.click('#anniversary-form button[type=submit]')]);
         return (await admin.textContent('#anniversary-status')).trim().replace(/\s+/g, ' ');
     };
+    saveRef = save;
     const iso = (d) => new Date(d.getTime() + 3 * 3600e3).toISOString().slice(0, 16); // Addis Ababa = UTC+3
     const day = 86400e3, now = new Date();
     await go(admin, '/admin/anniversary');
@@ -213,6 +238,10 @@ if (part === 'all' || part === 'anniversary') {
     rec('anniversary', 'back to Off: hidden for guest and admin', !(await guestSees('/')) && !(await (async () => { await go(admin, '/'); return (await admin.content()).includes('anniv5'); })()), s);
     await go(admin, '/admin/anniversary'); await shot(admin, 'anniversary', 'admin-final-off-1440');
     await guestCtx.close();
+  } finally {
+    // whatever happened above: leave the ceremony OFF
+    try { if (saveRef) { const fin = await saveRef({ mode: 'off', preview: false }); rec('anniversary', 'final state forced back to Off', /HIDDEN/.test(fin), fin); } } catch (e) { rec('anniversary', 'final state forced back to Off', false, String(e.message).slice(0, 120)); }
+  }
 }
 
 rec('js', 'no uncaught JS errors in the admin session', errors.length === 0, errors.slice(0, 2).join(' | '));
