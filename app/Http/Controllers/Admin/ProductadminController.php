@@ -45,7 +45,7 @@ class ProductadminController extends Controller
         'description' => $validated['description'],
         'price' => $validated['price'],
         'features' => $featuresArray, // Make sure your model casts features as array
-        'additional_info' => $validated['additional_info'],
+        'additional_info' => $validated['additional_info'] ?? null,
     ]);
 
     return redirect()->route('admin.products.index')->with('success', 'Product created successfully!');
