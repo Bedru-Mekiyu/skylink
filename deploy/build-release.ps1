@@ -23,12 +23,17 @@ $label = ($Ref -replace '[^A-Za-z0-9._-]', '-')
 $build = Join-Path $PWD 'deploy\.build'
 $stage = Join-Path $build 'stage'
 $zip   = Join-Path $build "skylink-release-$label-$sha.zip"
+# Windows' own bsdtar: Git's GNU tar reads "C:\..." as a remote host.
+$tar   = Join-Path $env:SystemRoot 'System32\tar.exe'
 
 if (Test-Path $stage) { Remove-Item $stage -Recurse -Force }
 New-Item -ItemType Directory -Force $stage | Out-Null
 
 Write-Host "1/5 Exporting committed files of $Ref ($sha)"
-git archive --format=tar $Ref | tar -x -C $stage
+git archive --format=tar --output="$build\export.tar" $Ref
+& $tar -xf "$build\export.tar" -C $stage
+Remove-Item "$build\export.tar" -Force
+if (-not (Test-Path (Join-Path $stage 'composer.json'))) { throw 'Export failed: composer.json is missing from the staging folder.' }
 
 Write-Host '2/5 Removing what the server does not need'
 foreach ($p in 'tests','tools','deploy','footage','phpunit.xml','build-video.sh','backup-db.bat','check-layout.bat',
@@ -55,8 +60,11 @@ Get-ChildItem (Join-Path $stage 'bootstrap\cache') -File -ErrorAction SilentlyCo
 
 Write-Host '5/5 Creating the zip'
 if (Test-Path $zip) { Remove-Item $zip -Force }
-tar -a -c -f $zip -C $stage .
-(Get-FileHash $zip -Algorithm SHA256).Hash | Set-Content "$zip.sha256"
+& $tar -a -c -f $zip -C $stage .
+$stream = [IO.File]::OpenRead($zip)
+$hash = [BitConverter]::ToString([Security.Cryptography.SHA256]::Create().ComputeHash($stream)) -replace '-', ''
+$stream.Dispose()
+$hash | Set-Content "$zip.sha256"
 
 $mb = [math]::Round((Get-Item $zip).Length / 1MB, 1)
 Write-Host "Done: $zip ($mb MB)"
