@@ -13,6 +13,12 @@
     <div class="card-header d-flex flex-wrap justify-content-between align-items-center gap-2">
         <h2 class="h5 mb-0"><i class="fas fa-inbox me-2" aria-hidden="true"></i>Website messages <span class="text-muted fw-normal small">({{ $inquiries->total() }})</span></h2>
         <span class="small text-muted">Emails go to <strong>{{ $inbox ?: 'not set' }}</strong> (CONTACT_INBOX)</span>
+        @if ($unreadCount > 0)
+            <form method="POST" action="{{ route('admin.inbox.read-all') }}" class="ms-auto">
+                @csrf
+                <button type="submit" class="btn btn-sm btn-outline-primary"><i class="fas fa-check-double me-1" aria-hidden="true"></i>Mark all as read ({{ $unreadCount }})</button>
+            </form>
+        @endif
     </div>
 
     <div class="card-body border-bottom">

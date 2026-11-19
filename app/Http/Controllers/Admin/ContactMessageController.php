@@ -26,6 +26,17 @@ class ContactMessageController extends Controller
     }
 
 
+    /** Viewing a message on this older page marks its inbox copy (same message) as read. */
+    public function markRead(ContactMessage $contactMessage)
+    {
+        \App\Models\Inquiry::unread()
+            ->where('legacy_table', 'contact_messages')
+            ->where('legacy_id', $contactMessage->id)
+            ->update(['read_at' => now()]);
+
+        return response()->noContent();
+    }
+
     /**
      * Show the form for creating a new resource.
      */

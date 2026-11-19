@@ -150,10 +150,13 @@ Route::resource('products', ProductadminController::class);
 
     // Contact messages
     Route::resource('contact-messages', ContactMessageController::class)->only(['index']);
+    // The old Messages page and the inbox hold the same messages: viewing one there counts as read in the inbox.
+    Route::post('/contact-messages/{contactMessage}/read', [ContactMessageController::class, 'markRead'])->name('contact-messages.read');
     
     
     // Admin inbox: every website message (contact, support, quote, service, subscription).
     Route::get('/inbox', [InboxController::class, 'index'])->name('inbox.index');
+    Route::post('/inbox/read-all', [InboxController::class, 'readAll'])->name('inbox.read-all');
     Route::get('/inbox/{inquiry}', [InboxController::class, 'show'])->name('inbox.show');
     Route::patch('/inbox/{inquiry}', [InboxController::class, 'update'])->name('inbox.update');
     Route::post('/inbox/{inquiry}/resend', [InboxController::class, 'resend'])->name('inbox.resend');

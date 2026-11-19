@@ -52,6 +52,14 @@ class InboxController extends Controller
         ]);
     }
 
+    /** Mark every unread message (only those the inbox lists: trashed ones are excluded by SoftDeletes) as read. */
+    public function readAll(): RedirectResponse
+    {
+        $count = Inquiry::unread()->update(['read_at' => now()]);
+
+        return back()->with('success', $count === 1 ? '1 message marked as read.' : "{$count} messages marked as read.");
+    }
+
     public function show(Inquiry $inquiry)
     {
         if ($inquiry->read_at === null) {

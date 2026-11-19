@@ -81,3 +81,16 @@
     @endif
 </div>
 @endsection
+
+@push('scripts')
+<script>
+    // Opening a message here also marks it read in the inbox, so the unread badge stays right.
+    document.querySelectorAll('[id^="messageModal-"]').forEach(function (modal) {
+        modal.addEventListener('show.bs.modal', function () {
+            fetch('{{ url('admin/contact-messages') }}/' + modal.id.replace('messageModal-', '') + '/read', {
+                method: 'POST', headers: { 'X-CSRF-TOKEN': '{{ csrf_token() }}', 'X-Requested-With': 'XMLHttpRequest' }, credentials: 'same-origin'
+            });
+        }, { once: true });
+    });
+</script>
+@endpush
