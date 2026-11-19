@@ -36,9 +36,7 @@
     </svg>
 
     <div class="container pf-hero__content">
-        <h1 class="pf-hero__page" id="pf-hero-heading">Portfolio</h1>
         @if ($p)
-            <p class="pf-hero__label"><i class="fas fa-star" aria-hidden="true"></i> Featured project</p>
             <p class="pf-hero__title">{{ $p->title }}</p>
             @if ($description)
                 <p class="pf-hero__text">{{ $description }}</p>

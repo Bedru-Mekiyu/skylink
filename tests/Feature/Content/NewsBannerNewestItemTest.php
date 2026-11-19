@@ -79,7 +79,7 @@ class NewsBannerNewestItemTest extends TestCase
 
         $hero = $this->hero();
         $this->assertStringContainsString('Newest video', $hero);
-        $this->assertStringContainsString('Latest video', $hero);
+        $this->assertStringNotContainsString('Latest video', $hero);
         $this->assertStringContainsString('data-platform="youtube"', $hero);
         $this->assertStringNotContainsString('Older article', $hero);
     }

@@ -62,15 +62,6 @@
         @if ($kind === 'none')
             <p class="news-hero__intro">Discover the latest developments, updates, and event highlights from our team.</p>
         @else
-            <p class="news-hero__label">
-                <span class="news-hero__kind">
-                    <i class="fas {{ $kind === 'video' ? 'fa-play-circle' : 'fa-newspaper' }}" aria-hidden="true"></i>
-                    {{ $kind === 'video' ? 'Latest video' : 'Latest story' }}
-                </span>
-                @if ($category)
-                    <span class="news-hero__chip">{{ $category }}</span>
-                @endif
-            </p>
             <p class="news-hero__title" lang="{{ $titleLang }}">{{ $title }}</p>
             <p class="news-hero__meta">
                 @if ($date)
@@ -216,21 +207,6 @@
     }
 
     .news-hero__intro { max-width: 720px; margin: 0; color: rgba(255, 255, 255, 0.88); line-height: 1.7; }
-
-    .news-hero__label { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin: 0 0 12px; }
-
-    .news-hero__kind { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; font-size: 0.95rem; color: #fff; }
-
-    .news-hero__kind i { color: #93c5fd; }
-
-    .news-hero__chip {
-        padding: 3px 12px;
-        border-radius: 50px;
-        background: rgba(255, 255, 255, 0.14);
-        border: 1px solid rgba(255, 255, 255, 0.25);
-        font-size: 0.78rem;
-        font-weight: 600;
-    }
 
     .news-hero__title {
         max-width: 860px;

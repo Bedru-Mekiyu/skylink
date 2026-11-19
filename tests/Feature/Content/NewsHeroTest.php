@@ -53,8 +53,9 @@ class NewsHeroTest extends TestCase
         $hero = $this->hero();
         $this->assertStringContainsString('Newest video', $hero);
         $this->assertStringNotContainsString('Older video', $hero);
-        $this->assertStringContainsString('Latest video', $hero);
-        $this->assertStringContainsString('Innovation', $hero); // category label
+        // No "Latest video" kind badge and no category chip above the title any more.
+        $this->assertStringNotContainsString('Latest video', $hero);
+        $this->assertStringNotContainsString('news-hero__chip', $hero);
         // Date in Addis Ababa time (15:02 UTC = 18:02 +03:00).
         $this->assertStringContainsString('datetime="2026-11-01T18:02:40+03:00"', $hero);
         $this->assertStringContainsString('data-platform="tiktok"', $hero);
@@ -129,7 +130,7 @@ class NewsHeroTest extends TestCase
         $draft->forceFill(['slug' => 'draft', 'status' => 'draft', 'published_at' => null])->save();
 
         $hero = $this->hero();
-        $this->assertStringContainsString('Latest story', $hero);
+        $this->assertStringNotContainsString('Latest story', $hero);
         $this->assertStringContainsString('Newest story', $hero);
         $this->assertStringNotContainsString('Draft story', $hero);
         $this->assertStringContainsString('storage/news/web/new.webp', $hero);
