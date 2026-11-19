@@ -307,6 +307,29 @@
             right: max(-80px, calc((100% - 100vw) / 2 + 16px));
         }
 
+        /* Services rotator: cards are positioned by JS by their offset from the active card. */
+        .services-container.is-rotator { display: block; padding: 25px 0; touch-action: pan-y; user-select: none; }
+        /* Phones show a peek of the neighbouring cards, so the row is clipped there; wider screens keep the full shadow. */
+        @media (max-width: 575.98px) { .services-container.is-rotator { overflow-x: clip; } }
+        .services-container.is-rotator .service-card {
+            position: absolute; left: 50%; top: 25px; width: var(--svc-w, 300px); margin: 0; will-change: transform, opacity;
+            transition: transform .8s cubic-bezier(.22, .61, .36, 1), opacity .6s ease, background-color .6s ease, color .6s ease;
+        }
+        .services-container.is-rotator.no-anim .service-card { transition: none; }
+        .carousel-nav:focus-visible, .services-pause:focus-visible, .services-dot:focus-visible { outline: 3px solid #f5c451; outline-offset: 3px; }
+        .services-controls { display: flex; justify-content: center; align-items: center; gap: .75rem; margin-top: .75rem; }
+        .services-pause {
+            width: 36px; height: 36px; border-radius: 50%; border: 0; cursor: pointer; font-size: .8rem;
+            background: var(--primary-blue); color: #fff; display: inline-flex; align-items: center; justify-content: center;
+        }
+        .services-pause:hover { background: var(--dark-blue); }
+        .services-dots { display: flex; }
+        .services-dot { width: 24px; height: 24px; padding: 7px; border: 0; border-radius: 50%; background: #9db4dc; background-clip: content-box; cursor: pointer; }
+        .services-dot[aria-current="true"] { background: var(--dark-blue); background-clip: content-box; }
+        @media (prefers-reduced-motion: reduce) {
+            .services-container.is-rotator .service-card { transition: none; }
+        }
+
         /* Latest News */
         .news-section {
             padding: 2rem 0;
@@ -1659,61 +1682,156 @@ max-height: 20 vh;
     }
   ];
 
-  let currentIndex = 1;
-
+  // ========= SERVICES ROTATOR =========
+  // Same custom widget as before (no library): a centre card with a side card each way. It now
+  // auto-rotates in an endless loop. Cards are laid out by their offset from the active one, so
+  // the loop never jumps back; only cards next to the active one are visible, the rest are
+  // invisible while they travel round behind.
   const container = document.querySelector('.services-container');
-  const cards = container.querySelectorAll('.service-card');
   const prevBtn = document.querySelector('.carousel-prev');
   const nextBtn = document.querySelector('.carousel-next');
+  const N = services.length;
+  const AUTOPLAY_MS = 3500;
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const holds = { hover: false, focus: false, touch: false, offscreen: false, hidden: document.hidden };
+  let current = 1, timer = 0, userPaused = false, cards = [], dots = [], laidOut = false;
 
-  function updateCard(card, service, position) {
-    card.className = 'service-card ' + position;
-    card.querySelector('.service-image i').className = service.icon;
-    card.querySelector('h4').textContent = service.title;
-    card.querySelector('p').textContent = service.desc;
+  container.querySelectorAll('.service-card').forEach((c) => c.remove());
+  container.classList.add('is-rotator', 'no-anim');
+  container.setAttribute('role', 'region');
+  container.setAttribute('aria-roledescription', 'carousel');
+  container.setAttribute('aria-label', 'Our services');
+
+  cards = services.map((s, i) => {
+    const card = document.createElement('div');
+    card.setAttribute('role', 'group');
+    card.setAttribute('aria-roledescription', 'slide');
+    card.setAttribute('aria-label', (i + 1) + ' of ' + N);
+    card.innerHTML = '<div class="service-image"><i class="' + s.icon + '" aria-hidden="true"></i></div>' +
+      '<div class="service-content"><h4></h4><p></p></div>';
+    card.querySelector('h4').textContent = s.title;
+    card.querySelector('p').textContent = s.desc;
+    container.insertBefore(card, nextBtn);
+    return card;
+  });
+
+  // Dots and the pause/play button (WCAG 2.2.2: moving content must be pausable).
+  const controls = document.createElement('div');
+  controls.className = 'services-controls';
+  controls.innerHTML = '<button type="button" class="services-pause" aria-label="Pause automatic rotation"><i class="fas fa-pause" aria-hidden="true"></i></button><div class="services-dots"></div>';
+  container.after(controls);
+  const pauseBtn = controls.querySelector('.services-pause');
+  const dotsBox = controls.querySelector('.services-dots');
+  dots = services.map((s, i) => {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'services-dot';
+    b.setAttribute('aria-label', 'Show service ' + (i + 1) + ': ' + s.title);
+    b.addEventListener('click', () => { current = i; layout(); schedule(); });
+    dotsBox.appendChild(b);
+    return b;
+  });
+  if (reduceMotion) pauseBtn.hidden = true;
+
+  function perView() {
+    return window.innerWidth >= 992 ? 3 : window.innerWidth >= 576 ? 2 : 1;
   }
 
-  function renderServices() {
-    if (cards.length < 3) {
-      console.warn('Not enough cards in the DOM. Expected 3.');
-      return;
+  function layout() {
+    const pv = perView(), cw = container.clientWidth;
+    const gap = pv === 1 ? 16 : pv === 2 ? 32 : 48;
+    let w = pv === 1 ? Math.round(cw * 0.78) : 300;
+    if (pv > 1 && w * pv + gap * (pv - 1) > cw) w = Math.floor((cw - gap * (pv - 1)) / pv);
+    container.style.setProperty('--svc-w', w + 'px');
+
+    // Every card as tall as the tallest, like the old row (align-items: stretch); no layout shift while rotating.
+    cards.forEach((c) => { c.style.height = 'auto'; });
+    const tallest = Math.max.apply(null, cards.map((c) => c.offsetHeight));
+    cards.forEach((c) => { c.style.height = tallest + 'px'; });
+    container.style.height = (tallest + 50) + 'px';
+
+    const step = w + gap;
+    cards.forEach((card, i) => {
+      let d = (((i - current) % N) + N) % N;
+      if (d > N / 2) d -= N;
+      const pos = pv === 2 ? d - 0.5 : d;
+      const visible = pv === 2 ? (d === 0 || d === 1) : Math.abs(d) <= 1;
+      const active = d === 0;
+      card.className = 'service-card ' + (active ? 'center' : 'side');
+      card.style.transform = 'translate3d(calc(-50% + ' + (pos * step) + 'px),0,0) scale(' + (active ? 1.08 : 0.94) + ')';
+      card.style.opacity = visible ? (active ? '1' : '0.72') : '0';
+      card.style.zIndex = active ? '2' : '1';
+      card.setAttribute('aria-hidden', visible ? 'false' : 'true');
+      card.inert = !visible;
+    });
+    dots.forEach((b, i) => { if (i === current) b.setAttribute('aria-current', 'true'); else b.removeAttribute('aria-current'); });
+    if (!laidOut) {
+      laidOut = true;
+      requestAnimationFrame(() => requestAnimationFrame(() => container.classList.remove('no-anim')));
     }
-
-    const prev = services[(currentIndex - 1 + services.length) % services.length];
-    const current = services[currentIndex % services.length];
-    const next = services[(currentIndex + 1) % services.length];
-
-    updateCard(cards[0], prev, 'side');
-    updateCard(cards[1], current, 'center');
-    updateCard(cards[2], next, 'side');
   }
 
-  prevBtn.addEventListener('click', () => {
-    currentIndex = (currentIndex - 1 + services.length) % services.length;
-    renderServices();
+  function running() {
+    return !reduceMotion && !userPaused && !holds.hover && !holds.focus && !holds.touch && !holds.offscreen && !holds.hidden;
+  }
+  function schedule() {
+    clearTimeout(timer);
+    container.setAttribute('aria-live', running() ? 'off' : 'polite'); // announce changes only when the user drives them
+    if (running()) timer = setTimeout(() => go(1), AUTOPLAY_MS);
+  }
+  function go(delta) {
+    current = (current + delta + N) % N;
+    layout();
+    schedule();
+  }
+  function hold(name, on) { holds[name] = on; schedule(); }
+
+  prevBtn.addEventListener('click', () => go(-1));
+  nextBtn.addEventListener('click', () => go(1));
+  pauseBtn.addEventListener('click', () => {
+    userPaused = !userPaused;
+    pauseBtn.setAttribute('aria-label', userPaused ? 'Start automatic rotation' : 'Pause automatic rotation');
+    pauseBtn.firstElementChild.className = userPaused ? 'fas fa-play' : 'fas fa-pause';
+    schedule();
   });
 
-  nextBtn.addEventListener('click', () => {
-    currentIndex = (currentIndex + 1) % services.length;
-    renderServices();
+  // Pause while the pointer is over it, focus is inside it, or it is being touched/dragged.
+  [container, controls].forEach((el) => {
+    el.addEventListener('mouseenter', () => hold('hover', true));
+    el.addEventListener('mouseleave', () => hold('hover', false));
+    el.addEventListener('focusin', () => hold('focus', true));
+    el.addEventListener('focusout', (e) => { if (!el.contains(e.relatedTarget)) hold('focus', false); });
+  });
+  container.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft') go(-1); else if (e.key === 'ArrowRight') go(1);
   });
 
-  // Swipe Support
-  let startX = 0;
-  container.addEventListener('touchstart', (e) => {
-    startX = e.touches[0].clientX;
+  // Swipe or drag (touch and mouse).
+  let startX = null;
+  container.addEventListener('pointerdown', (e) => {
+    if (e.target.closest('button')) return;
+    startX = e.clientX; hold('touch', true);
   });
+  const endDrag = (e) => {
+    if (startX === null) return;
+    const dx = e.clientX - startX;
+    startX = null;
+    hold('touch', false);
+    if (dx > 50) go(-1); else if (dx < -50) go(1);
+  };
+  container.addEventListener('pointerup', endDrag);
+  container.addEventListener('pointercancel', () => { startX = null; hold('touch', false); });
 
-  container.addEventListener('touchend', (e) => {
-    const endX = e.changedTouches[0].clientX;
-    const deltaX = endX - startX;
+  // Off-screen or hidden tab: stop.
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver((entries) => hold('offscreen', !entries[0].isIntersecting), { threshold: 0.25 }).observe(container);
+  }
+  document.addEventListener('visibilitychange', () => hold('hidden', document.hidden));
+  let resizeTimer = 0;
+  window.addEventListener('resize', () => { clearTimeout(resizeTimer); resizeTimer = setTimeout(layout, 120); });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(layout);
 
-    if (deltaX > 50) {
-      prevBtn.click();
-    } else if (deltaX < -50) {
-      nextBtn.click();
-    }
-  });
+  function renderServices() { layout(); schedule(); }
 
    // Counter animation for stats
         function animateCounters() {
@@ -1810,14 +1928,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
      
 
-        // Service carousel functionality
-        document.querySelector('.carousel-prev').addEventListener('click', function() {
-            console.log('Previous service');
-        });
-
-        document.querySelector('.carousel-next').addEventListener('click', function() {
-            console.log('Next service');
-        });
 
         // Intersection Observer for scroll animations
         const observerOptions = {
