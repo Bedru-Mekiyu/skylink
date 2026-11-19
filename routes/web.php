@@ -126,15 +126,10 @@ Route::put('/videos/{video}', [AdminVideoController::class, 'update'])->name('vi
 Route::delete('/videos/{video}', [AdminVideoController::class, 'destroy'])->name('videos.destroy');
 
 
+// Admin services. The resource defines index/create/store/edit/update/destroy; the same routes were once also
+// written out by hand with the same names, which made `php artisan route:cache` fail ("Another route has already
+// been assigned name admin.services.edit") and so would have broken the deploy.
 Route::resource('services', ServiceadminController::class);
-
-// Admin services
-    Route::get('/services', [ServiceadminController::class, 'index'])->name('services.index');
-    Route::get('/services/create', [ServiceadminController::class, 'create'])->name('services.create');
-    Route::post('/services', [ServiceadminController::class, 'store'])->name('services.store');
-    Route::get('/services/{services}/edit', [ServiceadminController::class, 'edit'])->name('services.edit');
-    Route::put('/services/{services}', [ServiceadminController::class, 'update'])->name('services.update');
-Route::delete('/services/{services}', [ServiceadminController::class, 'destroy'])->name('services.destroy');
 
     // Service categories: the cards and filter buttons on /services
     Route::resource('service-categories', ServiceCategoryAdminController::class)
