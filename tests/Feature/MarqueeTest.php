@@ -31,4 +31,15 @@ class MarqueeTest extends TestCase
         $this->assertMatchesRegularExpression('/prefers-reduced-motion: reduce\)\s*\{\s*\.services-track \{ animation: none; \}/', $html);
         $this->assertStringContainsString('.services-marquee .marquee-dup { display: none; }', $html);
     }
+
+    public function test_services_marquee_highlights_the_card_in_the_middle_with_readable_colours(): void
+    {
+        $html = $this->get('/')->assertOk()->getContent();
+
+        $this->assertStringContainsString('.service-card.is-center {', $html);
+        $this->assertStringContainsString('background: #1e40af;', $html); // white on #1e40af is 8.7:1, above the 4.5:1 AA minimum
+        $this->assertStringContainsString("classList.toggle('is-center'", $html);
+        // Reduced motion: the script never starts, so nothing is highlighted or animated.
+        $this->assertMatchesRegularExpression("/if \(!track \|\| \(window\.matchMedia && matchMedia\('\(prefers-reduced-motion: reduce\)'\)\.matches\)\) return;/", $html);
+    }
 }

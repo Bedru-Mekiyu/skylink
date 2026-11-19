@@ -236,7 +236,7 @@
             border-radius: 20px;
             overflow: hidden;
             box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-            transition: transform 0.3s ease, background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+            transition: transform 0.5s ease, background-color 0.5s ease, color 0.5s ease, box-shadow 0.5s ease;
             position: relative;
         }
 
@@ -261,6 +261,26 @@
         .service-card:hover .service-image {
             background: rgba(255,255,255,0.1);
             color: rgba(255,255,255,0.4);
+        }
+
+        /* The card passing through the middle of the section (set by the script below, one at a time).
+           #1e40af is the deep blue this page already uses for the card glow; white on it is 8.7:1.
+           Only transform, colours and shadow change, so nothing moves in the layout. */
+        .service-card.is-center {
+            background: #1e40af;
+            color: #fff;
+            transform: translateY(-4px) scale(1.03);
+            z-index: 2;
+            box-shadow: 0 8px 18px rgba(30, 64, 175, 0.4); /* stays inside the section's 25px padding, which clips overflow */
+        }
+
+        .service-card.is-center .service-image {
+            background: rgba(255,255,255,0.12);
+            color: rgba(255,255,255,0.9);
+        }
+
+        .service-card.is-center .service-content p {
+            opacity: 1;
         }
 
         .service-content {
@@ -1188,6 +1208,57 @@ max-height: 20 vh;
                     @endforeach
                 </div>
             </div>
+            <script>
+                // Highlight the service card passing through the middle of the section, one at a time.
+                // One requestAnimationFrame loop reads the track position once per frame and picks the card whose
+                // centre is nearest the middle. Each service exists twice in the track (for the seamless loop) and the
+                // two copies are half a track apart, so both copies carry the class: at the loop point the track jumps
+                // by exactly one copy and the highlighted card is already in place (no flicker). Only one of the pair
+                // is ever on screen. The loop runs only while the section is on screen and the tab is visible. With
+                // reduced motion the cards stand still and nothing is highlighted.
+                (function () {
+                    var box = document.querySelector('.services-marquee');
+                    var track = box && box.querySelector('.services-track');
+                    if (!track || (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches)) return;
+                    var cards = Array.prototype.slice.call(track.children), half = cards.length / 2, centers = [], active = -1, raf = 0;
+                    var onScreen = !('IntersectionObserver' in window);
+
+                    function measure() { centers = cards.map(function (c) { return c.offsetLeft + c.offsetWidth / 2; }); }
+                    function mark(i, on) {
+                        cards[i].classList.toggle('is-center', on);
+                        cards[i + half].classList.toggle('is-center', on);
+                    }
+                    function pick() {
+                        var x = track.getBoundingClientRect().left - box.getBoundingClientRect().left;
+                        var mid = box.clientWidth / 2, best = 0, bestD = Infinity;
+                        for (var i = 0; i < centers.length; i++) {
+                            var d = Math.abs(x + centers[i] - mid);
+                            if (d < bestD) { bestD = d; best = i; }
+                        }
+                        best %= half;
+                        if (best !== active) {
+                            if (active >= 0) mark(active, false);
+                            active = best;
+                            mark(active, true);
+                        }
+                    }
+                    function frame() { pick(); raf = requestAnimationFrame(frame); }
+                    function update() {
+                        cancelAnimationFrame(raf);
+                        raf = 0;
+                        if (onScreen && !document.hidden) frame();
+                    }
+
+                    measure();
+                    window.addEventListener('resize', measure);
+                    document.addEventListener('visibilitychange', update);
+                    if ('IntersectionObserver' in window) {
+                        new IntersectionObserver(function (entries) { onScreen = entries[0].isIntersecting; update(); }).observe(box);
+                    } else {
+                        update();
+                    }
+                })();
+            </script>
 
             <div class="text-center mt-5">
             <a href="{{ route('services') }}" class=" btn-view-more">
