@@ -12,6 +12,7 @@ const browser = await chromium.launch();
 const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 }, extraHTTPHeaders: host ? { Host: host } : {} });
 await ctx.route(/tawk\.to|\.(mp4|webm)(\?|$)/i, (r) => r.abort());
 const page = await ctx.newPage();
+page.setDefaultTimeout(90000); // slow CDN/font requests on a busy PC made a 30 s default flaky
 const bad = [];
 page.on('response', (r) => { if (r.status() >= 400 && !/tawk|favicon/.test(r.url())) bad.push(r.status() + ' ' + r.url()); });
 page.on('pageerror', (e) => bad.push('JS ' + e.message));
