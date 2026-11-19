@@ -41,7 +41,8 @@ return [
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
-            'url' => env('APP_URL').'/storage',
+            // ASSET_URL (optional) moves /assets, /build and /storage under one prefix, e.g. https://skylinkict.com/sl
+            'url' => rtrim((string) (env('ASSET_URL') ?: env('APP_URL')), '/').'/storage',
             'visibility' => 'public',
             'throw' => false,
             'report' => false,

@@ -1,0 +1,10 @@
+# Video types/caching for /sl/assets/videos when skylinkict.com serves the site (same rules as public/.htaccess).
+<IfModule mod_mime.c>
+    AddType video/webm .webm
+    AddType video/mp4 .mp4
+</IfModule>
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType video/mp4 "access plus 1 year"
+    ExpiresByType video/webm "access plus 1 year"
+</IfModule>
