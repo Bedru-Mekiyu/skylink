@@ -56,6 +56,7 @@ class ImageUploadValidationTest extends TestCase
 
     public function test_real_jpg_png_and_webp_images_are_accepted(): void
     {
+        $this->requireGd();
         // Real image bytes, content-sniffed exactly like a production upload.
         foreach (['jpg' => 'image/jpeg', 'jpeg' => 'image/jpeg', 'png' => 'image/png', 'webp' => 'image/webp'] as $ext => $mime) {
             $source = UploadedFile::fake()->image("source.{$ext}", 30, 30); // keep a reference: the temp file dies with the object
@@ -86,6 +87,7 @@ class ImageUploadValidationTest extends TestCase
 
     public function test_a_real_image_with_a_script_extension_is_rejected(): void
     {
+        $this->requireGd();
         $jpeg = $this->jpegBytes();
         $this->assertNotSame('', $jpeg);
 
@@ -97,6 +99,7 @@ class ImageUploadValidationTest extends TestCase
 
     public function test_files_over_5_mb_are_rejected(): void
     {
+        $this->requireGd();
         $this->assertFalse($this->passes(UploadedFile::fake()->image('huge.jpg')->size(ImageUploadRules::MAX_KILOBYTES + 1)));
         $this->assertTrue($this->passes(UploadedFile::fake()->image('ok.jpg')->size(ImageUploadRules::MAX_KILOBYTES)));
     }
@@ -132,6 +135,7 @@ class ImageUploadValidationTest extends TestCase
 
     public function test_a_valid_news_image_is_stored_under_random_names(): void
     {
+        $this->requireGd();
         Storage::fake('public');
         Storage::fake('local');
         $category = NewsCategory::create(['name' => 'News']);

@@ -50,6 +50,7 @@ class DatesAndShareImagesTest extends TestCase
 
     public function test_uploads_get_a_jpeg_share_copy_used_by_og_and_twitter_tags(): void
     {
+        $this->requireGd();
         $admin = User::factory()->create();
         $admin->forceFill(['is_admin' => true])->save();
         $this->actingAs($admin)->get(route('admin.news.create'));
@@ -78,6 +79,7 @@ class DatesAndShareImagesTest extends TestCase
 
     public function test_existing_articles_get_a_share_copy_from_their_archived_original(): void
     {
+        $this->requireGd();
         $originalFile = UploadedFile::fake()->image('orig.jpg', 3000, 2000);
         Storage::disk('local')->put('archive/news-originals/orig.jpg', file_get_contents($originalFile->getRealPath()));
         $webFile = UploadedFile::fake()->image('web.jpg', 1600, 1067);

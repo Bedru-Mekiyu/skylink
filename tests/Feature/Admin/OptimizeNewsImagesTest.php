@@ -24,6 +24,7 @@ class OptimizeNewsImagesTest extends TestCase
 
     public function test_oversized_images_get_a_web_copy_and_their_original_is_moved_to_the_private_archive(): void
     {
+        $this->requireGd();
         Storage::fake('public');
         Storage::fake('local');
         // Keep the fake files referenced: their temp files are removed with the objects.

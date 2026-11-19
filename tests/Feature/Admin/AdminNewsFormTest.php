@@ -315,6 +315,7 @@ class AdminNewsFormTest extends TestCase
 
     public function test_uploaded_images_get_a_web_copy_and_a_thumbnail_and_the_original_is_kept_privately(): void
     {
+        $this->requireGd();
         $this->store(['image' => UploadedFile::fake()->image('big.jpg', 3000, 2000)])->assertSessionHasNoErrors();
         $news = News::first();
 
@@ -334,6 +335,7 @@ class AdminNewsFormTest extends TestCase
 
     public function test_small_images_are_not_enlarged(): void
     {
+        $this->requireGd();
         $this->store(['image' => UploadedFile::fake()->image('small.png', 500, 300)])->assertSessionHasNoErrors();
         [$w] = getimagesizefromstring(Storage::disk('public')->get(News::first()->image));
         $this->assertSame(500, $w);

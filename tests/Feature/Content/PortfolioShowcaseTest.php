@@ -206,6 +206,7 @@ class PortfolioShowcaseTest extends TestCase
 
     public function test_adding_a_project_works_now_that_the_slug_column_exists(): void
     {
+        $this->requireGd();
         Storage::fake('public');
         $file = UploadedFile::fake()->image('shot.jpg', 800, 500);
 
