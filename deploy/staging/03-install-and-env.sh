@@ -1,7 +1,7 @@
 set -e
-# Runs ON THE SERVER (piped over ssh). Writes ONLY inside /home/skylinkictcom/staging.skylinkict.com:
+# Runs ON THE SERVER (piped over ssh). Writes ONLY inside /home/skylinkictcom/bedru.skylinkict.com:
 # first install (unzip the two zips) + the rest of the staging .env. Prints no secret.
-S=/home/skylinkictcom/staging.skylinkict.com
+S=/home/skylinkictcom/bedru.skylinkict.com
 cd "$S"
 [ "$(pwd -P)" = "$S" ] || { echo "wrong folder"; exit 1; }
 [ -f deploy/skylink-app.zip ] && [ -f .env ] || { echo "kit or .env missing"; exit 1; }
@@ -12,10 +12,10 @@ unzip -o -q deploy/skylink-app.zip -d "$S"
 unzip -o -q deploy/skylink-public.zip -d "$S/public"
 KEY="base64:$(openssl rand -base64 32)"
 {
-  echo "APP_NAME=\"Sky Link STAGING\""
+  echo "APP_NAME=\"Sky Link TEST (bedru)\""
   echo "APP_ENV=production"
   echo "APP_DEBUG=false"
-  echo "APP_URL=https://staging.skylinkict.com"
+  echo "APP_URL=https://bedru.skylinkict.com"
   echo "APP_KEY=$KEY"
   echo "APP_LOCALE=en"
   echo "APP_FALLBACK_LOCALE=en"
@@ -30,7 +30,7 @@ KEY="base64:$(openssl rand -base64 32)"
   echo "FILESYSTEM_DISK=local"
   echo "MAIL_MAILER=log"
   echo "MAIL_FROM_ADDRESS=staging@skylinkict.com"
-  echo "MAIL_FROM_NAME=\"Sky Link STAGING\""
+  echo "MAIL_FROM_NAME=\"Sky Link TEST (bedru)\""
   echo "CONTACT_CONFIRM_VISITOR=true"
   echo "CONTACT_RETENTION_MONTHS=24"
   echo "NEWS_ADMIN_TIMEZONE=Africa/Addis_Ababa"

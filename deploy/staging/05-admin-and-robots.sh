@@ -1,7 +1,7 @@
 set -e
 # Runs ON THE SERVER (piped over ssh: first line = admin password, read by the outer command into $PW).
-# Writes only inside /home/skylinkictcom/staging.skylinkict.com and into the staging database.
-S=/home/skylinkictcom/staging.skylinkict.com
+# Writes only inside /home/skylinkictcom/bedru.skylinkict.com and into the staging database.
+S=/home/skylinkictcom/bedru.skylinkict.com
 cd "$S"
 [ "$(pwd -P)" = "$S" ] || { echo wrong folder; exit 1; }
 printf 'User-agent: *\nDisallow: /\n' > public/robots.txt

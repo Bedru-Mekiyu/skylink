@@ -1,9 +1,9 @@
 set -e
 set -o pipefail
 # Runs ON THE SERVER (piped over ssh). READ-ONLY on the live site: only SELECTs via mysqldump --single-transaction and
-# a file copy FROM live. Every write goes into /home/skylinkictcom/staging.skylinkict.com or the staging database.
+# a file copy FROM live. Every write goes into /home/skylinkictcom/bedru.skylinkict.com or the staging database.
 LIVE=/home/skylinkictcom/s.skylinkict.com
-S=/home/skylinkictcom/staging.skylinkict.com
+S=/home/skylinkictcom/bedru.skylinkict.com
 envget() { # envget <file> <KEY>  (never printed by callers)
   local v; v="$(grep -E "^[[:space:]]*$2=" "$1" | tail -n1)"; v="${v#*=}"; v="${v%$'\r'}"
   case "$v" in \"*\") v="${v:1:${#v}-2}";; \'*\') v="${v:1:${#v}-2}";; esac; printf '%s' "$v"
@@ -16,8 +16,11 @@ MYSQL_PWD="$(envget $LIVE/.env DB_PASSWORD)" mysqldump -h "$(envget $LIVE/.env D
   --single-transaction --quick --routines --no-tablespaces --default-character-set=utf8mb4 "$LDB" | gzip > "$S/deploy/live-data.sql.gz"
 gunzip -c "$S/deploy/live-data.sql.gz" | tail -n 2 | grep -q 'Dump completed' || { echo "dump incomplete"; exit 1; }
 ls -l "$S/deploy/live-data.sql.gz" | awk '{print "dump size:", $5}'
-TABLES_BEFORE=$(MYSQL_PWD="$(envget $S/.env DB_PASSWORD)" mysql -N -h 127.0.0.1 -u "$(envget $S/.env DB_USERNAME)" "$SDB" -e 'show tables' | wc -l)
-[ "$TABLES_BEFORE" = "0" ] || { echo "staging database is not empty ($TABLES_BEFORE tables); stopping"; exit 1; }
+# refresh: empty the STAGING database (its own tables only; guarded by the name check above), then import the dump
+SQLC() { MYSQL_PWD="$(envget $S/.env DB_PASSWORD)" mysql -N -h 127.0.0.1 -u "$(envget $S/.env DB_USERNAME)" "$SDB" "$@"; }
+TABLES_BEFORE=$(SQLC -e 'show tables' | wc -l)
+echo "staging tables before refresh: $TABLES_BEFORE (they are dropped and replaced by the live copy)"
+{ echo 'SET FOREIGN_KEY_CHECKS=0;'; SQLC -e 'show tables' | sed 's/.*/DROP TABLE IF EXISTS `&`;/'; echo 'SET FOREIGN_KEY_CHECKS=1;'; } | SQLC
 gunzip -c "$S/deploy/live-data.sql.gz" | MYSQL_PWD="$(envget $S/.env DB_PASSWORD)" mysql -h 127.0.0.1 -u "$(envget $S/.env DB_USERNAME)" --default-character-set=utf8mb4 "$SDB"
 echo "imported. tables in staging: $(MYSQL_PWD="$(envget $S/.env DB_PASSWORD)" mysql -N -h 127.0.0.1 -u "$(envget $S/.env DB_USERNAME)" "$SDB" -e 'show tables' | wc -l)"
 # uploads: copy FROM live (read) INTO staging (write)
