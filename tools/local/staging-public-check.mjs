@@ -44,13 +44,14 @@ if (am) targets.push(['news-article-amharic', norm(am)]);
 targets.push(['not-found-404', '/this-page-does-not-exist-xyz']);
 
 for (const [name, url] of targets) {
-    let retried = false;
+    let retries = 0;
     for (let i = 0; i < widths.length; i++) {
         const w = widths[i];
+        try {
         await page.setViewportSize({ width: w, height: 900 });
         problems = [];
-        const r = await page.goto(base + url, { waitUntil: 'domcontentloaded' });
-        await page.evaluate(() => sessionStorage.clear());
+        let r; for (let a = 0; a < 4 && !r; a++) { r = await page.goto(base + url, { waitUntil: 'domcontentloaded' }).catch(() => null); if (!r) await page.waitForTimeout(3000); } // local network blips (ERR_NETWORK_CHANGED)
+        await page.evaluate(() => { try { sessionStorage.clear(); } catch (e) {} });
         await page.waitForLoadState('load', { timeout: 60000 }).catch(() => {}); // slow shared host: best effort
         await page.waitForTimeout(2500);
         const m = await page.evaluate(async () => ({
@@ -63,14 +64,17 @@ for (const [name, url] of targets) {
         await page.screenshot({ path: path.join(dir, `${w}.png`), fullPage: false });
         const row = { page: name, url, width: w, status: r.status(), overflowPx: m.overflow, ceremony: m.ceremony, fontsOk: Object.fromEntries(m.fonts), problems: [...new Set(problems)] };
         const expected = name === 'not-found-404' ? 404 : 200;
-        const relevant = row.problems.filter((p) => !(name === 'not-found-404' && /404/.test(p)));
+        const isExternal404 = (p) => /^http 404: https?:\/\//.test(p) && !p.includes('staging.skylinkict.com');
+        row.warnings = row.problems.filter(isExternal404); // dead third-party images (the page swaps in the placeholder)
+        const relevant = row.problems.filter((p) => !(name === 'not-found-404' && /404/.test(p)) && !isExternal404(p) && !(row.warnings.length && /Failed to load resource: the server responded with a status of 404/.test(p)));
         row.fontsLoaded = Object.values(row.fontsOk).every(Boolean);
         row.pass = row.status === expected && row.overflowPx <= 1 && !row.ceremony && relevant.length === 0;
         // The shared host sometimes drops a connection while many images load: one retry, flagged in the report.
-        if (!row.pass && !retried && relevant.some((p) => /ERR_CONNECTION/.test(p))) { retried = true; row.retryNote = 'connection dropped on first try'; i--; continue; }
-        retried = false;
+        if (!row.pass && retries < 2 && relevant.some((p) => /ERR_(CONNECTION|SOCKET|HTTP2|NETWORK|INTERNET|TIMED)/.test(p))) { retries++; i--; continue; }
+        row.retries = retries; retries = 0;
         report.push(row);
-        console.log(row.pass ? 'ok  ' : 'FAIL', name.padEnd(22), String(w).padStart(4), 'status', row.status, 'overflow', row.overflowPx, row.problems.length ? row.problems.slice(0, 2).join(' | ') : '');
+        console.log(row.pass ? 'ok  ' : 'FAIL', name.padEnd(22), String(w).padStart(4), 'status', row.status, 'overflow', row.overflowPx, row.retries ? '(retried ' + row.retries + 'x)' : '', row.problems.length ? row.problems.slice(0, 2).join(' | ') : '');
+        } catch (e) { if (retries < 3) { retries++; i--; continue; } report.push({ page: name, url, width: w, pass: false, problems: [String(e.message).slice(0, 160)] }); console.log('FAIL', name.padEnd(22), w, String(e.message).slice(0, 120)); retries = 0; }
     }
 }
 fs.writeFileSync(path.join(out, 'report-public.json'), JSON.stringify(report, null, 2));
