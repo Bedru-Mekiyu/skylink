@@ -26,7 +26,7 @@ say "files in backup : $(tar -tzf "$BK/files-before.tar.gz" | grep -vc '/$' || t
 RESTORE_DB=0
 if [ -e "$BK/db.sql.gz" ] || [ -e "$BK/db.sqlite" ]; then
     say "database dump  : yes"
-    say "Restoring the database replaces its tables with the dump: anything entered on the site since the backup is lost."
+    say "Restoring the database REPLACES the whole database with the dump (tables created since are removed too): anything entered on the site since the backup is lost."
     if confirm_yes "Restore the database too?"; then RESTORE_DB=1; fi
 fi
 confirm_yes "Restore the files from this backup now?" || die "Cancelled. Nothing was changed."

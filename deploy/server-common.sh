@@ -75,7 +75,15 @@ db_restore() {
             command -v mysql >/dev/null 2>&1 || die "mysql client is not available in this shell."
             say "   database: $name"
             set -o pipefail
-            gunzip -c "$src.sql.gz" | MYSQL_PWD="$(env_get DB_PASSWORD)" mysql -h "$(env_get DB_HOST)" -P "$(env_get DB_PORT)" -u "$(env_get DB_USERNAME)" --default-character-set=utf8mb4 "$name" \
+            local pw h p u
+            pw="$(env_get DB_PASSWORD)"; h="$(env_get DB_HOST)"; p="$(env_get DB_PORT)"; u="$(env_get DB_USERNAME)"
+            # A restore must give back the state of the backup. Tables that only exist AFTER the backup (created by the
+            # migrations of the release) are not in the dump and would make the next deploy fail ("table already exists"),
+            # so this database's own tables are emptied first (same database, same prompt that already warned about it).
+            { echo 'SET FOREIGN_KEY_CHECKS=0;'
+              MYSQL_PWD="$pw" mysql -N -h "$h" -P "$p" -u "$u" "$name" -e 'show tables' | sed 's/.*/DROP TABLE IF EXISTS `&`;/'
+              echo 'SET FOREIGN_KEY_CHECKS=1;'; } | MYSQL_PWD="$pw" mysql -h "$h" -P "$p" -u "$u" "$name" || die "Could not empty the database before the restore."
+            gunzip -c "$src.sql.gz" | MYSQL_PWD="$pw" mysql -h "$h" -P "$p" -u "$u" --default-character-set=utf8mb4 "$name" \
                 || die "Database restore failed."
             ;;
         *) die "Unsupported DB_CONNECTION ($conn).";;

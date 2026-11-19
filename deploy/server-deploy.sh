@@ -100,7 +100,7 @@ if printf '%s' "$PRETEND" | grep -Eiq '\bdrop (table|column)\b'; then
     confirm_yes "The migrations above would DROP something. Type yes only if you expected that" || die "Stopped before migrating (a DROP was found)."
 fi
 if confirm_yes "Run these migrations now (php artisan migrate --force)?"; then
-    "$PHP" artisan migrate --force
+    "$PHP" artisan migrate --force || die "php artisan migrate failed (see the output above). The site stays in maintenance mode: fix it or roll back."
 else
     die "Migrations were not run."
 fi
