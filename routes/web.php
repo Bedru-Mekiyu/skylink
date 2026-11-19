@@ -157,6 +157,10 @@ Route::resource('products', ProductadminController::class);
     // Admin inbox: every website message (contact, support, quote, service, subscription).
     Route::get('/inbox', [InboxController::class, 'index'])->name('inbox.index');
     Route::post('/inbox/read-all', [InboxController::class, 'readAll'])->name('inbox.read-all');
+
+    // Anniversary ceremony control (mode, dates, admin preview).
+    Route::get('/anniversary', [\App\Http\Controllers\Admin\AnniversaryAdminController::class, 'edit'])->name('anniversary.edit');
+    Route::put('/anniversary', [\App\Http\Controllers\Admin\AnniversaryAdminController::class, 'update'])->name('anniversary.update');
     Route::get('/inbox/{inquiry}', [InboxController::class, 'show'])->name('inbox.show');
     Route::patch('/inbox/{inquiry}', [InboxController::class, 'update'])->name('inbox.update');
     Route::post('/inbox/{inquiry}/resend', [InboxController::class, 'resend'])->name('inbox.resend');
