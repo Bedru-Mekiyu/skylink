@@ -1,0 +1,57 @@
+Server files (s.skylinkict.com) whose content (line endings ignored) is NOT in the local git history. Read-only comparison, 2026-11-19.
+Group 1 is overwritten by the upload (backup first). Group 2 has no local counterpart and is left untouched.
+
+== WILL BE OVERWRITTEN (44)
+app/Http/Controllers/SubscriptionController.php
+app/Http/Controllers/PortfolioController.php
+app/Http/Controllers/HomeController.php
+app/Http/Controllers/Admin/ServiceadminController.php
+app/Http/Controllers/Admin/PortfolioController.php
+app/Http/Controllers/Admin/AdminVideoController.php
+app/Http/Controllers/Admin/AdminNewsController.php
+app/Http/Controllers/Admin/SubscriptionsnewController.php
+app/Http/Controllers/NewsDisplayController.php
+app/Http/Controllers/NewsletterController.php
+app/Http/Controllers/ServiceController.php
+app/Providers/AppServiceProvider.php
+app/Models/Portfolio.php
+app/Models/Video.php
+app/Models/News.php
+app/Models/NewsCategory.php
+app/Mail/NewsLetterMail.php
+routes/web.php
+routes/console.php
+config/database.php
+resources/views/emails/newsletter.blade.php
+resources/views/admin/portfolio/create.blade.php
+resources/views/admin/portfolio/edit.blade.php
+resources/views/admin/news/form.blade.php
+resources/views/admin/news/create.blade.php
+resources/views/admin/news/edit.blade.php
+resources/views/admin/news/index.blade.php
+resources/views/admin/layouts/master.blade.php
+resources/views/services/index.blade.php
+resources/views/services/subscribe.blade.php
+resources/views/services/servicedetail.blade.php
+resources/views/pages/news-events.blade.php
+resources/views/pages/news-detail.blade.php
+resources/views/pages/contact.blade.php
+resources/views/pages/index.blade.php
+resources/views/pages/portfolio.blade.php
+resources/views/pages/aboutpage.blade.php
+resources/views/pages/video-detail.blade.php
+resources/views/layouts/master.blade.php
+bootstrap/app.php
+public/favicon.ico
+public/.htaccess
+composer.json
+composer.lock
+
+== SERVER-ONLY, NOT TOUCHED (7)
+app/Http/Controllers/ContactController.php
+app/Http/Controllers/ServiceRequestController.php
+app/Http/Controllers/MessageController.php
+app/Mail/ContactFormMail.php
+app/Mail/UserMessage.php
+resources/views/emails/user-message.blade.php
+resources/views/emails/contact/form.blade.php

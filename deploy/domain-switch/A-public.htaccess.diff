@@ -1,0 +1,34 @@
+diff --git "a/deploy\\domain-switch\\A-public.htaccess.CURRENT" "b/deploy\\domain-switch\\A-public.htaccess.NEW"
+index 79123bf..e52cce3 100644
+--- "a/deploy\\domain-switch\\A-public.htaccess.CURRENT"
++++ "b/deploy\\domain-switch\\A-public.htaccess.NEW"
+@@ -5,6 +5,12 @@
+ 
+     RewriteEngine On
+ 
++    # STAGE 2 ONLY: after skylinkict.com serves the site, send s.skylinkict.com there (301).
++    # Asset, build and upload URLs stay answered here so old cached pages and links keep working.
++    RewriteCond %{HTTP_HOST} ^s\.skylinkict\.com$ [NC]
++    RewriteCond %{REQUEST_URI} !^/(assets|build|storage)/
++    RewriteRule ^(.*)$ https://skylinkict.com/$1 [L,R=301]
++
+     # Handle Authorization Header
+     RewriteCond %{HTTP:Authorization} .
+     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+@@ -34,3 +40,16 @@
+ </IfModule>
+ # END cPanel-generated php ini directives, do not edit
+ AddType application/x-httpd-php .html
++
++# Hero background video (resources/views/partials/hero-media.blade.php)
++# WebM type for servers whose mime.types lack it, and long caching: the hero
++# video URLs carry a ?v=<file time> version, so a rebuilt file gets a new URL.
++<IfModule mod_mime.c>
++    AddType video/webm .webm
++    AddType video/mp4 .mp4
++</IfModule>
++<IfModule mod_expires.c>
++    ExpiresActive On
++    ExpiresByType video/mp4 "access plus 1 year"
++    ExpiresByType video/webm "access plus 1 year"
++</IfModule>

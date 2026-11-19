@@ -33,3 +33,4 @@ Thumbs.db
 
 # Release zips and staging made by deploy/build-release.ps1
 /deploy/.build/
+/deploy/*.zip

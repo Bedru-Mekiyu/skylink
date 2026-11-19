@@ -1,3 +1,4 @@
+# SUPERSEDED: use deploy/UPLOAD-GUIDE.md (exact paths for this server). Kept for reference only.
 #!/usr/bin/env bash
 # Commands to run ON THE SERVER (cPanel > Terminal, or SSH) after the release files are in place.
 # Not run automatically. Replace APP with the folder that holds artisan, e.g. /home/skylinkictcom/skylink
