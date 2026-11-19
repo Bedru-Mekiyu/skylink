@@ -180,4 +180,118 @@ class AnniversaryAdminTest extends TestCase
         $this->save(['mode' => 'off']);
         $this->actingAs($admin)->get(route('admin.anniversary.edit'))->assertSee('switched off', false);
     }
+
+    // ----- a saved setting beats ANNIVERSARY_FORCE ---------------------------------
+
+    private function pageHasAnniversaryTraces(string $uri = '/'): bool
+    {
+        return str_contains($this->get($uri)->assertOk()->getContent(), 'anniv5');
+    }
+
+    public function test_off_beats_anniversary_force_and_leaves_no_trace_for_guests(): void
+    {
+        config(['anniversary.force' => true]);
+        $this->at('2026-11-05 12:00:00');
+        $this->assertTrue(Anniversary::isActive(), 'with nothing saved the local force preview still works');
+
+        $this->save(['mode' => 'off']);
+        Auth::logout();
+        $this->flushSession();
+
+        $this->assertFalse(Anniversary::isActive());
+        foreach (['/', '/about', '/news'] as $uri) {
+            $this->assertFalse($this->pageHasAnniversaryTraces($uri), "$uri must carry no anniversary HTML, CSS or JS");
+        }
+        $this->assertStringNotContainsString('id="anniv5-intro"', $this->get('/')->getContent());
+    }
+
+    public function test_saved_automatic_with_a_future_start_also_beats_force(): void
+    {
+        config(['anniversary.force' => true]);
+        $this->at('2026-11-05 12:00:00');
+        $this->save(); // automatic, starts 1 Dec
+        Auth::logout();
+        $this->flushSession();
+
+        $this->assertFalse($this->pageHasAnniversaryTraces());
+    }
+
+    public function test_saved_on_now_still_shows_it_with_force_on(): void
+    {
+        config(['anniversary.force' => true]);
+        $this->at('2026-11-05 12:00:00');
+        $this->save(['mode' => 'on']);
+        Auth::logout();
+        $this->flushSession();
+
+        $this->assertTrue($this->homeShowsCeremony());
+    }
+
+    public function test_saving_off_takes_effect_on_the_next_request_even_with_force_on(): void
+    {
+        config(['anniversary.force' => true]);
+        $this->at('2026-11-05 12:00:00');
+        $this->assertTrue($this->homeShowsCeremony(), 'a guest sees the force preview before anything is saved');
+
+        $this->save(['mode' => 'off']);
+        Auth::logout();
+        $this->flushSession();
+
+        $this->assertFalse($this->homeShowsCeremony(), 'the very next request is clean');
+    }
+
+    // ----- admin preview and its label ---------------------------------------------
+
+    public function test_admin_preview_shows_the_label_to_the_admin_only(): void
+    {
+        config(['anniversary.force' => true]);
+        $this->at('2026-11-05 12:00:00');
+        $this->save(['mode' => 'off', 'admin_preview' => '1']);
+
+        $adminHtml = $this->get('/')->assertOk()->getContent();
+        $this->assertStringContainsString('data-anniv5-seal', $adminHtml);
+        $this->assertStringContainsString("Admin preview: visitors can't see this", $adminHtml);
+
+        Auth::logout();
+        $this->flushSession();
+        $guestHtml = $this->get('/')->assertOk()->getContent();
+        $this->assertStringNotContainsString('anniv5', $guestHtml);
+        $this->assertStringNotContainsString('Admin preview', $guestHtml);
+
+        $this->actingAs(User::factory()->create()); // a non-admin account is a visitor
+        $this->assertStringNotContainsString('anniv5', $this->get('/')->getContent());
+    }
+
+    public function test_no_label_when_the_ceremony_is_live_for_everyone(): void
+    {
+        $this->at('2026-11-05 12:00:00');
+        $this->save(['mode' => 'on', 'admin_preview' => '1']);
+
+        $html = $this->get('/')->assertOk()->getContent();
+        $this->assertStringContainsString('data-anniv5-seal', $html);
+        $this->assertStringNotContainsString("Admin preview: visitors can't see this", $html);
+    }
+
+    public function test_status_line_explains_the_admin_preview(): void
+    {
+        $this->at('2026-11-05 12:00:00');
+        $this->save(['mode' => 'off', 'admin_preview' => '1']);
+
+        $this->get(route('admin.anniversary.edit'))->assertOk()
+            ->assertSee('Visitors: HIDDEN. You: seeing preview', false);
+    }
+
+    public function test_every_save_updates_the_same_row_even_when_row_one_no_longer_exists(): void
+    {
+        $this->save(['mode' => 'off']);
+        AnniversarySetting::query()->delete(); // ids never restart, so the next row is not id 1
+        Anniversary::forgetCache();
+
+        $this->save(['mode' => 'on']);
+        $this->save(['mode' => 'off']);
+        $this->save(['mode' => 'auto']);
+
+        $this->assertSame(1, AnniversarySetting::count(), 'one settings row, not one per save');
+        $this->assertSame('auto', Anniversary::settings()['mode'], 'the page reads what was saved last');
+    }
 }

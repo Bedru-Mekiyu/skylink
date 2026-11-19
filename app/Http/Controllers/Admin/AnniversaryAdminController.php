@@ -47,12 +47,16 @@ class AnniversaryAdminController extends Controller
             return back()->withInput()->withErrors(['ends_at' => 'The end must be after the start.']);
         }
 
-        AnniversarySetting::query()->updateOrCreate(['id' => 1], [
+        // One settings row: update the newest one (the one Anniversary::settings() reads), or create it.
+        // (Never updateOrCreate(['id' => 1]): after the row was deleted once, id 1 never exists again, so every
+        // save would add a new row while the page kept reading an older one.)
+        $row = AnniversarySetting::query()->latest('id')->first() ?? new AnniversarySetting();
+        $row->fill([
             'mode' => $data['mode'],
             'starts_at' => $start->utc(),
             'ends_at' => $end->utc(),
             'admin_preview' => $request->boolean('admin_preview'),
-        ]);
+        ])->save();
         Anniversary::forgetCache(); // so the change shows on the very next page view
 
         return redirect()->route('admin.anniversary.edit')->with('success', 'Anniversary settings saved.');
@@ -65,7 +69,9 @@ class AnniversaryAdminController extends Controller
         $now = CarbonImmutable::now($s['timezone']);
         $live = Anniversary::liveForVisitors($now);
 
-        if ($live) {
+        if ($live && ! $s['saved'] && Anniversary::isPreviewForced()) {
+            $line = 'Currently LIVE for visitors because ANNIVERSARY_FORCE is on in this local/staging setup (production ignores it). Save a mode here and that mode wins.';
+        } elseif ($live) {
             $line = 'Currently LIVE for visitors until '.$fmt($s['end']).'.';
         } elseif ($s['mode'] === 'off') {
             $line = 'Currently HIDDEN for visitors. It is switched off.';
@@ -77,6 +83,13 @@ class AnniversaryAdminController extends Controller
             $line = 'Currently HIDDEN for visitors.';
         }
 
-        return $line.($s['admin_preview'] ? ' Logged-in admins can preview it on the site.' : '');
+        if (! $s['admin_preview']) {
+            return $line;
+        }
+
+        // Admin preview is ticked: say what the logged-in admin sees compared with visitors.
+        return $line.($live
+            ? ' Admin preview is on, but it changes nothing while the ceremony is live for everyone.'
+            : ' Visitors: HIDDEN. You: seeing preview (a small "Admin preview" label shows on the site for you only).');
     }
 }

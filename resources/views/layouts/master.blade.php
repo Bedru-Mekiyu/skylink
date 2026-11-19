@@ -471,6 +471,10 @@
 <body>
     @if ($anniversaryActive)
         @include('partials.anniversary.intro')
+        @if (\App\Support\Anniversary::previewOnlyForAdmin())
+            {{-- Only an admin who ticked "Admin preview" gets here: visitors do not see the ceremony. --}}
+            <div role="status" style="position:fixed;left:12px;bottom:12px;z-index:2147483600;max-width:calc(100vw - 24px);padding:8px 14px;border-radius:10px;background:#111827;color:#fff;border:1px solid #F5C451;font:600 13px/1.3 system-ui,sans-serif;box-shadow:0 6px 20px rgba(0,0,0,.35)">Admin preview: visitors can't see this</div>
+        @endif
     @endif
     {{-- Top bar removed: its phone numbers, address, social links and the "Service Active" badge now live in the contact launcher (partials/contact-launcher). --}}
 

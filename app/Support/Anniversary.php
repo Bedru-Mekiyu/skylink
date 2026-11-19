@@ -21,16 +21,39 @@ final class Anniversary
     private const CACHE_KEY = 'anniversary.settings';
     private const CACHE_SECONDS = 60;
 
+    /**
+     * The one check every anniversary part uses (intro, homepage panel, page strips, CSS and JS).
+     *
+     * Order: a logged-in admin with "Admin preview" ticked always sees it; everyone else follows
+     * liveForVisitors(), where a saved admin setting beats ANNIVERSARY_FORCE (see below).
+     */
     public static function isActive(): bool
     {
-        return self::isPreviewForced() || self::liveForVisitors() || self::adminPreviewing();
+        return self::adminPreviewing() || self::liveForVisitors();
     }
 
-    /** Would an ordinary visitor see the ceremony right now? */
+    /** True when the page shows the ceremony only because this admin ticked "Admin preview". */
+    public static function previewOnlyForAdmin(): bool
+    {
+        return self::adminPreviewing() && ! self::liveForVisitors();
+    }
+
+    /**
+     * Would an ordinary visitor see the ceremony right now?
+     *
+     * 1. Saved Off          -> never (beats the config dates AND ANNIVERSARY_FORCE).
+     * 2. Saved On now       -> until the end time.
+     * 3. Saved Automatic    -> between start and end (Addis Ababa time).
+     * 4. Nothing saved      -> the config dates; ANNIVERSARY_FORCE applies only here (local/staging, never production).
+     */
     public static function liveForVisitors(?CarbonImmutable $now = null): bool
     {
         $s = self::settings();
         $now ??= CarbonImmutable::now($s['timezone']);
+
+        if (! $s['saved'] && self::isPreviewForced()) {
+            return true;
+        }
 
         return match ($s['mode']) {
             'off' => false,
@@ -101,7 +124,7 @@ final class Anniversary
                     return false;
                 }
                 // Raw column values (stored in UTC): no model date casting, so a frozen test clock cannot shift them.
-                $m = DB::table('anniversary_settings')->first();
+                $m = DB::table('anniversary_settings')->orderByDesc('id')->first(); // newest row wins
 
                 return $m ? [
                     'mode' => $m->mode,
