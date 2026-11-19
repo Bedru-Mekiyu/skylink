@@ -73,6 +73,8 @@ class AnniversaryAdminController extends Controller
             $line = 'Currently LIVE for visitors because ANNIVERSARY_FORCE is on in this local/staging setup (production ignores it). Save a mode here and that mode wins.';
         } elseif ($live) {
             $line = 'Currently LIVE for visitors until '.$fmt($s['end']).'.';
+        } elseif (! $s['saved']) {
+            $line = 'Currently HIDDEN for visitors (Off). Choose Automatic or On now to enable.';
         } elseif ($s['mode'] === 'off') {
             $line = 'Currently HIDDEN for visitors. It is switched off.';
         } elseif ($now->gte($s['end'])) {

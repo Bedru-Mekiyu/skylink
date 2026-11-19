@@ -5,10 +5,11 @@ namespace Tests\Feature\Anniversary;
 use App\Support\Anniversary;
 use Carbon\CarbonImmutable;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
 
 /**
- * The 5-year campaign switches itself on and off by config/anniversary.php,
+ * Once an admin saved Automatic, the 5-year campaign switches itself on and off by its dates (config/anniversary.php),
  * leaves no trace outside its window and can only be previewed outside production.
  */
 class AnniversaryCampaignTest extends TestCase
@@ -34,6 +35,15 @@ class AnniversaryCampaignTest extends TestCase
         CarbonImmutable::setTestNow(CarbonImmutable::parse($localTime, self::TZ));
     }
 
+    /** An admin has saved Automatic with the campaign dates (nothing saved = Off, see AnniversaryAdminTest). */
+    private function automatic(): void
+    {
+        DB::table('anniversary_settings')->insert([
+            'mode' => 'auto', 'starts_at' => '2026-11-22 21:00:00', 'ends_at' => '2026-12-06 21:00:00',
+            'admin_preview' => false, 'created_at' => now(), 'updated_at' => now(),
+        ]);
+        Anniversary::forgetCache();
+    }
     public static function publicPages(): array
     {
         return [
@@ -45,6 +55,7 @@ class AnniversaryCampaignTest extends TestCase
 
     public function test_window_starts_inclusive_and_ends_exclusive_in_addis_ababa_time(): void
     {
+        $this->automatic();
         $this->at('2026-11-22 23:59:59');
         $this->assertFalse(Anniversary::isActive());
 
@@ -60,6 +71,7 @@ class AnniversaryCampaignTest extends TestCase
 
     public function test_window_uses_addis_ababa_not_utc(): void
     {
+        $this->automatic();
         // 2026-11-22 21:00 UTC is already 2026-11-23 00:00 in Addis Ababa (UTC+3).
         CarbonImmutable::setTestNow(CarbonImmutable::parse('2026-11-22 21:00:00', 'UTC'));
         $this->assertTrue(Anniversary::isActive());
@@ -95,6 +107,7 @@ class AnniversaryCampaignTest extends TestCase
     /** @dataProvider publicPages */
     public function test_active_pages_show_the_ceremony_seal_and_the_intro_once(string $uri): void
     {
+        $this->automatic();
         $this->at('2026-11-23 00:00:00');
 
         $html = $this->get($uri)->assertOk()->getContent();
@@ -107,6 +120,7 @@ class AnniversaryCampaignTest extends TestCase
 
     public function test_homepage_carries_the_full_message_and_other_pages_a_short_line(): void
     {
+        $this->automatic();
         $this->at('2026-11-23 00:00:00');
 
         $this->get('/')->assertOk()
@@ -120,6 +134,7 @@ class AnniversaryCampaignTest extends TestCase
 
     public function test_auth_pages_never_show_the_campaign(): void
     {
+        $this->automatic();
         $this->at('2026-11-23 00:00:00');
 
         $html = $this->get('/login')->assertOk()->getContent();
@@ -129,6 +144,7 @@ class AnniversaryCampaignTest extends TestCase
 
     public function test_amharic_locale_uses_the_amharic_copy(): void
     {
+        $this->automatic();
         $this->at('2026-11-23 00:00:00');
         app()->setLocale('am');
 

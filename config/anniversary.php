@@ -9,7 +9,8 @@ return [
 
     'timezone' => 'Africa/Addis_Ababa',
 
-    // Start is inclusive, end is exclusive (local time in the timezone above).
+    // The pre-filled dates of Admin > Anniversary Ceremony. They do NOT switch anything on by themselves:
+    // until an admin saves a mode there, the ceremony is Off. Start inclusive, end exclusive (local time above).
     'start' => '2026-11-23 00:00:00',
     'end' => '2026-12-07 00:00:00',
 

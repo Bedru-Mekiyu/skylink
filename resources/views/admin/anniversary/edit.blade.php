@@ -17,7 +17,7 @@
         <p class="text-muted mb-4">
             The ceremony is the full-screen intro, the homepage panel and the small strips on the other pages.
             It never shows unless it is live for visitors (or you are previewing it as a logged-in admin).
-            @unless ($saved) Nothing has been saved yet, so the dates below are the built-in defaults. @endunless
+            @unless ($saved) Nothing has been saved yet, so the ceremony is Off; the dates below are only the pre-filled defaults. @endunless
         </p>
 
         <form method="POST" action="{{ route('admin.anniversary.update') }}" id="anniversary-form">

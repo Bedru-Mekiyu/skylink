@@ -13,8 +13,8 @@ use Throwable;
  * Gate for the 5-year anniversary campaign.
  *
  * The owner controls it in Admin > Anniversary Ceremony (mode Automatic / Off / On now, start and end
- * time in Africa/Addis_Ababa, admin preview). Until something is saved there, config/anniversary.php
- * (the same dates) decides, so behaviour does not change on deploy.
+ * time in Africa/Addis_Ababa, admin preview). Until an admin saves something there the ceremony is OFF;
+ * config/anniversary.php only supplies the pre-filled default dates (Nov 23 - Dec 7, 2026).
  */
 final class Anniversary
 {
@@ -44,7 +44,8 @@ final class Anniversary
      * 1. Saved Off          -> never (beats the config dates AND ANNIVERSARY_FORCE).
      * 2. Saved On now       -> until the end time.
      * 3. Saved Automatic    -> between start and end (Addis Ababa time).
-     * 4. Nothing saved      -> the config dates; ANNIVERSARY_FORCE applies only here (local/staging, never production).
+     * 4. Nothing saved      -> Off (the config dates are only the pre-filled dates of the admin form);
+     *                          ANNIVERSARY_FORCE applies only here (local/staging, never production).
      */
     public static function liveForVisitors(?CarbonImmutable $now = null): bool
     {
@@ -94,7 +95,8 @@ final class Anniversary
             : CarbonImmutable::parse(config('anniversary.end'), $tz);
 
         return [
-            'mode' => in_array($row['mode'] ?? null, AnniversarySetting::MODES, true) ? $row['mode'] : 'auto',
+            // Nothing saved by an admin (or an unknown mode) = Off: the ceremony never shows until an admin turns it on.
+            'mode' => in_array($row['mode'] ?? null, AnniversarySetting::MODES, true) ? $row['mode'] : 'off',
             'start' => $start,
             'end' => $end,
             'admin_preview' => (bool) ($row['admin_preview'] ?? false),

@@ -56,20 +56,52 @@ class AnniversaryAdminTest extends TestCase
         return str_contains($this->get('/')->assertOk()->getContent(), 'data-anniv5-seal');
     }
 
-    public function test_without_saved_settings_the_config_dates_decide(): void
+    public function test_without_saved_settings_the_ceremony_is_off_even_inside_the_dates(): void
     {
         $this->assertSame(0, AnniversarySetting::count());
 
-        $this->at('2026-11-22 23:59:59');
-        $this->assertFalse(Anniversary::isActive());
-        $this->assertFalse($this->homeShowsCeremony());
+        foreach (['2026-11-22 23:59:59', '2026-11-23 00:00:00', '2026-11-23 12:00:00', '2026-11-25 12:00:00', '2026-12-06 23:59:59'] as $when) {
+            $this->at($when);
+            $this->assertFalse(Anniversary::isActive(), "hidden at $when");
+            $this->assertFalse(Anniversary::liveForVisitors(), "hidden for visitors at $when");
+            $this->assertFalse($this->homeShowsCeremony(), "no ceremony on the home page at $when");
+        }
+        $this->assertSame(0, AnniversarySetting::count(), 'reading the page never writes a setting');
+    }
 
-        $this->at('2026-11-23 00:00:00');
-        $this->assertTrue(Anniversary::isActive());
+    public function test_the_fresh_admin_form_is_off_with_the_prefilled_default_dates(): void
+    {
+        $this->at('2026-11-25 12:00:00');
+        $this->actingAs($this->admin())->get(route('admin.anniversary.edit'))
+            ->assertOk()
+            ->assertSee('Currently HIDDEN for visitors (Off). Choose Automatic or On now to enable.', false)
+            ->assertSee('value="2026-11-23T00:00"', false)
+            ->assertSee('value="2026-12-07T00:00"', false)
+            ->assertSeeInOrder(['id="mode-off"', 'checked'], false);
+    }
+
+    public function test_the_migration_does_not_switch_it_on(): void
+    {
+        $this->assertSame(0, AnniversarySetting::count(), 'migrating inserts no row');
+    }
+
+    public function test_after_saving_automatic_the_dates_decide_and_on_now_shows_it(): void
+    {
+        $this->save(['mode' => 'auto', 'starts_at' => '2026-11-23T00:00', 'ends_at' => '2026-12-07T00:00']);
+        $this->flushSession();
+        Auth::logout();
+
+        $this->at('2026-11-22 23:59:59');
+        $this->assertFalse(Anniversary::liveForVisitors());
+        $this->at('2026-11-23 12:00:00');
+        $this->assertTrue(Anniversary::liveForVisitors());
         $this->assertTrue($this->homeShowsCeremony());
 
-        $this->at('2026-12-07 00:00:00');
-        $this->assertFalse(Anniversary::isActive());
+        $this->save(['mode' => 'on', 'starts_at' => '2026-11-23T00:00', 'ends_at' => '2026-12-07T00:00']);
+        $this->flushSession();
+        Auth::logout();
+        $this->at('2026-11-10 12:00:00');
+        $this->assertTrue($this->homeShowsCeremony(), 'On now is live at once');
     }
 
     public function test_automatic_mode_follows_the_saved_start_and_end_in_addis_ababa_time(): void
@@ -168,6 +200,7 @@ class AnniversaryAdminTest extends TestCase
     public function test_the_page_states_clearly_what_visitors_see(): void
     {
         $admin = $this->admin();
+        $this->save(['mode' => 'auto', 'starts_at' => '2026-11-23T00:00', 'ends_at' => '2026-12-07T00:00']);
 
         $this->at('2026-11-05 12:00:00');
         $this->actingAs($admin)->get(route('admin.anniversary.edit'))
