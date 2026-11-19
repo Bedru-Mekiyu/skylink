@@ -210,7 +210,8 @@
         /* Services: continuous marquee, same technique as the testimonials and Featured Products
            (a track holding the cards twice, translated by -50% in a linear infinite loop, paused on hover).
            --w card width and --g gap are unitless px so the duration keeps ~80px/s, the testimonials' speed. */
-        .services-marquee { overflow: hidden; padding: 25px 0; --w: 300; --g: 32; }
+        /* The window shows three cards (never wider), so the middle one is always the highlighted card with a neighbour each side. */
+        .services-marquee { overflow: hidden; padding: 44px 0; max-width: calc(3 * (var(--w) + var(--g)) * 1px); margin-inline: auto; --w: 300; --g: 32; }
 
         .services-track {
             display: flex;
@@ -269,9 +270,9 @@
         .service-card.is-center {
             background: #1e40af;
             color: #fff;
-            transform: translateY(-4px) scale(1.03);
-            z-index: 2;
-            box-shadow: 0 8px 18px rgba(30, 64, 175, 0.4); /* stays inside the section's 25px padding, which clips overflow */
+            transform: translateY(-6px) scale(1.12); /* steps forward out of the row */
+            z-index: 3;
+            box-shadow: 0 14px 28px rgba(30, 64, 175, 0.4); /* stays inside the section's 44px padding, which clips overflow */
         }
 
         .service-card.is-center .service-image {
