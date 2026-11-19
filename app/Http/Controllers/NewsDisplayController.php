@@ -21,7 +21,10 @@ class NewsDisplayController extends Controller
      */
     public function index(Request $request)
     {
-        $categories = NewsCategory::get()
+        // Only the three news categories are filters (All Content, News, Innovation, Events). The categories table also
+        // holds other rows (service-type categories from 2025); those must not become filter buttons. Their articles still
+        // show under All Content, which applies no category filter.
+        $categories = NewsCategory::whereIn('name', NewsCategory::DISPLAY_ORDER)->get()
             ->sortBy(fn ($c) => array_search($c->name, NewsCategory::DISPLAY_ORDER, true) === false
                 ? 99
                 : array_search($c->name, NewsCategory::DISPLAY_ORDER, true))
