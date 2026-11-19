@@ -30,3 +30,6 @@ Thumbs.db
 # Local tooling and archives (never part of the site)
 /.playwright-mcp
 *.zip
+
+# Release zips and staging made by deploy/build-release.ps1
+/deploy/.build/
