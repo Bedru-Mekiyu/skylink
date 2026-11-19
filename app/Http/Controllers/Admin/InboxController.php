@@ -102,11 +102,28 @@ class InboxController extends Controller
         return back()->with('success', "The message was queued again for {$inbox}.");
     }
 
-    /** Hidden from the inbox (soft delete); kept in the database. */
+    /** Hidden from the inbox (soft delete: the row stays in the database, a developer can restore it). */
     public function destroy(Inquiry $inquiry): RedirectResponse
     {
         $inquiry->delete();
 
-        return redirect()->route('admin.inbox.index')->with('success', "Message {$inquiry->reference} deleted.");
+        return redirect()->route('admin.inbox.index')->with('success', 'Message deleted.');
+    }
+
+    /** "Delete selected": soft-deletes every ticked message. Unknown or already deleted ids are ignored. */
+    public function bulkDestroy(Request $request): RedirectResponse
+    {
+        $data = $request->validate([
+            'ids' => ['required', 'array', 'min:1', 'max:200'],
+            'ids.*' => ['integer'],
+        ], ['ids.required' => 'Tick at least one message to delete.', 'ids.min' => 'Tick at least one message to delete.']);
+
+        $count = 0;
+        foreach (Inquiry::whereIn('id', $data['ids'])->get() as $inquiry) {
+            $inquiry->delete();
+            $count++;
+        }
+
+        return redirect()->route('admin.inbox.index')->with('success', $count === 1 ? 'Message deleted.' : "{$count} messages deleted.");
     }
 }

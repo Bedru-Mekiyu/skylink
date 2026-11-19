@@ -17,7 +17,13 @@ class ContactMessageController extends Controller
 
      {
 
-    $messages = ContactMessage::latest()->paginate(20);
+    // This older page lists the original rows; a message deleted in the inbox (its copy is soft-deleted) is hidden here too.
+    $messages = ContactMessage::latest()
+        ->whereNotExists(fn ($q) => $q->select(\Illuminate\Support\Facades\DB::raw(1))->from('inquiries')
+            ->whereColumn('inquiries.legacy_id', 'contact_messages.id')
+            ->where('inquiries.legacy_table', 'contact_messages')
+            ->whereNotNull('inquiries.deleted_at'))
+        ->paginate(20);
     return view('admin.contact-message.index', compact('messages'));
 
     }

@@ -160,6 +160,7 @@ Route::resource('products', ProductadminController::class);
     Route::patch('/inbox/{inquiry}', [InboxController::class, 'update'])->name('inbox.update');
     Route::post('/inbox/{inquiry}/resend', [InboxController::class, 'resend'])->name('inbox.resend');
     Route::delete('/inbox/{inquiry}', [InboxController::class, 'destroy'])->name('inbox.destroy');
+    Route::delete('/inbox', [InboxController::class, 'bulkDestroy'])->name('inbox.bulk-destroy');
 
 //service admin
   

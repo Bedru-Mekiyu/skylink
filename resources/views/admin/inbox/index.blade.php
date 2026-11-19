@@ -60,24 +60,34 @@
         </form>
     </div>
 
+    <form method="POST" action="{{ route('admin.inbox.bulk-destroy') }}" id="bulk-delete-form">
+    @csrf
+    @method('DELETE')
+    <div class="card-body border-bottom py-2 d-flex flex-wrap align-items-center gap-2">
+        <button type="submit" class="btn btn-sm btn-outline-danger" id="bulk-delete-btn" disabled><i class="fas fa-trash me-1" aria-hidden="true"></i>Delete selected <span id="bulk-count" class="badge text-bg-light">0</span></button>
+        <span class="small text-muted">Tick messages in the list, then delete them together.</span>
+    </div>
     <div class="card-body p-0">
         <div class="table-wrapper">
             <table class="table table-hover align-middle mb-0 table-responsive-cards">
                 <caption class="visually-hidden">Website messages, newest first</caption>
                 <thead>
                     <tr>
-                        <th scope="col" class="ps-4">From</th>
+                        <th scope="col" class="ps-4" style="width:2.5rem"><input type="checkbox" class="form-check-input" id="select-all" aria-label="Select all messages on this page"></th>
+                        <th scope="col">From</th>
                         <th scope="col">Type</th>
                         <th scope="col">Message</th>
                         <th scope="col">Status</th>
                         <th scope="col">Received</th>
-                        <th scope="col" class="pe-4">Email</th>
+                        <th scope="col">Email</th>
+                        <th scope="col" class="pe-4"><span class="visually-hidden">Actions</span></th>
                     </tr>
                 </thead>
                 <tbody>
                     @forelse ($inquiries as $item)
                         <tr class="{{ $item->read_at ? '' : 'inbox-unread' }}">
-                            <td data-label="From" class="ps-4">
+                            <td data-label="Select" class="ps-4"><input type="checkbox" class="form-check-input bulk-box" name="ids[]" value="{{ $item->id }}" aria-label="Select message {{ $item->reference }}"></td>
+                            <td data-label="From">
                                 <a href="{{ route('admin.inbox.show', $item) }}" class="text-body text-decoration-none fw-semibold inbox-name" lang="{{ $item->language }}">
                                     @unless ($item->read_at)<span class="inbox-dot" aria-hidden="true"></span><span class="visually-hidden">Unread: </span>@endunless{{ $item->name }}
                                 </a>
@@ -88,7 +98,7 @@
                             <td data-label="Message" class="inbox-snippet" lang="{{ $item->language }}">{{ \Illuminate\Support\Str::limit((string) $item->message, 90) ?: '—' }}</td>
                             <td data-label="Status"><span class="badge {{ $statusClass[$item->status] ?? 'text-bg-light' }}">{{ $item->status_label }}</span></td>
                             <td data-label="Received" class="text-nowrap">{{ $item->created_at->copy()->setTimezone($tz)->format('M j, H:i') }}</td>
-                            <td data-label="Email" class="pe-4 text-nowrap small">
+                            <td data-label="Email" class="text-nowrap small">
                                 @if ($item->legacy_table)
                                     <span class="text-muted">Older message</span>
                                 @elseif ($item->team_notify_error)
@@ -99,10 +109,13 @@
                                     <span class="text-muted"><i class="fas fa-clock" aria-hidden="true"></i> Queued</span>
                                 @endif
                             </td>
+                            <td data-label="Delete" class="pe-4 text-nowrap">
+                                <button type="submit" form="delete-message-{{ $item->id }}" class="btn btn-sm btn-outline-danger" onclick="return confirm('Delete this message? This can\'t be undone from the admin.');"><i class="fas fa-trash me-1" aria-hidden="true"></i>Delete<span class="visually-hidden"> message {{ $item->reference }}</span></button>
+                            </td>
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="6" class="text-center py-5">
+                            <td colspan="8" class="text-center py-5">
                                 <i class="fas fa-inbox fa-3x text-muted mb-3" aria-hidden="true"></i>
                                 <p class="h5 text-muted">{{ ($search !== '' || $type || $status || $unread) ? 'No messages match these filters.' : 'No messages yet.' }}</p>
                             </td>
@@ -112,6 +125,12 @@
             </table>
         </div>
     </div>
+    </form>
+
+    {{-- One small form per row for the single Delete button (a form cannot sit inside the bulk form). --}}
+    @foreach ($inquiries as $item)
+        <form method="POST" action="{{ route('admin.inbox.destroy', $item) }}" id="delete-message-{{ $item->id }}" class="d-none">@csrf @method('DELETE')</form>
+    @endforeach
 
     @if ($inquiries->hasPages())
         <div class="card-footer d-flex justify-content-center">
@@ -120,6 +139,32 @@
     @endif
 </div>
 @endsection
+
+@push('scripts')
+<script>
+    (function () {
+        var form = document.getElementById('bulk-delete-form');
+        if (!form) return;
+        var boxes = Array.prototype.slice.call(form.querySelectorAll('.bulk-box'));
+        var all = document.getElementById('select-all');
+        var btn = document.getElementById('bulk-delete-btn');
+        var count = document.getElementById('bulk-count');
+        function refresh() {
+            var n = boxes.filter(function (b) { return b.checked; }).length;
+            count.textContent = n;
+            btn.disabled = n === 0;
+            if (all) { all.checked = n > 0 && n === boxes.length; all.indeterminate = n > 0 && n < boxes.length; }
+        }
+        boxes.forEach(function (b) { b.addEventListener('change', refresh); });
+        if (all) all.addEventListener('change', function () { boxes.forEach(function (b) { b.checked = all.checked; }); refresh(); });
+        form.addEventListener('submit', function (e) {
+            var n = boxes.filter(function (b) { return b.checked; }).length;
+            if (n === 0 || !window.confirm('Delete ' + (n === 1 ? 'the selected message' : 'the ' + n + ' selected messages') + '? This can\'t be undone from the admin.')) e.preventDefault();
+        });
+        refresh();
+    })();
+</script>
+@endpush
 
 @push('styles')
 <style>
