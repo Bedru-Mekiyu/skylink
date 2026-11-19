@@ -27,7 +27,7 @@
                      data-category="{{ $category }}"
                      data-name="{{ strtolower($product['name']) }}">
                     <div class="col-md-3 text-center">
-                        <img src="{{ $product['image'] }}" alt="{{ $product['name'] }}" class="img-fluid rounded-3 product-img">
+                        <img src="{{ $product['image'] }}" alt="{{ $product['name'] }}" class="img-fluid rounded-3 product-img" loading="lazy" onerror="this.onerror=null; this.src='{{ asset('assets/images/placeholder.png') }}';">
                     </div>
                     <div class="col-md-7">
                         <h4 class="mb-1">{{ $product['name'] }}</h4>
