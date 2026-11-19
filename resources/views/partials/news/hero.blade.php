@@ -63,33 +63,34 @@
             <p class="news-hero__intro">Discover the latest developments, updates, and event highlights from our team.</p>
         @else
             <p class="news-hero__title" lang="{{ $titleLang }}">{{ $title }}</p>
-            <p class="news-hero__meta">
-                @if ($date)
-                    <span><i class="far fa-calendar me-1" aria-hidden="true"></i><time datetime="{{ $date->toIso8601String() }}">{{ $date->format('F j, Y') }}</time></span>
-                @endif
-                @if ($platformLabel)
-                    <span><i class="fab {{ $platform === 'youtube' ? 'fa-youtube' : 'fa-tiktok' }} me-1" aria-hidden="true"></i>{{ $platformLabel }}</span>
-                @endif
-            </p>
-
-            @if ($kind === 'video' && $link)
-                <a class="news-hero__watch" href="{{ $link }}" target="_blank" rel="noopener noreferrer"
-                   @if ($embed)
-                       data-news-player-open
-                       data-embed="{{ $embed }}"
-                       data-platform="{{ $platform }}"
-                       data-title="{{ $title }}"
-                       aria-haspopup="dialog"
-                   @endif>
-                    <span class="news-hero__watch-icon" aria-hidden="true"><i class="fas fa-play"></i></span>
-                    Watch video
-                    <span class="visually-hidden">: {{ $title }}{{ $embed ? '' : ' (opens in a new tab)' }}</span>
-                </a>
-            @elseif ($kind === 'article')
-                <a class="news-hero__watch" href="{{ $link }}">
-                    <span class="news-hero__watch-icon" aria-hidden="true"><i class="fas fa-arrow-right"></i></span>
-                    Read article
-                </a>
+            <div class="news-hero__row">
+                <p class="news-hero__meta">
+                    @if ($date)
+                        <span><i class="far fa-calendar me-1" aria-hidden="true"></i><time datetime="{{ $date->toIso8601String() }}">{{ $date->format('F j, Y') }}</time></span>
+                    @endif
+                    @if ($platformLabel)
+                        <span><i class="fab {{ $platform === 'youtube' ? 'fa-youtube' : 'fa-tiktok' }} me-1" aria-hidden="true"></i>{{ $platformLabel }}</span>
+                    @endif
+                </p>
+                @if ($kind === 'video' && $link)
+                    <a class="news-hero__watch" href="{{ $link }}" target="_blank" rel="noopener noreferrer"
+                       @if ($embed)
+                           data-news-player-open
+                           data-embed="{{ $embed }}"
+                           data-platform="{{ $platform }}"
+                           data-title="{{ $title }}"
+                           aria-haspopup="dialog"
+                       @endif>
+                        <span class="news-hero__watch-icon" aria-hidden="true"><i class="fas fa-play"></i></span>
+                        Watch video
+                        <span class="visually-hidden">: {{ $title }}{{ $embed ? '' : ' (opens in a new tab)' }}</span>
+                    </a>
+                @elseif ($kind === 'article')
+                    <a class="news-hero__watch" href="{{ $link }}">
+                        <span class="news-hero__watch-icon" aria-hidden="true"><i class="fas fa-arrow-right"></i></span>
+                        Read article
+                    </a>
+            </div>
             @endif
         @endif
     </div>
@@ -225,11 +226,19 @@
 
     .news-hero__title[lang="am"] { font-family: var(--font-heading); line-height: 1.35; }
 
+    /* Date, platform and the Watch/Read button sit side by side; they wrap on narrow screens. */
+    .news-hero__row {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 14px 28px;
+    }
+
     .news-hero__meta {
         display: flex;
         flex-wrap: wrap;
         gap: 6px 18px;
-        margin: 0 0 22px;
+        margin: 0;
         color: rgba(255, 255, 255, 0.85);
         font-size: 0.92rem;
     }

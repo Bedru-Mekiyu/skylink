@@ -37,7 +37,7 @@
 
     <div class="container pf-hero__content">
         @if ($p)
-            <p class="pf-hero__title">{{ $p->title }}</p>
+            <h1 class="pf-hero__title" id="pf-hero-heading">{{ $p->title }}</h1>
             @if ($description)
                 <p class="pf-hero__text">{{ $description }}</p>
             @endif
@@ -48,6 +48,7 @@
                 </a>
             @endif
         @else
+            <h1 class="visually-hidden" id="pf-hero-heading">Portfolio</h1>
             <p class="pf-hero__text">Explore our portfolio of successful IT projects and digital solutions delivered to clients across Ethiopia.</p>
         @endif
     </div>
@@ -150,26 +151,6 @@
     }
 
     .pf-hero__content { position: relative; z-index: 2; }
-
-    .pf-hero__page {
-        margin: 0 0 14px;
-        font-size: 0.85rem;
-        font-weight: 600;
-        letter-spacing: 0.12em;
-        text-transform: uppercase;
-        color: rgba(219, 234, 254, 0.9);
-    }
-
-    .pf-hero__label {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        margin: 0 0 10px;
-        font-weight: 600;
-        font-size: 0.95rem;
-    }
-
-    .pf-hero__label i { color: #93c5fd; }
 
     .pf-hero__title {
         max-width: 860px;
