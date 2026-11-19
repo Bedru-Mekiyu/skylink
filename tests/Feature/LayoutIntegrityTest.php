@@ -10,7 +10,7 @@ use Tests\TestCase;
  * Guards the shared public layout against the bugs found in the layout review:
  * CSS printed before the doctype (quirks mode on /about), the scripts stack
  * rendered twice, Bootstrap JS loaded several times (phone menu would not close)
- * and the homepage carousel arrows pushing the page sideways.
+ * and the (since removed) homepage carousel arrows pushing the page sideways.
  */
 class LayoutIntegrityTest extends TestCase
 {
@@ -66,15 +66,6 @@ class LayoutIntegrityTest extends TestCase
         $this->assertStringContainsString('===== Page banner =====', $head);
     }
 
-    public function test_homepage_carousel_arrows_are_clamped_to_the_viewport(): void
-    {
-        $html = $this->get('/')->assertOk()->getContent();
-
-        $this->assertStringContainsString('left: max(-80px, calc((100% - 100vw) / 2 + 16px));', $html);
-        $this->assertStringContainsString('right: max(-80px, calc((100% - 100vw) / 2 + 16px));', $html);
-        $this->assertDoesNotMatchRegularExpression('/\.carousel-(prev|next)\s*\{\s*(left|right):\s*-80px;/', $html);
-    }
-
     public function test_about_promo_video_waits_for_the_visitor_and_works_with_a_keyboard(): void
     {
         $html = $this->get('/about')->assertOk()->getContent();
@@ -99,8 +90,6 @@ class LayoutIntegrityTest extends TestCase
         $html = $this->get('/')->assertOk()->getContent();
 
         $this->assertSame(5, substr_count($html, 'rel="noopener noreferrer" aria-label="Sky Link on '));
-        $this->assertStringContainsString('aria-label="Previous service"', $html);
-        $this->assertStringContainsString('aria-label="Next service"', $html);
         $this->assertStringContainsString('aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"', $html);
     }
 

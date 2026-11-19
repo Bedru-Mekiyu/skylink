@@ -96,21 +96,48 @@
             margin: 0 0 22px;
         }
 
+        /* Continuous marquee, same technique as the homepage testimonials and Featured Products:
+           the cards twice in one track, translated by -50%, linear, infinite, paused on hover.
+           --w card width and --g gap are unitless px so the speed stays ~80px/s. */
         .news-videos__row {
-            display: grid;
-            grid-auto-flow: column;
-            grid-auto-columns: minmax(230px, 260px);
-            gap: 18px;
-            overflow-x: auto;
-            scroll-snap-type: x mandatory;
-            padding: 4px 4px 18px;
+            overflow: hidden;
+            padding: 4px 0 18px;
+            --w: 250;
+            --g: 18;
+        }
+
+        .news-videos__track {
+            display: flex;
+            width: max-content;
             margin: 0;
+            padding: 0;
             list-style: none;
+            animation: slideNewsVideos calc(var(--n) * (var(--w) + var(--g)) / 80 * 1s) linear infinite;
+        }
+
+        .news-videos__track > li {
+            flex: 0 0 calc(var(--w) * 1px);
+            margin: 0 calc(var(--g) * 0.5px);
+        }
+
+        .news-videos__row:hover .news-videos__track {
+            animation-play-state: paused;
+        }
+
+        @keyframes slideNewsVideos {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* Reduced motion: no sliding; the row sits still, scrollable by hand, each video once. */
+        @media (prefers-reduced-motion: reduce) {
+            .news-videos__track { animation: none; }
+            .news-videos__row { overflow-x: auto; }
+            .news-videos__track > .marquee-dup { display: none; }
         }
 
         .news-video {
             position: relative;
-            scroll-snap-align: start;
             background: #fff;
             border-radius: 18px;
             overflow: hidden;
@@ -183,14 +210,6 @@
             position: absolute;
             inset: 0;
         }
-        /* Auto-rotation controls for the videos row (shown by the script only when the row overflows). */
-        .news-videos__controls { display: flex; justify-content: center; align-items: center; gap: 10px; min-height: 44px; margin-top: 4px; }
-        .news-videos__btn {
-            width: 40px; height: 40px; border-radius: 50%; border: 0; cursor: pointer; font-size: .85rem;
-            display: inline-flex; align-items: center; justify-content: center; background: var(--news-blue); color: #fff;
-        }
-        .news-videos__btn:hover { background: #1e3a8a; }
-        .news-videos__btn:focus-visible { outline: 3px solid #f5c451; outline-offset: 3px; }
         /* Landing spot for the filter links: just below the sticky navbar (56px) plus a little air. */
         .news-list {
             scroll-margin-top: 68px;
@@ -316,31 +335,34 @@
             <div class="container">
                 <h2 id="news-videos-title">Videos</h2>
                 <p class="news-videos__intro">Short clips from our projects, products and events.</p>
-                <ul class="news-videos__row">
-                    @foreach ($videos as $video)
-                        @php
-                            $host = parse_url($video->video_url, PHP_URL_HOST) ?? '';
-                            $platform = str_contains($host, 'tiktok') ? ['TikTok', 'fab fa-tiktok'] : (str_contains($host, 'youtu') ? ['YouTube', 'fab fa-youtube'] : ['Video', 'fas fa-video']);
-                            $isAmharic = preg_match('/\p{Ethiopic}/u', $video->title);
-                        @endphp
-                        <li>
-                            <article class="news-video" lang="{{ $isAmharic ? 'am' : 'en' }}">
-                                <div class="news-video__thumb">
-                                    @if ($video->thumbnail_image)
-                                        <img src="{{ asset('storage/'.$video->thumbnail_image) }}" alt="" width="260" height="347" loading="lazy" decoding="async">
-                                    @endif
-                                    <span class="news-video__platform"><i class="{{ $platform[1] }} me-1" aria-hidden="true"></i>{{ $platform[0] }}</span>
-                                    <span class="news-video__play" aria-hidden="true"><i class="fas fa-play"></i></span>
-                                </div>
-                                <h3 class="news-video__title"><a href="{{ route('videos.show', $video->slug) }}">{{ $video->title }}</a></h3>
-                            </article>
-                        </li>
-                    @endforeach
-                </ul>
-                <div class="news-videos__controls" hidden>
-                    <button type="button" class="news-videos__btn news-videos__prev" aria-label="Previous videos"><i class="fas fa-chevron-left" aria-hidden="true"></i></button>
-                    <button type="button" class="news-videos__btn news-videos__pause" aria-label="Pause automatic scrolling"><i class="fas fa-pause" aria-hidden="true"></i></button>
-                    <button type="button" class="news-videos__btn news-videos__next" aria-label="Next videos"><i class="fas fa-chevron-right" aria-hidden="true"></i></button>
+                @php
+                    // Enough repeats that one half of the track is always wider than the screen (no gap when few videos).
+                    $reps = max(1, (int) ceil(1920 / max(1, $videos->count() * 268)));
+                @endphp
+                <div class="news-videos__row" style="--n: {{ $videos->count() * $reps }}">
+                    <ul class="news-videos__track">
+                        @foreach (range(0, $reps * 2 - 1) as $copy)
+                        @foreach ($videos as $video)
+                            @php
+                                $host = parse_url($video->video_url, PHP_URL_HOST) ?? '';
+                                $platform = str_contains($host, 'tiktok') ? ['TikTok', 'fab fa-tiktok'] : (str_contains($host, 'youtu') ? ['YouTube', 'fab fa-youtube'] : ['Video', 'fas fa-video']);
+                                $isAmharic = preg_match('/\p{Ethiopic}/u', $video->title);
+                            @endphp
+                            <li @if ($copy > 0) class="marquee-dup" aria-hidden="true" inert @endif>
+                                <article class="news-video" lang="{{ $isAmharic ? 'am' : 'en' }}">
+                                    <div class="news-video__thumb">
+                                        @if ($video->thumbnail_image)
+                                            <img src="{{ asset('storage/'.$video->thumbnail_image) }}" alt="" width="260" height="347" loading="lazy" decoding="async">
+                                        @endif
+                                        <span class="news-video__platform"><i class="{{ $platform[1] }} me-1" aria-hidden="true"></i>{{ $platform[0] }}</span>
+                                        <span class="news-video__play" aria-hidden="true"><i class="fas fa-play"></i></span>
+                                    </div>
+                                    <h3 class="news-video__title"><a href="{{ route('videos.show', $video->slug) }}">{{ $video->title }}</a></h3>
+                                </article>
+                            </li>
+                        @endforeach
+                        @endforeach
+                    </ul>
                 </div>
             </div>
         </section>
@@ -437,84 +459,6 @@
         window.addEventListener('popstate', function (e) {
             if (e.state && e.state.newsList) load(location.href, false, null);
         });
-    })();
-</script>
-<script>
-    // Videos row: moves one card at a time every 3.5s (step-by-step suits the snap points and gives
-    // time to read each title), then glides back to the start. Manual scroll and swipe still work.
-    // No cloned cards: every video appears once. Pauses on hover, focus, touch, off-screen, hidden
-    // tab; a pause button is always there (WCAG 2.2.2); no autoplay with reduced motion.
-    (function () {
-        if (window.__skyVideoRow) return;
-        window.__skyVideoRow = true;
-        var row = document.querySelector('.news-videos__row');
-        var box = document.querySelector('.news-videos__controls');
-        if (!row || !box) return;
-
-        var AUTOPLAY_MS = 3500;
-        var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        var pauseBtn = box.querySelector('.news-videos__pause');
-        var holds = { hover: false, focus: false, touch: false, offscreen: false, hidden: document.hidden };
-        var userPaused = false, timer = 0;
-
-        function overflows() { return row.scrollWidth > row.clientWidth + 4; }
-        function step() {
-            var first = row.firstElementChild, second = first && first.nextElementSibling;
-            return second ? second.offsetLeft - first.offsetLeft : (first ? first.offsetWidth : 0);
-        }
-        function atEnd() { return row.scrollLeft + row.clientWidth >= row.scrollWidth - 4; }
-        function atStart() { return row.scrollLeft <= 4; }
-        function behavior() { return reduce ? 'auto' : 'smooth'; }
-        function move(dir) {
-            if (dir > 0) {
-                if (atEnd()) row.scrollTo({ left: 0, behavior: behavior() });
-                else row.scrollBy({ left: step(), behavior: behavior() });
-            } else if (atStart()) {
-                row.scrollTo({ left: row.scrollWidth, behavior: behavior() });
-            } else {
-                row.scrollBy({ left: -step(), behavior: behavior() });
-            }
-            schedule();
-        }
-        function running() {
-            return !reduce && !userPaused && !holds.hover && !holds.focus && !holds.touch && !holds.offscreen && !holds.hidden && overflows();
-        }
-        function schedule() {
-            clearTimeout(timer);
-            row.setAttribute('aria-live', running() ? 'off' : 'polite');
-            if (running()) timer = setTimeout(function () { move(1); }, AUTOPLAY_MS);
-        }
-        function hold(name, on) { holds[name] = on; schedule(); }
-
-        function refresh() { box.hidden = !overflows(); schedule(); }
-        refresh();
-        window.addEventListener('resize', refresh);
-        if (reduce) pauseBtn.hidden = true;
-
-        box.querySelector('.news-videos__prev').addEventListener('click', function () { move(-1); });
-        box.querySelector('.news-videos__next').addEventListener('click', function () { move(1); });
-        pauseBtn.addEventListener('click', function () {
-            userPaused = !userPaused;
-            pauseBtn.setAttribute('aria-label', userPaused ? 'Start automatic scrolling' : 'Pause automatic scrolling');
-            pauseBtn.firstElementChild.className = userPaused ? 'fas fa-play' : 'fas fa-pause';
-            schedule();
-        });
-
-        [row, box].forEach(function (el) {
-            el.addEventListener('mouseenter', function () { hold('hover', true); });
-            el.addEventListener('mouseleave', function () { hold('hover', false); });
-            el.addEventListener('focusin', function () { hold('focus', true); });
-            el.addEventListener('focusout', function (e) { if (!el.contains(e.relatedTarget)) hold('focus', false); });
-        });
-        row.addEventListener('pointerdown', function () { hold('touch', true); });
-        ['pointerup', 'pointercancel'].forEach(function (n) { row.addEventListener(n, function () { hold('touch', false); }); });
-        row.addEventListener('touchend', function () { hold('touch', false); }, { passive: true });
-        row.addEventListener('wheel', function () { schedule(); }, { passive: true }); // restart the wait after a manual scroll
-
-        if ('IntersectionObserver' in window) {
-            new IntersectionObserver(function (entries) { hold('offscreen', !entries[0].isIntersecting); }, { threshold: 0.25 }).observe(row);
-        }
-        document.addEventListener('visibilitychange', function () { hold('hidden', document.hidden); });
     })();
 </script>
 @endpush

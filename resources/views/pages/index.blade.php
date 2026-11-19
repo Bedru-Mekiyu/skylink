@@ -207,53 +207,60 @@
   margin: 0;
 }
 
-        .services-container {
-            position: relative;
+        /* Services: continuous marquee, same technique as the testimonials and Featured Products
+           (a track holding the cards twice, translated by -50% in a linear infinite loop, paused on hover).
+           --w card width and --g gap are unitless px so the duration keeps ~80px/s, the testimonials' speed. */
+        .services-marquee { overflow: hidden; padding: 25px 0; --w: 300; --g: 32; }
+
+        .services-track {
             display: flex;
-            justify-content: center;
-            align-items: stretch;
-            gap: 3rem;
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 25px 0;
+            width: max-content;
+            animation: slideServices calc(var(--n) * (var(--w) + var(--g)) / 80 * 1s) linear infinite;
+        }
+
+        .services-marquee:hover .services-track {
+            animation-play-state: paused;
+        }
+
+        @keyframes slideServices {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
         }
 
         .service-card {
-            width: 300px;
-            background: white;
+            flex: 0 0 calc(var(--w) * 1px);
+            width: calc(var(--w) * 1px);
+            margin: 0 calc(var(--g) * 0.5px);
+            background: var(--light-blue);
+            color: #333;
             border-radius: 20px;
             overflow: hidden;
             box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-            transition: opacity 0.3s ease;
+            transition: transform 0.3s ease, background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
             position: relative;
         }
-        
-        .service-card.center {
+
+        .service-card:hover {
             background: var(--dark-blue);
             color: white;
-            transform: scale(1.14);
+            transform: scale(1.06);
             z-index: 2;
             box-shadow: 0 15px 40px #1e40af;
         }
 
-        .service-card.side {
-            background: var(--light-blue);
-            color: #333;
-        }
-
         .service-image {
             height: 200px;
-            background: rgba(255,255,255,0.1);
+            background: rgba(0,0,0,0.03);
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 3.5rem;
-            color: rgba(255,255,255,0.4);
+            color: rgba(0,0,0,0.15);
         }
 
-        .service-card.side .service-image {
-            background: rgba(0,0,0,0.03);
-            color: rgba(0,0,0,0.15);
+        .service-card:hover .service-image {
+            background: rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.4);
         }
 
         .service-content {
@@ -273,61 +280,11 @@
             opacity: 0.9;
         }
 
-        .carousel-nav {
-            position: absolute;
-            z-index: 2; /* stay above the cards where the clamped arrows overlap them */
-            top: 50%;
-            background: var(--primary-blue);
-            color: white;
-            border: none;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.3rem;
-        }
-
-        .carousel-nav:hover {
-            background: var(--dark-blue);
-        }
-
-        /* The arrows sit up to 80px outside the 1000px card row, but never further than
-           the free space beside it: (100% - 100vw) / 2 is that space (negative), and the
-           +16px keeps them clear of a classic Windows scrollbar, which 100vw includes.
-           A fixed -80px pushed the page 12-60px sideways between ~780 and ~1160px wide. */
-        .carousel-prev {
-            left: max(-80px, calc((100% - 100vw) / 2 + 16px));
-        }
-
-        .carousel-next {
-            right: max(-80px, calc((100% - 100vw) / 2 + 16px));
-        }
-
-        /* Services rotator: cards are positioned by JS by their offset from the active card. */
-        .services-container.is-rotator { display: block; padding: 25px 0; touch-action: pan-y; user-select: none; }
-        /* Phones show a peek of the neighbouring cards, so the row is clipped there; wider screens keep the full shadow. */
-        @media (max-width: 575.98px) { .services-container.is-rotator { overflow-x: clip; } }
-        .services-container.is-rotator .service-card {
-            position: absolute; left: 50%; top: 25px; width: var(--svc-w, 300px); margin: 0; will-change: transform, opacity;
-            transition: transform .8s cubic-bezier(.22, .61, .36, 1), opacity .6s ease, background-color .6s ease, color .6s ease;
-        }
-        .services-container.is-rotator.no-anim .service-card { transition: none; }
-        .carousel-nav:focus-visible, .services-pause:focus-visible, .services-dot:focus-visible { outline: 3px solid #f5c451; outline-offset: 3px; }
-        .services-controls { display: flex; justify-content: center; align-items: center; gap: .75rem; margin-top: .75rem; }
-        .services-pause {
-            width: 36px; height: 36px; border-radius: 50%; border: 0; cursor: pointer; font-size: .8rem;
-            background: var(--primary-blue); color: #fff; display: inline-flex; align-items: center; justify-content: center;
-        }
-        .services-pause:hover { background: var(--dark-blue); }
-        .services-dots { display: flex; }
-        .services-dot { width: 24px; height: 24px; padding: 7px; border: 0; border-radius: 50%; background: #9db4dc; background-clip: content-box; cursor: pointer; }
-        .services-dot[aria-current="true"] { background: var(--dark-blue); background-clip: content-box; }
+        /* Reduced motion: no sliding; the cards sit still, scrollable by hand, shown once. */
         @media (prefers-reduced-motion: reduce) {
-            .services-container.is-rotator .service-card { transition: none; }
+            .services-track { animation: none; }
+            .services-marquee { overflow-x: auto; }
+            .services-marquee .marquee-dup { display: none; }
         }
 
         /* Latest News */
@@ -498,13 +455,6 @@
                 height: 160px;
             }
 
-            .carousel-prev {
-            left: 1px;
-        }
-
-        .carousel-next {
-            right: 1px;
-        }
         }
         /* Featured Portfolio */
         .portfolio-section {
@@ -949,20 +899,7 @@
                 display: none;
             }
             
-            .services-container {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .service-card.center {
-                transform: none;
-            }
-            
-            .carousel-nav {
-                display: none;
-            }
-            
-            .portfolio-grid {
+.portfolio-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
             
@@ -1018,15 +955,12 @@ max-height: 20 vh;
     margin: 0 15px;
     flex-shrink: 0;
 }
- .services-container {
-        flex-direction: column;
-        align-items: center;
-        gap: 1.5rem;
-        padding: 15px;
+ .services-marquee {
+        --w: 280;
+        --g: 20;
     }
 
     .service-card {
-        width: 90%; /* Reduced size from fixed 300px */
         border-radius: 16px;
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
     }
@@ -1050,10 +984,6 @@ max-height: 20 vh;
         line-height: 1.6;
     }
 
-    .service-card.center {
-        transform: none; /* Remove scale effect on mobile */
-        box-shadow: 0 8px 24px rgba(30, 64, 175, 0.3);
-    }
     .news-card {
         max-width: 90%;
         margin-left: auto;
@@ -1230,45 +1160,33 @@ max-height: 20 vh;
                 <div class="services-label">SERVICES</div>
                 <h2 class="services-title">Our Services</h2>
             </div>
-            <div class="services-container">
-                <button type="button" class="carousel-nav carousel-prev" aria-label="Previous service">
-                    <i class="fas fa-chevron-left"></i>
-                </button>
-                
-                <div class="service-card side">
-                    <div class="service-image">
-                        <i class="fas fa-laptop-code"></i>
-                    </div>
-                    <div class="service-content">
-                        <h4>Web Development</h4>
-                        <p>We create modern, responsive websites and web applications using the latest technologies and best practices to ensure optimal performance and exceptional user experience for your business.</p>
-                    </div>
+            @php
+                $services = [
+                    ['icon' => 'fas fa-laptop-code', 'title' => 'Web Development', 'desc' => 'We create modern, responsive websites and web applications using the latest technologies and best practices to ensure optimal performance and exceptional user experience for your business.'],
+                    ['icon' => 'fas fa-mobile-alt', 'title' => 'Mobile Apps', 'desc' => 'End-to-end mobile app development for iOS and Android that delivers seamless user experiences and powerful functionality.'],
+                    ['icon' => 'fas fa-shield-alt', 'title' => 'Physical Safety and Security', 'desc' => 'Integrated physical security systems including surveillance, access control, and alarm solutions to safeguard your assets.'],
+                    ['icon' => 'fas fa-shield-alt', 'title' => 'Enterprise Network Solution', 'desc' => 'Scalable and secure network infrastructure solutions designed to meet the demands of growing enterprise environments.'],
+                    ['icon' => 'fas fa-database', 'title' => 'ERP Consultancy', 'desc' => 'Expert guidance on ERP system selection, implementation, and optimization to streamline your business operations.'],
+                    ['icon' => 'fas fa-cogs', 'title' => 'ICT Support', 'desc' => 'Reliable and timely technical support services to ensure your IT systems run smoothly with minimal downtime.'],
+                    ['icon' => 'fas fa-database', 'title' => 'Smart City Projects', 'desc' => 'Innovative smart city technologies that enhance urban living through intelligent infrastructure and data-driven services.'],
+                ];
+            @endphp
+            <div class="services-marquee" style="--n: {{ count($services) }}">
+                <div class="services-track">
+                    @foreach ([0, 1] as $copy)
+                        @foreach ($services as $service)
+                            <div class="service-card{{ $copy ? ' marquee-dup' : '' }}" @if ($copy) aria-hidden="true" @endif>
+                                <div class="service-image">
+                                    <i class="{{ $service['icon'] }}" aria-hidden="true"></i>
+                                </div>
+                                <div class="service-content">
+                                    <h4>{{ $service['title'] }}</h4>
+                                    <p>{{ $service['desc'] }}</p>
+                                </div>
+                            </div>
+                        @endforeach
+                    @endforeach
                 </div>
-
-                <div class="service-card center">
-                    <div class="service-image">
-                        <i class="fas fa-mobile-alt"></i>
-                    </div>
-                    <div class="service-content">
-                        <h4>Mobile App</h4>
-                        <p>Our flagship mobile application development service provides comprehensive end-to-end solutions for iOS and Android platforms, ensuring seamless user experiences and robust functionality that drives business growth.</p>
-                    </div>
-                </div>
-
-
-                <div class="service-card side">
-                    <div class="service-image">
-                        <i class="fas fa-cloud"></i>
-                    </div>
-                    <div class="service-content">
-                        <h4>Cloud Solutions</h4>
-                        <p>Comprehensive cloud services including migration, management, and optimization to help your business scale efficiently, reduce operational costs, and improve overall system reliability.</p>
-                    </div>
-                </div>
-
-                <button type="button" class="carousel-nav carousel-next" aria-label="Next service">
-                    <i class="fas fa-chevron-right"></i>
-                </button>
             </div>
 
             <div class="text-center mt-5">
@@ -1643,196 +1561,6 @@ max-height: 20 vh;
 
 
         document.addEventListener('DOMContentLoaded', function () {
-  // ========= SERVICES DATA =========
-  const services = [
-    {
-      icon: 'fas fa-laptop-code',
-      title: 'Web Development',
-      desc: 'We create modern, responsive websites and web applications using the latest technologies and best practices to ensure optimal performance and exceptional user experience for your business.'
-    },
-    {
-      icon: 'fas fa-mobile-alt',
-      title: 'Mobile Apps',
-      desc: 'End-to-end mobile app development for iOS and Android that delivers seamless user experiences and powerful functionality.'
-    },
-    {
-      icon: 'fas fa-shield-alt',
-      title: 'Physical Safety and Security',
-      desc: 'Integrated physical security systems including surveillance, access control, and alarm solutions to safeguard your assets.'
-    },
-    {
-      icon: 'fas fa-shield-alt',
-      title: 'Enterprise Network Solution',
-      desc: 'Scalable and secure network infrastructure solutions designed to meet the demands of growing enterprise environments.'
-    },
-    {
-      icon: 'fas fa-database',
-      title: 'ERP Consultancy',
-      desc: 'Expert guidance on ERP system selection, implementation, and optimization to streamline your business operations.'
-    },
-    {
-      icon: 'fas fa-cogs',
-      title: 'ICT Support',
-      desc: 'Reliable and timely technical support services to ensure your IT systems run smoothly with minimal downtime.'
-    },
-    {
-      icon: 'fas fa-database',
-      title: 'Smart City Projects',
-      desc: 'Innovative smart city technologies that enhance urban living through intelligent infrastructure and data-driven services.'
-    }
-  ];
-
-  // ========= SERVICES ROTATOR =========
-  // Same custom widget as before (no library): a centre card with a side card each way. It now
-  // auto-rotates in an endless loop. Cards are laid out by their offset from the active one, so
-  // the loop never jumps back; only cards next to the active one are visible, the rest are
-  // invisible while they travel round behind.
-  const container = document.querySelector('.services-container');
-  const prevBtn = document.querySelector('.carousel-prev');
-  const nextBtn = document.querySelector('.carousel-next');
-  const N = services.length;
-  const AUTOPLAY_MS = 3500;
-  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const holds = { hover: false, focus: false, touch: false, offscreen: false, hidden: document.hidden };
-  let current = 1, timer = 0, userPaused = false, cards = [], dots = [], laidOut = false;
-
-  container.querySelectorAll('.service-card').forEach((c) => c.remove());
-  container.classList.add('is-rotator', 'no-anim');
-  container.setAttribute('role', 'region');
-  container.setAttribute('aria-roledescription', 'carousel');
-  container.setAttribute('aria-label', 'Our services');
-
-  cards = services.map((s, i) => {
-    const card = document.createElement('div');
-    card.setAttribute('role', 'group');
-    card.setAttribute('aria-roledescription', 'slide');
-    card.setAttribute('aria-label', (i + 1) + ' of ' + N);
-    card.innerHTML = '<div class="service-image"><i class="' + s.icon + '" aria-hidden="true"></i></div>' +
-      '<div class="service-content"><h4></h4><p></p></div>';
-    card.querySelector('h4').textContent = s.title;
-    card.querySelector('p').textContent = s.desc;
-    container.insertBefore(card, nextBtn);
-    return card;
-  });
-
-  // Dots and the pause/play button (WCAG 2.2.2: moving content must be pausable).
-  const controls = document.createElement('div');
-  controls.className = 'services-controls';
-  controls.innerHTML = '<button type="button" class="services-pause" aria-label="Pause automatic rotation"><i class="fas fa-pause" aria-hidden="true"></i></button><div class="services-dots"></div>';
-  container.after(controls);
-  const pauseBtn = controls.querySelector('.services-pause');
-  const dotsBox = controls.querySelector('.services-dots');
-  dots = services.map((s, i) => {
-    const b = document.createElement('button');
-    b.type = 'button';
-    b.className = 'services-dot';
-    b.setAttribute('aria-label', 'Show service ' + (i + 1) + ': ' + s.title);
-    b.addEventListener('click', () => { current = i; layout(); schedule(); });
-    dotsBox.appendChild(b);
-    return b;
-  });
-  if (reduceMotion) pauseBtn.hidden = true;
-
-  function perView() {
-    return window.innerWidth >= 992 ? 3 : window.innerWidth >= 576 ? 2 : 1;
-  }
-
-  function layout() {
-    const pv = perView(), cw = container.clientWidth;
-    const gap = pv === 1 ? 16 : pv === 2 ? 32 : 48;
-    let w = pv === 1 ? Math.round(cw * 0.78) : 300;
-    if (pv > 1 && w * pv + gap * (pv - 1) > cw) w = Math.floor((cw - gap * (pv - 1)) / pv);
-    container.style.setProperty('--svc-w', w + 'px');
-
-    // Every card as tall as the tallest, like the old row (align-items: stretch); no layout shift while rotating.
-    cards.forEach((c) => { c.style.height = 'auto'; });
-    const tallest = Math.max.apply(null, cards.map((c) => c.offsetHeight));
-    cards.forEach((c) => { c.style.height = tallest + 'px'; });
-    container.style.height = (tallest + 50) + 'px';
-
-    const step = w + gap;
-    cards.forEach((card, i) => {
-      let d = (((i - current) % N) + N) % N;
-      if (d > N / 2) d -= N;
-      const pos = pv === 2 ? d - 0.5 : d;
-      const visible = pv === 2 ? (d === 0 || d === 1) : Math.abs(d) <= 1;
-      const active = d === 0;
-      card.className = 'service-card ' + (active ? 'center' : 'side');
-      card.style.transform = 'translate3d(calc(-50% + ' + (pos * step) + 'px),0,0) scale(' + (active ? 1.08 : 0.94) + ')';
-      card.style.opacity = visible ? (active ? '1' : '0.72') : '0';
-      card.style.zIndex = active ? '2' : '1';
-      card.setAttribute('aria-hidden', visible ? 'false' : 'true');
-      card.inert = !visible;
-    });
-    dots.forEach((b, i) => { if (i === current) b.setAttribute('aria-current', 'true'); else b.removeAttribute('aria-current'); });
-    if (!laidOut) {
-      laidOut = true;
-      requestAnimationFrame(() => requestAnimationFrame(() => container.classList.remove('no-anim')));
-    }
-  }
-
-  function running() {
-    return !reduceMotion && !userPaused && !holds.hover && !holds.focus && !holds.touch && !holds.offscreen && !holds.hidden;
-  }
-  function schedule() {
-    clearTimeout(timer);
-    container.setAttribute('aria-live', running() ? 'off' : 'polite'); // announce changes only when the user drives them
-    if (running()) timer = setTimeout(() => go(1), AUTOPLAY_MS);
-  }
-  function go(delta) {
-    current = (current + delta + N) % N;
-    layout();
-    schedule();
-  }
-  function hold(name, on) { holds[name] = on; schedule(); }
-
-  prevBtn.addEventListener('click', () => go(-1));
-  nextBtn.addEventListener('click', () => go(1));
-  pauseBtn.addEventListener('click', () => {
-    userPaused = !userPaused;
-    pauseBtn.setAttribute('aria-label', userPaused ? 'Start automatic rotation' : 'Pause automatic rotation');
-    pauseBtn.firstElementChild.className = userPaused ? 'fas fa-play' : 'fas fa-pause';
-    schedule();
-  });
-
-  // Pause while the pointer is over it, focus is inside it, or it is being touched/dragged.
-  [container, controls].forEach((el) => {
-    el.addEventListener('mouseenter', () => hold('hover', true));
-    el.addEventListener('mouseleave', () => hold('hover', false));
-    el.addEventListener('focusin', () => hold('focus', true));
-    el.addEventListener('focusout', (e) => { if (!el.contains(e.relatedTarget)) hold('focus', false); });
-  });
-  container.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowLeft') go(-1); else if (e.key === 'ArrowRight') go(1);
-  });
-
-  // Swipe or drag (touch and mouse).
-  let startX = null;
-  container.addEventListener('pointerdown', (e) => {
-    if (e.target.closest('button')) return;
-    startX = e.clientX; hold('touch', true);
-  });
-  const endDrag = (e) => {
-    if (startX === null) return;
-    const dx = e.clientX - startX;
-    startX = null;
-    hold('touch', false);
-    if (dx > 50) go(-1); else if (dx < -50) go(1);
-  };
-  container.addEventListener('pointerup', endDrag);
-  container.addEventListener('pointercancel', () => { startX = null; hold('touch', false); });
-
-  // Off-screen or hidden tab: stop.
-  if ('IntersectionObserver' in window) {
-    new IntersectionObserver((entries) => hold('offscreen', !entries[0].isIntersecting), { threshold: 0.25 }).observe(container);
-  }
-  document.addEventListener('visibilitychange', () => hold('hidden', document.hidden));
-  let resizeTimer = 0;
-  window.addEventListener('resize', () => { clearTimeout(resizeTimer); resizeTimer = setTimeout(layout, 120); });
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(layout);
-
-  function renderServices() { layout(); schedule(); }
-
    // Counter animation for stats
         function animateCounters() {
     document.querySelectorAll('.stat-number').forEach(counter => {
@@ -1952,9 +1680,6 @@ const observer = new IntersectionObserver(function(entries) {
             observer.observe(section);
         });
 
-
-  // INITIAL RENDER
-  renderServices();
 });
 
 </script>
