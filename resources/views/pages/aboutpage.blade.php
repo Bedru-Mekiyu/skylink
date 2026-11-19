@@ -954,14 +954,14 @@ We lead the market by creating disciplined culture that will have much bigger ef
                         </div>
                         
                         <div class="position-relative overflow-hidden rounded-3 mb-4">
-                            <img src="{{ asset('assets/images/about/team-software.jpg') }}"
-                                 srcset="{{ \App\Support\ResponsiveImage::webpSrcset('assets/images/about/team-software.jpg') }}"
+                            <img src="{{ asset('assets/images/contact/team-support.jpg') }}"
+                                 srcset="{{ \App\Support\ResponsiveImage::webpSrcset('assets/images/contact/team-support.jpg') }}"
                                  sizes="(max-width: 767px) 100vw, 50vw" loading="lazy" decoding="async"
-                                 width="{{ \App\Support\ResponsiveImage::size('assets/images/about/team-software.jpg')[0] ?? 1920 }}"
-                                 height="{{ \App\Support\ResponsiveImage::size('assets/images/about/team-software.jpg')[1] ?? 1315 }}"
+                                 width="{{ \App\Support\ResponsiveImage::size('assets/images/contact/team-support.jpg')[0] ?? 1920 }}"
+                                 height="{{ \App\Support\ResponsiveImage::size('assets/images/contact/team-support.jpg')[1] ?? 1344 }}"
                                  class="img-fluid w-100 transition-transform"
                                  style="height: auto; transition: transform 0.3s ease;"
-                                 alt="Sky Link team members standing in front of the Sky Link Technologies logo wall"
+                                 alt="Sky Link team members smiling in front of the Sky Link Technologies logo wall"
                                  onmouseover="this.style.transform='scale(1.05)'"
                                  onmouseout="this.style.transform='scale(1)'">
                             <div class="position-absolute bottom-0 start-0 end-0 bg-gradient-to-top from-dark to-transparent p-3">

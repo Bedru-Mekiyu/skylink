@@ -300,12 +300,12 @@
                 <!-- Left Column: Operators Image -->
                 <div class="col-lg-5 mb-4">
                     <div class="operators-container">
-                        <img src="{{ asset('assets/images/contact/team-support.jpg') }}"
-                             srcset="{{ \App\Support\ResponsiveImage::webpSrcset('assets/images/contact/team-support.jpg') }}"
+                        <img src="{{ asset('assets/images/about/team-software.jpg') }}"
+                             srcset="{{ \App\Support\ResponsiveImage::webpSrcset('assets/images/about/team-software.jpg') }}"
                              sizes="(max-width: 991px) 100vw, 42vw" loading="lazy" decoding="async"
-                             width="{{ \App\Support\ResponsiveImage::size('assets/images/contact/team-support.jpg')[0] ?? 1920 }}"
-                             height="{{ \App\Support\ResponsiveImage::size('assets/images/contact/team-support.jpg')[1] ?? 1344 }}"
-                             alt="Sky Link team members smiling in front of the Sky Link Technologies logo wall" class="operators-image">
+                             width="{{ \App\Support\ResponsiveImage::size('assets/images/about/team-software.jpg')[0] ?? 1920 }}"
+                             height="{{ \App\Support\ResponsiveImage::size('assets/images/about/team-software.jpg')[1] ?? 1315 }}"
+                             alt="Sky Link team members standing in front of the Sky Link Technologies logo wall" class="operators-image">
                         <div class="image-overlay">
                             <h4>Expert Support Team</h4>
                             <p>Available Monday to Friday, 8:00 AM - 5:00 PM</p>
