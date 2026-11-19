@@ -183,6 +183,14 @@
             position: absolute;
             inset: 0;
         }
+        /* Auto-rotation controls for the videos row (shown by the script only when the row overflows). */
+        .news-videos__controls { display: flex; justify-content: center; align-items: center; gap: 10px; min-height: 44px; margin-top: 4px; }
+        .news-videos__btn {
+            width: 40px; height: 40px; border-radius: 50%; border: 0; cursor: pointer; font-size: .85rem;
+            display: inline-flex; align-items: center; justify-content: center; background: var(--news-blue); color: #fff;
+        }
+        .news-videos__btn:hover { background: #1e3a8a; }
+        .news-videos__btn:focus-visible { outline: 3px solid #f5c451; outline-offset: 3px; }
         /* Landing spot for the filter links: just below the sticky navbar (56px) plus a little air. */
         .news-list {
             scroll-margin-top: 68px;
@@ -329,6 +337,11 @@
                         </li>
                     @endforeach
                 </ul>
+                <div class="news-videos__controls" hidden>
+                    <button type="button" class="news-videos__btn news-videos__prev" aria-label="Previous videos"><i class="fas fa-chevron-left" aria-hidden="true"></i></button>
+                    <button type="button" class="news-videos__btn news-videos__pause" aria-label="Pause automatic scrolling"><i class="fas fa-pause" aria-hidden="true"></i></button>
+                    <button type="button" class="news-videos__btn news-videos__next" aria-label="Next videos"><i class="fas fa-chevron-right" aria-hidden="true"></i></button>
+                </div>
             </div>
         </section>
     @endif
@@ -424,6 +437,84 @@
         window.addEventListener('popstate', function (e) {
             if (e.state && e.state.newsList) load(location.href, false, null);
         });
+    })();
+</script>
+<script>
+    // Videos row: moves one card at a time every 3.5s (step-by-step suits the snap points and gives
+    // time to read each title), then glides back to the start. Manual scroll and swipe still work.
+    // No cloned cards: every video appears once. Pauses on hover, focus, touch, off-screen, hidden
+    // tab; a pause button is always there (WCAG 2.2.2); no autoplay with reduced motion.
+    (function () {
+        if (window.__skyVideoRow) return;
+        window.__skyVideoRow = true;
+        var row = document.querySelector('.news-videos__row');
+        var box = document.querySelector('.news-videos__controls');
+        if (!row || !box) return;
+
+        var AUTOPLAY_MS = 3500;
+        var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        var pauseBtn = box.querySelector('.news-videos__pause');
+        var holds = { hover: false, focus: false, touch: false, offscreen: false, hidden: document.hidden };
+        var userPaused = false, timer = 0;
+
+        function overflows() { return row.scrollWidth > row.clientWidth + 4; }
+        function step() {
+            var first = row.firstElementChild, second = first && first.nextElementSibling;
+            return second ? second.offsetLeft - first.offsetLeft : (first ? first.offsetWidth : 0);
+        }
+        function atEnd() { return row.scrollLeft + row.clientWidth >= row.scrollWidth - 4; }
+        function atStart() { return row.scrollLeft <= 4; }
+        function behavior() { return reduce ? 'auto' : 'smooth'; }
+        function move(dir) {
+            if (dir > 0) {
+                if (atEnd()) row.scrollTo({ left: 0, behavior: behavior() });
+                else row.scrollBy({ left: step(), behavior: behavior() });
+            } else if (atStart()) {
+                row.scrollTo({ left: row.scrollWidth, behavior: behavior() });
+            } else {
+                row.scrollBy({ left: -step(), behavior: behavior() });
+            }
+            schedule();
+        }
+        function running() {
+            return !reduce && !userPaused && !holds.hover && !holds.focus && !holds.touch && !holds.offscreen && !holds.hidden && overflows();
+        }
+        function schedule() {
+            clearTimeout(timer);
+            row.setAttribute('aria-live', running() ? 'off' : 'polite');
+            if (running()) timer = setTimeout(function () { move(1); }, AUTOPLAY_MS);
+        }
+        function hold(name, on) { holds[name] = on; schedule(); }
+
+        function refresh() { box.hidden = !overflows(); schedule(); }
+        refresh();
+        window.addEventListener('resize', refresh);
+        if (reduce) pauseBtn.hidden = true;
+
+        box.querySelector('.news-videos__prev').addEventListener('click', function () { move(-1); });
+        box.querySelector('.news-videos__next').addEventListener('click', function () { move(1); });
+        pauseBtn.addEventListener('click', function () {
+            userPaused = !userPaused;
+            pauseBtn.setAttribute('aria-label', userPaused ? 'Start automatic scrolling' : 'Pause automatic scrolling');
+            pauseBtn.firstElementChild.className = userPaused ? 'fas fa-play' : 'fas fa-pause';
+            schedule();
+        });
+
+        [row, box].forEach(function (el) {
+            el.addEventListener('mouseenter', function () { hold('hover', true); });
+            el.addEventListener('mouseleave', function () { hold('hover', false); });
+            el.addEventListener('focusin', function () { hold('focus', true); });
+            el.addEventListener('focusout', function (e) { if (!el.contains(e.relatedTarget)) hold('focus', false); });
+        });
+        row.addEventListener('pointerdown', function () { hold('touch', true); });
+        ['pointerup', 'pointercancel'].forEach(function (n) { row.addEventListener(n, function () { hold('touch', false); }); });
+        row.addEventListener('touchend', function () { hold('touch', false); }, { passive: true });
+        row.addEventListener('wheel', function () { schedule(); }, { passive: true }); // restart the wait after a manual scroll
+
+        if ('IntersectionObserver' in window) {
+            new IntersectionObserver(function (entries) { hold('offscreen', !entries[0].isIntersecting); }, { threshold: 0.25 }).observe(row);
+        }
+        document.addEventListener('visibilitychange', function () { hold('hidden', document.hidden); });
     })();
 </script>
 @endpush
