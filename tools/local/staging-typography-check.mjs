@@ -19,12 +19,11 @@ const SHOT = new Set([390, 768, 1440]);
 
 const browser = await (useWebkit ? webkit : chromium).launch();
 const ctx = await browser.newContext({ httpCredentials: basicPw ? { username: 'staging', password: basicPw } : undefined, viewport: { width: 1440, height: 900 } });
-await ctx.route(/tawk\.to/i, (r) => r.abort());
 const page = await ctx.newPage(); page.setDefaultTimeout(120000);
 const go = async (u) => { const r = await page.goto(base + u, { waitUntil: 'domcontentloaded', timeout: 150000 }); await page.waitForLoadState('load', { timeout: 60000 }).catch(() => {}); return r; };
 
 // admin login
-await go('/login');
+await go('/login'); await page.waitForTimeout(4000);
 await page.fill('input[name=email]', 'admin@gmail.com'); await page.fill('input[name=password]', adminPw);
 await Promise.all([page.waitForNavigation({ timeout: 120000 }), page.click('button[type=submit]')]);
 
@@ -32,10 +31,11 @@ await Promise.all([page.waitForNavigation({ timeout: 120000 }), page.click('butt
 const first = async (list, re) => { await go(list); return page.evaluate((src) => { const r = new RegExp(src); const a = [...document.querySelectorAll('a[href]')].map((x) => x.getAttribute('href')).find((h) => r.test(h)); return a ? new URL(a, location.href).pathname : null; }, re.source); };
 const detail = [
     ['news-detail', await first('/news', /\/news\/[a-z0-9-]+$/i)],
-    ['product-detail', await first('/products', /\/products\/[a-z0-9-]+\/[a-z0-9-]+$/i)],
     ['service-detail', await first('/services', /\/services\/(detail|category)\/[a-z0-9-]+/i)],
     ['video-detail', await first('/news', /\/videos\/[a-z0-9-]+$/i)],
+    ['product-detail', '/products/industry-solutions/fleet-management'],
 ].filter(([, u]) => u);
+console.log('detail pages:', JSON.stringify(detail));
 const pages = [['home', '/'], ['about', '/about'], ['contact', '/contact'], ['products', '/products'], ['portfolio', '/portfolio'], ['news', '/news'], ['services', '/services'], ...detail,
     ['admin-dashboard', '/admin/dashboard'], ['admin-inbox', '/admin/inbox'], ['admin-news', '/admin/news'], ['admin-portfolio', '/admin/portfolio'], ['admin-videos', '/admin/videos'],
     ['admin-products', '/admin/products'], ['admin-services', '/admin/services'], ['admin-anniversary', '/admin/anniversary'], ['admin-hero-video', '/admin/hero-video'], ['admin-profile', '/admin/profile']];
@@ -44,10 +44,13 @@ const rows = [];
 const chosen = only ? pages.filter(([n]) => only.test(n)) : pages;
 let bad = 0;
 for (const [name, url] of chosen) {
+    await new Promise((r) => setTimeout(r, 2500)); // be gentle: the host's firewall blocks an IP that hits it too fast
+    await page.setViewportSize({ width: WIDTHS[0], height: 900 });
+    const resp = await go(url).catch(() => null);
+    await page.waitForTimeout(1800);
     for (const w of WIDTHS) {
-        await page.setViewportSize({ width: w, height: 900 });
-        const resp = await go(url).catch(() => null);
-        await page.waitForTimeout(1800);
+        await page.setViewportSize({ width: w, height: 900 }); // one page load, then resized (no reload per width)
+        await page.waitForTimeout(700);
         const m = await page.evaluate(async () => {
             const cls = await new Promise((res) => { let s = 0; try { new PerformanceObserver((l) => { for (const e of l.getEntries()) if (!e.hadRecentInput) s += e.value; }).observe({ type: 'layout-shift', buffered: true }); } catch {} setTimeout(() => res(s), 700); });
             const small = new Map(); const fam = {};
