@@ -1138,44 +1138,7 @@ max-height: 20 vh;
     </div>
 </section>
 
-    <!-- Trusted Partners -->
-<section class="partners-section">
-    <div class="container">
-        <h5 class="h5 text-uppercase text-center fw-semibold mb-4 text-dark">Trusted Partners</h5>
-        <div class="partners-slider">
-            <div class="partners-track">
-                <img src="{{ asset('assets/images/minbertv.webp') }}" alt="Minber" class="partner-logo" loading="lazy" decoding="async">
-                <img src="{{ asset('assets/images/iman.webp') }}" alt="iman" class="partner-logo" loading="lazy" decoding="async">
-                <img src="{{ asset('assets/images/Ethiotel.jpg') }}" alt="ethiotel" class="partner-logo" loading="lazy" decoding="async">
-                <img src="{{ asset('assets/images/Safaricom.png') }}" alt="safaricom" class="partner-logo" loading="lazy" decoding="async">
-                <img src="{{ asset('assets/images/trusted/ad.png') }}" alt="ad" class="partner-logo" loading="lazy" decoding="async">
-                <img src="{{ asset('assets/images/trusted/amar.jpg') }}" alt="amar" class="partner-logo" loading="lazy" decoding="async">
-                <img src="{{ asset('assets/images/trusted/amin.png') }}" alt="amin" class="partner-logo" loading="lazy" decoding="async">
-                <img src="{{ asset('assets/images/trusted/basira.png') }}" alt="basira" class="partner-logo" loading="lazy" decoding="async">
-                <img src="{{ asset('assets/images/trusted/bilalul.png') }}" alt="bilalul" class="partner-logo" loading="lazy" decoding="async">
-                <img src="{{ asset('assets/images/trusted/kasma.png') }}" alt="kasma" class="partner-logo" loading="lazy" decoding="async">
-                <img src="{{ asset('assets/images/trusted/mslegue.JPG') }}" alt="Msleguer" class="partner-logo" loading="lazy" decoding="async">
-                <img src="{{ asset('assets/images/newleaf.webp') }}" alt="newleaf" class="partner-logo" loading="lazy" decoding="async">
-                <img src="{{ asset('assets/images/trusted/nujum.jpg') }}" alt="nujum" class="partner-logo" loading="lazy" decoding="async">
-                <img src="{{ asset('assets/images/trusted/popular.png') }}" alt="poplar" class="partner-logo" loading="lazy" decoding="async">
-                <img src="{{ asset('assets/images/trusted/ethioceramics.jpg') }}" alt="ethioceramics" class="partner-logo" loading="lazy" decoding="async">
-                <img src="{{ asset('assets/images/trusted/softvalley.jpg') }}" alt="softvalley" class="partner-logo" loading="lazy" decoding="async">
-                <img src="{{ asset('assets/images/befan.jpg') }}" alt="befam" class="partner-logo" loading="lazy" decoding="async">
-                <img src="{{ asset('assets/images/trusted/ukaz.jpg') }}" alt="ukaz" class="partner-logo" loading="lazy" decoding="async">
-                <img src="{{ asset('assets/images/trusted/sms.png') }}" alt="sms" class="partner-logo" loading="lazy" decoding="async">
-                <img src="{{ asset('assets/images/trusted/unknown.PNG') }}" alt="unknown" class="partner-logo" loading="lazy" decoding="async">
-                <img src="{{ asset('assets/images/evergreen.jfif') }}" alt="evergreen" class="partner-logo" loading="lazy" decoding="async">
-                <img src="{{ asset('assets/images/aauLogo.png') }}" alt="aau" class="partner-logo" loading="lazy" decoding="async">
-                <img src="{{ asset('assets/images/trusted/diredawa.png') }}" alt="diredawa" class="partner-logo" loading="lazy" decoding="async">
-                <img src="{{ asset('assets/images/trusted/addis.png') }}" alt="addis" class="partner-logo" loading="lazy" decoding="async">
-                <img src="{{ asset('assets/images/trusted/alfa.jpeg') }}" alt="alfa" class="partner-logo" loading="lazy" decoding="async">
-                <img src="{{ asset('assets/images/trusted/hilco.png') }}" alt="hilco" class="partner-logo" loading="lazy" decoding="async">
-                <img src="{{ asset('assets/images/trusted/maroli.JPG') }}" alt="Maroli" class="partner-logo" loading="lazy" decoding="async">
-
-            </div>
-        </div>
-    </div>
-</section>
+    @include('partials.partners')
 
     <!-- Services Section -->
     <section class="services" id="services">

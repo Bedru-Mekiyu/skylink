@@ -163,6 +163,15 @@ Route::resource('products', ProductadminController::class);
     Route::get('/anniversary', [\App\Http\Controllers\Admin\AnniversaryAdminController::class, 'edit'])->name('anniversary.edit');
     Route::put('/anniversary', [\App\Http\Controllers\Admin\AnniversaryAdminController::class, 'update'])->name('anniversary.update');
 
+    // Trusted Partners (homepage logo marquee): add, edit, hide, order. Never deletes.
+    Route::get('/partners', [\App\Http\Controllers\Admin\PartnerController::class, 'index'])->name('partners.index');
+    Route::get('/partners/create', [\App\Http\Controllers\Admin\PartnerController::class, 'create'])->name('partners.create');
+    Route::post('/partners', [\App\Http\Controllers\Admin\PartnerController::class, 'store'])->middleware('throttle:partner-upload')->name('partners.store');
+    Route::put('/partners/reorder', [\App\Http\Controllers\Admin\PartnerController::class, 'reorder'])->middleware('throttle:60,1')->name('partners.reorder');
+    Route::get('/partners/{partner}/edit', [\App\Http\Controllers\Admin\PartnerController::class, 'edit'])->name('partners.edit');
+    Route::put('/partners/{partner}', [\App\Http\Controllers\Admin\PartnerController::class, 'update'])->middleware('throttle:partner-upload')->name('partners.update');
+    Route::put('/partners/{partner}/toggle', [\App\Http\Controllers\Admin\PartnerController::class, 'toggle'])->middleware('throttle:60,1')->name('partners.toggle');
+
     // Homepage hero video: upload, preview, restore previous, reset to the built-in default.
     Route::get('/hero-video', [\App\Http\Controllers\Admin\HeroVideoController::class, 'edit'])->name('hero-video.edit');
     Route::put('/hero-video', [\App\Http\Controllers\Admin\HeroVideoController::class, 'update'])->middleware('throttle:hero-upload')->name('hero-video.update');

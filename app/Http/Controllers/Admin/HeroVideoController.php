@@ -7,6 +7,7 @@ use App\Models\HeroVideoSetting;
 use App\Support\HeroVideo;
 use App\Support\HeroVideoProcessor;
 use App\Support\PublicCache;
+use App\Support\UploadLock;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -88,7 +89,7 @@ class HeroVideoController extends Controller
         }
 
         // Stored under random names; the original file name is never used.
-        $this->ensureLocked();
+        UploadLock::ensure(HeroVideo::DIR);
         $new = $old;
         foreach ($in as $key => $file) {
             $ext = $key === 'poster' ? $this->imageExt($file) : self::FIELDS[$key][0][0];
@@ -225,22 +226,6 @@ class HeroVideoController extends Controller
             'image/webp' => 'webp',
             default => 'jpg',
         };
-    }
-
-    /** A script-blocking .htaccess inside the upload folder (Apache; harmless elsewhere). */
-    private function ensureLocked(): void
-    {
-        $disk = Storage::disk('public');
-        $file = HeroVideo::DIR.'/.htaccess';
-        if (! $disk->exists($file)) {
-            $disk->put($file, "# Uploaded media only: nothing in this folder may ever run as a script.\n"
-                ."<IfModule mod_php.c>\n    php_flag engine off\n</IfModule>\n"
-                ."<IfModule mod_php8.c>\n    php_flag engine off\n</IfModule>\n"
-                ."RemoveHandler .php .phtml .phar .pl .py .cgi\n"
-                ."RemoveType .php .phtml .phar\n"
-                ."Options -ExecCGI -Indexes\n"
-                ."<FilesMatch \"(?i)\\.(php\\d*|phtml|phar|pl|py|cgi|sh|html?|svg|js)$\">\n    Require all denied\n</FilesMatch>\n");
-        }
     }
 
     /** Smaller of PHP's upload_max_filesize and post_max_size, in bytes. */
