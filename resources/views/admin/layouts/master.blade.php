@@ -61,7 +61,7 @@
     .sidebar .nav-link.active { color: white; font-weight: 600; background: var(--sidebar-link-active); border-left-color: #a7c8fd; }
     .sidebar .nav-link .fa-fw { width: 1.25em; text-align: center; }
     .sidebar .collapse .nav-link { font-size: 0.85rem; padding-left: 3.5rem; }
-    .sidebar-heading { padding: 0.75rem 1.5rem; font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; }
+    .sidebar-heading { padding: 0.75rem 1.5rem; font-size: 0.8125rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; }
     .top-nav { background-color: var(--navbar-bg); border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 1020; }
     .card { border: 1px solid var(--border-color); border-radius: 0.75rem; box-shadow: none; transition: all 0.2s ease; }
     .card:hover { transform: translateY(-4px); box-shadow: var(--card-shadow); }
@@ -84,7 +84,7 @@
         .table-responsive-cards tr { margin-bottom: 1rem; border: 1px solid var(--border-color); border-radius: 0.5rem; overflow: hidden; }
         .table-responsive-cards td { padding: 0.75rem 1rem; text-align: left; border-bottom: 1px solid var(--border-color); }
         .table-responsive-cards tr td:last-child { border-bottom: 0; }
-        .table-responsive-cards td::before { content: attr(data-label); display: block; font-size: 0.75rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; margin-bottom: 0.25rem; }
+        .table-responsive-cards td::before { content: attr(data-label); display: block; font-size: 0.8125rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; margin-bottom: 0.25rem; }
         .table-responsive-cards td[data-label="Actions"] { padding-top: 1rem; padding-bottom: 1rem; }
         .table-responsive-cards td[data-label="Actions"] .action-buttons { justify-content: flex-start; }
     }
