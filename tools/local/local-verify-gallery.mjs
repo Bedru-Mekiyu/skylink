@@ -14,7 +14,9 @@ const rec = (name, pass, note = '') => { results.push({ name, pass, note }); con
 const browser = await chromium.launch();
 const newPage = async (opts = {}) => { const c = await browser.newContext({ viewport: { width: 1440, height: 900 }, reducedMotion: 'no-preference', ...opts }); const p = await c.newPage(); return [c, p]; };
 const caption = (p) => p.locator('#gallery [data-caption]').first().innerText();
-const toGallery = async (p) => { await p.goto(base + '/about', { waitUntil: 'load' }); await p.locator('#gallery').scrollIntoViewIfNeeded(); await p.waitForTimeout(1500); };
+// With the anniversary ceremony forced on, a full-screen intro plays once per visit: wait for it to finish first.
+const introDone = (p) => p.waitForFunction(() => { const i = document.querySelector('.anniv5-intro'); return !i || getComputedStyle(i).display === 'none' || getComputedStyle(i).visibility === 'hidden' || i.hidden || parseFloat(getComputedStyle(i).opacity) === 0; }, null, { timeout: 40000 }).catch(() => {});
+const toGallery = async (p) => { await p.goto(base + '/about', { waitUntil: 'load' }); await introDone(p); await p.locator('#gallery').scrollIntoViewIfNeeded(); await p.waitForTimeout(1500); };
 
 // ---- cinematic, autoplay, pause rules ----
 let [c, p] = await newPage(); await toGallery(p);
@@ -80,7 +82,7 @@ rec('Save-Data: static grid, no auto-rotation', !(await p.evaluate(() => documen
 
 // ---- frame rate with 4x CPU slowdown, layout stability ----
 [c, p] = await newPage(); const cdp = await c.newCDPSession(p);
-await p.goto(base + '/about', { waitUntil: 'load' }); await p.locator('#gallery').scrollIntoViewIfNeeded(); await p.waitForTimeout(1200);
+await p.goto(base + '/about', { waitUntil: 'load' }); await introDone(p); await p.locator('#gallery').scrollIntoViewIfNeeded(); await p.waitForTimeout(1200);
 await cdp.send('Emulation.setCPUThrottlingRate', { rate: 4 });
 const fps = await p.evaluate(() => new Promise((res) => { const t = []; let last = performance.now(); const end = last + 7000; const tick = (now) => { t.push(now - last); last = now; now < end ? requestAnimationFrame(tick) : res(t); }; requestAnimationFrame(tick); }));
 const avg = fps.reduce((a, b) => a + b, 0) / fps.length, sorted = [...fps].sort((a, b) => a - b), p95 = sorted[Math.floor(sorted.length * 0.95)];
@@ -94,7 +96,7 @@ await c.close();
 [c, p] = await newPage();
 for (const [w, h, dsf, label] of [[320, 640, 1, '320'], [360, 740, 1, '360'], [390, 844, 1, '390'], [768, 1024, 1, '768'], [1024, 768, 1, '1024'], [1440, 900, 1, '1440'], [1920, 1080, 1, '1920'], [1536, 864, 1.25, '125% scaling (1920 screen)'], [1280, 720, 1.5, '150% scaling (1920 screen)']]) {
     await p.setViewportSize({ width: w, height: h });
-    const ctx2 = p.context(); await toGallery(p); await p.setViewportSize({ width: w, height: h });
+    await toGallery(p); await p.setViewportSize({ width: w, height: h });
     await p.waitForTimeout(600);
     const m = await p.evaluate(() => {
         const g = document.querySelector('#gallery'), r = g.getBoundingClientRect();
