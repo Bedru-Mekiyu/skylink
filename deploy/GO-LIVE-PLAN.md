@@ -106,3 +106,11 @@ Setup: new subdomain, document root `/home/skylinkictcom/bedru.skylinkict.com/pu
 - **Homepage Video** (Admin menu): upload, preview, replace, restore previous, reset to default. Details, limits and ffmpeg behaviour: UPLOAD-GUIDE section 12. New migration `create_hero_video_settings_table`.
 - **Typography:** Inter (body, forms, numbers), Plus Jakarta Sans (headings, card titles), Fraunces (hero headline and anniversary numerals only), Noto Sans/Serif Ethiopic (Amharic). Self-hosted variable WOFF2, preloaded, metric-matched fallbacks, body 16 to 18 px, 13 px floor for labels.
 - Local tests: full suite passes (including `HeroVideoTest` and `TypographyTest`). Verification on bedru, Lighthouse before/after and the release package: see the final report.
+
+## 11. Added 2026-11-20: team, About banner, Partners admin (tested on bedru; live was not changed)
+
+- **Team:** Hanan Nesru, Head of Human Resource & Administration (replaces the old Head of Networking Administration). Photo cropped 4:5, WebP + JPEG, original archived privately. No personal links existed on the old card, so none were removed. Amharic name and title are not set on the site (the team cards are English only); propose Amharic only if the owner wants a translation.
+- **Team photos** are now 4:5 rounded rectangles (12 px). Sharpness: Bedru Hussen (370 x 452) is the only photo that is soft at 2x screens; the others are larger.
+- **About banner:** about half a screen (News 460 to 489 px and Portfolio 480 px are the reference).
+- **Partners:** Admin > Partners (new migration `create_partners_table`, then `php artisan partners:optimize-legacy` once). Homepage marquee is now a seamless loop; up to 6 logos show as a still row; reduced motion shows a static grid; an empty table falls back to the old static list.
+- **Gallery:** research only so far (placement options in `storage/app/staging-checks/about-gallery/`), waiting for the owner's "continue".
