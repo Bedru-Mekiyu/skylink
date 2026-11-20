@@ -114,3 +114,9 @@ Setup: new subdomain, document root `/home/skylinkictcom/bedru.skylinkict.com/pu
 - **About banner:** about half a screen (News 460 to 489 px and Portfolio 480 px are the reference).
 - **Partners:** Admin > Partners (new migration `create_partners_table`, then `php artisan partners:optimize-legacy` once). Homepage marquee is now a seamless loop; up to 6 logos show as a still row; reduced motion shows a static grid; an empty table falls back to the old static list.
 - **Gallery:** research only so far (placement options in `storage/app/staging-checks/about-gallery/`), waiting for the owner's "continue".
+
+## 12. Added 2026-11-20 (round 3): gallery, security clean-up of bedru, verification (live was not changed)
+
+- **Gallery** (Admin > Gallery, new migration `create_gallery_images_table`): see UPLOAD-GUIDE section 14. Verified locally (GD on, 367 tests, browser checks: autoplay, hover / focus / pause, swipe, keyboard, lightbox with focus trap, reduced motion, Save-Data, 4x CPU throttle about 50 fps, CLS 0, 1 / 3 / 12 / 60 photos).
+- **bedru clean-up:** Basic Auth restored with a new random password; `admin@gmail.com` password changed to a random one; all customer data (inbox 280 + 229 messages, 16 subscribers, 17 subscriptions, 1 service request, sessions) deleted from the staging database after a backup inside the bedru folder (`deploy/backups/pre-anonymize-*`). Older backups and `deploy/live-data.sql.gz` on bedru still contain the copied customer data: delete them when testing is over. The real admin `info@skylinkict.com` was not touched.
+- **Homepage speed:** local Lighthouse (mobile, simulated slow 4G) Home LCP before this work 4.5 to 5.1 s, after the Ethiopic font fix 5.0 to 5.3 s (it was 7.4 s before the fix). About LCP 10.7 s (before 11.4 s) with the gallery in place. SEO shows 66 locally only because of the test-site noindex tag.
