@@ -28,8 +28,9 @@
 
 {{-- Video URL Field --}}
 <div class="mb-3">
-    <label for="video_url" class="form-label">Video URL (YouTube or Vimeo)</label>
-    <input type="url" class="form-control @error('video_url') is-invalid @enderror" id="video_url" name="video_url" value="{{ old('video_url', $video->video_url ?? '') }}" required placeholder="https://www.youtube.com/watch?v=...">
+    <label for="video_url" class="form-label">Video URL (YouTube or TikTok)</label>
+    <input type="url" class="form-control @error('video_url') is-invalid @enderror" id="video_url" name="video_url" value="{{ old('video_url', $video->video_url ?? '') }}" required placeholder="https://www.youtube.com/watch?v=... or https://www.tiktok.com/@name/video/..." aria-describedby="video_url_help">
+    <div class="form-text" id="video_url_help">YouTube (youtube.com/watch?v=…, youtu.be/…) or the full link of one TikTok video (tiktok.com/@name/video/…). Short TikTok links (vm.tiktok.com) cannot be played: open them in the browser and copy the full address.</div>
     @error('video_url')
         <div class="invalid-feedback">{{ $message }}</div>
     @enderror

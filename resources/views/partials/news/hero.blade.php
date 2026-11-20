@@ -79,6 +79,7 @@
                            data-embed="{{ $embed }}"
                            data-platform="{{ $platform }}"
                            data-title="{{ $title }}"
+                           data-thumb="{{ $image }}"
                            aria-haspopup="dialog"
                        @endif>
                         <span class="news-hero__watch-icon" aria-hidden="true"><i class="fas fa-play"></i></span>
@@ -112,6 +113,7 @@
 
 @once
 @push('styles')
+<link rel="stylesheet" href="{{ asset('assets/css/sky-video-fallback.css') }}">
 <style>
     /* ===== /news top banner (same treatment as the About banner) ===== */
     .news-hero {
@@ -385,6 +387,7 @@
 @endpush
 
 @push('scripts')
+<script src="{{ asset('assets/js/sky-video-guard.js') }}"></script>
 <script>
     // /news "Watch video" pop-up. The layout renders the scripts stack twice: run once.
     (function () {
@@ -418,6 +421,10 @@
                 iframe.addEventListener('load', function () { iframe.classList.add('is-loaded'); });
                 frame.innerHTML = '<div class="news-player__loading" role="status"><span class="news-player__spinner" aria-hidden="true"></span>Loading video…</div>';
                 frame.appendChild(iframe);
+                // If the TikTok player cannot load in this browser/network, show "Watch on TikTok" instead of TikTok's own error.
+                if (window.SkyVideoGuard && opener.getAttribute('data-platform') === 'tiktok') {
+                    window.SkyVideoGuard.watch(iframe, { box: frame, link: opener.href, thumb: opener.getAttribute('data-thumb'), platform: 'tiktok', title: opener.getAttribute('data-title') });
+                }
 
                 document.documentElement.classList.add('news-player-open');
                 dialog.showModal(); // modal: the rest of the page is inert, Esc closes

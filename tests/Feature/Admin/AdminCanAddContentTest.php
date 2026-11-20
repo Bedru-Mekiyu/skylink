@@ -55,7 +55,7 @@ class AdminCanAddContentTest extends TestCase
         $category = NewsCategory::create(['name' => 'Videos']);
         $this->actingAs($this->admin)->get(route('admin.videos.create'))->assertOk();
         $this->actingAs($this->admin)->post(route('admin.videos.store'), [
-            'title' => 'Test Video', 'news_category_id' => $category->id, 'video_url' => 'https://example.com/v.mp4',
+            'title' => 'Test Video', 'news_category_id' => $category->id, 'video_url' => 'https://www.youtube.com/watch?v=8R4J33Dp2x8',
         ])->assertSessionHasNoErrors()->assertRedirect(route('admin.videos.index'));
 
         $this->assertDatabaseHas('videos', ['title' => 'Test Video']);

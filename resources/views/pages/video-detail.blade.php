@@ -4,7 +4,11 @@
 @section('description', Str::limit($videoItem->description, 150))
 
 @push('styles')
+<link rel="stylesheet" href="{{ asset('assets/css/sky-video-fallback.css') }}">
 <style>
+    .sky-player { position: relative; width: min(100%, 400px); aspect-ratio: 9 / 16; border-radius: 12px; overflow: hidden; background: #000; box-shadow: 0 8px 25px rgba(0,0,0,0.15); }
+    .sky-player iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+    .sky-player--unknown { aspect-ratio: 16 / 9; width: min(100%, 800px); }
     /* These styles are great and will remain the same */
     .video-detail-section {
         padding: 60px 0;
@@ -61,18 +65,12 @@
 {{--    SMART LOGIC BLOCK - This figures out which video player to use    --}}
 {{-- =================================================================== --}}
 @php
-    $url = $videoItem->video_url;
-    $isTikTok = strpos($url, 'tiktok.com') !== false;
-    $isYouTube = (strpos($url, 'youtube.com') !== false || strpos($url, 'youtu.be') !== false);
-    
-    $videoId = ''; // This will only be used for YouTube videos
-    if ($isYouTube) {
-        // This regular expression finds the YouTube ID from any format (long, short, or shorts)
-        preg_match('/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/|shorts\/)([^"&?\/ ]{11})/i', $url, $matches);
-        if (isset($matches[1])) {
-            $videoId = $matches[1];
-        }
-    }
+    // The player is chosen from the saved link by the Video model (id parsed server-side, never the raw link).
+    $url = (string) $videoItem->video_url;
+    $platform = $videoItem->platform;                       // youtube | tiktok | null
+    $platformName = ['youtube' => 'YouTube', 'tiktok' => 'TikTok'][$platform] ?? null;
+    $link = preg_match('~^https?://~i', $url) ? $url : null;
+    $thumb = $videoItem->thumbnail_url;
 @endphp
 
 <section class="video-detail-section">
@@ -94,36 +92,37 @@
                 {{-- =================================================================== --}}
                 <div class="d-flex justify-content-center">
 
-                    @if ($isTikTok)
-                        {{-- If it's a TikTok link, embed their player --}}
-                        <blockquote class="tiktok-embed" cite="{{ $url }}" data-video-id="{{ basename(parse_url($url, PHP_URL_PATH)) }}" style="max-width: 400px; min-width: 325px;">
-                            <section>
-                                <a target="_blank" title="Video by {{ $videoItem->title }}" href="{{ $url }}">Video by {{ $videoItem->title }}</a>
-                            </section>
-                        </blockquote>
-                        {{-- IMPORTANT: This script is required by TikTok to make the player work --}}
-                        <script async src="https://www.tiktok.com/embed.js"></script>
-
-                    @elseif ($isYouTube && $videoId)
-                        {{-- If it's a YouTube link, embed the YouTube player --}}
+                    @if ($platform === 'tiktok')
+                        {{-- TikTok's own player iframe; assets/js/sky-video-guard.js swaps in "Watch on TikTok" if it cannot load. --}}
+                        <div class="sky-player sky-player--tiktok" data-sky-player data-platform="tiktok" data-link="{{ $link }}" data-thumb="{{ $thumb }}" data-title="{{ $videoItem->title }}">
+                            <iframe src="https://www.tiktok.com/player/v1/{{ $videoItem->tiktok_id }}?rel=0&amp;description=1&amp;music_info=1"
+                                    title="{{ $videoItem->title }}" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"
+                                    allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>
+                        </div>
+                    @elseif ($platform === 'youtube')
                         <div class="video-player-wrapper">
-                            <iframe 
-                                src="https://www.youtube.com/embed/{{ $videoId }}" 
-                                title="{{ $videoItem->title }}" 
-                                frameborder="0" 
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                                allowfullscreen>
-                            </iframe>
+                            <iframe src="https://www.youtube-nocookie.com/embed/{{ $videoItem->youtube_id }}?rel=0&amp;modestbranding=1"
+                                    title="{{ $videoItem->title }}" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                         </div>
-
+                    @elseif ($link)
+                        {{-- A link the site cannot embed (for example a short TikTok link): thumbnail + button, never an error. --}}
+                        <div class="sky-player sky-player--unknown">
+                            <div class="sky-video-fallback" @if ($thumb) style="background-image: url('{{ $thumb }}')" @endif>
+                                <div class="sky-video-fallback__inner">
+                                    <p class="sky-video-fallback__msg">This video cannot be played here.</p>
+                                    <a class="sky-video-fallback__btn" href="{{ $link }}" target="_blank" rel="noopener noreferrer"><span class="sky-video-fallback__icon" aria-hidden="true">&#9654;</span> Watch video<span class="visually-hidden"> (opens in a new tab)</span></a>
+                                </div>
+                            </div>
+                        </div>
                     @else
-                        {{-- If we don't recognize the link, show an error --}}
-                        <div class="alert alert-warning">
-                            Could not display video. Please provide a valid Share Link from YouTube or TikTok.
-                        </div>
+                        <div class="alert alert-warning">This video has no valid link. Please edit it in the admin.</div>
                     @endif
-
                 </div>
+
+                @if ($link && $platformName)
+                    <p class="text-center mt-3 mb-0"><a class="btn btn-outline-primary btn-sm" href="{{ $link }}" target="_blank" rel="noopener noreferrer"><i class="fas fa-external-link-alt me-1" aria-hidden="true"></i>Watch on {{ $platformName }}<span class="visually-hidden"> (opens in a new tab)</span></a></p>
+                @endif
 
                 <!-- Video Description -->
                 @if($videoItem->description)
@@ -141,5 +140,20 @@
         </div>
     </div>
 </section>
+
+@push('scripts')
+<script src="{{ asset('assets/js/sky-video-guard.js') }}"></script>
+<script>
+    (function () {
+        function init() {
+            document.querySelectorAll('[data-sky-player]').forEach(function (box) {
+                var iframe = box.querySelector('iframe');
+                if (iframe && window.SkyVideoGuard) window.SkyVideoGuard.watch(iframe, { box: box, link: box.getAttribute('data-link'), thumb: box.getAttribute('data-thumb'), platform: box.getAttribute('data-platform'), title: box.getAttribute('data-title') });
+            });
+        }
+        if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
+    })();
+</script>
+@endpush
 
 @endsection

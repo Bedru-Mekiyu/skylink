@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Video;
 use App\Models\NewsCategory;
+use App\Rules\EmbeddableVideoUrl;
 use App\Support\ImageUploadRules;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -43,7 +44,7 @@ class AdminVideoController extends Controller
             'title' => 'required|string|max:255',
             'news_category_id' => 'required|exists:news_categories,id',
             'description' => 'nullable|string',
-            'video_url' => 'required|url', // Validate it's a URL
+            'video_url' => ['required', 'url', 'max:2048', new EmbeddableVideoUrl()], // a link the site can play (YouTube, or one TikTok video)
             'thumbnail_image' => ImageUploadRules::rules(),
         ]);
 
@@ -81,7 +82,7 @@ class AdminVideoController extends Controller
             'title' => 'required|string|max:255',
             'news_category_id' => 'required|exists:news_categories,id',
             'description' => 'nullable|string',
-            'video_url' => 'required|url',
+            'video_url' => ['required', 'url', 'max:2048', new EmbeddableVideoUrl()],
             'thumbnail_image' => ImageUploadRules::rules(),
         ]);
 
