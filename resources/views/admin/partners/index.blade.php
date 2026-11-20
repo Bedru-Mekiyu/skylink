@@ -80,7 +80,7 @@
             </table>
         </div>
     </div>
-    @if ($partners->hasPages())<div class="card-footer">{{ $partners->links() }}</div>@endif
+    @if ($partners->hasPages())<div class="card-footer">{{ $partners->onEachSide(1)->links('pagination::bootstrap-5') }}</div>@endif
 </div>
 <div class="visually-hidden" role="status" aria-live="polite" id="partner-live"></div>
 @endsection
