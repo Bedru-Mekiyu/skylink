@@ -7,7 +7,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 const access = fs.readFileSync('deploy/STAGING-ACCESS.txt', 'utf8');
-const basicPw = access.match(/user\s+staging\s+password\s+(\S+)/)[1];
+const basicPw = (access.match(/user\s+staging\s+password\s+(\S+)/) || [])[1];
 const base = 'https://bedru.skylinkict.com';
 const out = path.resolve('storage/app/staging-checks/videos'); fs.mkdirSync(out, { recursive: true });
 const rows = JSON.parse(fs.readFileSync(path.join(path.resolve('storage/app/staging-checks'), 'videos.json'), 'utf8').replace(/^﻿/, ''));
@@ -15,7 +15,7 @@ const results = [];
 const rec = (area, name, pass, note = '') => { results.push({ area, name, pass, note }); console.log(pass ? 'ok  ' : 'FAIL', area.padEnd(10), name, note ? '— ' + note : ''); };
 
 const browser = await chromium.launch({ args: ['--autoplay-policy=no-user-gesture-required'] });
-const newCtx = (extra = {}) => browser.newContext({ httpCredentials: { username: 'staging', password: basicPw }, viewport: { width: 1440, height: 900 }, ...extra });
+const newCtx = (extra = {}) => browser.newContext({ httpCredentials: basicPw ? { username: 'staging', password: basicPw } : undefined, viewport: { width: 1440, height: 900 }, ...extra });
 const nav = async (p, u) => { for (let a = 0; a < 5; a++) { try { return await p.goto(base + u, { waitUntil: 'domcontentloaded', timeout: 120000 }); } catch (e) { if (a === 4) throw e; await new Promise((r) => setTimeout(r, 20000 * (a + 1))); } } }; // the shared host is heavily loaded: back off instead of hammering
 const frameInfo = async (p) => { const o = []; for (const f of p.frames()) { if (f === p.mainFrame()) continue; const t = await f.locator('body').innerText({ timeout: 5000 }).catch(() => ''); o.push({ url: f.url(), text: t.replace(/\s+/g, ' ').slice(0, 120) }); } return o; };
 

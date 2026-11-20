@@ -13,8 +13,8 @@ import crypto from 'node:crypto';
 const part = process.argv[2] || 'all';
 const accessFile = 'deploy/STAGING-ACCESS.txt';
 let access = fs.readFileSync(accessFile, 'utf8');
-const basicPw = access.match(/user\s+staging\s+password\s+(\S+)/)[1];
-let adminPw = access.match(/email\s+staging-admin@skylinkict\.test\s+password\s+(\S+)/)[1];
+const basicPw = (access.match(/user\s+staging\s+password\s+(\S+)/) || [])[1];
+let adminPw = access.match(/email\s+admin@gmail\.com\s+password\s+(\S+)/)[1];
 const base = 'https://bedru.skylinkict.com';
 const out = path.resolve('storage/app/staging-checks');
 const results = [];
@@ -22,7 +22,7 @@ const rec = (area, name, pass, note = '') => { results.push({ area, name, pass, 
 const shot = async (p, dir, name) => { const d = path.join(out, dir); fs.mkdirSync(d, { recursive: true }); await p.screenshot({ path: path.join(d, name + '.png') }).catch(() => {}); };
 
 const browser = await chromium.launch();
-const mk = (extra = {}) => browser.newContext({ httpCredentials: { username: 'staging', password: basicPw }, viewport: { width: 1440, height: 900 }, ...extra });
+const mk = (extra = {}) => browser.newContext({ httpCredentials: basicPw ? { username: 'staging', password: basicPw } : undefined, viewport: { width: 1440, height: 900 }, ...extra });
 const hook = async (c) => { await c.route(/tawk\.to|\.(mp4|webm)(\?|$)/i, (r) => r.abort()); };
 const nav = async (p, u) => { for (let a = 0; a < 4; a++) { try { const r = await p.goto(base + u, { waitUntil: 'domcontentloaded', timeout: 120000 }); await p.waitForLoadState('load', { timeout: 60000 }).catch(() => {}); return r; } catch (e) { if (a === 3) throw e; } } };
 const login = async (p, email, pw) => {
@@ -39,8 +39,8 @@ const submit = async (p, sel) => { await Promise.all([p.waitForNavigation({ wait
 // If an earlier run stopped halfway, the test admin may still have the second email: put it back first.
 {
     const nc = await mk(); await hook(nc); const np = await nc.newPage(); np.setDefaultTimeout(120000);
-    if (!(await login(np, 'staging-admin@skylinkict.test', adminPw)) && (await login(np, 'staging-admin2@skylinkict.test', adminPw))) {
-        await nav(np, '/admin/profile'); await np.fill('#name', 'Staging Admin'); await np.fill('#email', 'staging-admin@skylinkict.test'); await np.fill('#profile_current_password', adminPw);
+    if (!(await login(np, 'admin@gmail.com', adminPw)) && (await login(np, 'staging-admin2@skylinkict.test', adminPw))) {
+        await nav(np, '/admin/profile'); await np.fill('#name', 'Staging Admin'); await np.fill('#email', 'admin@gmail.com'); await np.fill('#profile_current_password', adminPw);
         await submit(np, '#profile-form button[type=submit]'); console.log('(restored the test admin email from an interrupted run)');
     }
     await nc.close();
@@ -50,7 +50,7 @@ const ctx = await mk(); await hook(ctx);
 const admin = await ctx.newPage(); admin.setDefaultTimeout(120000);
 const nativeDialogs = [];
 admin.on('dialog', async (d) => { nativeDialogs.push(`${d.type()}: ${d.message().slice(0, 80)}`); await d.dismiss(); });
-const ok0 = await login(admin, 'staging-admin@skylinkict.test', adminPw);
+const ok0 = await login(admin, 'admin@gmail.com', adminPw);
 rec('auth', 'admin login', ok0);
 
 const modalOpen = async (p) => p.evaluate(() => { const m = document.querySelector('.sky-modal'); if (!m || m.hidden) return null; const panel = m.querySelector('.sky-modal__panel'); return { role: panel.getAttribute('role'), modal: panel.getAttribute('aria-modal'), title: m.querySelector('.sky-modal__title').textContent, msg: m.querySelector('.sky-modal__msg').textContent, focusInside: panel.contains(document.activeElement), focusText: document.activeElement?.textContent?.trim() }; });
@@ -210,7 +210,7 @@ if (part === 'all' || part === 'confirm') {
     // 390 px: the dialog fits
     {
         const mctx = await mk({ viewport: { width: 390, height: 844 } }); await hook(mctx); const m = await mctx.newPage(); m.setDefaultTimeout(120000);
-        await login(m, 'staging-admin@skylinkict.test', adminPw);
+        await login(m, 'admin@gmail.com', adminPw);
         await nav(m, '/admin/anniversary'); await m.check('#mode-on'); await m.click('#anniversary-form button[type=submit]');
         const box = await m.evaluate(() => { const p = document.querySelector('.sky-modal__panel'); const r = p.getBoundingClientRect(); return { w: r.width, left: r.left, right: window.innerWidth - r.right }; });
         await shot(m, 'confirm-modal', 'anniversary-on-open-390');
@@ -224,7 +224,7 @@ if (part === 'all' || part === 'profile') {
     const other = await pctx.newPage(); other.setDefaultTimeout(120000); // "another device": a second browser session of the same account
     const sctx = await mk(); await hook(sctx);
     const dev2 = await sctx.newPage(); dev2.setDefaultTimeout(120000);
-    await login(dev2, 'staging-admin@skylinkict.test', adminPw);
+    await login(dev2, 'admin@gmail.com', adminPw);
     await nav(dev2, '/admin/profile');
     rec('profile', 'My Profile page opens (menu link works)', /Profile details/.test(await dev2.content()) && /Change password/.test(await dev2.content()));
     await shot(dev2, 'profile', 'profile-1440');
@@ -282,7 +282,7 @@ if (part === 'all' || part === 'profile') {
     // put the test admin back to the known login (email + a new known password) and record it
     const known = 'Bd' + crypto.randomBytes(10).toString('hex');
     await nav(dev2, '/admin/profile');
-    await dev2.fill('#name', 'Staging Admin'); await dev2.fill('#email', 'staging-admin@skylinkict.test'); await dev2.fill('#profile_current_password', newPw);
+    await dev2.fill('#name', 'Staging Admin'); await dev2.fill('#email', 'admin@gmail.com'); await dev2.fill('#profile_current_password', newPw);
     await submit(dev2, '#profile-form button[type=submit]');
     await dev2.fill('#current_password', newPw); await dev2.fill('#password', known); await dev2.fill('#password_confirmation', known);
     await submit(dev2, '#password-form button[type=submit]');

@@ -7,14 +7,14 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 const access = fs.readFileSync('deploy/STAGING-ACCESS.txt', 'utf8');
-const pw = access.match(/user\s+staging\s+password\s+(\S+)/)[1];
+const pw = (access.match(/user\s+staging\s+password\s+(\S+)/) || [])[1];
 const base = 'https://bedru.skylinkict.com';
 const out = path.resolve('storage/app/staging-checks');
 const widths = [1440, 768, 390];
 const report = [];
 
 const browser = await chromium.launch();
-const ctx = await browser.newContext({ httpCredentials: { username: 'staging', password: pw }, viewport: { width: 1440, height: 900 } });
+const ctx = await browser.newContext({ httpCredentials: pw ? { username: 'staging', password: pw } : undefined, viewport: { width: 1440, height: 900 } });
 await ctx.route(/tawk\.to|\.(mp4|webm)(\?|$)/i, (r) => r.abort()); // chat widget + the big hero videos are not what is being tested
 const page = await ctx.newPage();
 page.setDefaultTimeout(150000);

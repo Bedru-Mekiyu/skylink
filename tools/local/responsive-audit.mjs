@@ -17,9 +17,9 @@ const only = opt('only', '');
 const base = opt('base', 'https://bedru.skylinkict.com').replace(/\/$/, '');
 const remote = /bedru\.skylinkict\.com/.test(base);
 const access = remote ? fs.readFileSync('deploy/STAGING-ACCESS.txt', 'utf8') : '';
-const basicPw = remote ? access.match(/user\s+staging\s+password\s+(\S+)/)[1] : '';
-const adminEmail = remote ? 'staging-admin@skylinkict.test' : process.env.ADMIN_EMAIL;
-const adminPw = remote ? access.match(/email\s+staging-admin@skylinkict\.test\s+password\s+(\S+)/)[1] : process.env.ADMIN_PASSWORD;
+const basicPw = remote ? (access.match(/user\s+staging\s+password\s+(\S+)/) || [])[1] : '';
+const adminEmail = remote ? 'admin@gmail.com' : process.env.ADMIN_EMAIL;
+const adminPw = remote ? access.match(/email\s+admin@gmail\.com\s+password\s+(\S+)/)[1] : process.env.ADMIN_PASSWORD;
 const out = path.resolve('storage/app/staging-checks', shotsDir);
 fs.mkdirSync(out, { recursive: true });
 
@@ -35,7 +35,7 @@ const viewports = (widthSet === 'key' ? KEY : ALL).map(([w, h, kind]) => ({ w, h
 
 const launcher = { chromium, chrome: chromium, msedge: chromium, firefox, webkit }[browserName];
 const browser = await launcher.launch(['chrome', 'msedge'].includes(browserName) ? { channel: browserName } : {});
-const ctx = await browser.newContext({ httpCredentials: remote ? { username: 'staging', password: basicPw } : undefined, viewport: { width: 1440, height: 900 } });
+const ctx = await browser.newContext({ httpCredentials: remote && basicPw ? { username: 'staging', password: basicPw } : undefined, viewport: { width: 1440, height: 900 } });
 await ctx.route(/tawk\.to/, (r) => r.abort());
 const page = await ctx.newPage(); page.setDefaultTimeout(120000);
 

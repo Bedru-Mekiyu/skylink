@@ -12,9 +12,9 @@ if (!outDir) { console.error('usage: node tools/local/staging-lighthouse.mjs <ou
 const paths = rest.length ? rest : ['/', '/news', '/products', '/contact'];
 const base = (process.env.LH_BASE || 'https://bedru.skylinkict.com').replace(/\/$/, '');
 const access = fs.readFileSync('deploy/STAGING-ACCESS.txt', 'utf8');
-const pw = access.match(/user\s+staging\s+password\s+(\S+)/)[1];
+const pw = (access.match(/user\s+staging\s+password\s+(\S+)/) || [])[1];
 const headers = path.join(os.tmpdir(), 'lh-headers.json');
-fs.writeFileSync(headers, JSON.stringify({ Authorization: 'Basic ' + Buffer.from('staging:' + pw).toString('base64') }));
+fs.writeFileSync(headers, JSON.stringify(pw ? { Authorization: 'Basic ' + Buffer.from('staging:' + pw).toString('base64') } : {}));
 fs.mkdirSync(outDir, { recursive: true });
 const chrome = chromium.executablePath();
 for (const p of paths) {

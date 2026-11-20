@@ -7,8 +7,8 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 const access = fs.readFileSync('deploy/STAGING-ACCESS.txt', 'utf8');
-const basicPw = access.match(/user\s+staging\s+password\s+(\S+)/)[1];
-const adminPw = access.match(/email\s+staging-admin@skylinkict\.test\s+password\s+(\S+)/)[1];
+const basicPw = (access.match(/user\s+staging\s+password\s+(\S+)/) || [])[1];
+const adminPw = access.match(/email\s+admin@gmail\.com\s+password\s+(\S+)/)[1];
 const base = 'https://bedru.skylinkict.com';
 const out = path.resolve('storage/app/staging-checks');
 const part = process.argv[2] || 'all';
@@ -17,7 +17,7 @@ const rec = (area, name, pass, note = '') => { results.push({ area, name, pass, 
 const shot = async (page, area, name) => { const d = path.join(out, area); fs.mkdirSync(d, { recursive: true }); await page.screenshot({ path: path.join(d, name + '.png') }).catch(() => {}); };
 
 const browser = await chromium.launch();
-const newCtx = (extra = {}) => browser.newContext({ httpCredentials: { username: 'staging', password: basicPw }, viewport: { width: 1440, height: 900 }, ...extra });
+const newCtx = (extra = {}) => browser.newContext({ httpCredentials: basicPw ? { username: 'staging', password: basicPw } : undefined, viewport: { width: 1440, height: 900 }, ...extra });
 const hook = async (ctx) => { await ctx.route(/tawk\.to|\.(mp4|webm)(\?|$)/i, (r) => r.abort()); };
 const settle = async (p) => { await p.waitForLoadState('load', { timeout: 60000 }).catch(() => {}); };
 const go = async (p, u) => { const r = await p.goto(base + u, { waitUntil: 'domcontentloaded', timeout: 150000 }); await settle(p); return r; };
@@ -29,7 +29,7 @@ const errors = []; admin.on('pageerror', (e) => errors.push(e.message));
 async function login() {
     await go(admin, '/login');
     if (/\/admin\//.test(admin.url())) return true; // already logged in
-    await admin.fill('input[name=email]', 'staging-admin@skylinkict.test');
+    await admin.fill('input[name=email]', 'admin@gmail.com');
     await admin.fill('input[name=password]', adminPw);
     await Promise.all([admin.waitForNavigation({ timeout: 150000 }), admin.click('button[type=submit]')]);
     return /\/admin\//.test(admin.url());

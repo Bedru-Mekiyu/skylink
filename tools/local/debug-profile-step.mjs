@@ -2,12 +2,12 @@
 import { chromium } from 'playwright-core';
 import fs from 'node:fs';
 const access = fs.readFileSync('deploy/STAGING-ACCESS.txt', 'utf8');
-const basicPw = access.match(/user\s+staging\s+password\s+(\S+)/)[1];
-const adminPw = access.match(/email\s+staging-admin@skylinkict\.test\s+password\s+(\S+)/)[1];
+const basicPw = (access.match(/user\s+staging\s+password\s+(\S+)/) || [])[1];
+const adminPw = access.match(/email\s+admin@gmail\.com\s+password\s+(\S+)/)[1];
 const email = process.argv[2] || 'staging-admin2@skylinkict.test';
 const base = 'https://bedru.skylinkict.com';
 const b = await chromium.launch();
-const c = await b.newContext({ httpCredentials: { username: 'staging', password: basicPw } });
+const c = await b.newContext({ httpCredentials: basicPw ? { username: 'staging', password: basicPw } : undefined });
 await c.route(/tawk\.to|\.(mp4|webm)(\?|$)/i, (r) => r.abort());
 const p = await c.newPage(); p.setDefaultTimeout(60000);
 p.on('response', (r) => { if (/admin\/profile/.test(r.url())) console.log('  response', r.request().method(), r.status(), r.url().replace(base, '')); });

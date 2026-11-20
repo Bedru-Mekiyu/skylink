@@ -8,8 +8,8 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 const access = fs.readFileSync('deploy/STAGING-ACCESS.txt', 'utf8');
-const basicPw = access.match(/user\s+staging\s+password\s+(\S+)/)[1];
-const adminPw = access.match(/email\s+staging-admin@skylinkict\.test\s+password\s+(\S+)/)[1];
+const basicPw = (access.match(/user\s+staging\s+password\s+(\S+)/) || [])[1];
+const adminPw = access.match(/email\s+admin@gmail\.com\s+password\s+(\S+)/)[1];
 const base = 'https://bedru.skylinkict.com';
 const out = path.resolve('storage/app/staging-checks');
 const results = [];
@@ -17,7 +17,7 @@ const rec = (area, name, pass, note = '') => { results.push({ area, name, pass, 
 const shot = async (p, dir, name) => { const d = path.join(out, dir); fs.mkdirSync(d, { recursive: true }); await p.screenshot({ path: path.join(d, name + '.png') }).catch(() => {}); };
 
 const browser = await chromium.launch();
-const mkCtx = async (w = 1440, h = 900) => { const c = await browser.newContext({ httpCredentials: { username: 'staging', password: basicPw }, viewport: { width: w, height: h } }); await c.route(/tawk\.to|\.(mp4|webm)(\?|$)/i, (r) => r.abort()); return c; };
+const mkCtx = async (w = 1440, h = 900) => { const c = await browser.newContext({ httpCredentials: basicPw ? { username: 'staging', password: basicPw } : undefined, viewport: { width: w, height: h } }); await c.route(/tawk\.to|\.(mp4|webm)(\?|$)/i, (r) => r.abort()); return c; };
 const nav = async (p, u) => { for (let a = 0; a < 4; a++) { try { const r = await p.goto(base + u, { waitUntil: 'domcontentloaded', timeout: 120000 }); await p.waitForLoadState('load', { timeout: 60000 }).catch(() => {}); return r; } catch (e) { if (a === 3) throw e; } } };
 
 // ------------------------------------------------------------------ 1. news filter
@@ -58,7 +58,7 @@ for (const w of [1440, 390]) {
 const adminCtx = await mkCtx(); const admin = await adminCtx.newPage(); admin.setDefaultTimeout(120000);
 admin.on('dialog', (d) => d.accept());
 await nav(admin, '/login');
-await admin.fill('input[name=email]', 'staging-admin@skylinkict.test'); await admin.fill('input[name=password]', adminPw);
+await admin.fill('input[name=email]', 'admin@gmail.com'); await admin.fill('input[name=password]', adminPw);
 await Promise.all([admin.waitForNavigation({ timeout: 120000 }), admin.click('button[type=submit]')]);
 const badge = async () => admin.evaluate(() => { const b = document.querySelector('.sidebar .nav-link[href*="inbox"] .badge, .nav-link[href*="inbox"] .badge'); return b ? b.textContent.replace(/\D/g, '') : '0'; });
 const unreadOnly = async () => { await nav(admin, '/admin/inbox'); return admin.evaluate(() => (document.querySelector('label[for=unread]')?.textContent.match(/\((\d+)\)/) || [])[1] ?? '?'); };
@@ -123,7 +123,7 @@ await shot(admin, 'inbox-delete', '5-old-contact-messages-1440');
 
 // 390 px: the list still works (cards layout, delete controls reachable)
 const mctx = await mkCtx(390, 844); const m = await mctx.newPage(); m.setDefaultTimeout(120000);
-await nav(m, '/login'); await m.fill('input[name=email]', 'staging-admin@skylinkict.test'); await m.fill('input[name=password]', adminPw);
+await nav(m, '/login'); await m.fill('input[name=email]', 'admin@gmail.com'); await m.fill('input[name=password]', adminPw);
 await Promise.all([m.waitForNavigation({ timeout: 120000 }), m.click('button[type=submit]')]);
 await nav(m, '/admin/inbox');
 const ov = await m.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);

@@ -6,10 +6,10 @@ import fs from 'node:fs';
 
 const visitor = process.argv[2] || 'info@skylinkict.com';
 const access = fs.readFileSync('deploy/STAGING-ACCESS.txt', 'utf8');
-const basicPw = access.match(/user\s+staging\s+password\s+(\S+)/)[1];
+const basicPw = (access.match(/user\s+staging\s+password\s+(\S+)/) || [])[1];
 const base = 'https://bedru.skylinkict.com';
 const b = await chromium.launch();
-const c = await b.newContext({ httpCredentials: { username: 'staging', password: basicPw }, viewport: { width: 390, height: 844 } });
+const c = await b.newContext({ httpCredentials: basicPw ? { username: 'staging', password: basicPw } : undefined, viewport: { width: 390, height: 844 } });
 await c.route(/tawk\.to|\.(mp4|webm)(\?|$)/i, (r) => r.abort());
 const p = await c.newPage(); p.setDefaultTimeout(120000);
 const out = [];
