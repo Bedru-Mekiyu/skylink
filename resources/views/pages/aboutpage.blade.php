@@ -934,7 +934,7 @@ We lead the market by creating disciplined culture that will have much bigger ef
         <div class="text-center mb-5">
         <h2 class="display-5 fw-bold text-dark mb-5">Meet the People Behind the Vision</h2>
         
-    </div
+    </div>
 
         <!-- Management Team -->
         <div class="mb-5">

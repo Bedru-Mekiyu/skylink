@@ -107,10 +107,10 @@
     file.addEventListener('change', function () {
         var f = file.files[0];
         if (!f) return;
-        if (f.size > 2 * 1024 * 1024) { file.value = ''; alert2('This logo is larger than 2 MB. Please choose a smaller file.'); return; }
+        if (f.size > 2 * 1024 * 1024) { file.value = ''; showLogoError('This logo is larger than 2 MB. Please choose a smaller file.'); return; }
         img.src = URL.createObjectURL(f); img.hidden = false; empty.hidden = true;
     });
-    function alert2(msg) { // in-page message instead of a browser alert
+    function showLogoError(msg) { // in-page message instead of a browser alert
         var d = document.getElementById('logo-help'); d.textContent = msg; d.classList.add('text-danger');
     }
     name.addEventListener('input', function () { pvName.textContent = name.value; });

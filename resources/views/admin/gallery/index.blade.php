@@ -29,10 +29,10 @@
 <div class="card">
     <div class="card-header d-flex flex-wrap gap-2 justify-content-between align-items-center">
         <h2 class="h5 mb-0"><i class="fas fa-images me-2" aria-hidden="true"></i>Photos</h2>
-        <form method="GET" action="{{ route('admin.gallery.index') }}" class="d-flex gap-2" role="search">
+        <form method="GET" action="{{ route('admin.gallery.index') }}" class="d-flex flex-nowrap gap-2" role="search">
             <label for="q" class="visually-hidden">Search captions</label>
             <input type="search" id="q" name="q" value="{{ $q }}" class="form-control" placeholder="Search captions">
-            <button class="btn btn-outline-secondary" type="submit">Search</button>
+            <button class="btn btn-outline-secondary text-nowrap" type="submit">Search</button>
         </form>
     </div>
     <div class="card-body p-0">
@@ -52,8 +52,8 @@
                         <td data-label="Order" class="ps-4 text-nowrap">
                             @if ($reorderable)
                                 <span class="text-muted me-1" aria-hidden="true" style="cursor:grab"><i class="fas fa-grip-vertical"></i></span>
-                                <button type="button" class="btn btn-sm btn-light" data-move="-1" aria-label="Move photo {{ $g->id }} up"><i class="fas fa-arrow-up" aria-hidden="true"></i></button>
-                                <button type="button" class="btn btn-sm btn-light" data-move="1" aria-label="Move photo {{ $g->id }} down"><i class="fas fa-arrow-down" aria-hidden="true"></i></button>
+                                <button type="button" class="btn btn-sm btn-light" data-move="-1" aria-label="Move {{ $g->altText() }} up"><i class="fas fa-arrow-up" aria-hidden="true"></i></button>
+                                <button type="button" class="btn btn-sm btn-light" data-move="1" aria-label="Move {{ $g->altText() }} down"><i class="fas fa-arrow-down" aria-hidden="true"></i></button>
                             @else {{ $g->sort_order }} @endif
                         </td>
                         <td data-label="Photo"><img src="{{ asset('storage/'.$g->thumb_path) }}" alt="{{ $g->altText() }}" width="{{ $g->thumb_w }}" height="{{ $g->thumb_h }}" loading="lazy" style="width:120px;height:80px;object-fit:cover;border-radius:8px"></td>
@@ -65,14 +65,14 @@
                         <td data-label="Status">@if ($g->visible)<span class="badge text-bg-success">Visible</span>@else<span class="badge text-bg-secondary">Hidden</span>@endif</td>
                         <td data-label="Actions" class="pe-4">
                             <div class="action-buttons">
-                                <a href="{{ route('admin.gallery.edit', $g) }}" class="btn btn-sm btn-warning" aria-label="Edit photo {{ $g->id }}"><i class="fas fa-pencil-alt" aria-hidden="true"></i></a>
+                                <a href="{{ route('admin.gallery.edit', $g) }}" class="btn btn-sm btn-warning" aria-label="Edit {{ $g->altText() }}"><i class="fas fa-pencil-alt" aria-hidden="true"></i></a>
                                 @if ($g->visible)
                                     <form action="{{ route('admin.gallery.toggle', $g) }}" method="POST" data-sky-confirm="It disappears from the About page but stays here, so you can show it again." data-sky-title="Hide this photo?" data-sky-ok="Hide" data-sky-variant="danger">
                                         @csrf @method('PUT')
-                                        <button type="submit" class="btn btn-sm btn-outline-secondary" aria-label="Hide photo {{ $g->id }}"><i class="fas fa-eye-slash" aria-hidden="true"></i></button>
+                                        <button type="submit" class="btn btn-sm btn-outline-secondary" aria-label="Hide {{ $g->altText() }}"><i class="fas fa-eye-slash" aria-hidden="true"></i></button>
                                     </form>
                                 @else
-                                    <form action="{{ route('admin.gallery.toggle', $g) }}" method="POST">@csrf @method('PUT')<button type="submit" class="btn btn-sm btn-outline-success" aria-label="Show photo {{ $g->id }}"><i class="fas fa-eye" aria-hidden="true"></i></button></form>
+                                    <form action="{{ route('admin.gallery.toggle', $g) }}" method="POST">@csrf @method('PUT')<button type="submit" class="btn btn-sm btn-outline-success" aria-label="Show {{ $g->altText() }}"><i class="fas fa-eye" aria-hidden="true"></i></button></form>
                                 @endif
                             </div>
                         </td>

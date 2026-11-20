@@ -69,6 +69,7 @@ final class PartnerLogoProcessor
         if (! function_exists('imagecreatetruecolor') || ! function_exists('imagewebp')) {
             throw new RuntimeException('The server cannot resize images (GD with WebP is missing).');
         }
+        @ini_set('memory_limit', '512M'); // a 4500 px PNG needs about 90 MB while it is decoded
         $src = match ($mime) {
             'image/png' => @imagecreatefrompng($path),
             'image/webp' => @imagecreatefromwebp($path),

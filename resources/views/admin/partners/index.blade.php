@@ -8,10 +8,10 @@
     <div class="card-header d-flex flex-wrap gap-2 justify-content-between align-items-center">
         <h2 class="h5 mb-0"><i class="fas fa-handshake me-2" aria-hidden="true"></i>Homepage partner logos</h2>
         <div class="d-flex flex-wrap gap-2">
-            <form method="GET" action="{{ route('admin.partners.index') }}" class="d-flex gap-2" role="search">
+            <form method="GET" action="{{ route('admin.partners.index') }}" class="d-flex flex-nowrap gap-2" role="search">
                 <label for="q" class="visually-hidden">Search partners</label>
                 <input type="search" id="q" name="q" value="{{ $q }}" class="form-control" placeholder="Search by name">
-                <button class="btn btn-outline-secondary" type="submit">Search</button>
+                <button class="btn btn-outline-secondary text-nowrap" type="submit">Search</button>
             </form>
             <a href="{{ route('admin.partners.create') }}" class="btn btn-primary"><i class="fas fa-plus me-1" aria-hidden="true"></i>Add partner</a>
         </div>
