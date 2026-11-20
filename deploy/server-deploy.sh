@@ -86,8 +86,19 @@ step "4/9 Extract (overwrite only, nothing is deleted)"
 if [ "${SKIP_EXTRACT:-0}" = "1" ]; then
     say "   SKIP_EXTRACT=1: assuming you extracted the zips yourself."
 else
+    # cPanel writes the PHP-version handler (and php ini block) into public/.htaccess; the release's file does not have it.
+    # Keep the server's "# php -- BEGIN ... # php -- END" block so the site keeps its PHP version after the overwrite.
+    HT="$APP/public/.htaccess"; HT_KEEP=""
+    if [ -f "$HT" ] && grep -q '^# php -- BEGIN' "$HT"; then
+        HT_KEEP="$BK/htaccess-php-handler.txt"
+        sed -n '/^# php -- BEGIN/,/^# php -- END/p' "$HT" > "$HT_KEEP"
+    fi
     unzip -o -q "$APP_ZIP" -d "$APP"
     unzip -o -q "$PUB_ZIP" -d "$APP/public"
+    if [ -n "$HT_KEEP" ] && [ -s "$HT_KEEP" ] && ! grep -q '^# php -- BEGIN' "$HT"; then
+        { printf '\n'; cat "$HT_KEEP"; } >> "$HT"
+        say "   Kept the server's PHP handler block in public/.htaccess."
+    fi
 fi
 [ -f "$ENVF" ] || die ".env disappeared (it must never be touched)."
 STATE="extracted"
