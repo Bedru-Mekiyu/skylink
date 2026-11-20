@@ -1160,7 +1160,7 @@ We lead the market by creating disciplined culture that will have much bigger ef
                         <div style="width: 16px; height: 16px; background: #2563eb; border-radius: 50%; border: 3px solid #0f172a; position: relative; z-index: 10; flex-shrink: 0; margin-top: 5px;"></div>
                         <div style="margin-left: 15px; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); border-radius: 8px; padding: 12px; border: 1px solid rgba(255,255,255,0.2); flex: 1;">
                             <h3 style="font-size: 1rem; font-weight: 700; color: #0f172a; margin-bottom: 3px;">IT Consultancy</h3>
-                            <p style="color: #2563eb; font-weight: 600; font-size: 0.8rem;">Dec 2021</p>
+                            <p style="color: #2563eb; font-weight: 600; font-size: 0.875rem;">Dec 2021</p>
                         </div>
                     </div>
 
@@ -1168,7 +1168,7 @@ We lead the market by creating disciplined culture that will have much bigger ef
                         <div style="width: 16px; height: 16px; background: #94a3b8; border-radius: 50%; border: 3px solid #0f172a; position: relative; z-index: 10; flex-shrink: 0; margin-top: 5px;"></div>
                         <div style="margin-left: 15px; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); border-radius: 8px; padding: 12px; border: 1px solid rgba(255,255,255,0.2); flex: 1;">
                             <h3 style="font-size: 1rem; font-weight: 700; color: #0f172a; margin-bottom: 3px;">Real State Management</h3>
-                            <p style="color: #64748b; font-weight: 600; font-size: 0.8rem;">Jun 2021</p>
+                            <p style="color: #64748b; font-weight: 600; font-size: 0.875rem;">Jun 2021</p>
                         </div>
                     </div>
 
@@ -1176,7 +1176,7 @@ We lead the market by creating disciplined culture that will have much bigger ef
                         <div style="width: 16px; height: 16px; background: #2563eb; border-radius: 50%; border: 3px solid #0f172a; position: relative; z-index: 10; flex-shrink: 0; margin-top: 5px;"></div>
                         <div style="margin-left: 15px; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); border-radius: 8px; padding: 12px; border: 1px solid rgba(255,255,255,0.2); flex: 1;">
                             <h3 style="font-size: 1rem; font-weight: 700; color: #0f172a; margin-bottom: 3px;">ERP Software</h3>
-                            <p style="color: #2563eb; font-weight: 600; font-size: 0.8rem;">Jun 2016</p>
+                            <p style="color: #2563eb; font-weight: 600; font-size: 0.875rem;">Jun 2016</p>
                         </div>
                     </div>
 
@@ -1184,7 +1184,7 @@ We lead the market by creating disciplined culture that will have much bigger ef
                         <div style="width: 16px; height: 16px; background: #94a3b8; border-radius: 50%; border: 3px solid #0f172a; position: relative; z-index: 10; flex-shrink: 0; margin-top: 5px;"></div>
                         <div style="margin-left: 15px; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); border-radius: 8px; padding: 12px; border: 1px solid rgba(255,255,255,0.2); flex: 1;">
                             <h3 style="font-size: 1rem; font-weight: 700; color: #0f172a; margin-bottom: 3px;">Software as a Service</h3>
-                            <p style="color: #64748b; font-weight: 600; font-size: 0.8rem;">Nov 2023</p>
+                            <p style="color: #64748b; font-weight: 600; font-size: 0.875rem;">Nov 2023</p>
                         </div>
                     </div>
 
@@ -1192,7 +1192,7 @@ We lead the market by creating disciplined culture that will have much bigger ef
                         <div style="width: 16px; height: 16px; background: #2563eb; border-radius: 50%; border: 3px solid #0f172a; position: relative; z-index: 10; flex-shrink: 0; margin-top: 5px;"></div>
                         <div style="margin-left: 15px; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); border-radius: 8px; padding: 12px; border: 1px solid rgba(255,255,255,0.2); flex: 1;">
                             <h3 style="font-size: 1rem; font-weight: 700; color: #0f172a; margin-bottom: 3px;">Network & Cyber Security</h3>
-                            <p style="color: #2563eb; font-weight: 600; font-size: 0.8rem;">July 2023</p>
+                            <p style="color: #2563eb; font-weight: 600; font-size: 0.875rem;">July 2023</p>
                         </div>
                     </div>
 
@@ -1200,7 +1200,7 @@ We lead the market by creating disciplined culture that will have much bigger ef
                         <div style="width: 16px; height: 16px; background: #94a3b8; border-radius: 50%; border: 3px solid #0f172a; position: relative; z-index: 10; flex-shrink: 0; margin-top: 5px;"></div>
                         <div style="margin-left: 15px; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); border-radius: 8px; padding: 12px; border: 1px solid rgba(255,255,255,0.2); flex: 1;">
                             <h3 style="font-size: 1rem; font-weight: 700; color: #0f172a; margin-bottom: 3px;">Technology Training</h3>
-                            <p style="color: #64748b; font-weight: 600; font-size: 0.8rem;">Sept 2023</p>
+                            <p style="color: #64748b; font-weight: 600; font-size: 0.875rem;">Sept 2023</p>
                         </div>
                     </div>
                 </div>
@@ -1238,7 +1238,7 @@ We lead the market by creating disciplined culture that will have much bigger ef
                         </svg>
                     </div>
                     <h3 style="font-size: 1rem; font-weight: 700; color: #0f172a; margin-bottom: 5px;">MEET & CONSULT</h3>
-                    <p style="color: #64748b; font-size: 0.8rem; line-height: 1.4;">Understanding your needs</p>
+                    <p style="color: #64748b; font-size: 0.875rem; line-height: 1.4;">Understanding your needs</p>
                 </div>
 
                 {{-- Design --}}
@@ -1249,7 +1249,7 @@ We lead the market by creating disciplined culture that will have much bigger ef
                         </svg>
                     </div>
                     <h3 style="font-size: 1rem; font-weight: 700; color: #0f172a; margin-bottom: 5px;">DESIGN</h3>
-                    <p style="color: #64748b; font-size: 0.8rem; line-height: 1.4;">Creating solutions</p>
+                    <p style="color: #64748b; font-size: 0.875rem; line-height: 1.4;">Creating solutions</p>
                 </div>
 
                 {{-- Implement --}}
@@ -1261,7 +1261,7 @@ We lead the market by creating disciplined culture that will have much bigger ef
                         </svg>
                     </div>
                     <h3 style="font-size: 1rem; font-weight: 700; color: #0f172a; margin-bottom: 5px;">IMPLEMENT</h3>
-                    <p style="color: #64748b; font-size: 0.8rem; line-height: 1.4;">Bringing vision to life</p>
+                    <p style="color: #64748b; font-size: 0.875rem; line-height: 1.4;">Bringing vision to life</p>
                 </div>
 
                 {{-- Training --}}
@@ -1272,7 +1272,7 @@ We lead the market by creating disciplined culture that will have much bigger ef
                         </svg>
                     </div>
                     <h3 style="font-size: 1rem; font-weight: 700; color: #0f172a; margin-bottom: 5px;">TRAINING</h3>
-                    <p style="color: #64748b; font-size: 0.8rem; line-height: 1.4;">Empowering your team</p>
+                    <p style="color: #64748b; font-size: 0.875rem; line-height: 1.4;">Empowering your team</p>
                 </div>
 
                 {{-- Support --}}
@@ -1283,7 +1283,7 @@ We lead the market by creating disciplined culture that will have much bigger ef
                         </svg>
                     </div>
                     <h3 style="font-size: 1rem; font-weight: 700; color: #0f172a; margin-bottom: 5px;">SUPPORT</h3>
-                    <p style="color: #64748b; font-size: 0.8rem; line-height: 1.4;">Ongoing assistance</p>
+                    <p style="color: #64748b; font-size: 0.875rem; line-height: 1.4;">Ongoing assistance</p>
                 </div>
             </div>
         </div>

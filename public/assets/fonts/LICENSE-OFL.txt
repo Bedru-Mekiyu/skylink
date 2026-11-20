@@ -1,0 +1,2 @@
+Fonts here are SIL Open Font License 1.1 (https://openfontlicense.org), from the Fontsource packages:
+Inter, Plus Jakarta Sans, Fraunces, Noto Sans Ethiopic, Noto Serif Ethiopic (variable WOFF2, latin / ethiopic subsets).

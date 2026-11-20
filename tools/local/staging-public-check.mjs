@@ -56,7 +56,7 @@ for (const [name, url] of targets) {
         await page.waitForTimeout(2500);
         const m = await page.evaluate(async () => ({
             overflow: document.documentElement.scrollWidth - window.innerWidth,
-            fonts: ['Bodoni Moda', 'Playfair Display', 'Belleza'].map((f) => [f, document.fonts.check(`16px "${f}"`)]),
+            fonts: ['Inter', 'Plus Jakarta Sans', 'Fraunces'].map((f) => [f, document.fonts.check(`16px "${f}"`)]),
             h1: document.querySelectorAll('h1').length,
             ceremony: document.documentElement.outerHTML.includes('anniv5'),
         }));

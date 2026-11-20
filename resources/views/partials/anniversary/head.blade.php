@@ -31,8 +31,8 @@
         animation: anniv5-spark var(--anniv5-cycle) cubic-bezier(.15, .8, .3, 1) infinite;
     }
     .anniv5-mark__n {
-        font-family: var(--font-card-title, 'Bodoni Moda', Georgia, serif);
-        font-optical-sizing: auto; font-size: 104px; font-weight: 600; fill: var(--anniv5-ink); opacity: 0;
+        font-family: var(--font-display, Georgia, serif);
+        font-size: 104px; font-weight: 600; fill: var(--anniv5-ink); opacity: 0;
         animation: anniv5-count var(--anniv5-cycle) cubic-bezier(.2, .7, .3, 1) infinite both;
     }
     .anniv5-mark__n--2 { animation-delay: .96s; }
@@ -40,7 +40,7 @@
     .anniv5-mark__n--4 { animation-delay: 2.88s; }
     .anniv5-mark__n--5 { fill: var(--anniv5-gold); animation-name: anniv5-five; animation-delay: 0s; }
     .anniv5-mark__years {
-        font-family: var(--font-ui, 'Manrope', sans-serif); font-size: 15px; font-weight: 700;
+        font-family: var(--font-ui, sans-serif); font-size: 15px; font-weight: 700;
         letter-spacing: .32em; fill: var(--anniv5-ink); opacity: 0;
         animation: anniv5-years var(--anniv5-cycle) ease-out infinite;
     }
@@ -118,11 +118,11 @@
 
     /* ---------- Copy ---------- */
     .anniv5 .anniv5__kicker {
-        margin: 0; font-family: var(--font-ui, 'Manrope', sans-serif); font-size: .72rem; font-weight: 700;
+        margin: 0; font-family: var(--font-ui, sans-serif); font-size: .72rem; font-weight: 700;
         letter-spacing: .26em; text-transform: uppercase; color: var(--anniv5-gold); line-height: 1.3;
     }
     .anniv5 .anniv5__line {
-        margin: .15rem 0 0; font-family: var(--font-reading, 'EB Garamond', serif); font-style: italic;
+        margin: .15rem 0 0; font-family: var(--font-reading, sans-serif); font-style: italic;
         font-size: 1.08rem; line-height: 1.35; color: var(--anniv5-ink); opacity: 1;
     }
     .anniv5 .anniv5__line:lang(am) { font-style: normal; font-size: 1rem; }
@@ -160,12 +160,12 @@
     .anniv5-hero-slot .anniv5--feature .anniv5__message { color: #fff; }
     .anniv5--feature .anniv5-mark { width: 148px; height: 148px; margin: 0 auto 1rem; }
     .anniv5--feature .anniv5__title {
-        margin: .55rem 0 .7rem; font-family: var(--font-card-title, 'Bodoni Moda', serif); font-optical-sizing: auto;
+        margin: .55rem 0 .7rem; font-family: var(--font-card-title, Georgia, serif); font-optical-sizing: auto;
         font-size: clamp(1.3rem, 1.05rem + .8vw, 1.6rem); font-weight: 600; line-height: 1.2; color: #fff;
         letter-spacing: 0; text-wrap: balance; padding: 0;
     }
     .anniv5--feature .anniv5__message {
-        margin: 0; font-family: var(--font-reading, 'EB Garamond', serif); font-size: 1.02rem; line-height: 1.6;
+        margin: 0; font-family: var(--font-reading, sans-serif); font-size: 1.02rem; line-height: 1.6;
         color: rgba(232, 238, 250, .88); opacity: 1; text-wrap: pretty;
     }
     .anniv5--feature .anniv5__message:lang(am), .anniv5--feature .anniv5__title:lang(am) { line-height: 1.75; }
@@ -276,7 +276,7 @@
     }
     .anniv5-intro__n, .anniv5-intro__title { grid-area: 1 / 1; }
     .anniv5-intro__n {
-        font-family: var(--font-card-title, 'Bodoni Moda', Georgia, serif); font-optical-sizing: auto;
+        font-family: var(--font-display, Georgia, serif); font-optical-sizing: auto;
         font-size: clamp(6rem, 22vw, 13rem); font-weight: 600; line-height: 1; opacity: 0;
         transform: scale(.85); transition: opacity .12s ease, transform .3s cubic-bezier(.2, .7, .3, 1);
     }
@@ -288,12 +288,12 @@
     @keyframes anniv5-punch { 0% { transform: scale(1); } 40% { transform: scale(1.15); } 100% { transform: scale(1); } }
     .anniv5-intro__title { text-align: center; width: min(94vw, 1100px); padding: 0 .5rem; }
     .anniv5-intro__kicker {
-        margin: 0 0 clamp(.6rem, 2vw, 1.1rem); font-family: var(--font-ui, 'Manrope', sans-serif); font-size: clamp(.68rem, 2.2vw, .95rem);
+        margin: 0 0 clamp(.6rem, 2vw, 1.1rem); font-family: var(--font-ui, sans-serif); font-size: clamp(.68rem, 2.2vw, .95rem);
         font-weight: 700; letter-spacing: .3em; text-transform: uppercase; color: var(--anniv5-cyan); line-height: 1.5; text-wrap: balance;
         opacity: 0; transform: translateY(10px); transition: opacity .6s ease, transform .7s cubic-bezier(.2, .7, .3, 1);
     }
     .anniv5-intro__headline {
-        margin: 0; font-family: var(--font-card-title, 'Bodoni Moda', Georgia, serif); font-optical-sizing: auto;
+        margin: 0; font-family: var(--font-display, Georgia, serif); font-optical-sizing: auto;
         font-size: clamp(1.75rem, 1.1rem + 3.6vw, 4.25rem); font-weight: 600; line-height: 1.12; color: #fff; text-wrap: balance;
         text-shadow: 0 0 22px rgba(245, 196, 81, .4), 0 2px 12px rgba(4, 10, 28, .8);
     }
@@ -311,7 +311,7 @@
     .anniv5-intro__skip {
         position: absolute; z-index: 3; top: max(16px, env(safe-area-inset-top)); right: max(16px, env(safe-area-inset-right));
         min-height: 44px; padding: .55rem 1.1rem; border-radius: 999px; cursor: pointer;
-        font-family: var(--font-ui, 'Manrope', sans-serif); font-size: .85rem; font-weight: 600; letter-spacing: .04em;
+        font-family: var(--font-ui, sans-serif); font-size: .85rem; font-weight: 600; letter-spacing: .04em;
         color: var(--anniv5-ink); background: rgba(16, 26, 53, .6); border: 1px solid rgba(232, 238, 250, .35);
     }
     .anniv5-intro__skip:hover { background: rgba(59, 130, 246, .35); }

@@ -5,5 +5,5 @@
 /* Font role tokens live in resources/views/partials/typography.blade.php (loaded by every layout).
    This fallback keeps Vite-only pages on the reading face if that partial is ever missing. */
 body {
-    font-family: var(--font-reading, 'EB Garamond', Georgia, serif);
+    font-family: var(--font-body, system-ui, sans-serif);
 }
