@@ -27,7 +27,7 @@
 .sky-modal__msg[hidden] { display: none; }
 .sky-modal__input { margin-top: 0.75rem; }
 .sky-modal__actions { display: flex; justify-content: flex-end; gap: 0.5rem; flex-wrap: wrap; padding: 0.85rem 1.25rem; border-top: 1px solid var(--border-color, #E5E7EB); background: var(--content-bg, #F9FAFB); border-radius: 0 0 0.75rem 0.75rem; }
-.sky-modal__actions .btn { min-width: 6rem; min-height: 2.5rem; }
+.sky-modal__actions .btn { min-width: 6rem; min-height: 44px; } /* easy to tap (px, because the admin's rem is a little under 16 px) */
 .sky-modal__actions .btn-light { border: 1px solid var(--border-color, #E5E7EB); background: #fff; }
 html.sky-modal-open { overflow: hidden; }
 @keyframes skyModalFade { from { opacity: 0; } to { opacity: 1; } }
