@@ -19,6 +19,9 @@ class AboutPageTest extends TestCase
             $this->assertStringNotContainsString($old, $html);
         }
         $this->assertFileDoesNotExist(public_path('assets/images/about/jemil.png'));
+        $this->assertStringContainsString('alt="Hanan Nesru, Head of Human Resource &amp; Administration"', $html);
+        $this->assertStringContainsString('assets/images/about/hanan.jpg', $html);
+        $this->assertFileExists(public_path('assets/images/about/hanan.jpg'));
     }
 
     public function test_team_photos_are_one_rounded_square_ratio_not_circles(): void

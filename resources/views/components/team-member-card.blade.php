@@ -4,7 +4,10 @@
 <div class="text-center team-card">
     <div class="team-card__photo mx-auto mb-4" style="background-color: {{ $member['bgColor'] }};">
         @if (!empty($member['image']))
-            <img src="{{ $member['image'] }}" alt="{{ $member['name'] }}, {{ $member['title'] }}" width="370" height="462" loading="lazy" decoding="async">
+            <picture>
+                @if (!empty($member['webp']))<source type="image/webp" srcset="{{ $member['webp'] }}">@endif
+                <img src="{{ $member['image'] }}" alt="{{ $member['name'] }}, {{ $member['title'] }}" width="480" height="600" loading="lazy" decoding="async">
+            </picture>
         @else
             <span class="team-card__initials" role="img" aria-label="{{ $member['name'] }}, {{ $member['title'] }}">{{ collect(explode(' ', $member['name']))->map(fn ($w) => mb_substr($w, 0, 1))->take(2)->implode('') }}</span>
         @endif

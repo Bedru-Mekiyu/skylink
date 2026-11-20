@@ -450,6 +450,7 @@ object-position: 50% 15%;
 }
     /* Management cards: one 4:5 portrait ratio for everyone, 12px corners (no circles). */
     .team-card__photo { position: relative; width: min(100%, 240px); aspect-ratio: 4 / 5; border-radius: 12px; overflow: hidden; display: grid; place-items: center; }
+    .team-card__photo picture { display: contents; }
     .team-card__photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 20%; display: block; }
     .team-card__initials { font: 700 3rem/1 var(--font-heading); color: #64748b; letter-spacing: 0.02em; }
     .team-info {

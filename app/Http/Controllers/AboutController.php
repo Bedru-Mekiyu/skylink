@@ -42,8 +42,9 @@ class AboutController extends Controller
         [
             'name' => 'Hanan Nesru',
             'title' => 'Head of Human Resource & Administration',
-            // Optimised copy of the owner's photo; the card shows initials until the file exists.
-            'image' => is_file(public_path('assets/images/about/hanan.png')) ? asset('assets/images/about/hanan.png') : null,
+            // Cropped 4:5 copy of the owner's photo (480x600); the original is archived privately.
+            'image' => asset('assets/images/about/hanan.jpg'),
+            'webp' => asset('assets/images/_opt/about/hanan-480.webp'),
             'bgColor' => '#f7f7f7ff',
         ],
         // [
