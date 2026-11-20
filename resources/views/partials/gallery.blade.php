@@ -62,9 +62,9 @@
     .sk-gallery__bar, .sk-gallery__caption { display: none; }
 
     /* ---- cinematic: coverflow arc with depth + parallax ---- */
-    .sk-gallery.is-cinematic .sk-gallery__stage { --h: clamp(260px, 38vw, 500px); position: relative; height: var(--h); perspective: 1400px; perspective-origin: 50% 45%; contain: layout paint; touch-action: pan-y; }
+    .sk-gallery.is-cinematic .sk-gallery__stage { --h: clamp(230px, 31vw, 440px); --sw: min(62vw, calc(var(--h) * 1.3)); position: relative; height: var(--h); perspective: 1400px; perspective-origin: 50% 45%; contain: layout paint; touch-action: pan-y; }
     .sk-gallery.is-cinematic .sk-gallery__track { display: block; position: absolute; inset: 0; max-width: none; padding: 0; transform-style: preserve-3d; }
-    .sk-gallery.is-cinematic .sk-gallery__slide { position: absolute; top: 50%; left: 50%; width: min(64%, calc(var(--h) * 1.35)); aspect-ratio: 3 / 2; margin: calc(var(--h) * -0.3) 0 0 calc(min(64%, calc(var(--h) * 1.35)) / -2);
+    .sk-gallery.is-cinematic .sk-gallery__slide { position: absolute; top: 50%; left: 50%; width: var(--sw); aspect-ratio: 3 / 2; margin: calc(var(--sw) / -3) 0 0 calc(var(--sw) / -2);
         transform: translate3d(var(--x, 0px), 0, var(--z, 0px)) rotateY(var(--ry, 0deg)); opacity: var(--o, 0); z-index: var(--zi, 0); filter: brightness(var(--b, 1));
         transition: transform 1s cubic-bezier(0.22, 0.7, 0.2, 1), opacity 1s ease, filter 1s ease; will-change: transform, opacity; backface-visibility: hidden; }
     .sk-gallery.is-cinematic .sk-gallery__slide.is-far { display: none; }
@@ -82,7 +82,7 @@
     .sk-lb { position: fixed; inset: 0; z-index: 2000; display: grid; grid-template-rows: 1fr auto; background: rgba(3, 9, 22, 0.94); color: #fff; touch-action: pan-y; }
     .sk-lb[hidden] { display: none; }
     .sk-lb__fig { margin: 0; display: grid; place-items: center; min-height: 0; padding: 56px 64px 8px; }
-    .sk-lb__fig img { max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; border-radius: 6px; }
+    .sk-lb__fig img { user-select: none; -webkit-user-drag: none; max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; border-radius: 6px; }
     .sk-lb__cap { text-align: center; padding: 8px 64px 22px; min-height: 4.2em; }
     .sk-lb__cap [lang="am"] { display: block; }
     .sk-lb__count { display: block; font-size: 0.875rem; opacity: 0.75; margin-top: 4px; }
@@ -113,7 +113,7 @@
     // ---------------- cinematic coverflow ----------------
     var prevOff = [];
     function render(first) {
-        var W = stage.clientWidth, half = Math.floor(n / 2), X = Math.max(120, W * 0.27);
+        var sw = slides[0].offsetWidth, half = Math.floor(n / 2), X = Math.max(90, sw * 0.6);
         slides.forEach(function (s, i) {
             var off = ((i - cur + n + half) % n) - half, abs = Math.abs(off);
             var jump = !first && prevOff[i] !== undefined && Math.abs(off - prevOff[i]) > 1;
@@ -173,7 +173,7 @@
         lb.innerHTML = '<button type="button" class="sk-lb__btn sk-lb__close" aria-label="Close">&times;</button>' +
             '<button type="button" class="sk-lb__btn sk-lb__prev" aria-label="Previous photo"><i class="fas fa-chevron-left" aria-hidden="true"></i></button>' +
             '<button type="button" class="sk-lb__btn sk-lb__next" aria-label="Next photo"><i class="fas fa-chevron-right" aria-hidden="true"></i></button>' +
-            '<figure class="sk-lb__fig"><img alt=""></figure><div class="sk-lb__cap" aria-live="polite"></div>';
+            '<figure class="sk-lb__fig"><img alt="" draggable="false"></figure><div class="sk-lb__cap" aria-live="polite"></div>';
         document.body.appendChild(lb);
         lbImg = lb.querySelector('img'); lbCap = lb.querySelector('.sk-lb__cap');
         lb.addEventListener('click', function (e) {
