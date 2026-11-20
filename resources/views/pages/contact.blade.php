@@ -106,6 +106,7 @@
             font-size: 14px;
             line-height: 1.4;
         }
+        @media (max-width: 767.98px) { .contact-card p { font-size: 1rem; } }
 
         /* Contact Form */
         .contact-form {
