@@ -1,2 +1,3 @@
 Fonts here are SIL Open Font License 1.1 (https://openfontlicense.org), from the Fontsource packages:
 Inter, Plus Jakarta Sans, Fraunces, Noto Sans Ethiopic, Noto Serif Ethiopic (variable WOFF2, latin / ethiopic subsets).
+The two Ethiopic files were narrowed to weights 400-700 and Ethiopic glyphs only (fonttools instancer + subset), 2026-11-20.

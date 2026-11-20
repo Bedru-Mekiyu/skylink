@@ -24,15 +24,15 @@
     </div>
 
     <div class="sk-gallery__stage" role="region" aria-roledescription="carousel" aria-label="Photo gallery">
-        <ul class="sk-gallery__track">
+        <div class="sk-gallery__track">
             @foreach ($gallery as $i => $g)
-                <li class="sk-gallery__slide" data-i="{{ $i }}" role="group" aria-roledescription="slide" aria-label="{{ $i + 1 }} of {{ $n }}">
+                <div class="sk-gallery__slide" data-i="{{ $i }}" role="group" aria-roledescription="slide" aria-label="{{ $i + 1 }} of {{ $n }}">
                     <button type="button" class="sk-gallery__open" aria-haspopup="dialog" aria-label="Open photo {{ $i + 1 }} of {{ $n }}: {{ $g['alt'] }}">
                         <img src="{{ $g['thumb'] }}" alt="{{ $g['alt'] }}" width="{{ $g['tw'] }}" height="{{ $g['th'] }}" loading="lazy" decoding="async" draggable="false">
                     </button>
-                </li>
+                </div>
             @endforeach
-        </ul>
+        </div>
     </div>
 
     <div class="sk-gallery__bar">

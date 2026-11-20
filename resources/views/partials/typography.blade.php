@@ -7,7 +7,8 @@
       --font-display     Fraunces           hero headline and anniversary numerals only; never small text
       --font-numeric     Inter (tabular)    prices, dates, stats, tables
     Amharic: Ge'ez glyphs fall through per glyph to Noto Sans Ethiopic (body and headings) and
-    Noto Serif Ethiopic (display); the Ethiopic files only download when a page contains Ge'ez text.
+    Noto Serif Ethiopic (display); the Ethiopic files (42 KB / 56 KB, weights 400-700, Ethiopic glyphs only) download only when a page
+    contains Ge'ez text.
     Legacy tokens (--font-ui, --font-reading, --font-card-text) are kept as aliases of --font-body.
     Files live in public/assets/fonts (SIL OFL, see LICENSE-OFL.txt). $surface = 'admin' uses body + heading only.
 --}}
@@ -27,10 +28,10 @@
     @font-face { font-family: 'Fraunces'; font-style: normal; font-weight: 100 900; font-display: swap;
         src: url('{{ asset('assets/fonts/fraunces-latin-var.woff2') }}') format('woff2');
         unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
-    @font-face { font-family: 'Noto Sans Ethiopic'; font-style: normal; font-weight: 100 900; font-display: swap;
+    @font-face { font-family: 'Noto Sans Ethiopic'; font-style: normal; font-weight: 400 700; font-display: swap;
         src: url('{{ asset('assets/fonts/noto-sans-ethiopic-var.woff2') }}') format('woff2');
         unicode-range: U+030E, U+1200-1399, U+2D80-2DDE, U+AB01-AB2E, U+1E7E0-1E7E6, U+1E7E8-1E7EB, U+1E7ED-1E7EE, U+1E7F0-1E7FE; }
-    @font-face { font-family: 'Noto Serif Ethiopic'; font-style: normal; font-weight: 100 900; font-display: swap;
+    @font-face { font-family: 'Noto Serif Ethiopic'; font-style: normal; font-weight: 400 700; font-display: swap;
         src: url('{{ asset('assets/fonts/noto-serif-ethiopic-var.woff2') }}') format('woff2');
         unicode-range: U+030E, U+1200-1399, U+2D80-2DDE, U+AB01-AB2E, U+1E7E0-1E7E6, U+1E7E8-1E7EB, U+1E7ED-1E7EE, U+1E7F0-1E7FE; }
     /* Metric-matched fallbacks: the system font is stretched to the proportions of the real font so text does not jump when it swaps in. */
