@@ -73,7 +73,8 @@ class ScanExternalImages extends Command
         $path = str_starts_with($rel, 'storage/') ? storage_path('app/public/'.substr($rel, 8))
             : (is_file(public_path($rel)) ? public_path($rel) : storage_path('app/public/'.$rel));
 
-        return is_file($path) ? null : 'file missing on disk';
+        // Service rows store only the file name; the page looks in assets/images/services/.
+        return is_file($path) || is_file(public_path('assets/images/services/'.$rel)) ? null : 'file missing on disk';
     }
 
     private function answers(string $url): bool

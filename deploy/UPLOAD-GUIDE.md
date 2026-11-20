@@ -142,3 +142,45 @@ Notes: only `skylink-front.php` is switched to PHP 8.2 (a `<Files>` handler line
 4. **The old copy `public_html/Skylink`** itself (not used by the live site).
 5. **The staging site** (`staging.skylinkict.com`, if created): keep for later tests or remove when you decide.
 6. The second phone number in the old header (`deploy/SERVER-DIFFS-REVIEW.md`).
+
+---
+
+## 10. Final round additions (2026-11-20): read before Deploy Day
+
+**Package:** build with `deploy\build-release.ps1` from the final commit. Public zip is now about 88 MB (was 168 MB: the oversized images were resized). **New migrations: none** (the 8 of the release are unchanged).
+
+**After step 3 (Run), run these two commands on the server** (`cd /home/skylinkictcom/s.skylinkict.com`, `/opt/cpanel/ea-php82/root/usr/bin/php`):
+```bash
+php artisan products:fix-lms-image   # idempotent: only changes product 6 if its image is still the dead Bing address
+php artisan images:scan-external     # read-only list of other hotlinked or missing images (title + admin edit address)
+```
+
+**`.env` on the live site (mail, cache, queue):**
+```
+MAIL_MAILER=smtp
+MAIL_HOST=mail.skylinkict.com
+MAIL_PORT=465
+MAIL_SCHEME=smtps            # Laravel 12: smtps for port 465, smtp for 587 (MAIL_ENCRYPTION is no longer read)
+MAIL_USERNAME=info@skylinkict.com
+MAIL_PASSWORD=<the CURRENT password of that mailbox>
+MAIL_FROM_ADDRESS=info@skylinkict.com
+MAIL_FROM_NAME="Sky Link Technologies"
+CONTACT_INBOX=info@skylinkict.com
+CACHE_STORE=file             # Redis and Memcached are NOT running on this server (PHP extensions exist, no server); file cache is used
+QUEUE_CONNECTION=sync        # mail goes out while the visitor's request runs; use `database` only together with the cron line below
+```
+- **The mailbox password in the current live `.env` is rejected by the mail server (`535 Incorrect authentication data`)**, so mail from the live site fails today. Reset the password of `info@skylinkict.com` in cPanel > Email Accounts if needed and put the working one into `.env`, then run `php artisan config:cache`. Test with a Contact form message: the inbox row must show "Sent", not "Failed".
+- **The test-site mail guard must not exist on live:** do NOT copy `MAIL_STAGING_GUARD`, `MAIL_STAGING_ALLOWLIST`, `MAIL_STAGING_REDIRECT` to the live `.env` (without `MAIL_STAGING_GUARD=true` the guard does nothing).
+- **Cron** (one line, every minute, already in step 5) runs the scheduler: scheduled news and, if `QUEUE_CONNECTION=database`, the mail queue (`queue:work --stop-when-empty`).
+- **DNS (cPanel > Zone Editor, skylinkict.com):** MX, SPF (`-all`, includes hostns.io) and DKIM (`default._domainkey`) exist. **DMARC is missing.** Add a TXT record `_dmarc` = `v=DMARC1; p=none; rua=mailto:info@skylinkict.com` (monitor first; tighten later). Without it Gmail and others may send the confirmation emails to spam.
+
+**`public/.htaccess`** now carries caching and compression rules (1 year for build files, uploads and WebP copies; 30 days for site images; 1 day for CSS/JS; gzip/brotli). The deploy script keeps the server's own cPanel PHP-handler block when it overwrites this file (it backs the block up in `deploy/backups/<date>/htaccess-php-handler.txt`).
+
+**Public data cache:** home sections, product and service lists are cached for 1 to 5 minutes and rebuilt at once after any admin save. If a change ever seems stuck: `php artisan cache:clear`.
+
+**For the owner (nothing was changed on live data):**
+- Run `php artisan images:scan-external` for the full list. On bedru: all 21 products used external image addresses (Bing, Google, Freepik, Unsplash, iconfinder, simplilearn, erp.aero, website-files); product 6 (LMS) now has its own image. Upload own images for the rest in Admin > Products.
+- Videos 22 and 23 have no thumbnail (`/admin/videos/22/edit`, `/23/edit`). No video link is dead; the TikTok player can still fail on some networks and then shows "Watch on TikTok".
+- Large files nothing on the site uses (about 30 MB, safe to delete later): `about/teammember2.JPG`, `about/diredawa.JPG`, `news1.jpg`, `about/hobe.JPG`, `about/huda.png`, `about/evergreen.JPG`, `about/teammember.JPG`, `about/huda2.jpg`, `teammember.png`.
+- Uploads in `storage` of 300 to 620 KB (a services PNG, portfolio WebP files, video thumbnails): re-save them smaller in the admin when convenient.
+- The ceremony stays **Off** after deploy. Turn it on in Admin > Anniversary Ceremony when you are ready. Stage 2 (switch to skylinkict.com) is separate and not between Nov 23 and Dec 7.
