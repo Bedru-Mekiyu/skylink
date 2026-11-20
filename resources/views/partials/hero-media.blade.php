@@ -17,11 +17,14 @@
         return is_file($path) ? asset($heroMediaDir.$file).'?v='.filemtime($path) : null;
     };
 
+    // Admin > Homepage Video: an uploaded set replaces the built-in files; none chosen -> the defaults below.
+    $heroCustom = \App\Support\HeroVideo::current();
+
     $heroBuiltPoster = $heroMediaUrl('poster.jpg');
-    $heroPoster = $heroBuiltPoster ?? asset('assets/images/27075.jpg');
-    $heroDesktopWebm = $heroMediaUrl('hero-desktop.webm');
-    $heroDesktopMp4 = $heroMediaUrl('hero-desktop.mp4');
-    $heroMobileMp4 = $heroMediaUrl('hero-mobile.mp4');
+    $heroPoster = ($heroCustom['poster'] ?? null) ?? $heroBuiltPoster ?? asset('assets/images/27075.jpg');
+    $heroDesktopWebm = $heroCustom ? ($heroCustom['desktop_webm'] ?? null) : $heroMediaUrl('hero-desktop.webm');
+    $heroDesktopMp4 = $heroCustom ? ($heroCustom['desktop_mp4'] ?? null) : $heroMediaUrl('hero-desktop.mp4');
+    $heroMobileMp4 = $heroCustom ? ($heroCustom['mobile_mp4'] ?? null) : $heroMediaUrl('hero-mobile.mp4');
     $heroHasVideo = $heroDesktopMp4 || $heroDesktopWebm || $heroMobileMp4;
 @endphp
 

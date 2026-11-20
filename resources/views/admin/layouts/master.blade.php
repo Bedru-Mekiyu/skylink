@@ -131,6 +131,7 @@
                 <li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}" href="{{ route('admin.dashboard') }}"><i class="fas fa-tachometer-alt fa-fw"></i> Dashboard</a></li>
                 <li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.inbox.*') ? 'active' : '' }}" href="{{ route('admin.inbox.index') }}"><i class="fas fa-inbox fa-fw"></i> Inbox @if ($adminUnreadInbox)<span class="badge rounded-pill text-bg-danger ms-auto">{{ $adminUnreadInbox }}<span class="visually-hidden"> unread</span></span>@endif</a></li>
                 <li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.anniversary.*') ? 'active' : '' }}" href="{{ route('admin.anniversary.edit') }}"><i class="fas fa-champagne-glasses fa-fw"></i> Anniversary Ceremony</a></li>
+                <li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.hero-video.*') ? 'active' : '' }}" href="{{ route('admin.hero-video.edit') }}"><i class="fas fa-film fa-fw"></i> Homepage Video</a></li>
                 <li class="sidebar-heading mt-2">Content</li>
                 <li class="nav-item">
                     <a class="nav-link" data-bs-toggle="collapse" href="#contentCollapseDesktop"><i class="fas fa-file-alt fa-fw"></i> Manage Content <i class="fas fa-chevron-down ms-auto"></i></a>
@@ -166,6 +167,7 @@
                     <li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}" href="{{ route('admin.dashboard') }}"><i class="fas fa-tachometer-alt fa-fw"></i> Dashboard</a></li>
                 <li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.inbox.*') ? 'active' : '' }}" href="{{ route('admin.inbox.index') }}"><i class="fas fa-inbox fa-fw"></i> Inbox @if ($adminUnreadInbox)<span class="badge rounded-pill text-bg-danger ms-auto">{{ $adminUnreadInbox }}<span class="visually-hidden"> unread</span></span>@endif</a></li>
                 <li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.anniversary.*') ? 'active' : '' }}" href="{{ route('admin.anniversary.edit') }}"><i class="fas fa-champagne-glasses fa-fw"></i> Anniversary Ceremony</a></li>
+                <li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.hero-video.*') ? 'active' : '' }}" href="{{ route('admin.hero-video.edit') }}"><i class="fas fa-film fa-fw"></i> Homepage Video</a></li>
                     <li class="sidebar-heading mt-2">Content</li>
                     <li class="nav-item">
                         <a class="nav-link" data-bs-toggle="collapse" href="#contentCollapseMobile"><i class="fas fa-file-alt fa-fw"></i> Manage Content <i class="fas fa-chevron-down ms-auto"></i></a>

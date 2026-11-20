@@ -162,6 +162,12 @@ Route::resource('products', ProductadminController::class);
     // Anniversary ceremony control (mode, dates, admin preview).
     Route::get('/anniversary', [\App\Http\Controllers\Admin\AnniversaryAdminController::class, 'edit'])->name('anniversary.edit');
     Route::put('/anniversary', [\App\Http\Controllers\Admin\AnniversaryAdminController::class, 'update'])->name('anniversary.update');
+
+    // Homepage hero video: upload, preview, restore previous, reset to the built-in default.
+    Route::get('/hero-video', [\App\Http\Controllers\Admin\HeroVideoController::class, 'edit'])->name('hero-video.edit');
+    Route::put('/hero-video', [\App\Http\Controllers\Admin\HeroVideoController::class, 'update'])->middleware('throttle:hero-upload')->name('hero-video.update');
+    Route::put('/hero-video/reset', [\App\Http\Controllers\Admin\HeroVideoController::class, 'reset'])->middleware('throttle:20,1')->name('hero-video.reset');
+    Route::put('/hero-video/restore', [\App\Http\Controllers\Admin\HeroVideoController::class, 'restore'])->middleware('throttle:20,1')->name('hero-video.restore');
     Route::get('/inbox/{inquiry}', [InboxController::class, 'show'])->name('inbox.show');
     Route::patch('/inbox/{inquiry}', [InboxController::class, 'update'])->name('inbox.update');
     Route::post('/inbox/{inquiry}/resend', [InboxController::class, 'resend'])->name('inbox.resend');

@@ -35,6 +35,9 @@ class AppServiceProvider extends ServiceProvider
         // Test site only (MAIL_STAGING_GUARD=true): real customers in the copied database never get test emails.
         Event::listen(MessageSending::class, [StagingMailGuard::class, 'handle']);
 
+        // Homepage video uploads: 10 per hour per admin (large files, optional ffmpeg work).
+        RateLimiter::for('hero-upload', fn (Request $request) => Limit::perHour(10)->by('hero-upload:'.($request->user()?->id ?? $request->ip())));
+
         // Public forms (contact, chat, quote, subscribe): per visitor (IP),
         // 5 submissions per minute and 20 per hour, with a friendly message.
         RateLimiter::for('public-forms', function (Request $request) {
