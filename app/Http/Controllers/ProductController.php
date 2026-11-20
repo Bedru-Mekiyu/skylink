@@ -17,13 +17,13 @@ class ProductController extends Controller
 
     public function __construct()
 {
-        $this->products = Product::all()->groupBy('category')->toArray();
+        $this->products = \App\Support\PublicCache::remember('products.grouped.array', 300, fn () => Product::all()->groupBy('category')->toArray());
     }
 
 
 public function index()
 {
-    $products = Product::all()->groupBy('category');
+    $products = \App\Support\PublicCache::remember('products.grouped', 300, fn () => Product::all()->groupBy('category'));
     return view('pages.products', compact('products'));
 }
 

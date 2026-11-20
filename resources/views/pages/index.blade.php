@@ -1144,33 +1144,33 @@ max-height: 20 vh;
         <h5 class="h5 text-uppercase text-center fw-semibold mb-4 text-dark">Trusted Partners</h5>
         <div class="partners-slider">
             <div class="partners-track">
-                <img src="{{ asset('assets/images/minbertv.webp') }}" alt="Minber" class="partner-logo">
-                <img src="{{ asset('assets/images/iman.webp') }}" alt="iman" class="partner-logo">
-                <img src="{{ asset('assets/images/Ethiotel.jpg') }}" alt="ethiotel" class="partner-logo">
-                <img src="{{ asset('assets/images/Safaricom.png') }}" alt="safaricom" class="partner-logo">
-                <img src="{{ asset('assets/images/trusted/ad.png') }}" alt="ad" class="partner-logo">
-                <img src="{{ asset('assets/images/trusted/amar.jpg') }}" alt="amar" class="partner-logo">
-                <img src="{{ asset('assets/images/trusted/amin.png') }}" alt="amin" class="partner-logo">
-                <img src="{{ asset('assets/images/trusted/basira.png') }}" alt="basira" class="partner-logo">
-                <img src="{{ asset('assets/images/trusted/bilalul.png') }}" alt="bilalul" class="partner-logo">
-                <img src="{{ asset('assets/images/trusted/kasma.png') }}" alt="kasma" class="partner-logo">
-                <img src="{{ asset('assets/images/trusted/mslegue.JPG') }}" alt="Msleguer" class="partner-logo">
-                <img src="{{ asset('assets/images/newleaf.webp') }}" alt="newleaf" class="partner-logo">
-                <img src="{{ asset('assets/images/trusted/nujum.jpg') }}" alt="nujum" class="partner-logo">
-                <img src="{{ asset('assets/images/trusted/popular.png') }}" alt="poplar" class="partner-logo">
-                <img src="{{ asset('assets/images/trusted/ethioceramics.jpg') }}" alt="ethioceramics" class="partner-logo">
-                <img src="{{ asset('assets/images/trusted/softvalley.jpg') }}" alt="softvalley" class="partner-logo">
-                <img src="{{ asset('assets/images/befan.jpg') }}" alt="befam" class="partner-logo">
-                <img src="{{ asset('assets/images/trusted/ukaz.jpg') }}" alt="ukaz" class="partner-logo">
-                <img src="{{ asset('assets/images/trusted/sms.png') }}" alt="sms" class="partner-logo">
-                <img src="{{ asset('assets/images/trusted/unknown.PNG') }}" alt="unknown" class="partner-logo">
-                <img src="{{ asset('assets/images/evergreen.jfif') }}" alt="evergreen" class="partner-logo">
-                <img src="{{ asset('assets/images/aauLogo.png') }}" alt="aau" class="partner-logo">
-                <img src="{{ asset('assets/images/trusted/diredawa.png') }}" alt="diredawa" class="partner-logo">
-                <img src="{{ asset('assets/images/trusted/addis.png') }}" alt="addis" class="partner-logo">
-                <img src="{{ asset('assets/images/trusted/alfa.jpeg') }}" alt="alfa" class="partner-logo">
-                <img src="{{ asset('assets/images/trusted/hilco.png') }}" alt="hilco" class="partner-logo">
-                <img src="{{ asset('assets/images/trusted/maroli.JPG') }}" alt="Maroli" class="partner-logo">
+                <img src="{{ asset('assets/images/minbertv.webp') }}" alt="Minber" class="partner-logo" loading="lazy" decoding="async">
+                <img src="{{ asset('assets/images/iman.webp') }}" alt="iman" class="partner-logo" loading="lazy" decoding="async">
+                <img src="{{ asset('assets/images/Ethiotel.jpg') }}" alt="ethiotel" class="partner-logo" loading="lazy" decoding="async">
+                <img src="{{ asset('assets/images/Safaricom.png') }}" alt="safaricom" class="partner-logo" loading="lazy" decoding="async">
+                <img src="{{ asset('assets/images/trusted/ad.png') }}" alt="ad" class="partner-logo" loading="lazy" decoding="async">
+                <img src="{{ asset('assets/images/trusted/amar.jpg') }}" alt="amar" class="partner-logo" loading="lazy" decoding="async">
+                <img src="{{ asset('assets/images/trusted/amin.png') }}" alt="amin" class="partner-logo" loading="lazy" decoding="async">
+                <img src="{{ asset('assets/images/trusted/basira.png') }}" alt="basira" class="partner-logo" loading="lazy" decoding="async">
+                <img src="{{ asset('assets/images/trusted/bilalul.png') }}" alt="bilalul" class="partner-logo" loading="lazy" decoding="async">
+                <img src="{{ asset('assets/images/trusted/kasma.png') }}" alt="kasma" class="partner-logo" loading="lazy" decoding="async">
+                <img src="{{ asset('assets/images/trusted/mslegue.JPG') }}" alt="Msleguer" class="partner-logo" loading="lazy" decoding="async">
+                <img src="{{ asset('assets/images/newleaf.webp') }}" alt="newleaf" class="partner-logo" loading="lazy" decoding="async">
+                <img src="{{ asset('assets/images/trusted/nujum.jpg') }}" alt="nujum" class="partner-logo" loading="lazy" decoding="async">
+                <img src="{{ asset('assets/images/trusted/popular.png') }}" alt="poplar" class="partner-logo" loading="lazy" decoding="async">
+                <img src="{{ asset('assets/images/trusted/ethioceramics.jpg') }}" alt="ethioceramics" class="partner-logo" loading="lazy" decoding="async">
+                <img src="{{ asset('assets/images/trusted/softvalley.jpg') }}" alt="softvalley" class="partner-logo" loading="lazy" decoding="async">
+                <img src="{{ asset('assets/images/befan.jpg') }}" alt="befam" class="partner-logo" loading="lazy" decoding="async">
+                <img src="{{ asset('assets/images/trusted/ukaz.jpg') }}" alt="ukaz" class="partner-logo" loading="lazy" decoding="async">
+                <img src="{{ asset('assets/images/trusted/sms.png') }}" alt="sms" class="partner-logo" loading="lazy" decoding="async">
+                <img src="{{ asset('assets/images/trusted/unknown.PNG') }}" alt="unknown" class="partner-logo" loading="lazy" decoding="async">
+                <img src="{{ asset('assets/images/evergreen.jfif') }}" alt="evergreen" class="partner-logo" loading="lazy" decoding="async">
+                <img src="{{ asset('assets/images/aauLogo.png') }}" alt="aau" class="partner-logo" loading="lazy" decoding="async">
+                <img src="{{ asset('assets/images/trusted/diredawa.png') }}" alt="diredawa" class="partner-logo" loading="lazy" decoding="async">
+                <img src="{{ asset('assets/images/trusted/addis.png') }}" alt="addis" class="partner-logo" loading="lazy" decoding="async">
+                <img src="{{ asset('assets/images/trusted/alfa.jpeg') }}" alt="alfa" class="partner-logo" loading="lazy" decoding="async">
+                <img src="{{ asset('assets/images/trusted/hilco.png') }}" alt="hilco" class="partner-logo" loading="lazy" decoding="async">
+                <img src="{{ asset('assets/images/trusted/maroli.JPG') }}" alt="Maroli" class="partner-logo" loading="lazy" decoding="async">
 
             </div>
         </div>
@@ -1293,7 +1293,7 @@ max-height: 20 vh;
                     <a href="{{ route('news.show', $news->slug) }}" class="news-link-wrapper">
                         <div class="card-image">
 
-                            <img src="{{ $news->thumb_url }}" alt="{{ $news->title }}" loading="lazy">
+                            <img src="{{ $news->thumb_url }}" alt="{{ $news->title }}" loading="lazy" decoding="async">
 
                             <div class="category-badge">{{ $news->category->name ?? 'News' }}</div>
                         </div>
@@ -1386,7 +1386,7 @@ max-height: 20 vh;
                 
                 @foreach(array_merge($products, $products) as $product)
                 <div class="product-card">
-                    <img src="{{ $product['image'] }}" alt="{{ $product['name'] }}" class="img-fluid mb-3" style="height: 200px; object-fit: contain;">
+                    <img src="{{ $product['image'] }}" alt="{{ $product['name'] }}" class="img-fluid mb-3" height="200" style="height: 200px; object-fit: contain;" loading="lazy" decoding="async">
                     <h5>{{ $product['name'] }}</h5>
                     <p class="text-muted">{{ $product['description'] }}</p>
                     

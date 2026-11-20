@@ -24,6 +24,30 @@
     RewriteRule ^ index.php [L]
 </IfModule>
 
+# ---- Caching and compression (Sky Link) ----------------------------------------------------------------------------
+# Long-lived, never-revalidated files: Vite build output (hashed names), uploads (unique names) and the generated
+# WebP copies. Normal site images and the hand-written CSS/JS keep their names when edited, so they get a shorter life.
+<IfModule mod_rewrite.c>
+    RewriteRule ^(build|storage|assets/images/_opt|assets/fonts)/ - [E=SKY_CACHE_LONG:1]
+    RewriteRule ^assets/images/ - [E=SKY_CACHE_IMG:1]
+    RewriteRule ^assets/(css|js)/ - [E=SKY_CACHE_CODE:1]
+</IfModule>
+<IfModule mod_headers.c>
+    Header set Cache-Control "public, max-age=31536000, immutable" env=SKY_CACHE_LONG
+    Header set Cache-Control "public, max-age=2592000" env=SKY_CACHE_IMG
+    Header set Cache-Control "public, max-age=86400" env=SKY_CACHE_CODE
+    <FilesMatch "\.(woff2?|ttf|otf|eot)$">
+        Header set Cache-Control "public, max-age=31536000, immutable"
+    </FilesMatch>
+</IfModule>
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/css text/xml application/javascript text/javascript application/json application/xml image/svg+xml font/ttf font/otf
+</IfModule>
+<IfModule mod_brotli.c>
+    AddOutputFilterByType BROTLI_COMPRESS text/html text/plain text/css text/xml application/javascript text/javascript application/json application/xml image/svg+xml
+</IfModule>
+# ---------------------------------------------------------------------------------------------------------------------
+
 # BEGIN cPanel-generated php ini directives, do not edit
 # Manual editing of this file may result in unexpected behavior.
 # To make changes to this file, use the cPanel MultiPHP INI Editor (Home >> Software >> MultiPHP INI Editor)

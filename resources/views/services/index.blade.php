@@ -1041,6 +1041,7 @@
         'title' => $c->card_heading,
         'desc' => $c->description,
         'img' => $c->image_url,
+        'raw' => (string) $c->image,
         'category' => $c->slug,
       ]);
     @endphp
@@ -1049,7 +1050,11 @@
   <div class="col-md-6 col-lg-3 mb-4 service-card" data-category="{{ $service['category'] }}">
     <div class="card h-100 shadow-sm border-0 overflow-hidden">
       <div style="aspect-ratio: 16/9; overflow: hidden;">
-        <img src="{{ $service['img'] }}" alt="{{ $service['title'] }}" class="w-100 h-90 object-fit-cover">
+        @if (str_starts_with($service['raw'], 'assets/'))
+          @include('partials.picture', ['src' => $service['raw'], 'alt' => $service['title'], 'sizes' => '(max-width: 767px) 100vw, (max-width: 991px) 50vw, 25vw', 'class' => 'w-100 h-90 object-fit-cover'])
+        @else
+          <img src="{{ $service['img'] }}" alt="{{ $service['title'] }}" class="w-100 h-90 object-fit-cover" loading="lazy" decoding="async">
+        @endif
       </div>
       <div class="card-body d-flex flex-column">
         <h5 class="card-title fw-bold">{{ $service['title'] }}</h5>

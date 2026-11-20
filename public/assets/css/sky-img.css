@@ -1,0 +1,5 @@
+/* Smooth image loading: lazy images show a soft placeholder, then fade in. Without JavaScript nothing is hidden (see the <noscript> rule in the layout). */
+img[loading="lazy"]:not(.is-loaded) { background-color: #e9eef8; }
+html.js img[loading="lazy"] { opacity: 0; transition: opacity 0.4s ease; }
+html.js img[loading="lazy"].is-loaded, html.js img.img-fallback { opacity: 1; }
+@media (prefers-reduced-motion: reduce) { html.js img[loading="lazy"] { transition: none; } }

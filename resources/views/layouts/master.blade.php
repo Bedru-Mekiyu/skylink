@@ -1,6 +1,6 @@
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-img-fallback="{{ asset('assets/images/placeholder.png') }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -472,6 +472,9 @@
 @yield('additional-styles')
    
     @stack('styles')
+    <link rel="stylesheet" href="{{ asset('assets/css/sky-img.css') }}">
+    <noscript><style>img[loading="lazy"]{opacity:1 !important}</style></noscript>
+    <script>document.documentElement.classList.add('js');</script>
     @php
         $anniversaryActive = \App\Support\Anniversary::isActive();
     @endphp
@@ -775,6 +778,7 @@ s0.parentNode.insertBefore(s1,s0);
     @if ($anniversaryActive)
         @include('partials.anniversary.scripts')
     @endif
+    <script src="{{ asset('assets/js/sky-img.js') }}" defer></script>
     @stack('scripts')
 </body>
 </html>

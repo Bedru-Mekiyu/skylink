@@ -43,6 +43,7 @@ $maxFallback = 1920;
 $refSources = array_merge(
     glob($root.'/resources/views/{,*/,*/*/,*/*/*/}*.blade.php', GLOB_BRACE),
     glob($root.'/database/seeders/*.{json,php}', GLOB_BRACE),
+    glob($root.'/database/migrations/*.php'),      // category card images are set in migrations
     glob($root.'/app/Http/Controllers/*.php'),
     glob($root.'/config/*.php'),
 );

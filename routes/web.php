@@ -93,7 +93,7 @@ Route::get('/dashboard', function () {
 //
 // Admin-only routes
 // --------------------------------------------------
-Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
+Route::middleware(['auth', 'admin', 'bust.public.cache'])->prefix('admin')->name('admin.')->group(function () {
     // Admin dashboard
     Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
 

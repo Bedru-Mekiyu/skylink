@@ -46,8 +46,8 @@ class ServiceController extends Controller
     public function index()
     {
         try {
-            $serviceCategories = ServiceCategory::withCount('services')->get();
-            $portfolioItems = Service::with('category')->get()->map(function ($service) {
+            $serviceCategories = \App\Support\PublicCache::remember('services.categories', 300, fn () => ServiceCategory::withCount('services')->get());
+            $portfolioItems = \App\Support\PublicCache::remember('services.items', 300, fn () => Service::with('category')->get())->map(function ($service) {
                 return [
                     'title' => $service->title,
                     'description' => $service->desc,

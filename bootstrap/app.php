@@ -21,6 +21,7 @@ return Application::configure(basePath: dirname(__DIR__))
         // This is the new replacement for the $routeMiddleware array
         $middleware->alias([
             'admin' => AdminMiddleware::class,
+            'bust.public.cache' => \App\Http\Middleware\BustPublicCache::class,
             // Honeypot + time-to-submit check for public forms (see ProtectPublicForm).
             'form.guard' => \App\Http\Middleware\ProtectPublicForm::class,
             

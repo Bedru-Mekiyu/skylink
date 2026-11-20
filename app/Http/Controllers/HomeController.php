@@ -14,8 +14,9 @@ class HomeController extends Controller
     public function index()
 
     {
-        $latestNews = News::visible()->newestFirst()->take(3)->get(); // or 4 if you want
-        $latestPortfolios = Portfolio::latest()->take(6)->get();
+        // Short cache (60 s for news, which can go live on a schedule; 5 min for projects). Rebuilt at once after any admin save.
+        $latestNews = \App\Support\PublicCache::remember('home.news', 60, fn () => News::visible()->newestFirst()->take(3)->get());
+        $latestPortfolios = \App\Support\PublicCache::remember('home.portfolios', 300, fn () => Portfolio::latest()->take(6)->get());
 
 
 

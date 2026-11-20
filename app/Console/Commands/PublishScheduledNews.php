@@ -25,6 +25,7 @@ class PublishScheduledNews extends Command
             ->whereNotNull('published_at')
             ->where('published_at', '<=', now())
             ->update(['status' => News::STATUS_PUBLISHED]);
+        \App\Support\PublicCache::bust(); // bulk update: no model events
 
         $this->info("{$count} scheduled article(s) published.");
 
