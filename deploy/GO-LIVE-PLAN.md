@@ -65,3 +65,11 @@ Setup: new subdomain, document root `/home/skylinkictcom/bedru.skylinkict.com/pu
 6. **The product with the dead image:** id 6, **"Learning Management System (LMS)"** (category `industry-solutions`, slug `lms`). Admin edit page: `https://s.skylinkict.com/admin/products/6/edit` (after deploy day; on bedru `https://bedru.skylinkict.com/admin/products/6/edit`). Replace its image with an uploaded file. Products 1 to 13 all use external image addresses; check them in the admin the same way.
 7. **The second phone number** in the old header (`+251-936-177777`), see `deploy/SERVER-DIFFS-REVIEW.md`: keep or drop.
 8. **Disk:** the server is at 97% (about 197 GB free); each deploy backup adds about 170 MB.
+
+## 6. Added 2026-11-20: news filter and inbox delete (tested on bedru)
+
+- **News filter:** it listed every row of `news_categories`; the real database also holds nine service-type categories (2025-07-04) next to News, Events and Innovations, which showed up as extra buttons. Fixed in `NewsDisplayController` (only the three news categories). The filter label for the "Innovations" row stays "Innovation" (the label already agreed in the code). No data was changed.
+- **Inbox delete:** Delete on each list row and on the message page, checkboxes + "Delete selected", confirmation popups, flash "Message deleted.", soft delete (the `inquiries` table already has `deleted_at`).
+- **Deploy day: no new migration** for these two changes (the 8 migrations of the release are unchanged).
+- Verified on bedru at 1440 and 390 px (21 checks, `storage/app/staging-checks/report-news-inbox.json`, screenshots in `news-filter/` and `inbox-delete/`).
+- Note: on 2026-11-19 at 20:14 UTC the ceremony on bedru was switched to "On now" by someone other than the automated checks (probably an admin trying it); it was set back to Off.
