@@ -94,3 +94,10 @@ Setup: new subdomain, document root `/home/skylinkictcom/bedru.skylinkict.com/pu
 - **Browsers:** layout audit at 16 widths on Chrome, Edge (0 sideways scroll everywhere), Firefox (key widths, 0). WebKit was installed but its run was stopped for time.
 - **Email:** forms save, show success and reach the inbox; sending fails because the mailbox password in `.env` is rejected (535). Needs the owner (see UPLOAD-GUIDE section 10). DMARC record missing.
 - **Deploy tooling:** `server-deploy.sh` keeps the server's cPanel PHP handler in `public/.htaccess`.
+
+## 9. Owner decides: the bedru test site is now open (changed 2026-11-20)
+
+- **bedru has no password popup any more.** It is reachable by anyone with the address, but it sends `X-Robots-Tag: noindex, nofollow` and a disallow-all `robots.txt` (search engines should not list it). After each deploy to bedru, re-write `public/robots.txt` (the release contains the normal one).
+- It **holds a copy of real customer messages and subscribers** (from live) and its test admin uses a simple password (`admin@gmail.com`, see the local `deploy/STAGING-ACCESS.txt`, not in git). Recommended: change that password to a strong one, or put Basic Auth back (the old file is `.htaccess.basic-auth.bak` in the bedru folder: copy it over `.htaccess`), or delete the test site when testing is over.
+- **The live site keeps its own admin accounts. This test login is not deployed and exists only in the `skylinkictcom_staging` database.**
+- The staging mail guard stays on bedru (`info@` and `info5@` allowed, all others redirected). Mail settings for the live `.env`: UPLOAD-GUIDE section 11.

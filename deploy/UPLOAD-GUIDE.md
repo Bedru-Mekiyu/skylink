@@ -187,37 +187,37 @@ QUEUE_CONNECTION=sync        # mail goes out while the visitor's request runs; u
 
 ---
 
-## 11. Email setup (owner, later)
+## 11. Email setup (owner enters the password; final decision 2026-11-20)
 
-Email is **not set up yet**: the mailbox password in the current `.env` (live and bedru) is rejected by the mail server (`535 Incorrect authentication data`). Forms still save, show their success message and appear in Admin > Inbox; only the outgoing emails fail (the inbox row says "Failed"). The password is entered **by the owner only**.
+The mailbox **`info5@skylinkict.com`** (created by the owner) **sends** the website emails; every form notification is **delivered to `info@skylinkict.com`**. (The old password for `info@` in the live `.env` is rejected by the mail server, `535`, so mail from the live site fails until this is changed.) The password is typed **by the owner only**, never in chat, code, seeders or git.
 
-**1. Live `.env` lines** (File Manager > `/home/skylinkictcom/s.skylinkict.com/.env`):
+**1. Live `.env` lines** (File Manager > `/home/skylinkictcom/s.skylinkict.com/.env`; replace every existing `MAIL_*`, `CONTACT_INBOX` and `QUEUE_CONNECTION` line, do not leave duplicates):
 ```
 MAIL_MAILER=smtp
 MAIL_HOST=mail.skylinkict.com
 MAIL_PORT=465
 MAIL_SCHEME=smtps
-MAIL_USERNAME=info@skylinkict.com
-MAIL_PASSWORD=<type the mailbox password here>
-MAIL_FROM_ADDRESS=info@skylinkict.com
+MAIL_USERNAME=info5@skylinkict.com
+MAIL_PASSWORD=<the mailbox password, typed by the owner>
+MAIL_FROM_ADDRESS=info5@skylinkict.com
 MAIL_FROM_NAME="Sky Link Technologies"
 CONTACT_INBOX=info@skylinkict.com
 CONTACT_CONFIRM_VISITOR=true
 QUEUE_CONNECTION=sync
+CACHE_STORE=file
 ```
-- Port 587 instead: `MAIL_PORT=587` and `MAIL_SCHEME=smtp`.
-- **No staging mail guard on live.** Do not add `MAIL_STAGING_GUARD`, `MAIL_STAGING_ALLOWLIST` or `MAIL_STAGING_REDIRECT` to the live `.env` (they exist only on bedru; without `MAIL_STAGING_GUARD=true` the guard does nothing).
-- If the password is unknown: cPanel > Email Accounts > `info@skylinkict.com` > Manage > set a new password, then use that one.
-- After editing: `cd /home/skylinkictcom/s.skylinkict.com && /opt/cpanel/ea-php82/root/usr/bin/php artisan config:cache`.
+- Port 587 instead: `MAIL_PORT=587`, `MAIL_SCHEME=smtp`.
+- **No staging mail guard on live.** Do not add `MAIL_STAGING_GUARD`, `MAIL_STAGING_ALLOWLIST` or `MAIL_STAGING_REDIRECT` (they exist only on bedru; without `MAIL_STAGING_GUARD=true` the guard does nothing).
+- Then: `cd /home/skylinkictcom/s.skylinkict.com && /opt/cpanel/ea-php82/root/usr/bin/php artisan config:clear && /opt/cpanel/ea-php82/root/usr/bin/php artisan config:cache`.
 
-**2. DMARC record** (cPanel > Zone Editor > Manage for skylinkict.com > Add Record): type `TXT`, name `_dmarc.skylinkict.com.`, record `v=DMARC1; p=none; rua=mailto:info@skylinkict.com`. MX, SPF and DKIM already exist. Start with `p=none` (only reports), tighten later.
+**2. DMARC record** (cPanel > Zone Editor > Manage for skylinkict.com > Add Record): type `TXT`, name `_dmarc.skylinkict.com.`, record `v=DMARC1; p=none; rua=mailto:info@skylinkict.com`. MX, SPF and DKIM already exist. Start with `p=none` (reports only), tighten later.
 
-**3. Test (on bedru first, then live):** use `info@skylinkict.com` as the visitor address in all four forms, so one mailbox sees everything:
-1. Contact page: send a **General question**, a **Quote request** and a **Support request**.
-2. Home page footer: subscribe to the **newsletter**.
-3. Open `info@skylinkict.com` (webmail) and check the **Inbox and the Spam folder**. For each of the three contact forms there must be **two** emails: the team notification (subject starts with the form type and reference `SK-...`) and the visitor confirmation ("We received your message ..."; in Amharic if the form was sent from the Amharic page). The newsletter gives one welcome email with an unsubscribe link.
-4. Admin > Inbox: the three messages are there; open one: the email line says **Sent**.
-5. Delete the test messages afterwards (and remove the test subscriber in Admin > Subscribers if you like).
-On bedru the staging guard already allows only `info@skylinkict.com`; every other address is redirected to it, so no customer in the copied data can receive a test mail.
+**3. Test right after going live (and the same on bedru):** use `info@skylinkict.com` as the visitor address in all four forms:
+1. Contact page: send a **General question**, a **Quote request** and a **Support request**; once in English and once with an Amharic name and message (the confirmation then arrives in Amharic).
+2. Home page footer: subscribe to the **newsletter** (welcome email with an unsubscribe link).
+3. Open `info@skylinkict.com` (webmail), **Inbox and Spam**: for each contact form there must be **two** emails: the team notification (reference `SK-...`) and the visitor confirmation ("We received your message ..."), both from `info5@`.
+4. Admin > Inbox: the messages are listed and each shows **Sent** on its email line (no red "Failed").
+5. Delete the test messages afterwards (and the test subscriber in Admin > Subscribers).
+On bedru the staging guard allows only `info@skylinkict.com` and `info5@skylinkict.com`; every other address is redirected to `info@`, so no customer in the copied data can receive a test mail.
 
-**4. If an email failed:** Admin > Inbox shows **Failed** (red) under the message. Open the message: the page shows the error text and a button **Send to team inbox again**. Fix the cause first (usually the password, see 1), then press it. If many failed, filter the inbox and resend one by one. The visitor's own confirmation is not re-sent automatically; reply to the visitor from your mail program.
+**4. If an email failed:** Admin > Inbox shows **Failed** (red). Open the message: the page shows the error and a button **Send to team inbox again**. Fix the cause first (usually the password), then press it. The visitor's own confirmation is not re-sent automatically; reply to the visitor from your mail program.
