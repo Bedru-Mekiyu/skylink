@@ -113,7 +113,7 @@ async function fillForm(page, title) {
             else if (f.tag === 'SELECT') { if (f.options.length) await page.selectOption(sel, f.options[0]); }
             else if (f.type === 'radio') { if (!radioDone.has(f.name)) { radioDone.add(f.name); const v = await page.evaluate((n) => { const r = [...document.querySelectorAll('input[type=radio][name="' + n + '"]')]; const pub = r.find((x) => /^(published|active|1)$/i.test(x.value)); return (pub || r[0]).value; }, f.name); await page.check('input[type=radio][name="' + f.name + '"][value="' + v + '"]').catch(() => {}); } }
             else if (f.type === 'checkbox' || f.type === 'submit') continue;
-            else if (f.type === 'url') await page.fill(sel, 'https://example.test/staging');
+            else if (f.type === 'url') await page.fill(sel, s.key === 'videos' ? 'https://www.youtube.com/watch?v=dQw4w9WgXcQ' : 'https://example.test/staging');
             else if (f.type === 'email') await page.fill(sel, 'staging@example.test');
             else if (f.type === 'number') await page.fill(sel, '1');
             else if (f.type === 'date') await page.fill(sel, '2026-11-19');
@@ -177,7 +177,7 @@ if (part === 'all' || part === 'crud') {
             // delete only our test row
             await go(admin, s.list);
             const deleted = await admin.evaluate((t) => { const row = [...document.querySelectorAll('tr, .card, li, .list-group-item')].find((r) => r.textContent.includes(t) && r.querySelector('form input[name=_method][value=DELETE]')); if (!row) return false; row.querySelector('form input[name=_method][value=DELETE]').closest('form').requestSubmit(); return true; }, title);
-            if (deleted) { await admin.waitForNavigation({ timeout: 150000 }).catch(() => {}); await settle(admin); }
+            if (deleted) { const ok = await admin.waitForSelector('.sky-modal:not([hidden]) .btn-danger', { timeout: 8000 }).catch(() => null); if (ok) await Promise.all([admin.waitForNavigation({ timeout: 150000 }).catch(() => {}), ok.click()]); else await admin.waitForNavigation({ timeout: 150000 }).catch(() => {}); await settle(admin); }
             await go(admin, s.list);
             rec(s.key, 'delete removes the test item', deleted && !(await admin.content()).includes(title));
         } catch (e) { rec(s.key, 'section run', false, String(e.message).slice(0, 200)); await shot(admin, s.key, 'error'); }

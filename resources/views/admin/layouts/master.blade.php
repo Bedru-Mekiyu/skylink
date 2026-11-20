@@ -123,7 +123,7 @@
             
             {{-- ✨ YOUR NEW LOGO IS HERE ✨ --}}
             <a href="{{ route('admin.dashboard') }}" class="sidebar-brand">
-                <img src="{{ asset('assets/images/skylink-logo.svg') }}" alt="Skylink Logo" class="sidebar-brand-logo">
+                <img src="{{ asset('assets/images/skylink-logo.webp') }}" alt="Skylink Logo" class="sidebar-brand-logo">
                 <span>SKYLINK ADMIN</span>
             </a>
 
@@ -155,7 +155,7 @@
 
                 {{-- ✨ YOUR NEW LOGO IS HERE TOO ✨ --}}
                 <a href="{{ route('admin.dashboard') }}" class="sidebar-brand p-0">
-                    <img src="{{ asset('assets/images/skylink-logo.svg') }}" alt="Skylink Logo" class="sidebar-brand-logo">
+                    <img src="{{ asset('assets/images/skylink-logo.webp') }}" alt="Skylink Logo" class="sidebar-brand-logo">
                     <span>SKYLINK ADMIN</span>
                 </a>
                 

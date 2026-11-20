@@ -272,7 +272,7 @@
             <article class="news-featured" lang="{{ $featured->language }}">
                 <div class="news-featured__media">
                     @if ($featured->image_url)
-                        <img src="{{ $featured->image_url }}" alt="" width="1200" height="675" decoding="async">
+                        <img src="{{ $featured->image_url }}" alt="" width="1200" height="675" fetchpriority="high" decoding="async">
                     @endif
                 </div>
                 <div class="news-featured__body">

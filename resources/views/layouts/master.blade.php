@@ -498,7 +498,7 @@
         <nav class="navbar navbar-expand-lg navbar-custom" id="mainNavbar">
             <div class="container">
                 <a href="{{ route('home') }}" class="navbar-home-link d-flex align-items-center text-decoration-none" aria-label="Sky Link ICT Solutions - Home">
-                    <img src="{{ asset('assets/images/skylink-logo.svg') }}" alt="" class="logo-img me-2">
+                    <img src="{{ asset('assets/images/skylink-logo.webp') }}" alt="" class="logo-img me-2">
                     
                 </a>
 
@@ -697,7 +697,7 @@
             <div class="col-lg-3 col-md-6 col-sm-6 mb-4">
                 <div class="logo mb-3">
                     <a href="/" class="d-flex align-items-center text-decoration-none">
-                        <img src="{{ asset('assets/images/skylink-logo.svg') }}" alt="Skylink Logo" class="logo-img me-2">
+                        <img src="{{ asset('assets/images/skylink-logo.webp') }}" alt="Skylink Logo" class="logo-img me-2">
                     </a>
                 </div>
                 <p>

@@ -6,7 +6,7 @@
             <!-- Logo -->
             <div class="text-center mb-4">
                 <a href="/">
-                    <img src="{{ asset('assets/images/skylink-logo.svg') }}" alt="Skylink Logo" class="img-fluid" style="max-height: 80px;">
+                    <img src="{{ asset('assets/images/skylink-logo.webp') }}" alt="Skylink Logo" class="img-fluid" style="max-height: 80px;">
                 </a>
                 <h2 class="mt-2 fw-bold text-dark">Create Your Account</h2>
                 <p class="text-muted small">Join the <strong>Skylink</strong> family today!</p>
