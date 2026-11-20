@@ -184,3 +184,40 @@ QUEUE_CONNECTION=sync        # mail goes out while the visitor's request runs; u
 - Large files nothing on the site uses (about 30 MB, safe to delete later): `about/teammember2.JPG`, `about/diredawa.JPG`, `news1.jpg`, `about/hobe.JPG`, `about/huda.png`, `about/evergreen.JPG`, `about/teammember.JPG`, `about/huda2.jpg`, `teammember.png`.
 - Uploads in `storage` of 300 to 620 KB (a services PNG, portfolio WebP files, video thumbnails): re-save them smaller in the admin when convenient.
 - The ceremony stays **Off** after deploy. Turn it on in Admin > Anniversary Ceremony when you are ready. Stage 2 (switch to skylinkict.com) is separate and not between Nov 23 and Dec 7.
+
+---
+
+## 11. Email setup (owner, later)
+
+Email is **not set up yet**: the mailbox password in the current `.env` (live and bedru) is rejected by the mail server (`535 Incorrect authentication data`). Forms still save, show their success message and appear in Admin > Inbox; only the outgoing emails fail (the inbox row says "Failed"). The password is entered **by the owner only**.
+
+**1. Live `.env` lines** (File Manager > `/home/skylinkictcom/s.skylinkict.com/.env`):
+```
+MAIL_MAILER=smtp
+MAIL_HOST=mail.skylinkict.com
+MAIL_PORT=465
+MAIL_SCHEME=smtps
+MAIL_USERNAME=info@skylinkict.com
+MAIL_PASSWORD=<type the mailbox password here>
+MAIL_FROM_ADDRESS=info@skylinkict.com
+MAIL_FROM_NAME="Sky Link Technologies"
+CONTACT_INBOX=info@skylinkict.com
+CONTACT_CONFIRM_VISITOR=true
+QUEUE_CONNECTION=sync
+```
+- Port 587 instead: `MAIL_PORT=587` and `MAIL_SCHEME=smtp`.
+- **No staging mail guard on live.** Do not add `MAIL_STAGING_GUARD`, `MAIL_STAGING_ALLOWLIST` or `MAIL_STAGING_REDIRECT` to the live `.env` (they exist only on bedru; without `MAIL_STAGING_GUARD=true` the guard does nothing).
+- If the password is unknown: cPanel > Email Accounts > `info@skylinkict.com` > Manage > set a new password, then use that one.
+- After editing: `cd /home/skylinkictcom/s.skylinkict.com && /opt/cpanel/ea-php82/root/usr/bin/php artisan config:cache`.
+
+**2. DMARC record** (cPanel > Zone Editor > Manage for skylinkict.com > Add Record): type `TXT`, name `_dmarc.skylinkict.com.`, record `v=DMARC1; p=none; rua=mailto:info@skylinkict.com`. MX, SPF and DKIM already exist. Start with `p=none` (only reports), tighten later.
+
+**3. Test (on bedru first, then live):** use `info@skylinkict.com` as the visitor address in all four forms, so one mailbox sees everything:
+1. Contact page: send a **General question**, a **Quote request** and a **Support request**.
+2. Home page footer: subscribe to the **newsletter**.
+3. Open `info@skylinkict.com` (webmail) and check the **Inbox and the Spam folder**. For each of the three contact forms there must be **two** emails: the team notification (subject starts with the form type and reference `SK-...`) and the visitor confirmation ("We received your message ..."; in Amharic if the form was sent from the Amharic page). The newsletter gives one welcome email with an unsubscribe link.
+4. Admin > Inbox: the three messages are there; open one: the email line says **Sent**.
+5. Delete the test messages afterwards (and remove the test subscriber in Admin > Subscribers if you like).
+On bedru the staging guard already allows only `info@skylinkict.com`; every other address is redirected to it, so no customer in the copied data can receive a test mail.
+
+**4. If an email failed:** Admin > Inbox shows **Failed** (red) under the message. Open the message: the page shows the error text and a button **Send to team inbox again**. Fix the cause first (usually the password, see 1), then press it. If many failed, filter the inbox and resend one by one. The visitor's own confirmation is not re-sent automatically; reply to the visitor from your mail program.
