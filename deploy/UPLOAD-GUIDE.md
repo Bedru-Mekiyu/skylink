@@ -161,15 +161,15 @@ MAIL_MAILER=smtp
 MAIL_HOST=mail.skylinkict.com
 MAIL_PORT=465
 MAIL_SCHEME=smtps            # Laravel 12: smtps for port 465, smtp for 587 (MAIL_ENCRYPTION is no longer read)
-MAIL_USERNAME=info@skylinkict.com
-MAIL_PASSWORD=<the CURRENT password of that mailbox>
-MAIL_FROM_ADDRESS=info@skylinkict.com
+MAIL_USERNAME=info5@skylinkict.com      # sender mailbox (see section 11)
+MAIL_PASSWORD=<typed by the owner>
+MAIL_FROM_ADDRESS=info5@skylinkict.com
 MAIL_FROM_NAME="Sky Link Technologies"
 CONTACT_INBOX=info@skylinkict.com
 CACHE_STORE=file             # Redis and Memcached are NOT running on this server (PHP extensions exist, no server); file cache is used
 QUEUE_CONNECTION=sync        # mail goes out while the visitor's request runs; use `database` only together with the cron line below
 ```
-- **The mailbox password in the current live `.env` is rejected by the mail server (`535 Incorrect authentication data`)**, so mail from the live site fails today. Reset the password of `info@skylinkict.com` in cPanel > Email Accounts if needed and put the working one into `.env`, then run `php artisan config:cache`. Test with a Contact form message: the inbox row must show "Sent", not "Failed".
+- **Mail details and the test are in section 11** (the old `info@` password in the live `.env` is rejected, `535`; the new sender is `info5@`).
 - **The test-site mail guard must not exist on live:** do NOT copy `MAIL_STAGING_GUARD`, `MAIL_STAGING_ALLOWLIST`, `MAIL_STAGING_REDIRECT` to the live `.env` (without `MAIL_STAGING_GUARD=true` the guard does nothing).
 - **Cron** (one line, every minute, already in step 5) runs the scheduler: scheduled news and, if `QUEUE_CONNECTION=database`, the mail queue (`queue:work --stop-when-empty`).
 - **DNS (cPanel > Zone Editor, skylinkict.com):** MX, SPF (`-all`, includes hostns.io) and DKIM (`default._domainkey`) exist. **DMARC is missing.** Add a TXT record `_dmarc` = `v=DMARC1; p=none; rua=mailto:info@skylinkict.com` (monitor first; tighten later). Without it Gmail and others may send the confirmation emails to spam.
