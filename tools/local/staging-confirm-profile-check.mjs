@@ -33,6 +33,19 @@ const login = async (p, email, pw) => {
     return /\/admin\//.test(p.url());
 };
 
+// submit a form and wait until the NEW page has loaded (the shared host is slow; reading too early gave false failures)
+const submit = async (p, sel) => { await Promise.all([p.waitForNavigation({ waitUntil: 'load', timeout: 120000 }).catch(() => {}), p.click(sel)]); await p.waitForLoadState('load', { timeout: 60000 }).catch(() => {}); await p.waitForTimeout(500); };
+
+// If an earlier run stopped halfway, the test admin may still have the second email: put it back first.
+{
+    const nc = await mk(); await hook(nc); const np = await nc.newPage(); np.setDefaultTimeout(120000);
+    if (!(await login(np, 'staging-admin@skylinkict.test', adminPw)) && (await login(np, 'staging-admin2@skylinkict.test', adminPw))) {
+        await nav(np, '/admin/profile'); await np.fill('#name', 'Staging Admin'); await np.fill('#email', 'staging-admin@skylinkict.test'); await np.fill('#profile_current_password', adminPw);
+        await submit(np, '#profile-form button[type=submit]'); console.log('(restored the test admin email from an interrupted run)');
+    }
+    await nc.close();
+}
+
 const ctx = await mk(); await hook(ctx);
 const admin = await ctx.newPage(); admin.setDefaultTimeout(120000);
 const nativeDialogs = [];
@@ -220,26 +233,26 @@ if (part === 'all' || part === 'profile') {
 
     // name
     await dev2.fill('#name', 'Staging Admin Renamed');
-    await Promise.all([dev2.waitForNavigation({ timeout: 120000 }), dev2.click('#profile-form button[type=submit]')]);
+    await submit(dev2, '#profile-form button[type=submit]');
     rec('profile', 'name change saves with a success message', /Profile updated/.test(await dev2.content()) && (await dev2.inputValue('#name')) === 'Staging Admin Renamed');
     await shot(dev2, 'profile', 'name-saved-1440');
     // email: needs current password
     await dev2.fill('#email', 'staging-admin2@skylinkict.test');
-    await Promise.all([dev2.waitForNavigation({ timeout: 120000 }), dev2.click('#profile-form button[type=submit]')]);
+    await submit(dev2, '#profile-form button[type=submit]');
     rec('profile', 'email change without the current password is refused', /Enter your current password/.test(await dev2.content()));
     await dev2.fill('#email', 'staging-admin2@skylinkict.test'); await dev2.fill('#profile_current_password', 'wrong-password-123');
-    await Promise.all([dev2.waitForNavigation({ timeout: 120000 }), dev2.click('#profile-form button[type=submit]')]);
+    await submit(dev2, '#profile-form button[type=submit]');
     rec('profile', 'email change with a wrong current password is refused', /current password is not correct/.test(await dev2.content()));
     await shot(dev2, 'profile', 'email-wrong-password-1440');
     await dev2.fill('#email', 'staging-admin2@skylinkict.test'); await dev2.fill('#profile_current_password', adminPw);
-    await Promise.all([dev2.waitForNavigation({ timeout: 120000 }), dev2.click('#profile-form button[type=submit]')]);
+    await submit(dev2, '#profile-form button[type=submit]');
     rec('profile', 'email change with the right password saves', /Profile updated/.test(await dev2.content()) && (await dev2.inputValue('#email')) === 'staging-admin2@skylinkict.test');
     // password: wrong current -> error; short -> error
     await dev2.fill('#current_password', 'wrong-password-123'); await dev2.fill('#password', 'Newpass-12345'); await dev2.fill('#password_confirmation', 'Newpass-12345');
-    await Promise.all([dev2.waitForNavigation({ timeout: 120000 }), dev2.click('#password-form button[type=submit]')]);
+    await submit(dev2, '#password-form button[type=submit]');
     rec('profile', 'password change with a wrong current password is refused', /current password is not correct/.test(await dev2.content()));
     await dev2.fill('#current_password', adminPw); await dev2.fill('#password', 'short'); await dev2.fill('#password_confirmation', 'short');
-    await Promise.all([dev2.waitForNavigation({ timeout: 120000 }), dev2.click('#password-form button[type=submit]')]);
+    await submit(dev2, '#password-form button[type=submit]');
     rec('profile', 'a too-short new password is refused', /at least 8 characters/.test(await dev2.content()));
     // show/hide toggle
     await dev2.fill('#password', 'Visible-1'); await dev2.click('[data-target="password"]');
@@ -252,7 +265,7 @@ if (part === 'all' || part === 'profile') {
     // the real change
     const newPw = 'Bd' + crypto.randomBytes(10).toString('hex');
     await dev2.fill('#current_password', adminPw); await dev2.fill('#password', newPw); await dev2.fill('#password_confirmation', newPw);
-    await Promise.all([dev2.waitForNavigation({ timeout: 120000 }), dev2.click('#password-form button[type=submit]')]);
+    await submit(dev2, '#password-form button[type=submit]');
     rec('profile', 'password change with the right current password succeeds', /Password changed/.test(await dev2.content()));
     await shot(dev2, 'profile', 'password-changed-1440');
     await nav(dev2, '/admin/profile');
@@ -260,7 +273,9 @@ if (part === 'all' || part === 'profile') {
     await nav(other, '/admin/profile');
     rec('profile', 'the OTHER device was signed out by the password change', otherBefore && /\/login/.test(other.url()), other.url().replace(base, ''));
     // log out and in with the new password
-    await dev2.evaluate(() => document.getElementById('logout-form').submit()); await dev2.waitForLoadState('load').catch(() => {});
+    await Promise.all([dev2.waitForNavigation({ waitUntil: 'load', timeout: 120000 }), dev2.evaluate(() => document.getElementById('logout-form').submit())]);
+    await nav(dev2, '/admin/profile');
+    rec('profile', 'logout really ended this session (the admin area asks for login again)', /\/login/.test(dev2.url()), dev2.url().replace(base, ''));
     const oldFails = !(await login(dev2, 'staging-admin2@skylinkict.test', adminPw));
     rec('profile', 'the OLD password no longer logs in', oldFails);
     rec('profile', 'login works with the NEW password', await login(dev2, 'staging-admin2@skylinkict.test', newPw));
@@ -268,9 +283,9 @@ if (part === 'all' || part === 'profile') {
     const known = 'Bd' + crypto.randomBytes(10).toString('hex');
     await nav(dev2, '/admin/profile');
     await dev2.fill('#name', 'Staging Admin'); await dev2.fill('#email', 'staging-admin@skylinkict.test'); await dev2.fill('#profile_current_password', newPw);
-    await Promise.all([dev2.waitForNavigation({ timeout: 120000 }), dev2.click('#profile-form button[type=submit]')]);
+    await submit(dev2, '#profile-form button[type=submit]');
     await dev2.fill('#current_password', newPw); await dev2.fill('#password', known); await dev2.fill('#password_confirmation', known);
-    await Promise.all([dev2.waitForNavigation({ timeout: 120000 }), dev2.click('#password-form button[type=submit]')]);
+    await submit(dev2, '#password-form button[type=submit]');
     const restored = /Password changed/.test(await dev2.content());
     if (restored) {
         access = access.replace(/(email\s+staging-admin@skylinkict\.test\s+password\s+)\S+/, `$1${known}`);

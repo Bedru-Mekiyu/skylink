@@ -1,0 +1,26 @@
+// LOCAL USE ONLY. Reproduces the "too-short new password" step on the bedru test site and prints what comes back.
+import { chromium } from 'playwright-core';
+import fs from 'node:fs';
+const access = fs.readFileSync('deploy/STAGING-ACCESS.txt', 'utf8');
+const basicPw = access.match(/user\s+staging\s+password\s+(\S+)/)[1];
+const adminPw = access.match(/email\s+staging-admin@skylinkict\.test\s+password\s+(\S+)/)[1];
+const email = process.argv[2] || 'staging-admin2@skylinkict.test';
+const base = 'https://bedru.skylinkict.com';
+const b = await chromium.launch();
+const c = await b.newContext({ httpCredentials: { username: 'staging', password: basicPw } });
+await c.route(/tawk\.to|\.(mp4|webm)(\?|$)/i, (r) => r.abort());
+const p = await c.newPage(); p.setDefaultTimeout(60000);
+p.on('response', (r) => { if (/admin\/profile/.test(r.url())) console.log('  response', r.request().method(), r.status(), r.url().replace(base, '')); });
+await p.goto(base + '/login', { waitUntil: 'domcontentloaded' });
+await p.fill('input[name=email]', email); await p.fill('input[name=password]', adminPw);
+await Promise.all([p.waitForNavigation(), p.click('button[type=submit]')]);
+console.log('after login:', p.url().replace(base, ''));
+await p.goto(base + '/admin/profile', { waitUntil: 'domcontentloaded' });
+console.log('profile page:', p.url().replace(base, ''), (await p.title()));
+await p.fill('#current_password', adminPw); await p.fill('#password', 'short'); await p.fill('#password_confirmation', 'short');
+await Promise.all([p.waitForNavigation().catch(() => {}), p.click('#password-form button[type=submit]')]);
+console.log('after short-password submit:', p.url().replace(base, ''), '|', (await p.title()));
+const txt = (await p.locator('body').innerText()).replace(/\s+/g, ' ');
+console.log('errors:', JSON.stringify(await p.evaluate(() => [...document.querySelectorAll('.invalid-feedback')].map((e) => e.textContent.trim() + ' | visible=' + (e.offsetParent !== null)))), 'pw visible:', await p.isVisible('#password'));
+console.log('has form:', !!(await p.$('#password')), '| text:', txt.slice(0, 220));
+await b.close();
