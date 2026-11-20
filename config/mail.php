@@ -110,6 +110,13 @@ return [
     |
     */
 
+    // TEST SITE ONLY (see App\Support\StagingMailGuard). Leave all three unset on the live site.
+    'staging_guard' => [
+        'enabled' => (bool) env('MAIL_STAGING_GUARD', false),
+        'allowlist' => array_values(array_filter(array_map('trim', explode(',', (string) env('MAIL_STAGING_ALLOWLIST', ''))))),
+        'redirect' => env('MAIL_STAGING_REDIRECT'),
+    ],
+
     'from' => [
         'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
         'name' => env('MAIL_FROM_NAME', 'Example'),

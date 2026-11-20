@@ -16,7 +16,7 @@
     'use strict';
     if (window.SkyConfirm) return;
 
-    var root, panel, titleEl, msgEl, inputWrap, inputLabel, input, okBtn, cancelBtn;
+    var root, panel, titleEl, iconEl, msgEl, inputWrap, inputLabel, input, okBtn, cancelBtn;
     var opener = null;
     var resolver = null;
     var hasInput = false;
@@ -29,14 +29,15 @@
         root.innerHTML =
             '<div class="sky-modal__backdrop" data-sky-cancel></div>' +
             '<div class="sky-modal__panel" role="dialog" aria-modal="true" aria-labelledby="skyModalTitle" aria-describedby="skyModalMsg" tabindex="-1">' +
-            '<h2 class="sky-modal__title" id="skyModalTitle"></h2>' +
-            '<p class="sky-modal__msg" id="skyModalMsg"></p>' +
-            '<div class="sky-modal__input" hidden><label class="form-label" for="skyModalInput"></label><input type="text" class="form-control" id="skyModalInput" autocomplete="off"></div>' +
+            '<div class="sky-modal__head"><span class="sky-modal__icon" aria-hidden="true"><i class="fas"></i></span><h2 class="sky-modal__title" id="skyModalTitle"></h2></div>' +
+            '<div class="sky-modal__body"><p class="sky-modal__msg" id="skyModalMsg"></p>' +
+            '<div class="sky-modal__input" hidden><label class="form-label" for="skyModalInput"></label><input type="text" class="form-control" id="skyModalInput" autocomplete="off"></div></div>' +
             '<div class="sky-modal__actions"><button type="button" class="btn btn-light" data-sky-cancel>Cancel</button><button type="button" class="btn" data-sky-ok>Confirm</button></div>' +
             '</div>';
         document.body.appendChild(root);
         panel = root.querySelector('.sky-modal__panel');
         titleEl = root.querySelector('.sky-modal__title');
+        iconEl = root.querySelector('.sky-modal__icon i');
         msgEl = root.querySelector('.sky-modal__msg');
         inputWrap = root.querySelector('.sky-modal__input');
         inputLabel = inputWrap.querySelector('label');
@@ -103,6 +104,7 @@
             cancelBtn.textContent = o.cancelLabel || 'Cancel';
             okBtn.className = 'btn ' + (danger ? 'btn-danger' : 'btn-primary');
             root.classList.toggle('sky-modal--danger', danger);
+            iconEl.className = 'fas ' + (hasInput ? 'fa-link' : (danger ? 'fa-trash-alt' : 'fa-question'));
             root.hidden = false;
             document.documentElement.classList.add('sky-modal-open');
             // Dangerous action: start on Cancel so a stray Enter does not delete anything.

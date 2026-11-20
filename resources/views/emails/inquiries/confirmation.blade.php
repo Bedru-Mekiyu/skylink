@@ -1,9 +1,10 @@
 @php
     /** @var \App\Models\Inquiry $inquiry */
+    $am = $inquiry->language === 'am';
     $typeAm = \App\Models\Inquiry::TYPES_AM[$inquiry->type] ?? '';
 @endphp
 <!DOCTYPE html>
-<html lang="am">
+<html lang="{{ $am ? 'am' : 'en' }}">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -16,26 +17,35 @@
             <div style="font-size:18px;font-weight:bold;color:#1e40af;">Sky Link Technologies</div>
         </td>
     </tr>
+    @if ($am)
     <tr>
         <td lang="am" style="padding:8px 24px;font-size:15px;line-height:1.9;">
-            ሰላም፣<br>
+            እናመሰግናለን፣<br>
             {{ $typeAm }} መልዕክትዎ ደርሶናል። ቡድናችን በቅርቡ ያገኝዎታል።<br>
             የመልዕክትዎ መለያ ቁጥር፦ <strong>{{ $inquiry->reference }}</strong>
         </td>
     </tr>
     <tr>
-        <td lang="en" style="padding:8px 24px;font-size:15px;line-height:1.7;border-top:1px solid #f3f4f6;">
-            Hello,<br>
+        <td lang="am" style="padding:14px 24px 22px;font-size:13px;color:#6b7280;line-height:1.7;">
+            ለዚህ ኢሜይል በመመለስ ተጨማሪ መረጃ መላክ ይችላሉ።<br>
+            ይህን መልዕክት ካልላኩ፣ ይህን ኢሜይል ችላ ይበሉ።
+        </td>
+    </tr>
+    @else
+    <tr>
+        <td lang="en" style="padding:8px 24px;font-size:15px;line-height:1.7;">
+            Thank you,<br>
             we have received your {{ strtolower($inquiry->type_label) }}. Our team will get back to you soon.<br>
             Your reference number: <strong>{{ $inquiry->reference }}</strong>
         </td>
     </tr>
     <tr>
-        <td style="padding:14px 24px 22px;font-size:13px;color:#6b7280;line-height:1.6;">
-            ለዚህ ኢሜይል በመመለስ ተጨማሪ መረጃ መላክ ይችላሉ። / You can reply to this email to add anything.<br>
-            ይህን መልዕክት ካልላኩ፣ ይህን ኢሜይል ችላ ይበሉ። / If you did not send a message, please ignore this email.
+        <td lang="en" style="padding:14px 24px 22px;font-size:13px;color:#6b7280;line-height:1.6;">
+            You can reply to this email to add anything.<br>
+            If you did not send a message, please ignore this email.
         </td>
     </tr>
+    @endif
 </table>
 </body>
 </html>

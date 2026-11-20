@@ -35,6 +35,11 @@ class NewsletterController extends Controller
      */
     public function send(Request $request)
     {
+        // The test site holds a copy of the real subscriber list: a campaign must never go out from it.
+        if (\App\Support\StagingMailGuard::enabled()) {
+            return redirect()->route('admin.newsletter.confirm')->with('error', 'Sending the newsletter is switched off on this test site.');
+        }
+
         $request->validate([
             'confirm' => ['accepted'],
         ]);

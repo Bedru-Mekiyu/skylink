@@ -14,7 +14,7 @@ use Illuminate\Queue\SerializesModels;
 use Throwable;
 
 /**
- * To the visitor: "we received your message", in Amharic and English, with the
+ * To the visitor: "we received your message", in the visitor's language (Amharic or English), with the
  * reference number. Replying reaches the team inbox.
  *
  * Deliberately does NOT repeat the visitor's own text or name: anyone can type
@@ -42,7 +42,7 @@ class InquiryConfirmation extends Mailable implements ShouldQueue
 
         return new Envelope(
             replyTo: $inbox ? [new Address($inbox, config('mail.from.name'))] : [],
-            subject: sprintf('መልዕክትዎ ደርሶናል / We received your message (%s)', $this->inquiry->reference),
+            subject: sprintf($this->inquiry->language === 'am' ? 'መልዕክትዎ ደርሶናል (%s)' : 'We received your message (%s)', $this->inquiry->reference),
         );
     }
 

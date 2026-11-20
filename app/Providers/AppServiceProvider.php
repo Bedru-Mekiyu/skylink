@@ -5,6 +5,9 @@ namespace App\Providers;
 use App\Http\Middleware\ProtectPublicForm;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
+use App\Support\StagingMailGuard;
+use Illuminate\Mail\Events\MessageSending;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
 
@@ -23,6 +26,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // Test site only (MAIL_STAGING_GUARD=true): real customers in the copied database never get test emails.
+        Event::listen(MessageSending::class, [StagingMailGuard::class, 'handle']);
+
         // Public forms (contact, chat, quote, subscribe): per visitor (IP),
         // 5 submissions per minute and 20 per hour, with a friendly message.
         RateLimiter::for('public-forms', function (Request $request) {
