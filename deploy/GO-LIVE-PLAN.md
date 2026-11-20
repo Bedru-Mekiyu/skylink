@@ -101,3 +101,8 @@ Setup: new subdomain, document root `/home/skylinkictcom/bedru.skylinkict.com/pu
 - It **holds a copy of real customer messages and subscribers** (from live) and its test admin uses a simple password (`admin@gmail.com`, see the local `deploy/STAGING-ACCESS.txt`, not in git). Recommended: change that password to a strong one, or put Basic Auth back (the old file is `.htaccess.basic-auth.bak` in the bedru folder: copy it over `.htaccess`), or delete the test site when testing is over.
 - **The live site keeps its own admin accounts. This test login is not deployed and exists only in the `skylinkictcom_staging` database.**
 - The staging mail guard stays on bedru (`info@` and `info5@` allowed, all others redirected). Mail settings for the live `.env`: UPLOAD-GUIDE section 11.
+## 10. Added 2026-11-20: Homepage Video admin page and new typography (local work done; bedru check pending)
+
+- **Homepage Video** (Admin menu): upload, preview, replace, restore previous, reset to default. Details, limits and ffmpeg behaviour: UPLOAD-GUIDE section 12. New migration `create_hero_video_settings_table`.
+- **Typography:** Inter (body, forms, numbers), Plus Jakarta Sans (headings, card titles), Fraunces (hero headline and anniversary numerals only), Noto Sans/Serif Ethiopic (Amharic). Self-hosted variable WOFF2, preloaded, metric-matched fallbacks, body 16 to 18 px, 13 px floor for labels.
+- Local tests: full suite passes (including `HeroVideoTest` and `TypographyTest`). Verification on bedru, Lighthouse before/after and the release package: see the final report.
