@@ -160,7 +160,7 @@
     html body :is(.category-badge, .news-tag, .news-video__platform, .news-featured__label, .sk-contact__status,
                   .nav-contact__row, .nav-contact__row a, .nav-contact__sep, .contact-card h6) { font-size: 0.8125rem; }
     @media (max-width: 575.98px) {
-        html body .product-card p.text-muted { font-size: 0.9375rem; }
+        html body .product-card p { font-size: 0.9375rem !important; } /* the page sets 12px !important on phones */
     }
 
     /* Long-form news article: comfortable measure and leading. */
