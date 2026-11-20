@@ -50,7 +50,7 @@
             </div>
             <div class="card-footer d-flex flex-wrap gap-2">
                 <a class="btn btn-primary" href="mailto:{{ $inquiry->email }}?subject={{ $replySubject }}"><i class="fas fa-reply me-1" aria-hidden="true"></i>Reply by email</a>
-                <form method="POST" action="{{ route('admin.inbox.destroy', $inquiry) }}" onsubmit="return confirm('Delete this message? This can\'t be undone from the admin.');">
+                <form method="POST" action="{{ route('admin.inbox.destroy', $inquiry) }}" data-sky-confirm="Delete this message? This can't be undone from the admin." data-sky-title="Delete message?" data-sky-ok="Delete" data-sky-variant="danger" onsubmit="return confirm('Delete this message? This can\'t be undone from the admin.');">
                     @csrf @method('DELETE')
                     <button type="submit" class="btn btn-outline-danger"><i class="fas fa-trash me-1" aria-hidden="true"></i>Delete</button>
                 </form>

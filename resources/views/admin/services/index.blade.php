@@ -52,7 +52,7 @@
                                     ✏️ Edit
                                 </a>
 
-                                <form action="{{ route('admin.services.destroy', $service->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this service?');">
+                                <form action="{{ route('admin.services.destroy', $service->id) }}" method="POST" data-sky-confirm="Delete this service? This can't be undone from the admin." data-sky-title="Delete service?" data-sky-variant="danger" data-sky-ok="Delete" onsubmit="return confirm('Are you sure you want to delete this service?');">
                                     @csrf @method('DELETE')
                                     <button type="submit" class="btn btn-sm btn-outline-danger">
                                         🗑️ Delete

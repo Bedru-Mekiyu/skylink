@@ -127,7 +127,7 @@
                             <td data-label="Actions" class="pe-4">
                                 @if ($isHidden)
                                 <div class="action-buttons">
-                                    <form action="{{ route('admin.news.restore', $item->id) }}" method="POST" onsubmit="return confirm('Show this article on the site again? Its address will stop redirecting to the kept article.');">
+                                    <form action="{{ route('admin.news.restore', $item->id) }}" method="POST" data-sky-confirm="Show this article on the site again? Its address will stop redirecting to the kept article." data-sky-title="Show article again?" data-sky-variant="primary" data-sky-ok="Show again" onsubmit="return confirm('Show this article on the site again? Its address will stop redirecting to the kept article.');">
                                         @csrf
                                         <button type="submit" class="btn btn-sm btn-outline-success">
                                             <i class="fas fa-undo me-1" aria-hidden="true"></i>Restore<span class="visually-hidden">: {{ $item->title }}</span>
@@ -142,7 +142,7 @@
                                     <a href="{{ route('admin.news.edit', $item->id) }}" class="btn btn-sm btn-warning" title="Edit">
                                         <i class="fas fa-pencil-alt" aria-hidden="true"></i><span class="visually-hidden">Edit: {{ $item->title }}</span>
                                     </a>
-                                    <form action="{{ route('admin.news.destroy', $item->id) }}" method="POST" onsubmit="return confirm('Delete this article? It will be hidden from the site but kept in the database.');">
+                                    <form action="{{ route('admin.news.destroy', $item->id) }}" method="POST" data-sky-confirm="Delete this article? It will be hidden from the site but kept in the database." data-sky-title="Delete article?" data-sky-variant="danger" data-sky-ok="Delete" onsubmit="return confirm('Delete this article? It will be hidden from the site but kept in the database.');">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-sm btn-danger" title="Delete">

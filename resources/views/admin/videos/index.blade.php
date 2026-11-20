@@ -38,7 +38,7 @@
                                     <a href="{{ route('admin.videos.edit', $video) }}" class="btn btn-sm btn-warning">
                                         <i class="fas fa-pencil-alt"></i>
                                     </a>
-                                    <form action="{{ route('admin.videos.destroy', $video) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this video?');">
+                                    <form action="{{ route('admin.videos.destroy', $video) }}" method="POST" data-sky-confirm="Delete this video? This can't be undone from the admin." data-sky-title="Delete video?" data-sky-variant="danger" data-sky-ok="Delete" onsubmit="return confirm('Are you sure you want to delete this video?');">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-sm btn-danger">

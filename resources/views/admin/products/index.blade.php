@@ -39,7 +39,7 @@
                         <a href="{{ route('admin.products.edit', $product) }}" class="btn btn-outline-warning btn-sm me-2" title="Edit">
                             <i class="bi bi-pencil-square"></i>
                         </a>
-                        <form action="{{ route('admin.products.destroy', $product) }}" method="POST" class="d-inline-block" onsubmit="return confirm('Are you sure?')">
+                        <form action="{{ route('admin.products.destroy', $product) }}" method="POST" class="d-inline-block" data-sky-confirm="Delete this product? This can't be undone from the admin." data-sky-title="Delete product?" data-sky-variant="danger" data-sky-ok="Delete" onsubmit="return confirm('Are you sure?')">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-outline-danger btn-sm" title="Delete">

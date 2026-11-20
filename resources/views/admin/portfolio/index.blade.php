@@ -45,7 +45,7 @@
                                 <form action="{{ route('admin.portfolio.destroy', $project->id) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this project?')">
+                                    <button type="submit" class="btn btn-sm btn-danger" data-sky-confirm="Delete this project? This can't be undone from the admin." data-sky-title="Delete project?" data-sky-variant="danger" data-sky-ok="Delete" onclick="return confirm('Are you sure you want to delete this project?')">
                                         <i class="fas fa-trash"></i>
                                     </button>
                                 </form>

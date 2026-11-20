@@ -1612,10 +1612,8 @@
                         this.style.background = 'white';
                         heartIcon.style.color = '#3B82F6';
                     }
-                } else if (iconClass.contains('fa-shopping-cart')) {
-                    alert('Shopping cart clicked!');
                 } else if (iconClass.contains('fa-bell')) {
-                    alert('You have 3 new notifications!');
+                    // (demo pop-up removed: the site has no notifications)
                     const badge = this.querySelector('.notification-badge');
                     if (badge) badge.style.display = 'none';
                 }
@@ -1628,8 +1626,7 @@
         document.querySelectorAll('.btn-view-details').forEach(btn => {
             btn.addEventListener('click', function() {
                 const card = this.closest('.service-card');
-                const title = card.querySelector('h5').textContent;
-                alert(`Viewing details for: ${title}`);
+                // (demo pop-up removed: the button had no real action)
             });
         });
 

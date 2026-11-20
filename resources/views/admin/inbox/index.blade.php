@@ -110,7 +110,7 @@
                                 @endif
                             </td>
                             <td data-label="Delete" class="pe-4 text-nowrap">
-                                <button type="submit" form="delete-message-{{ $item->id }}" class="btn btn-sm btn-outline-danger" onclick="return confirm('Delete this message? This can\'t be undone from the admin.');"><i class="fas fa-trash me-1" aria-hidden="true"></i>Delete<span class="visually-hidden"> message {{ $item->reference }}</span></button>
+                                <button type="submit" form="delete-message-{{ $item->id }}" class="btn btn-sm btn-outline-danger" data-sky-confirm="Delete this message? This can't be undone from the admin." data-sky-title="Delete message?" data-sky-ok="Delete" data-sky-variant="danger" onclick="return confirm('Delete this message? This can\'t be undone from the admin.');"><i class="fas fa-trash me-1" aria-hidden="true"></i>Delete<span class="visually-hidden"> message {{ $item->reference }}</span></button>
                             </td>
                         </tr>
                     @empty
@@ -157,9 +157,17 @@
         }
         boxes.forEach(function (b) { b.addEventListener('change', refresh); });
         if (all) all.addEventListener('change', function () { boxes.forEach(function (b) { b.checked = all.checked; }); refresh(); });
+        var confirmed = false;
         form.addEventListener('submit', function (e) {
+            if (confirmed) return;
             var n = boxes.filter(function (b) { return b.checked; }).length;
-            if (n === 0 || !window.confirm('Delete ' + (n === 1 ? 'the selected message' : 'the ' + n + ' selected messages') + '? This can\'t be undone from the admin.')) e.preventDefault();
+            e.preventDefault();
+            if (n === 0) return;
+            var title = n === 1 ? 'Delete 1 message?' : 'Delete ' + n + ' messages?';
+            var msg = (n === 1 ? 'The selected message' : 'The ' + n + ' selected messages') + ' will be removed from the inbox. This can\'t be undone from the admin.';
+            if (window.SkyConfirm) {
+                window.SkyConfirm.ask({ title: title, message: msg, confirmLabel: 'Delete', variant: 'danger' }).then(function (ok) { if (ok) { confirmed = true; form.submit(); } });
+            } else if (window.confirm(title + '\n\n' + msg)) { confirmed = true; form.submit(); }
         });
         refresh();
     })();

@@ -72,12 +72,17 @@
         var form = document.getElementById('anniversary-form');
         if (!form) return;
         var wasOn = {{ $mode === 'on' ? 'true' : 'false' }};
+        var confirmed = false;
         form.addEventListener('submit', function (e) {
+            if (confirmed) return;
             var chosen = form.querySelector('input[name="mode"]:checked');
-            if (chosen && chosen.value === 'on' && !wasOn &&
-                !window.confirm('Switch the anniversary ceremony ON now?\n\nEvery visitor will see it immediately, until the end time.')) {
-                e.preventDefault();
-            }
+            if (!(chosen && chosen.value === 'on' && !wasOn)) return;
+            e.preventDefault();
+            var msg = 'Every visitor will see the ceremony immediately, until the end time.';
+            if (window.SkyConfirm) {
+                window.SkyConfirm.ask({ title: 'Turn the ceremony on now?', message: msg, confirmLabel: 'Turn on now', variant: 'primary' })
+                    .then(function (ok) { if (ok) { confirmed = true; form.submit(); } });
+            } else if (window.confirm('Switch the anniversary ceremony ON now?\n\n' + msg)) { confirmed = true; form.submit(); }
         });
     })();
 </script>

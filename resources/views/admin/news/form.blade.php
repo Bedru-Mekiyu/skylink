@@ -340,10 +340,23 @@
                 area.focus();
                 var cmd = btn.dataset.cmd;
                 if (cmd === 'createLink') {
-                    var href = window.prompt('Link address (https://…)', 'https://');
-                    if (!href || href === 'https://') return;
-                    if (!/^(https?:\/\/|mailto:|tel:|\/)/i.test(href)) href = 'https://' + href;
-                    document.execCommand('createLink', false, href);
+                    // Keep the selected text: the dialog takes the focus, so remember the range and put it back.
+                    var sel = window.getSelection();
+                    var saved = sel && sel.rangeCount ? sel.getRangeAt(0).cloneRange() : null;
+                    var apply = function (href) {
+                        if (!href || href === 'https://') return;
+                        if (!/^(https?:\/\/|mailto:|tel:|\/)/i.test(href)) href = 'https://' + href;
+                        area.focus();
+                        if (saved) { sel.removeAllRanges(); sel.addRange(saved); }
+                        document.execCommand('createLink', false, href);
+                        refreshState();
+                        syncEditor();
+                    };
+                    if (window.SkyConfirm) {
+                        window.SkyConfirm.ask({ title: 'Insert link', confirmLabel: 'Insert link', variant: 'primary', input: { label: 'Link address (https://…)', value: 'https://' } })
+                            .then(function (v) { if (typeof v === 'string') apply(v); });
+                    } else { apply(window.prompt('Link address (https://…)', 'https://')); }
+                    return;
                 } else {
                     document.execCommand(cmd, false, btn.dataset.value || null);
                 }
