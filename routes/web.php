@@ -20,6 +20,7 @@ use App\Http\Controllers\Admin\AdminNewsController;
 use App\Http\Controllers\Admin\SubscriberController as AdminSubscriberController;
 use App\Http\Controllers\Admin\ContactMessageController;
 use App\Http\Controllers\Admin\InboxController;
+use App\Http\Controllers\Admin\ProfileController as AdminProfileController;
 use App\Http\Controllers\Admin\SubscriptionsnewController;
 use App\Http\Controllers\Admin\ProductadminController; 
 
@@ -152,6 +153,11 @@ Route::resource('products', ProductadminController::class);
     // Admin inbox: every website message (contact, support, quote, service, subscription).
     Route::get('/inbox', [InboxController::class, 'index'])->name('inbox.index');
     Route::post('/inbox/read-all', [InboxController::class, 'readAll'])->name('inbox.read-all');
+
+    // My Profile: the logged-in admin's own name, email and password (rate limited; the user comes from the session)
+    Route::get('/profile', [AdminProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [AdminProfileController::class, 'update'])->middleware('throttle:20,1')->name('profile.update');
+    Route::put('/profile/password', [AdminProfileController::class, 'password'])->middleware('throttle:5,1')->name('profile.password');
 
     // Anniversary ceremony control (mode, dates, admin preview).
     Route::get('/anniversary', [\App\Http\Controllers\Admin\AnniversaryAdminController::class, 'edit'])->name('anniversary.edit');

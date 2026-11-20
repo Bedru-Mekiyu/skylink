@@ -13,6 +13,9 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) { // The variable is "$middleware"
+
+        // Needed by Auth::logoutOtherDevices(): after a password change, other sessions of the account stop being valid.
+        $middleware->web(append: [\Illuminate\Session\Middleware\AuthenticateSession::class]);
         
         // 2. Use the alias() method to register your route middleware
         // This is the new replacement for the $routeMiddleware array

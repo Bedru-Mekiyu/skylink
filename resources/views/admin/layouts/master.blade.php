@@ -91,7 +91,8 @@
     .action-buttons { display: flex; gap: 0.5rem; justify-content: flex-end; flex-wrap: wrap; }
 </style>
 
- @stack('styles')
+ <link href="{{ asset('assets/css/sky-confirm.css') }}" rel="stylesheet">
+@stack('styles')
 </head>
 <body>
     @php($adminUnreadInbox = \App\Models\Inquiry::unread()->count())
@@ -125,7 +126,7 @@
                     </div>
                 </li>
             </ul>
-            <div class="mt-auto"><hr class="my-3" style="border-color: rgba(255,255,255,0.1);"><ul class="nav flex-column p-2"><li class="nav-item"><a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="fas fa-sign-out-alt fa-fw"></i> Logout</a></li></ul></div>
+            <div class="mt-auto"><hr class="my-3" style="border-color: rgba(255,255,255,0.1);"><ul class="nav flex-column p-2"><li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.profile.*') ? 'active' : '' }}" href="{{ route('admin.profile.edit') }}"><i class="fas fa-user-circle fa-fw"></i> My Profile</a></li><li class="nav-item"><a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="fas fa-sign-out-alt fa-fw"></i> Logout</a></li></ul></div>
         </nav>
 
         <!-- ===== MOBILE OFFCANVAS SIDEBAR ===== -->
@@ -160,13 +161,13 @@
                         </div>
                     </li>
                 </ul>
-                <div class="mt-auto"><hr class="my-3" style="border-color: rgba(255,255,255,0.1);"><ul class="nav flex-column p-2"><li class="nav-item"><a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="fas fa-sign-out-alt fa-fw"></i> Logout</a></li></ul></div>
+                <div class="mt-auto"><hr class="my-3" style="border-color: rgba(255,255,255,0.1);"><ul class="nav flex-column p-2"><li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.profile.*') ? 'active' : '' }}" href="{{ route('admin.profile.edit') }}"><i class="fas fa-user-circle fa-fw"></i> My Profile</a></li><li class="nav-item"><a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="fas fa-sign-out-alt fa-fw"></i> Logout</a></li></ul></div>
             </div>
         </div>
 
         <!-- ===== MAIN CONTENT ===== -->
         <main class="main-content">
-            <nav class="navbar navbar-light top-nav px-3"><button class="navbar-toggler border-0 d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu"><i class="fas fa-bars"></i></button><div class="ms-auto"><div class="dropdown"><button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown"><i class="fas fa-user-circle me-1"></i> {{ Auth::user()->name ?? 'Admin' }}</button><ul class="dropdown-menu dropdown-menu-end"><li><a class="dropdown-item" href="#"><i class="fas fa-user-edit me-2"></i>Edit Profile</a></li><li><a class="dropdown-item" href="#" target="_blank"><i class="fas fa-eye me-2"></i>View Site</a></li><li><hr class="dropdown-divider"></li><li><a class="dropdown-item text-danger" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li></ul></div></div></nav>
+            <nav class="navbar navbar-light top-nav px-3"><button class="navbar-toggler border-0 d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu"><i class="fas fa-bars"></i></button><div class="ms-auto"><div class="dropdown"><button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown"><i class="fas fa-user-circle me-1"></i> {{ Auth::user()->name ?? 'Admin' }}</button><ul class="dropdown-menu dropdown-menu-end"><li><a class="dropdown-item" href="{{ route('admin.profile.edit') }}"><i class="fas fa-user-edit me-2"></i>My Profile</a></li><li><a class="dropdown-item" href="{{ url('/') }}" target="_blank" rel="noopener"><i class="fas fa-eye me-2"></i>View Site</a></li><li><hr class="dropdown-divider"></li><li><a class="dropdown-item text-danger" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li></ul></div></div></nav>
             <div class="p-4"><div class="d-flex justify-content-between align-items-center mb-4"><h1 class="h3 mb-0">@yield('page-title', 'Dashboard')</h1></div>@if(session('success'))<div class="alert alert-success alert-dismissible fade show" role="alert"><i class="fas fa-check-circle me-2"></i>{{ session('success') }}<button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>@endif @if(session('error'))<div class="alert alert-danger alert-dismissible fade show" role="alert"><i class="fas fa-exclamation-circle me-2"></i>{{ session('error') }}<button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>@endif
                 @yield('content')
             </div>
@@ -175,6 +176,7 @@
 
     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none"> @csrf </form>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    @stack('scripts')
+    <script src="{{ asset('assets/js/sky-confirm.js') }}"></script>
+@stack('scripts')
 </body>
 </html>
