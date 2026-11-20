@@ -68,7 +68,7 @@ for (const w of [1440, 390]) {
     await c.route(/(^|\.)tiktok(v)?\.com|tiktokcdn/i, (r) => r.abort());
     const p = await c.newPage(); p.setDefaultTimeout(90000);
     const tk = rows.find((r) => /tiktok\.com/.test(r.url));
-    await nav(p, '/videos/' + tk.slug); await p.waitForTimeout(19000);
+    await nav(p, '/videos/' + tk.slug); await p.waitForTimeout(29000);
     const fb = await p.$('.sky-video-fallback a.sky-video-fallback__btn');
     const href = fb ? await fb.getAttribute('href') : '';
     const target = fb ? await fb.getAttribute('target') : '';
@@ -77,7 +77,7 @@ for (const w of [1440, 390]) {
     await nav(p, '/news'); await p.waitForLoadState('load', { timeout: 60000 }).catch(() => {});
     const op = await p.$('[data-news-player-open]');
     if (op && (await op.getAttribute('data-platform')) === 'tiktok') {
-        await op.click(); await p.waitForTimeout(19000);
+        await op.click(); await p.waitForTimeout(29000);
         const fb2 = await p.$('#newsPlayer .sky-video-fallback a.sky-video-fallback__btn');
         rec('fallback', 'TikTok unreachable: the news pop-up shows "Watch on TikTok"', !!fb2, (await fb2?.innerText())?.trim() ?? 'none');
         await p.screenshot({ path: path.join(out, 'fallback-popup-1440.png') });

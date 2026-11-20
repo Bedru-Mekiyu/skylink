@@ -3,7 +3,7 @@
  * ("Unable to load player ... Retry"): privacy settings, a blocked TikTok video server, a removed or private video.
  * The page cannot read inside the foreign iframe, but the TikTok player tells its host page when it is ready or has failed
  * (postMessage: onPlayerReady / onPlayerError). This script listens to that and, if the player does not become ready
- * (error, or nothing within 15 seconds), replaces it with a thumbnail and a "Watch on TikTok" button.
+ * (error, or nothing within 25 seconds), replaces it with a thumbnail and a "Watch on TikTok" button.
  *
  *   SkyVideoGuard.watch(iframe, { box, link, thumb, platform, title })   box = element that holds the iframe
  */
@@ -25,7 +25,7 @@
         inner.className = 'sky-video-fallback__inner';
         var msg = document.createElement('p');
         msg.className = 'sky-video-fallback__msg';
-        msg.textContent = 'This video cannot be played here right now.';
+        msg.textContent = 'This video cannot be played here right now. You can still watch it on ' + name + '.';
         inner.appendChild(msg);
         if (o.link) {
             var a = document.createElement('a');
@@ -53,6 +53,8 @@
             clearTimeout(timer);
             window.removeEventListener('message', onMessage);
         }
+        // "Ready" only ends the start-up timeout; a playback error after that (TikTok's servers refusing the video) still shows the fallback.
+        function ready() { clearTimeout(timer); }
         function fail() {
             if (settled) return;
             stop();
@@ -63,15 +65,19 @@
             var d = e.data;
             if (typeof d === 'string') { try { d = JSON.parse(d); } catch (x) { return; } }
             if (!d || !d['x-tiktok-player']) return;
-            if (d.type === 'onPlayerReady') { stop(); return; }
+            if (d.type === 'onPlayerReady') { ready(); return; }
             if (d.type === 'onPlayerError') {
                 var code = d.value && d.value.errorCode;
-                if (code !== 3002) fail(); // 3002 = autoplay blocked by the browser: the player itself is fine
+                // 3002 = autoplay blocked by the browser: the player itself is fine. 1001/2001/3001 = TikTok cannot serve or play the video.
+                if (code !== 3002) {
+                    if (window.console && console.info) console.info('SkyVideoGuard: TikTok player error', d.value);
+                    fail();
+                }
             }
         }
 
         window.addEventListener('message', onMessage);
-        timer = setTimeout(fail, o.timeout || 15000);
+        timer = setTimeout(fail, o.timeout || 25000); // slow mobile networks need time; a silent player after 25 s gets the fallback
         return { fail: fail, stop: stop };
     }
 
