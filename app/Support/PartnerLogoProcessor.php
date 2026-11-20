@@ -56,8 +56,9 @@ final class PartnerLogoProcessor
             throw new RuntimeException('Only JPG, PNG or WebP images are allowed.');
         }
         [$w, $h] = $info;
-        if ($w < self::MIN_PX || $h < self::MIN_PX || $w > self::MAX_PX || $h > self::MAX_PX) {
-            throw new RuntimeException('The logo must be between '.self::MIN_PX.' and '.self::MAX_PX.' px on each side.');
+        $max = $strict ? self::MAX_PX : 6000; // the command for the old static logos (trusted files) allows the two 4500 px ones
+        if ($w < self::MIN_PX || $h < self::MIN_PX || $w > $max || $h > $max) {
+            throw new RuntimeException('The logo must be between '.self::MIN_PX.' and '.$max.' px on each side.');
         }
 
         return [$mime, $w, $h];

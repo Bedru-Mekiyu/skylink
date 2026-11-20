@@ -1,5 +1,5 @@
 // LOCAL USE ONLY. Typography check on the STAGING site (bedru): every public page + main admin pages, 9 widths.
-//   node tools/local/staging-typography-check.mjs [webkit]
+//   node tools/local/staging-typography-check.mjs [webkit|chromium] [page-name-regex]   (a regex runs only some pages; run in chunks on a small PC)
 // Per page and width: horizontal overflow, fonts used, text under 13px, layout shift (CLS), old fonts loaded.
 // Screenshots at 390 / 768 / 1440 -> storage/app/staging-checks/typography/<page>/<width>.png. Login from deploy/STAGING-ACCESS.txt.
 import { chromium, webkit } from 'playwright-core';
@@ -11,6 +11,7 @@ const basicPw = (access.match(/user\s+staging\s+password\s+(\S+)/) || [])[1];
 const adminPw = access.match(/email\s+admin@gmail\.com\s+password\s+(\S+)/)[1];
 const base = 'https://bedru.skylinkict.com';
 const useWebkit = process.argv[2] === 'webkit';
+const only = process.argv[3] ? new RegExp(process.argv[3]) : null;
 const out = path.resolve('storage/app/staging-checks/typography' + (useWebkit ? '-webkit' : ''));
 fs.mkdirSync(out, { recursive: true });
 const WIDTHS = useWebkit ? [390] : [320, 375, 390, 430, 768, 1024, 1366, 1440, 1920];
@@ -40,8 +41,9 @@ const pages = [['home', '/'], ['about', '/about'], ['contact', '/contact'], ['pr
     ['admin-products', '/admin/products'], ['admin-services', '/admin/services'], ['admin-anniversary', '/admin/anniversary'], ['admin-hero-video', '/admin/hero-video'], ['admin-profile', '/admin/profile']];
 
 const rows = [];
+const chosen = only ? pages.filter(([n]) => only.test(n)) : pages;
 let bad = 0;
-for (const [name, url] of pages) {
+for (const [name, url] of chosen) {
     for (const w of WIDTHS) {
         await page.setViewportSize({ width: w, height: 900 });
         const resp = await go(url).catch(() => null);
@@ -75,5 +77,5 @@ for (const [name, url] of pages) {
     }
 }
 await browser.close();
-fs.writeFileSync(path.join(out, 'report.json'), JSON.stringify(rows, null, 1));
-console.log(`\n${rows.length} page/width combinations, ${bad} to review. Report: ${path.join(out, 'report.json')}`);
+fs.writeFileSync(path.join(out, `report-${(process.argv[3] || 'all').replace(/[^a-z0-9]+/gi, '_')}.json`), JSON.stringify(rows, null, 1));
+console.log(`\n${rows.length} page/width combinations, ${bad} to review. Report written next to the screenshots`);
