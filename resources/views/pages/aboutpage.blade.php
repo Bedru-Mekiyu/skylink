@@ -956,7 +956,7 @@ We lead the market by creating disciplined culture that will have much bigger ef
                         <div class="position-relative overflow-hidden rounded-3 mb-4">
                             <img src="{{ asset('assets/images/contact/team-support.jpg') }}"
                                  srcset="{{ \App\Support\ResponsiveImage::webpSrcset('assets/images/contact/team-support.jpg') }}"
-                                 sizes="(max-width: 767px) 100vw, 50vw" loading="lazy" decoding="async"
+                                 sizes="(max-width: 991px) 100vw, 50vw" loading="lazy" decoding="async"
                                  width="{{ \App\Support\ResponsiveImage::size('assets/images/contact/team-support.jpg')[0] ?? 1920 }}"
                                  height="{{ \App\Support\ResponsiveImage::size('assets/images/contact/team-support.jpg')[1] ?? 1344 }}"
                                  class="img-fluid w-100 transition-transform"

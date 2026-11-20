@@ -452,7 +452,20 @@
     }
 }
 
-
+/* ---- Touch targets: at least 44 x 44 px on phones and tablets (measured by tools/local/responsive-audit.mjs) ---- */
+@media (max-width: 1024px), (pointer: coarse) {
+    .navbar-toggler { min-width: 44px; min-height: 44px; }
+    .btn:not(.btn-sm), .filter-btn, .btn-view-more, .project-card__link, .nav-tabs .nav-link { min-height: 44px; display: inline-flex; align-items: center; justify-content: center; }
+    .input-group > .btn { min-height: 44px; }
+    .form-control:not(textarea), .form-select { min-height: 44px; }
+    .social-footer a { display: inline-flex; align-items: center; justify-content: center; min-width: 44px; min-height: 44px; }
+    .article-back, .back-link, a.news-tag { display: inline-flex; align-items: center; min-height: 44px; }
+    .news-card__title a { display: inline-block; padding-block: 13px; }
+    a.text-decoration-none.text-primary { display: inline-flex; align-items: center; min-height: 44px; }
+    .pagination .page-link { min-height: 44px !important; min-width: 44px !important; display: inline-flex; align-items: center; justify-content: center; }
+    .navbar .nav-link { min-height: 44px; display: flex; align-items: center; }
+    .share a, .share button { min-width: 44px; min-height: 44px; }
+}
  </style>
     
 

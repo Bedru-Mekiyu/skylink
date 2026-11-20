@@ -251,7 +251,8 @@
             }
             
             .contact-card p {
-                font-size: 11px;
+                font-size: 14px; /* was 11px: unreadable on a phone */
+                line-height: 1.4;
             }
             
             .col-lg-7 {

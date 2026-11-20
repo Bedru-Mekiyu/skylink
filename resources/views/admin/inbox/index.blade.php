@@ -73,7 +73,7 @@
                 <caption class="visually-hidden">Website messages, newest first</caption>
                 <thead>
                     <tr>
-                        <th scope="col" class="ps-4" style="width:2.5rem"><input type="checkbox" class="form-check-input" id="select-all" aria-label="Select all messages on this page"></th>
+                        <th scope="col" class="ps-4 sky-tap" style="width:2.5rem"><input type="checkbox" class="form-check-input" id="select-all" aria-label="Select all messages on this page"></th>
                         <th scope="col">From</th>
                         <th scope="col">Type</th>
                         <th scope="col">Message</th>
@@ -86,7 +86,7 @@
                 <tbody>
                     @forelse ($inquiries as $item)
                         <tr class="{{ $item->read_at ? '' : 'inbox-unread' }}">
-                            <td data-label="Select" class="ps-4"><input type="checkbox" class="form-check-input bulk-box" name="ids[]" value="{{ $item->id }}" aria-label="Select message {{ $item->reference }}"></td>
+                            <td data-label="Select" class="ps-4 sky-tap"><input type="checkbox" class="form-check-input bulk-box" name="ids[]" value="{{ $item->id }}" aria-label="Select message {{ $item->reference }}"></td>
                             <td data-label="From">
                                 <a href="{{ route('admin.inbox.show', $item) }}" class="text-body text-decoration-none fw-semibold inbox-name" lang="{{ $item->language }}">
                                     @unless ($item->read_at)<span class="inbox-dot" aria-hidden="true"></span><span class="visually-hidden">Unread: </span>@endunless{{ $item->name }}
@@ -156,6 +156,13 @@
             if (all) { all.checked = n > 0 && n === boxes.length; all.indeterminate = n > 0 && n < boxes.length; }
         }
         boxes.forEach(function (b) { b.addEventListener('change', refresh); });
+        // the whole 44 px cell is the tap target for its checkbox
+        form.querySelectorAll('td.sky-tap, th.sky-tap').forEach(function (cell) {
+            cell.addEventListener('click', function (e) {
+                var box = cell.querySelector('input[type=checkbox]');
+                if (box && e.target !== box) { box.click(); }
+            });
+        });
         if (all) all.addEventListener('change', function () { boxes.forEach(function (b) { b.checked = all.checked; }); refresh(); });
         var confirmed = false;
         form.addEventListener('submit', function (e) {

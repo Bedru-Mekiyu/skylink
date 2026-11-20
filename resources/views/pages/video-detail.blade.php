@@ -121,7 +121,7 @@
                 </div>
 
                 @if ($link && $platformName)
-                    <p class="text-center mt-3 mb-0"><a class="btn btn-outline-primary btn-sm" href="{{ $link }}" target="_blank" rel="noopener noreferrer"><i class="fas fa-external-link-alt me-1" aria-hidden="true"></i>Watch on {{ $platformName }}<span class="visually-hidden"> (opens in a new tab)</span></a></p>
+                    <p class="text-center mt-3 mb-0"><a class="btn btn-outline-primary" href="{{ $link }}" target="_blank" rel="noopener noreferrer"><i class="fas fa-external-link-alt me-1" aria-hidden="true"></i>Watch on {{ $platformName }}<span class="visually-hidden"> (opens in a new tab)</span></a></p>
                 @endif
 
                 <!-- Video Description -->

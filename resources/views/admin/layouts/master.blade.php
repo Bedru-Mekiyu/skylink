@@ -29,7 +29,8 @@
     body { background-color: var(--content-bg); font-family: var(--font-ui); color: var(--text-color); }
     .sidebar { background-color: var(--sidebar-bg); }
     @media (min-width: 992px) {
-        .main-layout { display: grid; grid-template-columns: 280px 1fr; }
+        .main-layout { display: grid; grid-template-columns: 280px minmax(0, 1fr); } /* minmax(0,..): a wide table scrolls inside its box instead of widening the page */
+        .main-content { min-width: 0; }
         .sidebar { position: sticky; top: 0; height: 100vh; }
     }
     .offcanvas-header { background: var(--sidebar-bg); border-bottom: 1px solid rgba(255,255,255,0.1); }
@@ -89,7 +90,26 @@
     }
     body, .card, .card-body, .table { overflow-wrap: break-word; word-wrap: break-word; word-break: break-word; -webkit-hyphens: auto; -ms-hyphens: auto; hyphens: auto; }
     .action-buttons { display: flex; gap: 0.5rem; justify-content: flex-end; flex-wrap: wrap; }
-</style>
+
+/* ---- Touch targets: at least 44 x 44 px on phones and tablets (measured by tools/local/responsive-audit.mjs) ---- */
+.table-wrapper, .table-responsive { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+@media (max-width: 1024px), (pointer: coarse) {
+    .btn, .navbar-toggler, .page-link, .form-control, .form-select { min-height: 44px; }
+    .navbar-toggler { min-width: 44px; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.35rem; }
+    .btn-sm { min-width: 44px; }
+    .sidebar .nav-link, .offcanvas .nav-link { min-height: 46px; display: flex; align-items: center; }
+    .news-editor__toolbar .btn { min-width: 44px !important; min-height: 44px !important; }
+    .page-link { min-width: 44px; justify-content: center; }
+    .card-body > a:not(.btn), .card-header > a:not(.btn) { display: inline-flex; align-items: center; min-height: 44px; }
+    td .form-check-input, th .form-check-input { margin: 0; }
+    .sky-tap { cursor: pointer; min-width: 44px; min-height: 44px; vertical-align: middle; }
+    th.sky-tap { height: 48px; }
+    .form-check-input { width: 1.35rem; height: 1.35rem; }
+    .form-check, .form-check-label { min-height: 44px; }
+}
+@media (max-width: 575.98px) { .form-label.small, .form-text, .small.text-muted { font-size: 1rem; } }
+    </style>
 
  <link href="{{ asset('assets/css/sky-confirm.css') }}" rel="stylesheet">
 @stack('styles')

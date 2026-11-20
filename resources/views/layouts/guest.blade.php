@@ -36,7 +36,16 @@
         .animate-fade-in-down {
             animation: fadeInDown 0.5s ease-out forwards;
         }
-    </style>
+    
+/* touch targets on phones and tablets (login, password reset) */
+@media (max-width: 1024px), (pointer: coarse) {
+    .form-control, .form-select, .btn { min-height: 44px; }
+    .input-group > .btn { min-width: 44px; }
+    .form-check-input { width: 1.4rem; height: 1.4rem; }
+    .form-check-label, .form-check { min-height: 44px; display: flex; align-items: center; gap: 0.5rem; }
+    a.small { display: inline-flex; align-items: center; min-height: 44px; }
+}
+</style>
 </head>
 <body class="font-sans text-gray-900 antialiased">
     {{ $slot }}
