@@ -925,6 +925,8 @@ We lead the market by creating disciplined culture that will have much bigger ef
 </section>
 
 
+@include('partials.gallery')
+
 <!-- Team Section -->
 <section class="team-section py-5 bg-light">
     <div class="container">

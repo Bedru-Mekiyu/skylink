@@ -172,6 +172,14 @@ Route::resource('products', ProductadminController::class);
     Route::put('/partners/{partner}', [\App\Http\Controllers\Admin\PartnerController::class, 'update'])->middleware('throttle:partner-upload')->name('partners.update');
     Route::put('/partners/{partner}/toggle', [\App\Http\Controllers\Admin\PartnerController::class, 'toggle'])->middleware('throttle:60,1')->name('partners.toggle');
 
+    // About-page gallery: bulk upload, captions, order, hide. Never deletes.
+    Route::get('/gallery', [\App\Http\Controllers\Admin\GalleryController::class, 'index'])->name('gallery.index');
+    Route::post('/gallery', [\App\Http\Controllers\Admin\GalleryController::class, 'store'])->middleware('throttle:gallery-upload')->name('gallery.store');
+    Route::put('/gallery/reorder', [\App\Http\Controllers\Admin\GalleryController::class, 'reorder'])->middleware('throttle:60,1')->name('gallery.reorder');
+    Route::get('/gallery/{image}/edit', [\App\Http\Controllers\Admin\GalleryController::class, 'edit'])->name('gallery.edit');
+    Route::put('/gallery/{image}', [\App\Http\Controllers\Admin\GalleryController::class, 'update'])->middleware('throttle:60,1')->name('gallery.update');
+    Route::put('/gallery/{image}/toggle', [\App\Http\Controllers\Admin\GalleryController::class, 'toggle'])->middleware('throttle:60,1')->name('gallery.toggle');
+
     // Homepage hero video: upload, preview, restore previous, reset to the built-in default.
     Route::get('/hero-video', [\App\Http\Controllers\Admin\HeroVideoController::class, 'edit'])->name('hero-video.edit');
     Route::put('/hero-video', [\App\Http\Controllers\Admin\HeroVideoController::class, 'update'])->middleware('throttle:hero-upload')->name('hero-video.update');

@@ -41,6 +41,9 @@ class AppServiceProvider extends ServiceProvider
         // Partner logo / gallery uploads: 30 per hour per admin.
         RateLimiter::for('partner-upload', fn (Request $request) => Limit::perHour(30)->by('partner-upload:'.($request->user()?->id ?? $request->ip())));
 
+        // Gallery bulk uploads send one photo per request: 120 per hour per admin.
+        RateLimiter::for('gallery-upload', fn (Request $request) => Limit::perHour(120)->by('gallery-upload:'.($request->user()?->id ?? $request->ip())));
+
         // Public forms (contact, chat, quote, subscribe): per visitor (IP),
         // 5 submissions per minute and 20 per hour, with a friendly message.
         RateLimiter::for('public-forms', function (Request $request) {

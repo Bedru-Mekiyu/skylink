@@ -134,6 +134,7 @@
                 <li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.anniversary.*') ? 'active' : '' }}" href="{{ route('admin.anniversary.edit') }}"><i class="fas fa-champagne-glasses fa-fw"></i> Anniversary Ceremony</a></li>
                 <li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.hero-video.*') ? 'active' : '' }}" href="{{ route('admin.hero-video.edit') }}"><i class="fas fa-film fa-fw"></i> Homepage Video</a></li>
                 <li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.partners.*') ? 'active' : '' }}" href="{{ route('admin.partners.index') }}"><i class="fas fa-handshake fa-fw"></i> Partners</a></li>
+                <li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.gallery.*') ? 'active' : '' }}" href="{{ route('admin.gallery.index') }}"><i class="fas fa-images fa-fw"></i> Gallery</a></li>
                 <li class="sidebar-heading mt-2">Content</li>
                 <li class="nav-item">
                     <a class="nav-link" data-bs-toggle="collapse" href="#contentCollapseDesktop"><i class="fas fa-file-alt fa-fw"></i> Manage Content <i class="fas fa-chevron-down ms-auto"></i></a>
@@ -171,6 +172,7 @@
                 <li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.anniversary.*') ? 'active' : '' }}" href="{{ route('admin.anniversary.edit') }}"><i class="fas fa-champagne-glasses fa-fw"></i> Anniversary Ceremony</a></li>
                 <li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.hero-video.*') ? 'active' : '' }}" href="{{ route('admin.hero-video.edit') }}"><i class="fas fa-film fa-fw"></i> Homepage Video</a></li>
                 <li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.partners.*') ? 'active' : '' }}" href="{{ route('admin.partners.index') }}"><i class="fas fa-handshake fa-fw"></i> Partners</a></li>
+                <li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.gallery.*') ? 'active' : '' }}" href="{{ route('admin.gallery.index') }}"><i class="fas fa-images fa-fw"></i> Gallery</a></li>
                     <li class="sidebar-heading mt-2">Content</li>
                     <li class="nav-item">
                         <a class="nav-link" data-bs-toggle="collapse" href="#contentCollapseMobile"><i class="fas fa-file-alt fa-fw"></i> Manage Content <i class="fas fa-chevron-down ms-auto"></i></a>
