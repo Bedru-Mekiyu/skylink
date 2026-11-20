@@ -1,18 +1,16 @@
 @props(['member'])
 
-<div class="text-center">
-    {{-- Profile Image --}}
-    <div class="position-relative mx-auto mb-4" style="width: 192px; height: 192px;">
-        <div class="rounded-circle overflow-hidden mx-auto" style="width: 100%; height: 100%; background-color: {{ $member['bgColor'] }};">
-            <img src="{{ asset($member['image']) }}" alt="{{ $member['name'] }}" class="w-100 h-100 object-fit-cover">
-        </div>
+{{-- Management card: portrait 4:5 photo with softly rounded corners (was a circle). Face-biased crop. --}}
+<div class="text-center team-card">
+    <div class="team-card__photo mx-auto mb-4" style="background-color: {{ $member['bgColor'] }};">
+        @if (!empty($member['image']))
+            <img src="{{ $member['image'] }}" alt="{{ $member['name'] }}, {{ $member['title'] }}" width="370" height="462" loading="lazy" decoding="async">
+        @else
+            <span class="team-card__initials" role="img" aria-label="{{ $member['name'] }}, {{ $member['title'] }}">{{ collect(explode(' ', $member['name']))->map(fn ($w) => mb_substr($w, 0, 1))->take(2)->implode('') }}</span>
+        @endif
     </div>
 
     {{-- Name and Title --}}
     <h3 class="h5 fw-bold text-dark mb-1">{{ $member['name'] }}</h3>
     <p class="text-primary fw-medium mb-3">{{ $member['title'] }}</p>
-
-    {{-- Description --}}
-    {{-- <p class="text-muted small mb-4 px-2">{{ $member['description'] }}</p> --}}
-
 </div>

@@ -165,7 +165,13 @@
        set by that strip while it is shown). The photo always runs edge to edge; when the
        height is capped only the top/bottom are trimmed, keeping the logo and faces (focal
        point ~6% down). Scrolling past the banner slides the photo up to reveal the rest. */
-    .about-hero { width: 100%; height: auto; aspect-ratio: 4271 / 2809; max-height: calc(100svh - 56px - var(--top-strip-h, 0px)); }
+    /* Banner height: about half a screen (News 460-489px, Portfolio 480px, same scale), never a full screen.
+       The photo is cropped by object-fit: cover; focal point 6% keeps the logo and faces and hides the strip along
+       the very top edge of the photo (where the room signs are). Shorter on tablet, phone and short landscape. */
+    .about-hero { width: 100%; aspect-ratio: auto; height: clamp(340px, 50svh, 560px); }
+    @media (max-width: 991.98px) { .about-hero { height: clamp(300px, 42svh, 440px); } }
+    @media (max-width: 575.98px) { .about-hero { height: clamp(220px, 32svh, 300px); } }
+    @media (max-height: 500px) and (orientation: landscape) { .about-hero { height: clamp(220px, 62svh, 320px); } }
     .about-hero__zoom { animation: none; }
     .about-hero__img { top: 0; height: 100%; transform: none; object-fit: cover; object-position: 50% 6%; }
     @supports (animation-timeline: scroll(root)) {
@@ -442,6 +448,10 @@
     object-fit: cover;
 object-position: 50% 15%; 
 }
+    /* Management cards: one 4:5 portrait ratio for everyone, 12px corners (no circles). */
+    .team-card__photo { position: relative; width: min(100%, 240px); aspect-ratio: 4 / 5; border-radius: 12px; overflow: hidden; display: grid; place-items: center; }
+    .team-card__photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 20%; display: block; }
+    .team-card__initials { font: 700 3rem/1 var(--font-heading); color: #64748b; letter-spacing: 0.02em; }
     .team-info {
         padding: 25px;
     }

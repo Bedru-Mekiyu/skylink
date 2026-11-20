@@ -40,9 +40,10 @@ class AboutController extends Controller
             'bgColor' => '#f7f7f7ff',
         ],
         [
-            'name' => 'Jemil Gragn',
-            'title' => 'Head of Networking Administration',
-            'image' => asset('assets/images/about/jemil.png'),
+            'name' => 'Hanan Nesru',
+            'title' => 'Head of Human Resource & Administration',
+            // Optimised copy of the owner's photo; the card shows initials until the file exists.
+            'image' => is_file(public_path('assets/images/about/hanan.png')) ? asset('assets/images/about/hanan.png') : null,
             'bgColor' => '#f7f7f7ff',
         ],
         // [
