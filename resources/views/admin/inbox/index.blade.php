@@ -5,14 +5,14 @@
 
 @php
     $tz = config('news.admin_timezone', 'Africa/Addis_Ababa');
-    $statusClass = ['new' => 'text-bg-primary', 'in_progress' => 'text-bg-warning', 'done' => 'text-bg-success', 'spam' => 'text-bg-secondary'];
+    $filtered = $search !== '' || $type || $status || $unread;
+    $emailLabel = fn ($i) => $i->legacy_table ? null : ($i->team_notify_error ? 'Email to the team failed' : null);
 @endphp
 
 @section('content')
 <div class="card inbox-card">
-    <div class="card-header d-flex flex-wrap justify-content-between align-items-center gap-2">
-        <h2 class="h5 mb-0"><i class="fas fa-inbox me-2" aria-hidden="true"></i>Website messages <span class="text-muted fw-normal small">({{ $inquiries->total() }})</span></h2>
-        <span class="small text-muted">Emails go to <strong>{{ $inbox ?: 'not set' }}</strong> (CONTACT_INBOX)</span>
+    <div class="card-header d-flex flex-wrap align-items-center gap-2">
+        <span class="fw-semibold">{{ $inquiries->total() }} {{ \Illuminate\Support\Str::plural('message', $inquiries->total()) }}@if ($unreadCount > 0) <span class="text-muted fw-normal">· {{ $unreadCount }} unread</span>@endif</span>
         @if ($unreadCount > 0)
             <form method="POST" action="{{ route('admin.inbox.read-all') }}" class="ms-auto">
                 @csrf
@@ -22,109 +22,68 @@
     </div>
 
     <div class="card-body border-bottom">
-        <form method="GET" action="{{ route('admin.inbox.index') }}" class="row g-2 align-items-end" role="search">
-            <div class="col-12 col-md-4">
-                <label for="q" class="form-label small mb-1">Search name, email, phone, reference or text</label>
-                <input type="search" id="q" name="q" value="{{ $search }}" class="form-control" maxlength="100">
+        <form method="GET" action="{{ route('admin.inbox.index') }}" class="inbox-filters" role="search">
+            <label for="q" class="visually-hidden">Search name, email, phone, reference or text</label>
+            <input type="search" id="q" name="q" value="{{ $search }}" class="form-control" maxlength="100" placeholder="Search messages">
+            <label for="type" class="visually-hidden">Type</label>
+            <select id="type" name="type" class="form-select">
+                <option value="">All types</option>
+                @foreach (\App\Models\Inquiry::TYPES as $value => $label)
+                    <option value="{{ $value }}" @selected($type === $value)>{{ $label }}</option>
+                @endforeach
+            </select>
+            <label for="status" class="visually-hidden">Status</label>
+            <select id="status" name="status" class="form-select">
+                <option value="">All statuses</option>
+                @foreach (\App\Models\Inquiry::STATUSES as $value => $label)
+                    <option value="{{ $value }}" @selected($status === $value)>{{ $label }}</option>
+                @endforeach
+            </select>
+            <div class="form-check inbox-unread-toggle">
+                <input class="form-check-input" type="checkbox" name="unread" value="1" id="unread" @checked($unread)>
+                <label class="form-check-label" for="unread">Unread only ({{ $unreadCount }})</label>
             </div>
-            <div class="col-6 col-md-2">
-                <label for="type" class="form-label small mb-1">Type</label>
-                <select id="type" name="type" class="form-select">
-                    <option value="">All types</option>
-                    @foreach (\App\Models\Inquiry::TYPES as $value => $label)
-                        <option value="{{ $value }}" @selected($type === $value)>{{ $label }}</option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="col-6 col-md-2">
-                <label for="status" class="form-label small mb-1">Status</label>
-                <select id="status" name="status" class="form-select">
-                    <option value="">All statuses</option>
-                    @foreach (\App\Models\Inquiry::STATUSES as $value => $label)
-                        <option value="{{ $value }}" @selected($status === $value)>{{ $label }}</option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="col-6 col-md-2">
-                <div class="form-check mt-md-4">
-                    <input class="form-check-input" type="checkbox" name="unread" value="1" id="unread" @checked($unread)>
-                    <label class="form-check-label" for="unread">Unread only ({{ $unreadCount }})</label>
-                </div>
-            </div>
-            <div class="col-6 col-md-2 d-flex gap-2">
-                <button type="submit" class="btn btn-outline-primary flex-fill"><i class="fas fa-search me-1" aria-hidden="true"></i>Filter</button>
-                @if ($search !== '' || $type || $status || $unread)
-                    <a href="{{ route('admin.inbox.index') }}" class="btn btn-light" title="Clear filters"><i class="fas fa-times" aria-hidden="true"></i><span class="visually-hidden">Clear filters</span></a>
-                @endif
-            </div>
+            <button type="submit" class="btn btn-outline-primary"><i class="fas fa-search me-1" aria-hidden="true"></i>Filter</button>
+            @if ($filtered)
+                <a href="{{ route('admin.inbox.index') }}" class="btn btn-light" title="Clear filters"><i class="fas fa-times" aria-hidden="true"></i><span class="visually-hidden">Clear filters</span></a>
+            @endif
         </form>
     </div>
 
     <form method="POST" action="{{ route('admin.inbox.bulk-destroy') }}" id="bulk-delete-form">
     @csrf
     @method('DELETE')
-    <div class="card-body border-bottom py-2 d-flex flex-wrap align-items-center gap-2">
-        <button type="submit" class="btn btn-sm btn-outline-danger" id="bulk-delete-btn" disabled><i class="fas fa-trash me-1" aria-hidden="true"></i>Delete selected <span id="bulk-count" class="badge text-bg-light">0</span></button>
-        <span class="small text-muted">Tick messages in the list, then delete them together.</span>
+    <div class="inbox-head">
+        <span class="sky-tap inbox-check"><input type="checkbox" class="form-check-input" id="select-all" aria-label="Select all messages on this page"></span>
+        <span class="inbox-head__from">From</span>
+        <span class="inbox-head__type">Type</span>
+        <span class="inbox-head__msg">Message</span>
+        <span class="inbox-head__date">Received</span>
+        <button type="submit" class="btn btn-sm btn-outline-danger inbox-bulk" id="bulk-delete-btn" disabled><i class="fas fa-trash me-1" aria-hidden="true"></i>Delete selected <span id="bulk-count" class="badge text-bg-danger">0</span></button>
     </div>
-    <div class="card-body p-0">
-        <div class="table-wrapper">
-            <table class="table table-hover align-middle mb-0 table-responsive-cards">
-                <caption class="visually-hidden">Website messages, newest first</caption>
-                <thead>
-                    <tr>
-                        <th scope="col" class="ps-4 sky-tap" style="width:2.5rem"><input type="checkbox" class="form-check-input" id="select-all" aria-label="Select all messages on this page"></th>
-                        <th scope="col">From</th>
-                        <th scope="col">Type</th>
-                        <th scope="col">Message</th>
-                        <th scope="col">Status</th>
-                        <th scope="col">Received</th>
-                        <th scope="col">Email</th>
-                        <th scope="col" class="pe-4"><span class="visually-hidden">Actions</span></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @forelse ($inquiries as $item)
-                        <tr class="{{ $item->read_at ? '' : 'inbox-unread' }}">
-                            <td data-label="Select" class="ps-4 sky-tap"><input type="checkbox" class="form-check-input bulk-box" name="ids[]" value="{{ $item->id }}" aria-label="Select message {{ $item->reference }}"></td>
-                            <td data-label="From">
-                                <a href="{{ route('admin.inbox.show', $item) }}" class="text-body text-decoration-none fw-semibold inbox-name" lang="{{ $item->language }}">
-                                    @unless ($item->read_at)<span class="inbox-dot" aria-hidden="true"></span><span class="visually-hidden">Unread: </span>@endunless{{ $item->name }}
-                                </a>
-                                <div class="small text-muted text-break">{{ $item->email }}</div>
-                                <div class="small text-muted">{{ $item->reference }}</div>
-                            </td>
-                            <td data-label="Type">{{ $item->type_label }}@if ($item->service)<div class="small text-muted">{{ $item->service }}</div>@endif @if ($item->plan)<div class="small text-muted">Plan: {{ $item->plan }}</div>@endif</td>
-                            <td data-label="Message" class="inbox-snippet" lang="{{ $item->language }}">{{ \Illuminate\Support\Str::limit((string) $item->message, 90) ?: '—' }}</td>
-                            <td data-label="Status"><span class="badge {{ $statusClass[$item->status] ?? 'text-bg-light' }}">{{ $item->status_label }}</span></td>
-                            <td data-label="Received" class="text-nowrap">{{ $item->created_at->copy()->setTimezone($tz)->format('M j, H:i') }}</td>
-                            <td data-label="Email" class="text-nowrap small">
-                                @if ($item->legacy_table)
-                                    <span class="text-muted">Older message</span>
-                                @elseif ($item->team_notify_error)
-                                    <span class="text-danger"><i class="fas fa-exclamation-triangle" aria-hidden="true"></i> Failed</span>
-                                @elseif ($item->team_notified_at)
-                                    <span class="text-success"><i class="fas fa-check" aria-hidden="true"></i> Sent</span>
-                                @else
-                                    <span class="text-muted"><i class="fas fa-clock" aria-hidden="true"></i> Queued</span>
-                                @endif
-                            </td>
-                            <td data-label="Delete" class="pe-4 text-nowrap">
-                                <button type="submit" form="delete-message-{{ $item->id }}" class="btn btn-sm btn-outline-danger" data-sky-confirm="Delete this message? This can't be undone from the admin." data-sky-title="Delete message?" data-sky-ok="Delete" data-sky-variant="danger" onclick="return confirm('Delete this message? This can\'t be undone from the admin.');"><i class="fas fa-trash me-1" aria-hidden="true"></i>Delete<span class="visually-hidden"> message {{ $item->reference }}</span></button>
-                            </td>
-                        </tr>
-                    @empty
-                        <tr>
-                            <td colspan="8" class="text-center py-5">
-                                <i class="fas fa-inbox fa-3x text-muted mb-3" aria-hidden="true"></i>
-                                <p class="h5 text-muted">{{ ($search !== '' || $type || $status || $unread) ? 'No messages match these filters.' : 'No messages yet.' }}</p>
-                            </td>
-                        </tr>
-                    @endforelse
-                </tbody>
-            </table>
-        </div>
-    </div>
+    <ul class="inbox-list list-unstyled mb-0">
+        @forelse ($inquiries as $item)
+            <li class="inbox-row {{ $item->read_at ? '' : 'inbox-unread' }}">
+                <span class="sky-tap inbox-check"><input type="checkbox" class="form-check-input bulk-box" name="ids[]" value="{{ $item->id }}" aria-label="Select message {{ $item->reference }}"></span>
+                <div class="inbox-from">
+                    <a href="{{ route('admin.inbox.show', $item) }}" class="text-body text-decoration-none inbox-name" lang="{{ $item->language }}" title="{{ $item->reference }}">@unless ($item->read_at)<span class="inbox-dot" aria-hidden="true"></span><span class="visually-hidden">Unread: </span>@endunless{{ $item->name }}</a>
+                    <div class="small text-muted text-break">{{ $item->email }}</div>
+                </div>
+                <div class="inbox-type small">
+                    <span class="inbox-chip">{{ $item->type_label }}</span>
+                    @if ($item->status !== 'new')<span class="badge text-bg-light border">{{ $item->status_label }}</span>@endif
+                </div>
+                <div class="inbox-snippet" lang="{{ $item->language }}">{{ \Illuminate\Support\Str::limit((string) $item->message, 90) ?: '—' }}@if ($emailLabel($item))<div class="small text-danger"><i class="fas fa-exclamation-triangle" aria-hidden="true"></i> {{ $emailLabel($item) }}</div>@endif</div>
+                <div class="inbox-date small text-muted">{{ $item->created_at->copy()->setTimezone($tz)->format('M j, H:i') }}</div>
+                <button type="submit" form="delete-message-{{ $item->id }}" class="btn btn-sm btn-outline-danger inbox-del" data-sky-confirm="Delete this message? This can't be undone from the admin." data-sky-title="Delete message?" data-sky-ok="Delete" data-sky-variant="danger" onclick="return confirm('Delete this message? This can\'t be undone from the admin.');"><i class="fas fa-trash" aria-hidden="true"></i><span class="inbox-del__txt ms-1">Delete</span><span class="visually-hidden"> message {{ $item->reference }}</span></button>
+            </li>
+        @empty
+            <li class="text-center py-5">
+                <i class="fas fa-inbox fa-3x text-muted mb-3" aria-hidden="true"></i>
+                <p class="h5 text-muted">{{ $filtered ? 'No messages match these filters.' : 'No messages yet.' }}</p>
+            </li>
+        @endforelse
+    </ul>
     </form>
 
     {{-- One small form per row for the single Delete button (a form cannot sit inside the bulk form). --}}
@@ -132,13 +91,13 @@
         <form method="POST" action="{{ route('admin.inbox.destroy', $item) }}" id="delete-message-{{ $item->id }}" class="d-none">@csrf @method('DELETE')</form>
     @endforeach
 
-    @if ($inquiries->hasPages())
-        <div class="card-footer d-flex justify-content-center">
-            {{ $inquiries->onEachSide(1)->links('pagination::bootstrap-5') }}
-        </div>
-    @endif
+    <div class="card-footer d-flex flex-wrap justify-content-between align-items-center gap-2">
+        <span class="small text-muted">New messages are emailed to <strong>{{ $inbox ?: 'not set' }}</strong></span>
+        @if ($inquiries->hasPages()){{ $inquiries->onEachSide(1)->links('pagination::bootstrap-5') }}@endif
+    </div>
 </div>
 @endsection
+
 
 @push('scripts')
 <script>
@@ -184,13 +143,39 @@
 @push('styles')
 <style>
     .inbox-card.card:hover { transform: none; box-shadow: none; }
-    .inbox-unread td { background: #f8fbff; }
-    .inbox-unread .inbox-name { font-weight: 700 !important; }
-    .inbox-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #2563eb; margin-right: 6px; vertical-align: middle; }
+    .inbox-filters { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; }
+    .inbox-filters #q { flex: 1 1 220px; min-width: 0; }
+    .inbox-filters .form-select { flex: 0 1 11rem; width: auto; }
+    .inbox-filters .btn { white-space: nowrap; }
+    .inbox-head, .inbox-row { display: grid; grid-template-columns: 44px minmax(170px, 1.1fr) 150px minmax(0, 2fr) 110px 150px; column-gap: 0.75rem; align-items: center; padding: 0.4rem 1rem 0.4rem 0.25rem; }
+    .inbox-head { border-bottom: 1px solid var(--border-color); font-size: 0.8rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.03em; padding-top: 0.2rem; padding-bottom: 0.2rem; }
+    .inbox-head .inbox-bulk { grid-column: 6; justify-self: end; white-space: nowrap; text-transform: none; letter-spacing: 0; }
+    .inbox-row { border-bottom: 1px solid var(--border-color); min-height: 64px; }
+    .inbox-row:last-child { border-bottom: 0; }
+    .inbox-row:hover { background: rgba(63, 122, 249, 0.04); }
+    .inbox-unread { background: #f8fbff; }
+    .inbox-unread .inbox-name { font-weight: 700; }
+    .inbox-name { font-weight: 600; }
+    .inbox-dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: #2563eb; margin-right: 7px; vertical-align: middle; }
+    .inbox-chip { display: inline-block; padding: 0.1rem 0.55rem; border-radius: 999px; background: #eef3ff; color: #2447a8; font-size: 0.8rem; font-weight: 600; white-space: nowrap; }
+    .inbox-snippet { min-width: 0; overflow: hidden; text-overflow: ellipsis; color: var(--text-muted); }
+    .inbox-date { text-align: right; white-space: nowrap; }
+    .inbox-del { justify-self: end; }
+    .inbox-check { display: inline-flex; align-items: center; justify-content: center; }
     .inbox-name[lang="am"], .inbox-snippet[lang="am"] { font-family: var(--font-ui); }
-    @media (min-width: 768px) {
-        .inbox-card th, .inbox-card td[data-label="Type"], .inbox-card td[data-label="Status"] { white-space: nowrap; word-break: normal; }
-        .inbox-snippet { max-width: 360px; }
+    @media (max-width: 767.98px) {
+        .inbox-filters .form-select { flex: 1 1 40%; }
+        .inbox-filters .inbox-unread-toggle { flex: 1 1 100%; margin: 0; }
+        .inbox-head__from, .inbox-head__type, .inbox-head__msg, .inbox-head__date { display: none; }
+        .inbox-head { display: flex; justify-content: space-between; padding-left: 0.25rem; }
+        .inbox-row { grid-template-columns: 44px minmax(0, 1fr) auto; grid-template-areas: "chk from date" "chk msg msg" "chk type del"; row-gap: 0.15rem; padding-top: 0.6rem; padding-bottom: 0.6rem; }
+        .inbox-row > .inbox-check { grid-area: chk; align-self: start; }
+        .inbox-from { grid-area: from; min-width: 0; }
+        .inbox-date { grid-area: date; align-self: start; padding-top: 0.15rem; }
+        .inbox-snippet { grid-area: msg; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; white-space: normal; font-size: 1rem; }
+        .inbox-type { grid-area: type; }
+        .inbox-del { grid-area: del; }
     }
+    @media (max-width: 420px) { .inbox-del__txt { display: none; } }
 </style>
 @endpush

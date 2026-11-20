@@ -92,7 +92,7 @@
     .action-buttons { display: flex; gap: 0.5rem; justify-content: flex-end; flex-wrap: wrap; }
 
 /* ---- Touch targets: at least 44 x 44 px on phones and tablets (measured by tools/local/responsive-audit.mjs) ---- */
-.table-wrapper, .table-responsive { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.table-wrapper, .table-responsive { position: relative; overflow-x: auto; -webkit-overflow-scrolling: touch; } /* relative: a visually-hidden header cell must not stick out of the scroll box */
 @media (max-width: 1024px), (pointer: coarse) {
     .btn, .navbar-toggler, .page-link, .form-control, .form-select { min-height: 44px; }
     .navbar-toggler { min-width: 44px; }

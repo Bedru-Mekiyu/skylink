@@ -6,29 +6,25 @@
 @section('content')
 <div class="card">
     <div class="card-header d-flex justify-content-between align-items-center">
-        <h5 class="mb-0"><i class="fas fa-envelope-open-text me-2"></i>Contact Messages</h5>
+        <span class="fw-semibold">{{ $messages->total() }} older {{ \Illuminate\Support\Str::plural("message", $messages->total()) }}</span>
     </div>
     <div class="card-body p-0">
         <div class="table-wrapper">
             <table class="table table-hover align-middle mb-0 table-responsive-cards">
                 <thead>
                     <tr>
-                        <th scope="col" class="ps-4" style="width: 5%;">#</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Contact</th>
-                        <th scope="col" style="width: 40%;">Message Preview</th>
-                        <th scope="col" style="width: 15%;">Received</th>
-                        <th scope="col" class="text-end pe-4">Actions</th>
+                        <th scope="col" class="ps-4">From</th>
+                        <th scope="col">Message</th>
+                        <th scope="col">Received</th>
+                        <th scope="col" class="text-end pe-4"><span class="visually-hidden">Actions</span></th>
                     </tr>
                 </thead>
                 <tbody>
                     @forelse($messages as $message)
                     <tr>
-                        <td data-label="#" class="fw-bold ps-4">{{ $loop->iteration + ($messages->currentPage() - 1) * $messages->perPage() }}</td>
-                        <td data-label="Name">{{ $message->first_name }} {{ $message->last_name }}</td>
-                        <td data-label="Contact">{{ $message->email }}</td>
+                        <td data-label="From" class="ps-4"><div class="fw-semibold">{{ $message->first_name }} {{ $message->last_name }}</div><div class="small text-muted text-break">{{ $message->email }}</div></td>
                         <td data-label="Message">{{ Str::limit($message->message, 70) }}</td>
-                        <td data-label="Received">{{ $message->created_at->format('M d, Y') }}</td>
+                        <td data-label="Received" class="text-nowrap text-muted">{{ $message->created_at->format('M j, Y') }}</td>
                         <td data-label="Actions" class="text-end pe-4">
                             <button type="button" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#messageModal-{{ $message->id }}">
                                 <i class="fas fa-eye me-1"></i> View
@@ -64,7 +60,7 @@
                     </div>
                     @empty
                     <tr>
-                        <td colspan="6" class="text-center py-5">
+                        <td colspan="4" class="text-center py-5">
                             <i class="fas fa-inbox fa-3x text-muted mb-3"></i>
                             <h5 class="text-muted">No messages found.</h5>
                         </td>
