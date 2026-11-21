@@ -123,10 +123,11 @@ class AboutPageTest extends TestCase
         $html = $this->get(route('about'))->getContent();
         $this->assertSame(1, preg_match_all('/class="[^"]*team-card--lead/', $html), 'exactly one lead card');
         // desktop/tablet/phone: the lead photo is up to 410 px (or 86% of the width), the others 240 px or less
-        $this->assertMatchesRegularExpression('/\.team-card--lead \.team-card__photo \{ width: min\(86%, 410px\)/', $html);
+        // the CEO frame is landscape (4:3: wider than tall), up to 400 px wide: wider than the 240 px cards, far less tall than before
+        $this->assertMatchesRegularExpression('/\.team-card--lead \.team-card__photo \{ --lead-ratio: 4 \/ 3; width: min\(90%, 400px\)/', $html);
         $this->assertMatchesRegularExpression('/\.team-card__photo \{[^}]*width: min\(100%, 240px\)/', $html);
-        $this->assertGreaterThanOrEqual(1.6, 410 / 240);
-        $this->assertLessThanOrEqual(1.8, 410 / 240);
+        $this->assertGreaterThan(1.5, 400 / 240);
+        $this->assertGreaterThan(1, 4 / 3);
         $this->assertStringContainsString('width="1000"', $html);
     }
 
