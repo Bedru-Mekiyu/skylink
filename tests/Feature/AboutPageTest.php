@@ -124,6 +124,16 @@ class AboutPageTest extends TestCase
         $this->assertStringContainsString('width="820"', $html);
     }
 
+    public function test_homepage_years_counter_uses_the_same_config_figure_as_the_about_intro(): void
+    {
+        $home = $this->get('/')->assertOk()->getContent();
+        $this->assertStringContainsString('data-target="5+"', $home);
+        $this->assertStringNotContainsString('data-target="4+"', $home);
+        config(['company.years_experience' => 6]);
+        $this->assertStringContainsString('data-target="6+"', $this->get('/')->getContent());
+        $this->assertStringContainsString('data-ai-count="6"', $this->get(route('about'))->getContent());
+    }
+
     public function test_team_photos_are_one_rounded_square_ratio_not_circles(): void
     {
         $html = $this->get(route('about'))->getContent();
