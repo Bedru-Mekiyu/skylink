@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password;
 
@@ -60,6 +61,7 @@ class ProfileController extends Controller
         $user = $request->user();
         $user->forceFill(['password' => $data['password']])->save(); // hashed by the model cast
         Auth::logoutOtherDevices($data['password']);                  // other sessions/devices are signed out, this one stays
+        Log::notice('admin password changed', ['user_id' => $user->id]); // audit log: never the password
 
         return redirect()->route('admin.profile.edit')->with('success', 'Password changed. Any other device that was signed in has been signed out.');
     }

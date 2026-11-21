@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Models\User;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rules\Password;
 
@@ -34,6 +35,7 @@ class SetAdminPassword extends Command
             return self::FAILURE;
         }
         $user->forceFill(['password' => Hash::make($password), 'remember_token' => null])->save();
+        Log::notice('admin password set from the command line', ['user_id' => $user->id]);
         $this->info('Password changed for '.$user->email.'. Log in at /login.');
 
         return self::SUCCESS;

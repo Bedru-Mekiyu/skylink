@@ -158,4 +158,12 @@ class AdminProfileTest extends TestCase
         $this->actingAs($admin)->put(route('admin.profile.password'), ['current_password' => 'password', 'password' => 'new-password-1', 'password_confirmation' => 'new-password-1'])->assertStatus(429);
         $this->assertTrue(Hash::check('password', $admin->fresh()->password));
     }
+
+    public function test_a_password_change_is_written_to_the_audit_log_without_the_password(): void
+    {
+        \Illuminate\Support\Facades\Log::spy();
+        $admin = $this->admin();
+        $this->actingAs($admin)->put(route('admin.profile.password'), ['current_password' => 'password', 'password' => 'brand-new-pass-9', 'password_confirmation' => 'brand-new-pass-9']);
+        \Illuminate\Support\Facades\Log::shouldHaveReceived('notice')->withArgs(fn ($m, $c = []) => $m === 'admin password changed' && $c === ['user_id' => $admin->id])->once();
+    }
 }
