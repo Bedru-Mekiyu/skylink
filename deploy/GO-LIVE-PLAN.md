@@ -133,3 +133,6 @@ Setup: new subdomain, document root `/home/skylinkictcom/bedru.skylinkict.com/pu
 ## Added 2026-11-21 (4)
 - Gallery photos are imported on bedru only (15 visible, 23 hidden). Decide what stays visible; review faces and stock photos (GALLERY-IMPORT-REPORT.md) BEFORE importing on the live site (steps in UPLOAD-GUIDE.md addendum 4; rollback: `php artisan gallery:import-site-photos --rollback`).
 - The homepage Years Experience counter now reads `config/company.php` (5+), same as the About intro.
+
+## Added 2026-11-21 (5)
+- About page text and spacing changes (intro headline/link, compact team section with a landscape CEO photo, Milestones to Gallery gap). No extra steps.

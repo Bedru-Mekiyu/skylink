@@ -288,3 +288,6 @@ The About gallery can be filled from the site's own photos (15 shown, 23 hidden 
 3. `php artisan cache:clear` (the About page can show the old empty gallery for a few minutes otherwise).
 4. **Undo:** `php artisan gallery:import-site-photos --rollback` (removes everything it imported) or `--rollback --hide-only`. Single photos: Admin > Gallery.
 5. Before showing these on the live site, review the faces and the stock-style photos (footage/_review/GALLERY-IMPORT-REPORT.md).
+
+## Addendum 2026-11-21 (5)
+About page: new intro headline and link text, a compact team section with a landscape CEO photo, and a smaller gap between Milestones and the Gallery. No new files or steps beyond the normal deploy.

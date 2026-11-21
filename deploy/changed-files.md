@@ -69,3 +69,12 @@ No migrations. Rollback: re-upload the previous files, or `git revert`.
 - `app/Console/Commands/ImportSitePhotos.php` (new): `php artisan gallery:import-site-photos` (dry run by default; `--apply`; `--rollback` removes everything it imported; `--rollback --hide-only` hides it). List: `database/data/gallery-site-photos.php` (15 visible, 23 hidden). Source photos (NOT in git or the package, 99 MB): `storage/app/private/gallery-import-src/`. Manifest: `storage/app/private/gallery-import/manifest.json`.
 - `resources/views/pages/index.blade.php`: the "Years Experience" counter reads `config/company.php` (5+).
 - `tests/TestCase.php`: test-only (each test process uses its own temporary storage).
+
+# Added 2026-11-21 (5): About text and spacing
+
+No migrations. Rollback: re-upload the previous version of each file or `git revert`.
+- `resources/views/partials/about-intro.blade.php`: the "About Us" label and the lead-in line are removed; headline is now "5+ YEARS OF DRIVING DIGITAL INNOVATION AND TECHNOLOGICAL EXCELLENCE." (5 from `config/company.php`); link text "MORE ABOUT US →" (still #journey).
+- `resources/views/pages/aboutpage.blade.php`: team section spacing tightened; CEO photo frame is landscape (4:3, up to 400 px wide); Milestones bottom padding reduced (gap to the Gallery about 60 px).
+- `resources/views/partials/gallery.blade.php`: smaller top/bottom padding, title and caption spacing.
+- `resources/views/components/team-member-card.blade.php`: image size attributes for the CEO card.
+- Not shipped: tests, tools.
