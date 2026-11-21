@@ -70,7 +70,7 @@ echo App\\Support\\Anniversary::liveForVisitors() ? 'LIVE' : 'HIDDEN';
     results.push(['fresh install: ceremony HIDDEN for visitors (nothing saved)', /HIDDEN$/.test(fresh.trim())]);
     fs.writeFileSync(path.join(tmp, 'freeze.php'), `<?php
 require ${JSON.stringify(path.join(app, 'vendor', 'autoload.php'))};
-$t = '2026-11-25 12:00:00'; // inside Nov 23 - Dec 7: it must STILL be hidden until an admin turns it on
+$t = '2026-11-25 12:00:00'; // inside Nov 21 - Dec 21: it must STILL be hidden until an admin turns it on
 Carbon\\Carbon::setTestNow(Carbon\\Carbon::parse($t, 'Africa/Addis_Ababa'));
 Carbon\\CarbonImmutable::setTestNow(Carbon\\CarbonImmutable::parse($t, 'Africa/Addis_Ababa'));
 `);

@@ -41,7 +41,7 @@ await page.goto(base + '/admin/anniversary');
 const status = (await page.textContent('#anniversary-status')).trim().replace(/\s+/g, ' ');
 ok(status === 'Currently HIDDEN for visitors (Off). Choose Automatic or On now to enable.', 'Anniversary status: ' + status);
 ok((await page.$('#mode-off:checked')) !== null && (await page.$('#admin_preview:checked')) === null, 'Off selected on a fresh install, preview off');
-ok((await page.inputValue('#starts_at')) === '2026-11-23T00:00' && (await page.inputValue('#ends_at')) === '2026-12-07T00:00', 'pre-filled dates Nov 23 - Dec 7 2026');
+ok((await page.inputValue('#starts_at')) === '2026-11-21T00:00' && (await page.inputValue('#ends_at')) === '2026-12-21T00:00', 'pre-filled dates Nov 21 - Dec 21 2026');
 const inbox = await page.goto(base + '/admin/inbox');
 ok(inbox.status() === 200, 'admin inbox -> ' + inbox.status());
 
