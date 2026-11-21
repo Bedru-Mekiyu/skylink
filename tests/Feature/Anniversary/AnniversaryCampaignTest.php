@@ -123,11 +123,12 @@ class AnniversaryCampaignTest extends TestCase
         $this->automatic();
         $this->at('2026-11-23 00:00:00');
         foreach (['en' => 'Close', 'am' => 'ዝጋ'] as $locale => $label) {
-            $html = $this->withSession(['locale' => $locale])->get('/')->assertOk()->getContent();
+            app()->setLocale($locale);
+            $html = $this->get('/')->assertOk()->getContent();
             $intro = substr($html, strpos($html, 'id="anniv5-intro"'), 1200);
             $this->assertStringContainsString('class="anniv5-intro__skip" aria-label="'.__('anniversary.close', [], $locale).'"', $intro);
             $this->assertStringContainsString('<svg', $intro);
-            $this->assertDoesNotMatchRegularExpression('/skip/i', preg_replace('/anniv5-intro__skip/', '', strip_tags(substr($html, strpos($html, 'id="anniv5-intro"'), 3000))), 'no visible "skip" word');
+            $this->assertDoesNotMatchRegularExpression('/skip/i', preg_replace('/anniv5-intro__skip/', '', strip_tags(preg_replace('#<(script|style).*?</>#is', '', substr($html, strpos($html, 'id="anniv5-intro"'), 9000)))), 'no visible "skip" word');
             $this->assertSame($label, __('anniversary.close', [], $locale));
         }
         $this->assertStringNotContainsString('Skip intro', file_get_contents(lang_path('en/anniversary.php')));
