@@ -124,8 +124,9 @@ class AboutPageTest extends TestCase
     {
         foreach (['/', '/about', '/contact'] as $url) {
             $html = $this->get($url)->assertOk()->getContent();
-            $this->assertStringContainsString('+251-974-967171', $html, $url);
-            $this->assertStringContainsString('+251-936-177777', $html, $url);
+            // same digits, Ethiopian display format (non-breaking spaces)
+            $this->assertStringContainsString("+251\u{00A0}974\u{00A0}967\u{00A0}171", $html, $url);
+            $this->assertStringContainsString("+251\u{00A0}936\u{00A0}177\u{00A0}777", $html, $url);
         }
     }
 
