@@ -18,5 +18,5 @@ return [
     ],
 
     'intro_label' => 'Five-year anniversary introduction',
-    'skip' => 'Skip intro',
+    'close' => 'Close',
 ];

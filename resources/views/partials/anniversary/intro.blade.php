@@ -5,7 +5,7 @@
     Placed right after <body> so it paints before the page; the page keeps loading underneath.
 --}}
 <div id="anniv5-intro" class="anniv5-intro" role="dialog" aria-modal="true" aria-label="{{ __('anniversary.intro_label') }}" hidden>
-    <button type="button" class="anniv5-intro__skip">{{ __('anniversary.skip') }}</button>
+    <button type="button" class="anniv5-intro__skip" aria-label="{{ __('anniversary.close') }}"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
     <div class="anniv5-intro__world" aria-hidden="true">
         <canvas class="anniv5-intro__sky"></canvas>
         <div class="anniv5-intro__core"></div>

@@ -310,9 +310,8 @@
     }
     .anniv5-intro__skip {
         position: absolute; z-index: 3; top: max(16px, env(safe-area-inset-top)); right: max(16px, env(safe-area-inset-right));
-        min-height: 44px; padding: .55rem 1.1rem; border-radius: 999px; cursor: pointer;
-        font-family: var(--font-ui, sans-serif); font-size: .85rem; font-weight: 600; letter-spacing: .04em;
-        color: var(--anniv5-ink); background: rgba(16, 26, 53, .6); border: 1px solid rgba(232, 238, 250, .35);
+        width: 44px; height: 44px; padding: 0; display: grid; place-items: center; border-radius: 50%; cursor: pointer; /* icon-only close button (an X in a circle) */
+        color: var(--anniv5-ink); background: rgba(16, 26, 53, .45); border: 1px solid rgba(232, 238, 250, .3); opacity: .85;
     }
     .anniv5-intro__skip:hover { background: rgba(59, 130, 246, .35); }
     .anniv5-intro__skip:focus-visible { outline: 3px solid var(--anniv5-gold); outline-offset: 3px; }

@@ -136,7 +136,7 @@ for (const mode of ['skip', 'escape']) {
     const page = await ctx.newPage();
     await page.goto(base + '/', { waitUntil: 'domcontentloaded' });
     await page.waitForSelector('#anniv5-intro[data-phase="n2"]', { timeout: 10000 }).catch(() => {});
-    if (mode === 'skip') await page.click('.anniv5-intro__skip'); else await page.keyboard.press('Escape');
+    if (mode === 'skip') await page.click('.anniv5-intro__skip[aria-label]'); else await page.keyboard.press('Escape');
     const gone = await page.waitForSelector('#anniv5-intro', { state: 'detached', timeout: 3000 }).then(() => true, () => false);
     report[`${mode}Works`] = gone;
     if (!gone) fail(`${mode} did not dismiss the intro`);
