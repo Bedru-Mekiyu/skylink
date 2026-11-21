@@ -36,7 +36,7 @@
         .about-intro__wrap { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(32px, 5vw, 72px); align-items: center; }
         .about-intro__card { background: #fff; border-radius: 8px; padding: clamp(28px, 3.4vw, 40px); box-shadow: 0 30px 80px rgba(15, 42, 92, 0.12); color: #0f2a5c; transition: transform 0.35s ease, box-shadow 0.35s ease; }
         .about-intro__card:hover { transform: translateY(-4px); box-shadow: 0 38px 90px rgba(15, 42, 92, 0.16); }
-        .about-intro__headline { margin: 0 0 clamp(20px, 2.4vw, 28px); font-family: var(--font-heading); font-size: clamp(1.75rem, 1.1rem + 2.6vw, 2.75rem); line-height: 1.12; color: #0f2a5c; letter-spacing: -0.01em; }
+        .about-intro__headline { margin: 0 0 clamp(20px, 2.4vw, 28px); font-family: var(--font-heading); font-size: clamp(1.5rem, 0.9rem + 2.8vw, 2.75rem); line-height: 1.12; color: #0f2a5c; letter-spacing: -0.01em; }
         .ai-line { display: block; white-space: nowrap; }
         .ai-strong { font-weight: 800; }
         .ai-light { font-weight: 300; }
@@ -58,7 +58,6 @@
             .about-intro__card { max-width: 560px; width: 100%; margin: 0 auto; }
             .about-intro__body { max-width: 640px; margin: 0 auto; width: 100%; }
         }
-        @media (max-width: 380px) { .ai-line { white-space: normal; } }
         /* Motion: only when the page script allows it (not reduced motion, not Save-Data, not 2G). */
         .ai-anim .about-intro__card { opacity: 0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.22, 0.7, 0.2, 1), box-shadow 0.35s ease; }
         .ai-anim .about-intro.is-in .about-intro__card { opacity: 1; transform: none; }
@@ -74,7 +73,7 @@
         var more = sec.querySelector('[data-ai-more]');
         if (more) more.addEventListener('click', function (e) {
             var t = document.getElementById('journey'); if (!t) return;
-            e.preventDefault(); t.scrollIntoView({ behavior: animate ? 'smooth' : 'auto', block: 'start' });
+            e.preventDefault(); t.scrollIntoView({ behavior: animate ? 'smooth' : 'instant', block: 'start' });
             if (history.replaceState) history.replaceState(null, '', '#journey');
         });
         if (!animate) { sec.classList.add('is-in'); return; }
