@@ -2,7 +2,7 @@
 @php use Illuminate\Support\Str; @endphp
 
 @section('title', 'Explore ' . ucfirst(str_replace('-', ' ', $category)) . ' Services')
-@section('meta_description', 'Discover high-quality services in ' . ucfirst(str_replace('-', ' ', $category)) . ' tailored to your needs.')
+@section('description', 'Discover high-quality services in ' . ucfirst(str_replace('-', ' ', $category)) . ' tailored to your needs.')
 
 @section('content')
 

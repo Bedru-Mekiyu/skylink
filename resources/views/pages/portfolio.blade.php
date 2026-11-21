@@ -1,7 +1,5 @@
 @extends('layouts.master')
 
-@section('title', 'Portfolio - Sky Link IT Solutions')
-@section('description', 'Explore our portfolio of successful IT projects and digital solutions delivered to clients across Ethiopia.')
 
 @push('styles')
     @include('partials.news.styles')

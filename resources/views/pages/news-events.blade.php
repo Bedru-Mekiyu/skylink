@@ -1,7 +1,5 @@
 @extends('layouts.master')
 
-@section('title', $activeCategory ? $activeCategory->label.' | News, Innovations & Events | Sky Link' : 'News, Innovations & Events | Sky Link')
-@section('description', 'Discover the latest developments, updates, and event highlights from our team.')
 
 @push('styles')
     @include('partials.news.styles')
@@ -272,7 +270,7 @@
             <article class="news-featured" lang="{{ $featured->language }}">
                 <div class="news-featured__media">
                     @if ($featured->image_url)
-                        <img src="{{ $featured->image_url }}" alt="" width="1200" height="675" fetchpriority="high" decoding="async">
+                        <img src="{{ $featured->image_url }}" alt="{{ $featured->title }}" width="1200" height="675" fetchpriority="high" decoding="async">
                     @endif
                 </div>
                 <div class="news-featured__body">
@@ -352,7 +350,7 @@
                                 <article class="news-video" lang="{{ $isAmharic ? 'am' : 'en' }}">
                                     <div class="news-video__thumb">
                                         @if ($video->thumbnail_image)
-                                            <img src="{{ asset('storage/'.$video->thumbnail_image) }}" alt="" width="260" height="347" loading="lazy" decoding="async">
+                                            <img src="{{ asset('storage/'.$video->thumbnail_image) }}" alt="{{ $video->title }}" width="260" height="347" loading="lazy" decoding="async">
                                         @endif
                                         <span class="news-video__platform"><i class="{{ $platform[1] }} me-1" aria-hidden="true"></i>{{ $platform[0] }}</span>
                                         <span class="news-video__play" aria-hidden="true"><i class="fas fa-play"></i></span>

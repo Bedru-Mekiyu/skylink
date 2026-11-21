@@ -34,6 +34,10 @@ use App\Http\Controllers\Admin\ProductadminController;
 // --------------------------------------------------
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/sitemap.xml', \App\Http\Controllers\SitemapController::class)->name('sitemap');
+// Duplicate addresses of the home page go to the one canonical address (301).
+Route::redirect('/home', '/', 301);
+// IndexNow key file (only when INDEXNOW_KEY is set; see php artisan seo:ping).
+Route::get('/{key}.txt', fn (string $key) => config('seo.indexnow_key') && hash_equals((string) config('seo.indexnow_key'), $key) ? response($key, 200, ['Content-Type' => 'text/plain; charset=UTF-8']) : abort(404))->where('key', '[A-Za-z0-9-]{8,128}');
 Route::get('/about', [AboutController::class, 'about'])->name('about');
 Route::get('/contact', fn() => view('pages.contact'))->name('contact');
 Route::get('/products', [ProductController::class, 'index'])->name('products');

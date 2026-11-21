@@ -1,5 +1,9 @@
 @extends('layouts.master')
 
+@php
+    \App\Support\Seo::set(['title' => $product->name, 'description' => (string) $product->description, 'breadcrumb' => [['Products', route('products')], [$product->name, url()->current()]]]);
+@endphp
+
 @section('content')
 <div class="container py-5">
   <div class="row align-items-center gy-4">

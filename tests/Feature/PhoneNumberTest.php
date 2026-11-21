@@ -66,7 +66,7 @@ class PhoneNumberTest extends TestCase
     {
         foreach (['/', '/about', '/services', '/products', '/portfolio', '/news', '/contact'] as $path) {
             $html = $this->get($path)->assertOk()->getContent();
-            $this->assertDoesNotMatchRegularExpression('/\+251-\d|\d{3}-\d{6}|\+251 \d{3} \d{6}|974967171|936177777/', preg_replace('/(href="tel:|data-copy=")[^"]*"/', '', $html), $path);
+            $this->assertDoesNotMatchRegularExpression('/\+251-\d|\d{3}-\d{6}|\+251 \d{3} \d{6}|974967171|936177777/', preg_replace(['/(href="tel:|data-copy=")[^"]*"/', '#<script type="application/ld\+json">.*?</script>#s'], '', $html), $path);
             $this->assertStringNotContainsString('tel:+251-', $html, $path);
             $this->assertStringNotContainsString('tel: ', $html, $path);
         }

@@ -1,14 +1,12 @@
 
 <!DOCTYPE html>
-<html lang="en" data-img-fallback="{{ asset('assets/images/placeholder.png') }}">
+<html lang="{{ \App\Support\Seo::lang() }}" data-img-fallback="{{ asset('assets/images/placeholder.png') }}">
 <head>
-    @include('partials.noindex')
-    @include('partials.seo')
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', 'Sky Link - IT Services in Ethiopia')</title>
-    <meta name="description" content="@yield('description', 'Leading IT services company in Ethiopia, providing innovative technology solutions for businesses.')">
+    @include('partials.noindex')
+    @include('partials.seo')
     
     <!-- Fonts -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -513,7 +511,7 @@
         <nav class="navbar navbar-expand-lg navbar-custom" id="mainNavbar">
             <div class="container">
                 <a href="{{ route('home') }}" class="navbar-home-link d-flex align-items-center text-decoration-none" aria-label="Sky Link ICT Solutions - Home">
-                    <img src="{{ asset('assets/images/skylink-logo.webp') }}" alt="" class="logo-img me-2">
+                    <img src="{{ asset('assets/images/skylink-logo.webp') }}" alt="Sky Link Technologies" class="logo-img me-2">
                     
                 </a>
 

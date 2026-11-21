@@ -1,6 +1,4 @@
 @extends('layouts.master')
-@section('title', 'Sky Link - IT Services in Ethiopia')
-@section('description', 'Leading IT services company in Ethiopia, helping businesses succeed with innovative technology solutions.')
 
 @section('additional-styles')
 @push('styles')

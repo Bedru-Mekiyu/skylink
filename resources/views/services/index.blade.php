@@ -2,8 +2,6 @@
 
 @extends('layouts.master')
 
-@section('title', 'Sky Link - IT Services in Ethiopia')
-@section('description', 'Leading IT services company in Ethiopia, helping businesses succeed with innovative technology solutions.')
 
 {{-- (An unclosed @section('additional-styles') used to sit here; it left an
      output buffer open on every request. The styles below use the stack.) --}}

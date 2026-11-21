@@ -12,36 +12,18 @@
     $showLead = $newsItem->content_format !== 'html' && $newsItem->excerpt && ! str_starts_with(trim((string) $newsItem->content), $excerptStart);
 @endphp
 
-@section('title', $newsItem->title.' | Sky Link News')
-@section('description', $summary)
+@php
+    // Head data (title = the article headline, canonical, share tags, NewsArticle JSON-LD) come from App\Support\Seo.
+    \App\Support\Seo::set([
+        'title' => $newsItem->title, 'title_is_headline' => true, 'description' => $summary, 'type' => 'article',
+        'image' => $newsItem->share_image_url, 'lang' => $newsItem->language === 'am' ? 'am' : 'en',
+        'published' => $newsItem->display_date->toIso8601String(), 'modified' => optional($newsItem->updated_at)->toIso8601String(),
+        'noindex' => $isPreview, 'breadcrumb' => [['News', route('content.index')], [$newsItem->title, $pageUrl]],
+    ]);
+@endphp
 
 @push('styles')
     {{-- Share previews (Telegram, Facebook, LinkedIn, X) --}}
-    @if ($isPreview)
-        <meta name="robots" content="noindex, nofollow">
-    @endif
-    <link rel="canonical" href="{{ $pageUrl }}">
-    <meta property="og:type" content="article">
-    <meta property="og:site_name" content="Sky Link Technologies">
-    <meta property="og:title" content="{{ $newsItem->title }}">
-    <meta property="og:description" content="{{ $summary }}">
-    <meta property="og:url" content="{{ $pageUrl }}">
-    @if ($newsItem->share_image_url)
-        {{-- JPEG share copy: not every network shows WebP previews. --}}
-        <meta property="og:image" content="{{ $newsItem->share_image_url }}">
-        @if ($newsItem->image_share)
-            <meta property="og:image:type" content="image/jpeg">
-        @endif
-        <meta property="og:image:alt" content="{{ $newsItem->title }}">
-    @endif
-    <meta property="article:published_time" content="{{ $newsItem->display_date->toIso8601String() }}">
-    <meta name="twitter:card" content="{{ $newsItem->share_image_url ? 'summary_large_image' : 'summary' }}">
-    <meta name="twitter:title" content="{{ $newsItem->title }}">
-    <meta name="twitter:description" content="{{ $summary }}">
-    @if ($newsItem->share_image_url)
-        <meta name="twitter:image" content="{{ $newsItem->share_image_url }}">
-    @endif
-
     @include('partials.news.styles')
     <style>
         .article-banner {
@@ -254,7 +236,7 @@
     @endif
     <section class="news-banner article-banner">
         @if ($newsItem->image_url)
-            <img class="news-banner__img" src="{{ $newsItem->image_url }}" alt="" width="1600" height="900" fetchpriority="high" decoding="async">
+            <img class="news-banner__img" src="{{ $newsItem->image_url }}" alt="{{ $newsItem->title }}" width="1600" height="900" fetchpriority="high" decoding="async">
         @endif
         <div class="container" lang="{{ $newsItem->language }}">
             <a class="article-back" href="{{ route('content.index') }}"><i class="fas fa-arrow-left" aria-hidden="true"></i> All news</a><br>
