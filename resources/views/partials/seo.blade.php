@@ -23,6 +23,7 @@
 <meta property="og:description" content="{{ $seo['description'] }}">
 <meta property="og:url" content="{{ $seo['canonical'] }}">
 <meta property="og:image" content="{{ $seo['image'] }}">
+@if ($seo['image_type'])<meta property="og:image:type" content="{{ $seo['image_type'] }}">@endif
 @if ($seo['image_is_default'])
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">

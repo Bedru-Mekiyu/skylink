@@ -70,6 +70,7 @@ class Seo
             'locale' => ($page['lang'] ?? 'en') === 'am' ? 'am_ET' : 'en_US',
             'image' => $image,
             'image_is_default' => ! $hasOwnImage,
+            'image_type' => $page['image_type'] ?? null,
             'published' => $page['published'] ?? null,
             'modified' => $page['modified'] ?? null,
             'noindex' => (bool) ($page['noindex'] ?? ($status === 404)),

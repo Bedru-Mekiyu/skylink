@@ -16,7 +16,7 @@
     // Head data (title = the article headline, canonical, share tags, NewsArticle JSON-LD) come from App\Support\Seo.
     \App\Support\Seo::set([
         'title' => $newsItem->title, 'title_is_headline' => true, 'description' => $summary, 'type' => 'article',
-        'image' => $newsItem->share_image_url, 'lang' => $newsItem->language === 'am' ? 'am' : 'en',
+        'image' => $newsItem->share_image_url, 'image_type' => $newsItem->image_share ? 'image/jpeg' : null, 'lang' => $newsItem->language === 'am' ? 'am' : 'en',
         'published' => $newsItem->display_date->toIso8601String(), 'modified' => optional($newsItem->updated_at)->toIso8601String(),
         'noindex' => $isPreview, 'breadcrumb' => [['News', route('content.index')], [$newsItem->title, $pageUrl]],
     ]);
