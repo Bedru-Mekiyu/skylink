@@ -118,7 +118,7 @@ return [
     ],
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS') ?: env('COMPANY_EMAIL', 'info@skylinkictet.com'),
+        'address' => env('MAIL_FROM_ADDRESS') ?: env('COMPANY_EMAIL', 'info@skylinkict.com'),
         'name' => env('MAIL_FROM_NAME', 'Example'),
     ],
 

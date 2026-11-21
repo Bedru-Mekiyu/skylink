@@ -16,7 +16,7 @@ class ReplaceOldEmailAddresses extends Command
 
     protected $description = 'Replace the old company email addresses in database text with COMPANY_EMAIL (dry run by default)';
 
-    private const OLD = ['info@skylinkict.com', 'info@skylink.com', 'info@skylinktech.com'];
+    private const OLD = ['info@skylinkictet.com', 'info@skylink.com', 'info@skylinktech.com'];
 
     public function handle(): int
     {

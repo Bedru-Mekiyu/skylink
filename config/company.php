@@ -11,7 +11,7 @@
  * (config/mail.php). Change it with COMPANY_EMAIL in .env (one line).
  */
 return [
-    'email' => env('COMPANY_EMAIL', 'info@skylinkictet.com'),
+    'email' => env('COMPANY_EMAIL', 'info@skylinkict.com'),
 
     'years_experience' => 5,
 ];

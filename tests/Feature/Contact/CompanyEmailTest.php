@@ -12,13 +12,13 @@ class CompanyEmailTest extends TestCase
 {
     use RefreshDatabase;
 
-    private const OLD = ['info@skylinkict.com', 'info@skylink.com', 'info@skylinktech.com'];
+    private const OLD = ['info@skylinkictet.com', 'info@skylink.com', 'info@skylinktech.com'];
 
     public function test_the_new_address_is_the_default_and_shown_on_the_contact_page_with_a_mailto_link(): void
     {
-        $this->assertSame('info@skylinkictet.com', config('company.email'));
+        $this->assertSame('info@skylinkict.com', config('company.email'));
         $html = $this->get('/contact')->assertOk()->getContent();
-        $this->assertStringContainsString('<a href="mailto:info@skylinkictet.com">info@skylinkictet.com</a>', $html);
+        $this->assertStringContainsString('<a href="mailto:info@skylinkict.com">info@skylinkict.com</a>', $html);
     }
 
     public function test_no_old_address_remains_in_rendered_public_pages_or_in_the_code(): void
@@ -61,7 +61,7 @@ class CompanyEmailTest extends TestCase
         $this->assertStringContainsString("env('COMPANY_EMAIL'", $contact);
         $this->assertStringContainsString("env('COMPANY_EMAIL'", $mail);
         $this->assertSame(config('company.email'), config('contact.inbox') ?: config('company.email'));
-        $this->assertStringContainsString('COMPANY_EMAIL=info@skylinkictet.com', file_get_contents(base_path('deploy/production.env.example')));
+        $this->assertStringContainsString('COMPANY_EMAIL=info@skylinkict.com', file_get_contents(base_path('deploy/production.env.example')));
     }
 
     public function test_the_test_send_command_is_a_dry_run_by_default_and_sends_only_to_the_company_address(): void

@@ -104,7 +104,7 @@ class InquiryTest extends TestCase
         $c = $this->contactConfigWith(['COMPANY_EMAIL' => 'company@example.test']);
         $this->assertSame('company@example.test', $c['inboxes']['subscription']);
         $c = $this->contactConfigWith([]);
-        $this->assertSame('info@skylinkictet.com', $c['inboxes']['subscription']);
+        $this->assertSame('info@skylinkict.com', $c['inboxes']['subscription']);
     }
 
     // ----- every form type ----------------------------------------------------
