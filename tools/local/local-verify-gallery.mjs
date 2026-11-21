@@ -1,6 +1,6 @@
 // LOCAL USE ONLY (never against bedru). Gallery behaviour in a real browser on the local site (http://127.0.0.1:8000).
 //   node tools/local/local-verify-gallery.mjs            (needs >= 3 visible gallery photos; seed with .seedgal.php)
-// Checks: autoplay, hover/focus/pause, buttons, swipe, keyboard, lightbox (dialog, focus trap, Esc, outside click, focus return),
+// Checks: autoplay, hover pause, NO visible controls (no arrows/dots/pause), swipe, keyboard, lightbox (dialog, focus trap, Esc, outside click, focus return),
 // reduced motion + Save-Data = static grid, 4x CPU-throttled frame rate, no sideways scroll, no overlap with fixed widgets.
 import { chromium } from 'playwright-core';
 import fs from 'node:fs';
@@ -26,12 +26,8 @@ rec('auto-advances by itself', c0 !== c1, `${c0.slice(0, 28)} -> ${c1.slice(0, 2
 await p.hover('#gallery .sk-gallery__stage'); const h0 = await caption(p); await p.waitForTimeout(6500);
 rec('pauses on hover', h0 === await caption(p));
 await p.mouse.move(5, 5); await p.waitForTimeout(300);
-await p.click('#gallery [data-act="pause"]'); await p.mouse.move(5, 5); const u0 = await caption(p); await p.waitForTimeout(6500);
-rec('pause button stops it (aria-pressed true)', u0 === await caption(p) && (await p.getAttribute('#gallery [data-act="pause"]', 'aria-pressed')) === 'true');
-await p.click('#gallery [data-act="next"]'); await p.waitForTimeout(400);
-rec('next button moves', (await caption(p)) !== u0);
-await p.click('#gallery [data-act="prev"]'); await p.waitForTimeout(400);
-rec('prev button moves back', (await caption(p)) === u0);
+rec('no visible controls: no prev/next/pause buttons, no dots', await p.evaluate(() => !document.querySelector('#gallery [data-act], #gallery .sk-gallery__bar, #gallery .sk-gallery__btn, #gallery [role="tablist"]')));
+const u0 = await caption(p); await p.mouse.move(5, 5);
 // swipe with the mouse
 const box = await p.locator('#gallery .sk-gallery__stage').boundingBox();
 await p.mouse.move(box.x + box.width * 0.7, box.y + box.height / 2); await p.mouse.down(); await p.mouse.move(box.x + box.width * 0.3, box.y + box.height / 2, { steps: 8 }); await p.mouse.up(); await p.waitForTimeout(500);
@@ -69,7 +65,7 @@ await c.close();
 
 // ---- reduced motion and Save-Data: static grid, no rotation ----
 [c, p] = await newPage({ reducedMotion: 'reduce' }); await toGallery(p);
-const rm = await p.evaluate(() => ({ cin: document.querySelector('#gallery').classList.contains('is-cinematic'), cols: getComputedStyle(document.querySelector('.sk-gallery__track')).display, bar: getComputedStyle(document.querySelector('.sk-gallery__bar')).display }));
+const rm = await p.evaluate(() => ({ cin: document.querySelector('#gallery').classList.contains('is-cinematic'), cols: getComputedStyle(document.querySelector('.sk-gallery__track')).display, bar: document.querySelector('.sk-gallery__bar') ? 'present' : 'none' }));
 const r0 = await p.evaluate(() => document.querySelector('.sk-gallery__track').getBoundingClientRect().height); await p.waitForTimeout(6000);
 rec('reduced motion: static grid, no controls, no rotation', !rm.cin && rm.cols === 'grid' && rm.bar === 'none' && r0 === await p.evaluate(() => document.querySelector('.sk-gallery__track').getBoundingClientRect().height));
 await p.screenshot({ path: path.join(out, 'gallery-local-reduced-motion.png') });
@@ -103,7 +99,7 @@ for (const [w, h, dsf, label] of [[320, 640, 1, '320'], [360, 740, 1, '360'], [3
         const rect = (e) => { const b = e.getBoundingClientRect(); return { l: b.left, t: b.top, r: b.right, b: b.bottom }; };
         const hit = (a, b) => a.l < b.r && a.r > b.l && a.t < b.b && a.b > b.t;
         const fixed = [...document.querySelectorAll('body *')].filter((e) => { const cs = getComputedStyle(e); return cs.position === 'fixed' && cs.display !== 'none' && cs.visibility !== 'hidden' && parseFloat(cs.opacity) > 0 && e.getBoundingClientRect().width > 0 && !e.closest('.sk-lb'); });
-        const btns = [...g.querySelectorAll('.sk-gallery__btn')].map(rect);
+        const btns = [...g.querySelectorAll('.sk-gallery__stage, .sk-gallery__caption')].map(rect);
         const bad = []; fixed.forEach((f) => { const fr = rect(f); if (btns.some((b) => hit(b, fr))) bad.push(f.className || f.tagName); });
         return { ovf: document.documentElement.scrollWidth - innerWidth, cin: g.classList.contains('is-cinematic'), stage: Math.round(g.querySelector('.sk-gallery__stage').getBoundingClientRect().height), overlap: bad };
     });

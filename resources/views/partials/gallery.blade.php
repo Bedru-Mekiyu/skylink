@@ -1,7 +1,7 @@
 {{--
     About-page gallery (Admin > Gallery): ONE collection of photos of our work and our time with partners and clients.
     3+ photos: a slow, endless, revolving coverflow (CSS transforms + opacity, vanilla JS, no library) that pauses on
-    hover / focus / off-screen / hidden tab, with prev-next, pause button, swipe and keyboard. Click opens a lightbox.
+    hover / focus / off-screen / hidden tab. No visible controls: swipe, arrow keys and click-to-open lightbox only.
     1-2 photos, reduced motion, Save-Data / 2G, or no JavaScript: a plain responsive grid (still opens the lightbox).
     No visible photos: nothing is rendered at all (no gap). Thumbnails are in the page, large images load only in the lightbox.
 --}}
@@ -35,11 +35,6 @@
         </div>
     </div>
 
-    <div class="sk-gallery__bar">
-        <button type="button" class="sk-gallery__btn" data-act="prev" aria-label="Previous photo"><i class="fas fa-chevron-left" aria-hidden="true"></i></button>
-        <button type="button" class="sk-gallery__btn" data-act="pause" aria-label="Pause the slideshow" aria-pressed="false"><i class="fas fa-pause" aria-hidden="true"></i></button>
-        <button type="button" class="sk-gallery__btn" data-act="next" aria-label="Next photo"><i class="fas fa-chevron-right" aria-hidden="true"></i></button>
-    </div>
     <p class="sk-gallery__caption" data-caption aria-live="polite"></p>
 
     <script type="application/json" id="sk-gallery-data">@json($gallery)</script>
@@ -57,9 +52,9 @@
     @media (max-width: 575.98px) { .sk-gallery[data-count="2"] .sk-gallery__track { grid-template-columns: minmax(0, 1fr); } }
     .sk-gallery__slide { margin: 0; aspect-ratio: 3 / 2; border-radius: 14px; overflow: hidden; background: #0b1f46; box-shadow: 0 14px 34px rgba(0, 0, 0, 0.35); }
     .sk-gallery__open { display: block; width: 100%; height: 100%; padding: 0; border: 0; background: none; cursor: zoom-in; border-radius: inherit; }
-    .sk-gallery__open:focus-visible, .sk-gallery__btn:focus-visible { outline: 3px solid #7db4ff; outline-offset: 3px; }
+    .sk-gallery__open:focus-visible { outline: 3px solid #7db4ff; outline-offset: 3px; }
     .sk-gallery__open img { display: block; width: 100%; height: 100%; object-fit: cover; }
-    .sk-gallery__bar, .sk-gallery__caption { display: none; }
+    .sk-gallery__caption { display: none; }
 
     /* ---- cinematic: coverflow arc with depth + parallax ---- */
     .sk-gallery.is-cinematic .sk-gallery__stage { --h: clamp(230px, 31vw, 440px); --sw: min(62vw, calc(var(--h) * 1.3)); position: relative; height: var(--h); perspective: 1400px; perspective-origin: 50% 45%; contain: layout paint; touch-action: pan-y; }
@@ -72,11 +67,8 @@
     .sk-gallery.is-cinematic .sk-gallery__slide.is-edge { pointer-events: none; }
     .sk-gallery.is-cinematic .sk-gallery__open img { transform: translateX(calc(var(--off, 0) * -4%)) scale(1.12); transition: transform 1s cubic-bezier(0.22, 0.7, 0.2, 1); }
     .sk-gallery.is-cinematic .sk-gallery__slide.is-jump .sk-gallery__open img { transition: none; }
-    .sk-gallery.is-cinematic .sk-gallery__bar { display: flex; justify-content: center; gap: 12px; margin-top: 18px; }
     .sk-gallery.is-cinematic .sk-gallery__caption { display: block; text-align: center; min-height: 3.2em; margin: 10px auto 0; padding: 0 20px; max-width: 760px; color: rgba(226, 236, 255, 0.92); }
     .sk-gallery__caption [lang="am"] { display: block; margin-top: 2px; }
-    .sk-gallery__btn { width: 44px; height: 44px; border-radius: 50%; border: 1px solid rgba(255, 255, 255, 0.35); background: rgba(255, 255, 255, 0.08); color: #fff; display: inline-grid; place-items: center; cursor: pointer; }
-    .sk-gallery__btn:hover { background: rgba(255, 255, 255, 0.2); }
 
     /* ---- lightbox ---- */
     .sk-lb { position: fixed; inset: 0; z-index: 2000; display: grid; grid-template-rows: 1fr auto; background: rgba(3, 9, 22, 0.94); color: #fff; touch-action: pan-y; }
@@ -99,9 +91,9 @@
     var root = document.getElementById('gallery'); if (!root) return;
     var data = JSON.parse(document.getElementById('sk-gallery-data').textContent), n = data.length;
     var slides = [].slice.call(root.querySelectorAll('.sk-gallery__slide')), stage = root.querySelector('.sk-gallery__stage');
-    var capEl = root.querySelector('[data-caption]'), pauseBtn = root.querySelector('[data-act="pause"]');
+    var capEl = root.querySelector('[data-caption]');
     var cinematic = root.classList.contains('is-cinematic'), cur = 0, timer = null;
-    var flags = { hover: false, focus: false, lb: false, hidden: false, off: false, user: false };
+    var flags = { hover: false, focus: false, lb: false, hidden: false, off: false };
 
     function caption(g, el) {
         el.textContent = '';
@@ -137,18 +129,11 @@
     }
     var jumpFix = true;
     function go(to) { cur = (to + n) % n; render(false); }
-    function running() { return cinematic && !flags.user && !flags.hover && !flags.focus && !flags.lb && !flags.hidden && !flags.off; }
+    function running() { return cinematic && !flags.hover && !flags.focus && !flags.lb && !flags.hidden && !flags.off; }
     function schedule() { clearTimeout(timer); if (running()) timer = setTimeout(function () { go(cur + 1); schedule(); }, 4800); }
 
     if (cinematic) {
         render(true);
-        root.querySelector('.sk-gallery__bar').addEventListener('click', function (e) {
-            var b = e.target.closest('[data-act]'); if (!b) return;
-            if (b.dataset.act === 'prev') go(cur - 1);
-            else if (b.dataset.act === 'next') go(cur + 1);
-            else { flags.user = !flags.user; b.setAttribute('aria-pressed', flags.user); b.setAttribute('aria-label', flags.user ? 'Play the slideshow' : 'Pause the slideshow'); b.firstElementChild.className = 'fas ' + (flags.user ? 'fa-play' : 'fa-pause'); }
-            schedule();
-        });
         stage.addEventListener('mouseenter', function () { flags.hover = true; schedule(); });
         stage.addEventListener('mouseleave', function () { flags.hover = false; schedule(); });
         root.addEventListener('focusin', function () { flags.focus = true; schedule(); });

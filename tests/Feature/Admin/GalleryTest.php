@@ -105,8 +105,12 @@ class GalleryTest extends TestCase
     {
         $this->addPhotos(4);
         $html = $this->get(route('about'))->getContent();
-        foreach (['prefers-reduced-motion', 'aria-roledescription="carousel"', 'aria-modal', 'saveData', 'IntersectionObserver', 'Escape', 'data-act="pause"'] as $needle) {
+        foreach (['prefers-reduced-motion', 'aria-roledescription="carousel"', 'aria-modal', 'saveData', 'IntersectionObserver', 'Escape'] as $needle) {
             $this->assertStringContainsString($needle, $html, $needle);
+        }
+        // The gallery turns by itself: no visible prev/next/pause buttons and no dots.
+        foreach (['sk-gallery__bar', 'sk-gallery__btn', 'data-act=', 'aria-pressed'] as $gone) {
+            $this->assertStringNotContainsString($gone, $html, $gone);
         }
     }
 
