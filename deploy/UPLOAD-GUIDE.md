@@ -291,3 +291,14 @@ The About gallery can be filled from the site's own photos (15 shown, 23 hidden 
 
 ## Addendum 2026-11-21 (5)
 About page: new intro headline and link text, a compact team section with a landscape CEO photo, and a smaller gap between Milestones and the Gallery. No new files or steps beyond the normal deploy.
+
+## Addendum 2026-11-21 (6): admin features, email setting
+1. Deploy as usual; `server-deploy.sh` shows **2 pending migrations** (testimonials, departments): answer `yes`. They import the existing 6 testimonials and 2 department cards, so the public pages look the same.
+2. After deploying: `php artisan cache:clear`.
+3. **Email (you do this, never send me the password):** in the site's `.env` set
+   `COMPANY_EMAIL=info@skylinkictet.com`, `MAIL_MAILER=smtp`, `MAIL_HOST=`, `MAIL_PORT=`, `MAIL_SCHEME=` (`smtps` for 465, `smtp` for 587), `MAIL_USERNAME=`, `MAIL_PASSWORD=`, `MAIL_FROM_ADDRESS=` (empty = COMPANY_EMAIL), `MAIL_FROM_NAME=`. Optional: `CONTACT_INBOX=` / `QUOTE_INBOX=` / `SUPPORT_INBOX=` (empty = COMPANY_EMAIL). On bedru keep `MAIL_STAGING_GUARD=true`. Then `php artisan config:clear`.
+   **First check that the domain skylinkictet.com exists and has mail records (MX, SPF, DKIM): today it does not.**
+4. Test mail, only after you add the password and decide: `php artisan mail:send-test` shows the plan; `php artisan mail:send-test --send` sends 5 labelled emails to COMPANY_EMAIL only.
+5. Old addresses inside database content: `php artisan email:replace-old-addresses` (list), then `--apply`.
+6. Admin > Portfolio: the newest project is now the banner by itself; tick "Pin as banner" to override.
+7. Undo a migration: see changed-files.md (rollback lines).

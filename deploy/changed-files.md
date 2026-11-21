@@ -78,3 +78,20 @@ No migrations. Rollback: re-upload the previous version of each file or `git rev
 - `resources/views/partials/gallery.blade.php`: smaller top/bottom padding, title and caption spacing.
 - `resources/views/components/team-member-card.blade.php`: image size attributes for the CEO card.
 - Not shipped: tests, tools.
+
+# Added 2026-11-21 (6): admin features and About/home fixes (branch feat/admin-features-and-about-fixes)
+
+**New migrations (additive; each imports the existing content):**
+- `2026_11_25_100000_create_testimonials_table` imports the 6 testimonials (rollback: `php artisan migrate:rollback --path=database/migrations/2026_11_25_100000_create_testimonials_table.php`)
+- `2026_11_25_100100_create_departments_table` imports the 2 department cards (rollback: `--path=database/migrations/2026_11_25_100100_create_departments_table.php`)
+Rolling back drops the table; uploaded pictures in `storage/app/public/{testimonials,departments}` stay on disk.
+
+**New admin pages:** Testimonials, Departments (left menu). Reorder with arrows, hide, delete (modal, files removed).
+**Delete buttons (files removed too):** Partners, Gallery (edit page), News "Delete permanently" (row, images, old-address redirects), and file cleanup on delete for Portfolio (pinned banner is blocked), Videos, Products, Services. Hide stays everywhere.
+**Portfolio banner:** the NEWEST project is the banner automatically; "Pin as banner" (old "Feature on top") overrides it.
+**Public changes:** homepage anniversary headline "Happy 5th Anniversary!" (block 20 px higher); About Milestones labels removed; About banner photo cropped (`public/assets/images/about/team-banner.jpg` + `_opt/about/team-banner-*.webp`); testimonial strip is now an endless loop without a jump (home + Services); department cards come from the admin.
+**New files/folders:** `config/team.php`, `config/company.php` (years + `email`), `app/Models/{Testimonial,Department}.php`, `app/Support/{SmallImageProcessor,MediaCleanup}.php`, `database/data/testimonials-initial.php`, partials `testimonials-strip`, `departments`; upload folders `storage/app/public/{testimonials,departments}` (script-blocking .htaccess is created automatically).
+**Limits:** testimonial photo / department picture: JPG/PNG/WebP, 4 MB, min 80 px; portfolio video clip 20 MB (the server limit is named in the error message).
+**Email:** new env variable `COMPANY_EMAIL` (default `info@skylinkictet.com`) is the one setting for the Contact page, the inbox (`CONTACT_INBOX` still overrides) and the sender (`MAIL_FROM_ADDRESS` still overrides). **DNS: the domain skylinkictet.com does not exist yet (no A, MX, SPF, DKIM, DMARC): mail to or from it will not arrive until the domain and its mail records exist.**
+**New commands:** `php artisan mail:send-test` (dry run; `--send` sends 5 labelled test mails to COMPANY_EMAIL only), `php artisan email:replace-old-addresses` (dry run; `--apply`), `php artisan gallery:import-site-photos` (earlier).
+Not shipped: tests, tools, the photo sources.

@@ -136,3 +136,8 @@ Setup: new subdomain, document root `/home/skylinkictcom/bedru.skylinkict.com/pu
 
 ## Added 2026-11-21 (5)
 - About page text and spacing changes (intro headline/link, compact team section with a landscape CEO photo, Milestones to Gallery gap). No extra steps.
+
+## Added 2026-11-21 (6)
+- 2 new migrations (testimonials, departments) with import and tested rollback; new admin pages; delete buttons with file cleanup; Portfolio banner rule (newest, pin overrides); new `COMPANY_EMAIL` setting.
+- **Go-live blocker:** the domain **skylinkictet.com does not exist in DNS** (no MX/SPF/DKIM/DMARC). Create the domain and its mail records (or confirm the address) BEFORE using info@skylinkictet.com on the live site; until then website emails to/from it will not arrive. skylinkict.com does have MX + SPF + DKIM (no DMARC).
+- Replace the Head of Marketing placeholder (see earlier item).
