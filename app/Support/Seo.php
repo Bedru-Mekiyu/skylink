@@ -43,7 +43,7 @@ class Seo
     {
         $page = self::$page;
         self::flush();
-        $cfg = $routeName ? config('seo.pages.'.$routeName) : null;
+        $cfg = $routeName ? (config('seo.pages')[$routeName] ?? null) : null; // not config('seo.pages.x'): route names contain dots
         if ($status === 404) {
             $cfg = config('seo.not_found');
         }

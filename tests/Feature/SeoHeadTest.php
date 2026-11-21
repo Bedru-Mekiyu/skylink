@@ -51,6 +51,7 @@ class SeoHeadTest extends TestCase
         $this->assertCount(count(self::PAGES), array_unique($descriptions), 'descriptions are unique');
         $this->assertSame('Sky Link Technologies | IT Solutions in Addis Ababa, Ethiopia', $titles[0]);
         $this->assertSame('About Us | Sky Link Technologies', $titles[1]);
+        $this->assertSame('News and Events | Sky Link Technologies', $titles[5], 'route name content.index contains a dot');
         $this->assertSame('Software Development Services | Sky Link Technologies', $titles[2]);
     }
 
