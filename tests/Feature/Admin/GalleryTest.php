@@ -75,16 +75,29 @@ class GalleryTest extends TestCase
         $this->assertStringNotContainsString('sk-gallery', $this->get(route('about'))->getContent());
     }
 
-    public function test_gallery_sits_between_why_clients_and_the_team_for_1_3_12_and_60_photos(): void
+    public function test_empty_gallery_leaves_milestones_directly_above_the_footer(): void
+    {
+        $html = $this->get(route('about'))->assertOk()->getContent();
+        $this->assertStringNotContainsString('sk-gallery', $html);
+        $this->assertStringNotContainsString('id="gallery"', $html);
+        $between = substr($html, strpos($html, 'Milestones'));
+        $between = substr($between, strpos($between, '</section>') + 10, strpos($between, '<footer class="footer"') - strpos($between, '</section>') - 10);
+        $this->assertSame('</main>', trim(preg_replace('#<!--.*?-->|<script.*?</script>|<style.*?</style>#s', '', $between)), 'only the closing main tag between Milestones and the footer');
+    }
+
+    public function test_gallery_is_the_last_section_after_milestones_and_before_the_footer_for_1_3_12_and_60_photos(): void
     {
         foreach ([1, 3, 12, 60] as $count) {
             GalleryImage::query()->delete();
             $this->addPhotos($count);
             $html = $this->get(route('about'))->getContent();
-            $why = strpos($html, 'Why Clients Choose Us');
-            $gal = strpos($html, 'id="gallery"');
             $team = strpos($html, 'Meet the People Behind the Vision');
-            $this->assertTrue($why < $gal && $gal < $team, "$count photos: wrong placement");
+            $mile = strpos($html, 'Milestones');
+            $gal = strpos($html, 'id="gallery"');
+            $footer = strpos($html, '<footer class="footer"');
+            $this->assertTrue($team < $mile && $mile < $gal && $gal < $footer, "$count photos: order must be Milestones, Gallery, footer");
+            $this->assertSame(1, substr_count($html, 'id="gallery"'), 'the old position is gone (one gallery only)');
+            $this->assertSame(1, substr_count($html, 'id="sk-gallery-data"'));
             $this->assertSame($count, substr_count($html, 'class="sk-gallery__slide"'), "$count photos");
             $this->assertStringContainsString('data-count="'.$count.'"', $html);
         }

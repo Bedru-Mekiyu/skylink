@@ -795,9 +795,6 @@ We lead the market by creating disciplined culture that will have much bigger ef
     </div>
 </section>
 
-
-@include('partials.gallery')
-
 <!-- Team Section -->
 <section class="team-section py-5 bg-light">
     <div class="container">
@@ -1241,6 +1238,9 @@ We lead the market by creating disciplined culture that will have much bigger ef
         
     </div>
 </section>
+
+{{-- Gallery: last section, right above the footer (hidden when there are no visible photos) --}}
+@include('partials.gallery')
 @endsection
 
 @push('scripts')
