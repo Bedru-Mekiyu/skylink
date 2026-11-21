@@ -31,7 +31,8 @@ class AboutPageTest extends TestCase
         $team = substr($team, 0, strpos($team, 'Teams Grid'));
         $rows = explode('class="row g-4', $team);
         $this->assertStringContainsString('Mohammedkerem Ahmed', $rows[1]);
-        $this->assertSame(1, substr_count($rows[1], 'col-lg-3'));
+        $this->assertSame(1, substr_count($rows[1], 'team-card--lead'), 'the CEO card is the large one');
+        $this->assertSame(0, substr_count($rows[2], 'team-card--lead'));
         $this->assertSame(4, substr_count($rows[2], 'col-lg-3'), 'bottom row: three core members plus Head of Marketing');
         $this->assertStringContainsString('Head of Marketing', $rows[2]);
         $this->assertLessThan(strpos($rows[2], 'Head of Marketing'), strpos($rows[2], 'Hanan Nesru'));
@@ -80,6 +81,47 @@ class AboutPageTest extends TestCase
         // real name and photo: production is fine
         config(['mail.staging_guard.enabled' => false, 'team.marketing.name' => 'Real Person', 'team.marketing.image' => 'assets/images/about/hanan.jpg']);
         $this->artisan('team:check-placeholder')->assertSuccessful();
+    }
+
+    public function test_about_intro_has_no_phone_item_keeps_all_words_and_reads_years_from_config(): void
+    {
+        $html = $this->get(route('about'))->assertOk()->getContent();
+        $intro = substr($html, strpos($html, '<section class="about-intro"'));
+        $intro = substr($intro, 0, strpos($intro, '</section>'));
+        $this->assertStringNotContainsString('Call to ask any question', $html);
+        $this->assertDoesNotMatchRegularExpression('/\+?251[\s-]?9\d|fa-phone|tel:/', $intro);
+        foreach (['About Us', 'The Best IT Solution With Many Years of Experience', 'At Sky Link Technologies, we turn visionary concepts into cutting-edge digital solutions.', 'Award Winning', 'Dedicated Support', 'Professional Staff', 'Fair Prices', 'MORE INFORMATION', 'YEARS', 'EXPERIENCE', 'INDUSTRY.'] as $words) {
+            $this->assertStringContainsString($words, $intro, $words);
+        }
+        $this->assertStringContainsString('data-ai-count="5"', $intro);
+        config(['company.years_experience' => 7]);
+        $this->assertStringContainsString('data-ai-count="7"', $this->get(route('about'))->getContent());
+        $this->assertStringContainsString('id="journey"', $html, 'the MORE INFORMATION link has a target');
+        $this->assertStringContainsString('href="#journey"', $intro);
+        // the intro is the plain white section; reduced motion / Save-Data switch the motion off
+        $this->assertStringContainsString('prefers-reduced-motion', $intro);
+        $this->assertStringContainsString('saveData', $intro);
+    }
+
+    public function test_company_numbers_stay_in_navbar_footer_and_contact_page(): void
+    {
+        foreach (['/', '/about', '/contact'] as $url) {
+            $html = $this->get($url)->assertOk()->getContent();
+            $this->assertStringContainsString('+251-974-967171', $html, $url);
+            $this->assertStringContainsString('+251-936-177777', $html, $url);
+        }
+    }
+
+    public function test_ceo_card_is_larger_than_the_other_cards_at_every_breakpoint(): void
+    {
+        $html = $this->get(route('about'))->getContent();
+        $this->assertSame(1, preg_match_all('/class="[^"]*team-card--lead/', $html), 'exactly one lead card');
+        // desktop/tablet/phone: the lead photo is up to 410 px (or 86% of the width), the others 240 px or less
+        $this->assertMatchesRegularExpression('/\.team-card--lead \.team-card__photo \{ width: min\(86%, 410px\)/', $html);
+        $this->assertMatchesRegularExpression('/\.team-card__photo \{[^}]*width: min\(100%, 240px\)/', $html);
+        $this->assertGreaterThanOrEqual(1.6, 410 / 240);
+        $this->assertLessThanOrEqual(1.8, 410 / 240);
+        $this->assertStringContainsString('width="820"', $html);
     }
 
     public function test_team_photos_are_one_rounded_square_ratio_not_circles(): void

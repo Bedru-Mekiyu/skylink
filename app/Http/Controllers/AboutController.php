@@ -25,6 +25,7 @@ class AboutController extends Controller
             'name' => config('team.ceo.name'),
             'title' => config('team.ceo.title'),
             'image' => asset(config('team.ceo.image')),
+            'lead' => true, // the CEO card is shown larger (see .team-card--lead)
             'bgColor' => '#f7f7f7ff',
         ],
         [

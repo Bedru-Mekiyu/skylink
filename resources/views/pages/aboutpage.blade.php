@@ -89,7 +89,7 @@
         background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
     }
 
-    /* Curved bottom edge in the next section's exact colour (.about-section #f8f9fa). */
+    /* Curved bottom edge in the next section's exact colour (.about-intro, white). */
     .about-hero__curve {
         position: absolute;
         left: 0;
@@ -99,7 +99,7 @@
         width: 100%;
         height: 56px;
         display: block;
-        fill: #f8f9fa;
+        fill: #ffffff;
     }
 
     .about-hero__content {
@@ -201,11 +201,6 @@
         overflow-x: clip;
     }
 
-    .about-section {
-        padding: 50px 0;
-        background: #f8f9fa;
-    }
-
     .section-tag {
         color: #3B82F6;
         font-size: 14px;
@@ -216,88 +211,6 @@
         display: block;
     }
 
-    .section-title {
-        font-size: 32px;
-        font-weight: 700;
-        color: #333;
-        margin-bottom: 25px;
-        line-height: 1.3;
-    }
-
-    .about-text {
-        color: #666;
-        font-size: 15px;
-        line-height: 1.7;
-        margin-bottom: 30px;
-    }
-
-    .about-features-list {
-        margin-bottom: 35px;
-    }
-
-    .feature-row {
-        display: flex;
-        gap: 60px;
-        margin-bottom: 15px;
-    }
-
-    .feature-item-check {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-    }
-
-    .feature-item-check i {
-        color: #3B82F6;
-        font-size: 16px;
-        width: 16px;
-    }
-
-    .feature-item-check span {
-        font-weight: 500;
-        color: #333;
-        font-size: 15px;
-    }
-
-    .contact-info-box {
-        color: rgb(0, 30, 255);
-        padding: 20px 25px;
-        border-radius: 8px;
-        display: flex;
-        align-items: center;
-        gap: 20px;
-        max-width: 280px;
-    }
-
-    .contact-icon-box {
-        width: 50px;
-        height: 50px;
-        background: rgb(7, 85, 255);
-        border-radius: 8px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-shrink: 0;
-    }
-
-    .contact-icon-box i {
-        font-size: 20px;
-        color: white;
-    }
-
-    .contact-details h6 {
-        margin: 0 0 5px 0;
-        font-weight: 600;
-        font-size: 14px;
-        color: rgb(16, 15, 15);
-    }
-
-    .contact-details p {
-        margin: 0;
-        font-size: 16px;
-        font-weight: 600;
-        color: rgb(38, 120, 227);
-    }
 
     .about-image-container {
         position: relative;
@@ -451,6 +364,10 @@ object-position: 50% 15%;
     /* Management cards: one 4:5 portrait ratio for everyone, 12px corners (no circles). */
     .team-card__photo { position: relative; width: min(100%, 240px); aspect-ratio: 4 / 5; border-radius: 12px; overflow: hidden; display: grid; place-items: center; }
     .team-card__photo picture { display: contents; }
+    /* CEO / founder card: clearly the largest (about 1.7x the other photos on desktop, ~86% of the width on phones, capped). */
+    .team-card--lead .team-card__photo { width: min(86%, 410px); border-radius: 14px; box-shadow: 0 18px 44px rgba(15, 42, 92, 0.18); }
+    .team-card--lead h3 { font-size: clamp(1.375rem, 1.2rem + 0.7vw, 1.75rem); }
+    .team-card--lead p { font-size: clamp(1.0625rem, 1rem + 0.3vw, 1.25rem); }
     .team-card__photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 20%; display: block; }
     .team-card__initials { font: 700 3rem/1 var(--font-heading); color: #64748b; letter-spacing: 0.02em; }
     .team-info {
@@ -753,53 +670,7 @@ object-position: 50% 15%;
 
 <!-- About Section -->
 
-<section class="about-section">
-    <div class="container">
-        <div class="row align-items-center">
-            <div class="col-lg-6">
-                <div class="section-tag">About Us</div>
-                <h2 class="section-title">The Best IT Solution With Many Years of Experience</h2>
-                <p class="about-text">
-                    At Sky Link Technologies, we turn visionary concepts into cutting-edge digital solutions. With a passion for technology and a commitment to excellence, we empower businesses to thrive in the digital age.
-                </p>
-                
-                <div class="contact-info-box">
-                    <div class="contact-icon-box">
-                        <i class="fas fa-phone"></i>
-                    </div>
-                    <div class="contact-details">
-                        <h6>Call to ask any question</h6>
-                        <p>+251-974-96-7171</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="about-features-list">
-                    <div class="feature-row">
-                        <div class="feature-item-check">
-                            <i class="fas fa-check"></i>
-                            <span>Award Winning</span>
-                        </div>
-                        <div class="feature-item-check">
-                            <i class="fas fa-check"></i>
-                            <span>Dedicated Support</span>
-                        </div>
-                    </div>
-                    <div class="feature-row">
-                        <div class="feature-item-check">
-                            <i class="fas fa-check"></i>
-                            <span>Professional Staff</span>
-                        </div>
-                        <div class="feature-item-check">
-                            <i class="fas fa-check"></i>
-                            <span>Fair Prices</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+@include('partials.about-intro')
 
 <section class="bg-light py-5 px-3 px-lg-5">
     <div class="container">
@@ -941,7 +812,7 @@ We lead the market by creating disciplined culture that will have much bigger ef
         <h2 class="h4 text-uppercase text-center fw-semibold mb-4 text-dark">Our Management Team</h2>
         {{-- CEO alone on top, the rest centred below --}}
         <div class="row g-4 justify-content-center">
-            <div class="col-12 col-sm-6 col-lg-3">
+            <div class="col-12">
                 @include('components.team-member-card', ['member' => $managementTeam[0]])
             </div>
         </div>
@@ -1060,7 +931,7 @@ We lead the market by creating disciplined culture that will have much bigger ef
 
 <section>
 {{-- Compact Journey Map Section --}}
-<section style="padding: 60px 0; background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+<section id="journey" style="padding: 60px 0; background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
  position: relative;">
     <div style="max-width: 1200px; margin: 0 auto; padding: 0 15px; position: relative;">
         <div style="text-align: center; margin-bottom: 40px;">
