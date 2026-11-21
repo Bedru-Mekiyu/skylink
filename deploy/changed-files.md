@@ -105,3 +105,9 @@ No new migrations. Rollback: re-upload the previous files or `git revert`.
 - News video: `public/assets/js/sky-video-guard.js` (slow start no longer replaced after 25 s; helper bar after 15 s; fallback only on a real player error or after 3 minutes), `partials/news/hero.blade.php`, `pages/video-detail.blade.php` (script URL versioned).
 - Delete audit: Subscribers and Subscriptions (delete, delete selected, CSV export; `app/Http/Controllers/Admin/Concerns/ManagesRecordList.php`, `admin/partials/record-list.blade.php`), Inbox messages are now deleted for good with CSV export (an imported older message row is removed too).
 - Email: default `COMPANY_EMAIL` is `info@skylinkict.com`.
+
+
+## Go-live additions (2026-11-21)
+- app/Http/Controllers/SitemapController.php, resources/views/partials/seo.blade.php, public/robots.txt, routes/web.php (/sitemap.xml), tests/Feature/SeoTest.php
+- app/Console/Commands/EnableAnniversary.php, SetAdminPassword.php (+ tests)
+- deploy/golive-*.sh, deploy/GO-LIVE-DONE.md

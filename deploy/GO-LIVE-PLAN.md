@@ -146,3 +146,6 @@ Setup: new subdomain, document root `/home/skylinkictcom/bedru.skylinkict.com/pu
 - Head of Marketing: replace `public/assets/images/about/head-of-marketing.jpg` with the real photo (the card is hidden on the live site until then).
 - Set the live admin password to a strong one; `admin@gmail.com` (test account, weak password) must not exist or must be changed.
 - Email: fill the MAIL_* variables (UPLOAD-GUIDE addendum 7, items 4-6), add the DMARC TXT record (item 7), run the labelled test send, then enable.
+
+
+> Done on 2026-11-21: see deploy/GO-LIVE-DONE.md.
