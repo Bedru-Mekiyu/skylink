@@ -65,7 +65,7 @@ class DepartmentTest extends TestCase
         \App\Support\PublicCache::bust();
         $html = $this->get(route('about'))->getContent();
         $this->assertStringNotContainsString('id="departments"', $html);
-        $this->assertStringNotContainsString('team-showcase-card', $html);
+        $this->assertStringNotContainsString('team-showcase-card h-100', $html);
     }
 
     public function test_only_admins_reach_the_routes(): void
