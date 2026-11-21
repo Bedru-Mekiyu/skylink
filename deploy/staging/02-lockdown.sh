@@ -1,3 +1,8 @@
+#!/bin/sh
+# DISABLED 2026-11-21: this old script put a Basic Auth password on the whole test site. Public pages must stay open to everyone;
+# only /admin is protected (by the app login). It now refuses to run.
+echo "02-lockdown.sh is DISABLED: public pages must not have a password."; exit 1
+# ---- old content below, kept only for history ----
 set -e
 # Runs ON THE SERVER (piped over ssh; the staging password arrives in the PW variable, see the command in the guide). Writes ONLY inside
 # /home/skylinkictcom/bedru.skylinkict.com and sets PHP 8.2 for bedru.skylinkict.com only.

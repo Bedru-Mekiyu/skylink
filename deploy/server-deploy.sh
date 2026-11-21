@@ -141,6 +141,8 @@ grep -Eq '^[[:space:]]*ANNIVERSARY_FORCE=' "$ENVF" && say "   !! .env has ANNIVE
 PLACEHOLDER_BAD=0
 "$PHP" artisan team:check-placeholder >/dev/null 2>&1 || PLACEHOLDER_BAD=1
 [ "$PLACEHOLDER_BAD" = "0" ] || say "   !! The Head of Marketing PLACEHOLDER (name 'Full Name', silhouette photo) is still on this live site. Replace it now: config/team.php."
+# Public pages must be open to everyone: no Basic Auth (AuthType) anywhere in the site folder's .htaccess files.
+grep -qE '^[[:space:]]*(AuthType|AuthUserFile|Require[[:space:]]+valid-user)' "$APP/.htaccess" "$APP/public/.htaccess" 2>/dev/null && say "   !! Basic Auth (AuthType) is still in an .htaccess: public pages would ask for a password. Remove those lines."
 crontab -l 2>/dev/null | grep -q 's.skylinkict.com' || say "   note: no cron line for this site yet (guide: Deploy Day, step 'Cron')."
 
 step "9/9 Done"
