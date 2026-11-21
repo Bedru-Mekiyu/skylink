@@ -387,7 +387,7 @@
 @endpush
 
 @push('scripts')
-<script src="{{ asset('assets/js/sky-video-guard.js') }}"></script>
+<script src="{{ asset('assets/js/sky-video-guard.js') }}?v={{ @filemtime(public_path('assets/js/sky-video-guard.js')) }}"></script>
 <script>
     // /news "Watch video" pop-up. The layout renders the scripts stack twice: run once.
     (function () {

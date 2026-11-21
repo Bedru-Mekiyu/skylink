@@ -147,7 +147,7 @@
 </section>
 
 @push('scripts')
-<script src="{{ asset('assets/js/sky-video-guard.js') }}"></script>
+<script src="{{ asset('assets/js/sky-video-guard.js') }}?v={{ @filemtime(public_path('assets/js/sky-video-guard.js')) }}"></script>
 <script>
     // Lite embed: only a thumbnail and a play button load with the page; the player starts after the click (faster page, no third-party requests until needed).
     (function () {
