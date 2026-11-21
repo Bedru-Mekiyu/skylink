@@ -751,7 +751,7 @@
         </div>
 
         <div class="footer-bottom text-center pt-3">
-            <p>Copyright © 2025 | Powered By Sky Link Technologies</p>
+            <p>Copyright © {{ now('Africa/Addis_Ababa')->year }} | Powered By Sky Link Technologies</p>
         </div>
     </div>
 </footer>

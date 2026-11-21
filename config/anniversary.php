@@ -11,8 +11,8 @@ return [
 
     // The pre-filled dates of Admin > Anniversary Ceremony. They do NOT switch anything on by themselves:
     // until an admin saves a mode there, the ceremony is Off. Start inclusive, end exclusive (local time above).
-    'start' => '2026-11-23 00:00:00',
-    'end' => '2026-12-07 00:00:00',
+    'start' => env('ANNIVERSARY_START', '2026-11-21 00:00:00'),
+    'end' => env('ANNIVERSARY_END', '2026-12-21 00:00:00'),
 
     // Preview the campaign outside its dates. Honoured only in the
     // environments below; production ignores it whatever the .env says.

@@ -58,6 +58,7 @@ class AnniversaryAdminController extends Controller
             'admin_preview' => $request->boolean('admin_preview'),
         ])->save();
         Anniversary::forgetCache(); // so the change shows on the very next page view
+        \Illuminate\Support\Facades\Log::notice('anniversary settings saved', ['user_id' => $request->user()->id, 'mode' => $data['mode']]);
 
         return redirect()->route('admin.anniversary.edit')->with('success', 'Anniversary settings saved.');
     }
