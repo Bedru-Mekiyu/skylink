@@ -209,7 +209,7 @@ Route::resource('products', ProductadminController::class);
     Route::put('/hero-video', [\App\Http\Controllers\Admin\HeroVideoController::class, 'update'])->middleware('throttle:hero-upload')->name('hero-video.update');
     Route::put('/hero-video/reset', [\App\Http\Controllers\Admin\HeroVideoController::class, 'reset'])->middleware('throttle:20,1')->name('hero-video.reset');
     Route::put('/hero-video/restore', [\App\Http\Controllers\Admin\HeroVideoController::class, 'restore'])->middleware('throttle:20,1')->name('hero-video.restore');
-    Route::get('/inbox/{inquiry}', [InboxController::class, 'show'])->name('inbox.show');
+    Route::get('/inbox/{inquiry}', [InboxController::class, 'show'])->whereNumber('inquiry')->name('inbox.show');
     Route::patch('/inbox/{inquiry}', [InboxController::class, 'update'])->name('inbox.update');
     Route::post('/inbox/{inquiry}/resend', [InboxController::class, 'resend'])->name('inbox.resend');
     Route::delete('/inbox/{inquiry}', [InboxController::class, 'destroy'])->name('inbox.destroy');
@@ -220,6 +220,15 @@ Route::resource('products', ProductadminController::class);
 
 
 Route::get('/admin/subscriptions', [SubscriptionsnewController::class, 'index'])->name('subscriptions');
+    // Subscribers and plan subscriptions: delete one / selected, CSV export (admin only).
+    Route::get('/subscribers/export', [AdminSubscriberController::class, 'export'])->name('subscribers.export');
+    Route::delete('/subscribers/bulk', [AdminSubscriberController::class, 'bulkDestroy'])->middleware('throttle:60,1')->name('subscribers.bulk-destroy');
+    Route::delete('/subscribers/{id}', [AdminSubscriberController::class, 'destroy'])->middleware('throttle:60,1')->whereNumber('id')->name('subscribers.destroy');
+    Route::get('/subscriptions', [SubscriptionsnewController::class, 'index'])->name('subscriptions.index');
+    Route::get('/subscriptions/export', [SubscriptionsnewController::class, 'export'])->name('subscriptions.export');
+    Route::delete('/subscriptions/bulk', [SubscriptionsnewController::class, 'bulkDestroy'])->middleware('throttle:60,1')->name('subscriptions.bulk-destroy');
+    Route::delete('/subscriptions/{id}', [SubscriptionsnewController::class, 'destroy'])->middleware('throttle:60,1')->whereNumber('id')->name('subscriptions.destroy');
+    Route::get('/inbox/export', [InboxController::class, 'export'])->name('inbox.export');
 
     // Newsletter: confirmation page + POST (CSRF via the web group), max 3 attempts per hour.
     Route::get('/newsletter', [NewsletterController::class, 'confirm'])->name('newsletter.confirm');

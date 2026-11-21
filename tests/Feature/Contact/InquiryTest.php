@@ -280,7 +280,7 @@ class InquiryTest extends TestCase
         Mail::assertQueued(InquiryReceived::class, fn ($m) => $m->hasTo(self::INBOX));
 
         $this->actingAs($admin)->delete(route('admin.inbox.destroy', $contact))->assertRedirect(route('admin.inbox.index'));
-        $this->assertSoftDeleted($contact);
+        $this->assertModelMissing($contact); // deleted for good (export the CSV first)
 
         // Sidebar badge on every admin page.
         $this->actingAs($admin)->get(route('admin.dashboard'))->assertSee('Inbox');

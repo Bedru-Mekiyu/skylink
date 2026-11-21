@@ -46,7 +46,7 @@ class InboxDeleteTest extends TestCase
         $this->assertStringContainsString("Delete this message? This can\\'t be undone from the admin.", $show);
     }
 
-    public function test_admin_deletes_one_message_softly_and_the_unread_count_drops(): void
+    public function test_admin_deletes_one_message_for_good_and_the_unread_count_drops(): void
     {
         $admin = $this->admin();
         $a = $this->inquiry();
@@ -57,8 +57,8 @@ class InboxDeleteTest extends TestCase
         $this->actingAs($admin)->delete(route('admin.inbox.destroy', $a))
             ->assertRedirect(route('admin.inbox.index'))->assertSessionHas('success', 'Message deleted.');
 
-        $this->assertSoftDeleted('inquiries', ['id' => $a->id]);           // kept in the database
-        $this->assertNotNull(Inquiry::withTrashed()->find($a->id));          // a developer can restore it
+        $this->assertDatabaseMissing('inquiries', ['id' => $a->id]);        // removed for good (export the CSV first)
+        $this->assertNull(Inquiry::withTrashed()->find($a->id));
         $this->assertSame(1, Inquiry::unread()->count());
         $this->actingAs($admin)->get(route('admin.inbox.index'))->assertSee('Unread only (1)', false)->assertDontSee($a->reference)->assertSee($b->reference);
         $this->actingAs($admin)->get(route('admin.inbox.show', $a))->assertNotFound();
@@ -74,8 +74,8 @@ class InboxDeleteTest extends TestCase
         $this->actingAs($admin)->delete(route('admin.inbox.bulk-destroy'), ['ids' => [$x->id, $y->id]])
             ->assertRedirect(route('admin.inbox.index'))->assertSessionHas('success', '2 messages deleted.');
 
-        $this->assertSoftDeleted('inquiries', ['id' => $x->id]);
-        $this->assertSoftDeleted('inquiries', ['id' => $y->id]);
+        $this->assertDatabaseMissing('inquiries', ['id' => $x->id]);
+        $this->assertDatabaseMissing('inquiries', ['id' => $y->id]);
         $this->assertNotSoftDeleted('inquiries', ['id' => $keep->id]);
         $this->assertSame(1, Inquiry::unread()->count());
         $this->actingAs($admin)->get(route('admin.inbox.index'))->assertSee('Unread only (1)', false)->assertSee($keep->reference)->assertDontSee($x->reference)->assertDontSee($y->reference);

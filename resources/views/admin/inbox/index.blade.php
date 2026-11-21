@@ -59,6 +59,7 @@
         <span class="inbox-head__type">Type</span>
         <span class="inbox-head__msg">Message</span>
         <span class="inbox-head__date">Received</span>
+        <a href="{{ route('admin.inbox.export') }}" class="btn btn-sm btn-outline-secondary me-2" style="min-height:44px;display:inline-flex;align-items:center"><i class="fas fa-file-csv me-1" aria-hidden="true"></i>Export CSV (all)</a>
         <button type="submit" class="btn btn-sm btn-outline-danger inbox-bulk" id="bulk-delete-btn" disabled><i class="fas fa-trash me-1" aria-hidden="true"></i>Delete selected <span id="bulk-count" class="badge text-bg-danger">0</span></button>
     </div>
     <ul class="inbox-list list-unstyled mb-0">

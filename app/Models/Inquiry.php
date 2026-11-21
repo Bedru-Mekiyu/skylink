@@ -56,6 +56,12 @@ class Inquiry extends Model
             $inquiry->reference ??= self::newReference();
             $inquiry->status ??= 'new';
         });
+        // A permanent delete also removes the original row of an imported older message (else it would reappear on the older page).
+        static::forceDeleted(function (Inquiry $inquiry) {
+            if ($inquiry->legacy_table && $inquiry->legacy_id && in_array($inquiry->legacy_table, ['contact_messages', 'messages'], true)) {
+                \Illuminate\Support\Facades\DB::table($inquiry->legacy_table)->where('id', $inquiry->legacy_id)->delete();
+            }
+        });
     }
 
     /** Short, unique, easy to read out on the phone: SK-261115-7KQ4D. */

@@ -2,21 +2,39 @@
 
 namespace App\Http\Controllers\Admin;
 
-
+use App\Http\Controllers\Admin\Concerns\ManagesRecordList;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\Subscription;
-    use Illuminate\Support\Facades\Log;
 
-
+/** Admin > Subscriptions (plan requests): list, delete one, delete selected, CSV export. */
 class SubscriptionsnewController extends Controller
 {
-        public function index()
-{
-    // Fetch all subscriptions from the database
-$subscriptions = Subscription::paginate(10);
+    use ManagesRecordList;
 
-    // Pass the subscriptions variable to the view
-    return view('admin.subscriptions.index', compact('subscriptions'));
-}
+    public function index()
+    {
+        $subscriptions = Subscription::latest()->paginate(10);
+
+        return view('admin.subscriptions.index', compact('subscriptions'));
+    }
+
+    protected function recordModel(): string
+    {
+        return Subscription::class;
+    }
+
+    protected function recordRoutes(): string
+    {
+        return 'admin.subscriptions';
+    }
+
+    protected function recordLabel(): string
+    {
+        return 'subscription';
+    }
+
+    protected function csvColumns(): array
+    {
+        return ['Name' => 'name', 'Email' => 'email', 'Phone' => 'phone', 'Plan' => 'plan', 'Notes' => 'notes', 'Subscribed' => 'created_at'];
+    }
 }

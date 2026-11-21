@@ -102,12 +102,33 @@ class InboxController extends Controller
         return back()->with('success', "The message was queued again for {$inbox}.");
     }
 
-    /** Hidden from the inbox (soft delete: the row stays in the database, a developer can restore it). */
-    public function destroy(Inquiry $inquiry): RedirectResponse
+    /** PERMANENT delete: the message row is removed from the database (download the CSV first if you need a copy). */
+    public function destroy(Request $request, Inquiry $inquiry): RedirectResponse
     {
-        $inquiry->delete();
+        $id = $inquiry->id;
+        $inquiry->forceDelete();
+        \Illuminate\Support\Facades\Log::notice('inbox message deleted', ['user_id' => $request->user()->id, 'inquiry_id' => $id]);
 
         return redirect()->route('admin.inbox.index')->with('success', 'Message deleted.');
+    }
+
+    /** CSV of all inbox messages (or only the ticked ones: ?ids[]=). Spreadsheet formulas are neutralised. */
+    public function export(Request $request): \Symfony\Component\HttpFoundation\StreamedResponse
+    {
+        $ids = array_filter((array) $request->query('ids', []), 'is_numeric');
+        $cols = ['Received' => 'created_at', 'Type' => 'type', 'Name' => 'name', 'Email' => 'email', 'Phone' => 'phone', 'Company' => 'company', 'Service' => 'service', 'Plan' => 'plan', 'Message' => 'message', 'Language' => 'language'];
+
+        return response()->streamDownload(function () use ($ids, $cols) {
+            $out = fopen('php://output', 'w');
+            fwrite($out, "\xEF\xBB\xBF");
+            fputcsv($out, array_keys($cols));
+            Inquiry::query()->when($ids, fn ($q) => $q->whereIn('id', $ids))->orderBy('id')->chunk(500, function ($rows) use ($out, $cols) {
+                foreach ($rows as $r) {
+                    fputcsv($out, array_map(fn ($a) => preg_match('/^[=+\-@\t\r]/', (string) $r->{$a}) ? "'".$r->{$a} : (string) $r->{$a}, array_values($cols)));
+                }
+            });
+            fclose($out);
+        }, 'inbox-messages-'.now()->format('Y-m-d').'.csv', ['Content-Type' => 'text/csv; charset=UTF-8']);
     }
 
     /** "Delete selected": soft-deletes every ticked message. Unknown or already deleted ids are ignored. */
@@ -120,9 +141,10 @@ class InboxController extends Controller
 
         $count = 0;
         foreach (Inquiry::whereIn('id', $data['ids'])->get() as $inquiry) {
-            $inquiry->delete();
+            $inquiry->forceDelete();
             $count++;
         }
+        \Illuminate\Support\Facades\Log::notice('inbox messages bulk deleted', ['user_id' => $request->user()->id, 'count' => $count]);
 
         return redirect()->route('admin.inbox.index')->with('success', $count === 1 ? 'Message deleted.' : "{$count} messages deleted.");
     }
