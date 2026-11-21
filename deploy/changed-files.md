@@ -52,3 +52,13 @@ No migrations. Rollback: re-upload the previous version of each file (previous r
 - `public/assets/images/about/head-of-marketing.jpg` (new, placeholder silhouette 480x600). Replace this file with the real photo (same name).
 - `app/Support/TeamPlaceholder.php`, `app/Console/Commands/CheckTeamPlaceholder.php` (new): `php artisan team:check-placeholder`; `deploy/server-deploy.sh` warns and exits 1 on the live site while the placeholder is in use.
 - Removed on bedru only: `deploy/mkadmin.php` (backup in `deploy/backups/removed-files/`); added `deploy/.htaccess` (deny all) on bedru.
+
+# Added 2026-11-21 (3): About intro card, bigger CEO card, Gallery at the bottom, admin fixes
+
+No migrations. Rollback: re-upload the previous version of each file (previous release zip) or `git revert`.
+- `resources/views/partials/about-intro.blade.php` (new) + `resources/views/pages/aboutpage.blade.php`: the "About Us" intro is now a floating card (headline "5+ YEARS of EXPERIENCE in the IT INDUSTRY.", MORE INFORMATION link to the Journey section) next to the old paragraph; the "Call to ask any question" phone item is removed; the old intro CSS is removed; the Journey section got `id="journey"`; the hero curve is white.
+- `config/company.php` (new): `years_experience` (5) feeds the headline. The homepage counter "4+ Years Experience" is NOT linked to it yet (decision pending).
+- `resources/views/components/team-member-card.blade.php`, `app/Http/Controllers/AboutController.php`: CEO card is the larger "lead" card (about 1.7x the others).
+- `resources/views/pages/aboutpage.blade.php`: the Gallery section now sits at the very bottom (after Milestones, before the footer); nothing left at the old place.
+- `resources/views/admin/services/show.blade.php` (bug fix: wrong route names gave a 500), `resources/views/admin/products/show.blade.php` (full-URL product images).
+- Not shipped: tests, tools.

@@ -273,3 +273,9 @@ What it does: every minute it runs Laravel's scheduler: publishes scheduled news
 
 ### Safety: `deploy/mkadmin.php` and non-public folders
 `deploy/mkadmin.php` was a helper that created or reset a test admin on bedru (guarded to the `skylinkictcom_staging` database). It was never in git or any package and was not reachable from the web (the web root is `public/`; `/deploy/mkadmin.php` gave 404). It is deleted from bedru (copy kept in `deploy/backups/removed-files/`, not served). The live server never had it. Check on the live server in File Manager that `/home/skylinkictcom/s.skylinkict.com/deploy/` holds no `mkadmin.php`, and add a `.htaccess` there with `Require all denied` (the file bedru now has).
+
+## Addendum 2026-11-21 (3)
+- New file `config/company.php` (years of experience, used by the About intro headline). Run `php artisan config:clear` after deploying (the deploy script already rebuilds the caches).
+- The Gallery is now the last section of the About page. It still only shows when Admin > Gallery has visible photos.
+- Admin: the service detail page (Admin > Services > a service) no longer gives an error.
+- The homepage counter "4+ Years Experience" is a separate hard-coded number; change it with the owner's decision.

@@ -125,3 +125,7 @@ Setup: new subdomain, document root `/home/skylinkictcom/bedru.skylinkict.com/pu
 - **Replace the Head of Marketing placeholder before going live** (photo `public/assets/images/about/head-of-marketing.jpg` + name in `config/team.php`; see UPLOAD-GUIDE.md addendum 2). The deploy script stops with a warning while it is still the placeholder.
 - Add the cron line (UPLOAD-GUIDE.md addendum 2) on go-live day.
 - Do the Elida clip admin step (`footage/_review/PORTFOLIO-VIDEO-FIX.md`).
+
+## Added 2026-11-21 (3)
+- About page: new intro card, bigger CEO card, Gallery moved to the bottom (above the footer). Admin service detail page fixed.
+- Decision pending: the homepage shows "4+ Years Experience" while the About intro says "5+ YEARS" (`config/company.php`); make them agree before going live.
