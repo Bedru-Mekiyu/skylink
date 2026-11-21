@@ -133,6 +133,22 @@ class HeroVideoTest extends TestCase
         $this->assertSame($custom, HeroVideo::row()->current);
     }
 
+    public function test_default_still_is_the_ceo_portrait_and_reset_brings_it_back(): void
+    {
+        $home = $this->get('/')->assertOk()->getContent();
+        $this->assertStringContainsString('alt="Muhammad Karim, CEO and founder of Sky Link Technologies"', $home);
+        $this->assertStringContainsString('assets/videos/hero/poster.webp', $home);
+        $this->assertStringContainsString('assets/videos/hero/poster-mobile.webp', $home);
+        foreach (['poster.jpg' => 250, 'poster.webp' => 250, 'poster-mobile.jpg' => 150, 'poster-mobile.webp' => 150] as $f => $kb) {
+            $this->assertLessThanOrEqual($kb * 1024, filesize(public_path('assets/videos/hero/'.$f)), $f);
+        }
+
+        $this->upload(['desktop_mp4' => $this->mp4(), 'poster' => $this->poster()]);
+        $this->assertStringNotContainsString('poster-mobile.webp', $this->get('/')->getContent());
+        $this->put(route('admin.hero-video.reset'));
+        $this->assertStringContainsString('poster-mobile.webp', $this->get('/')->getContent());
+    }
+
     public function test_changes_bust_the_public_cache(): void
     {
         $before = Cache::get('public-data-version');

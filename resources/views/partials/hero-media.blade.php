@@ -22,6 +22,12 @@
 
     $heroBuiltPoster = $heroMediaUrl('poster.jpg');
     $heroPoster = ($heroCustom['poster'] ?? null) ?? $heroBuiltPoster ?? asset('assets/images/27075.jpg');
+    // The built-in still is the CEO portrait (tools/local/build-ceo-hero.php): WebP + a 900 px phone version.
+    // An admin-uploaded poster is a single file and is used as it is.
+    $heroCeoStill = ! ($heroCustom['poster'] ?? null) && $heroBuiltPoster;
+    $heroPosterWebp = $heroCeoStill ? $heroMediaUrl('poster.webp') : null;
+    $heroPosterMobile = $heroCeoStill ? $heroMediaUrl('poster-mobile.jpg') : null;
+    $heroPosterMobileWebp = $heroCeoStill ? $heroMediaUrl('poster-mobile.webp') : null;
     $heroDesktopWebm = $heroCustom ? ($heroCustom['desktop_webm'] ?? null) : $heroMediaUrl('hero-desktop.webm');
     $heroDesktopMp4 = $heroCustom ? ($heroCustom['desktop_mp4'] ?? null) : $heroMediaUrl('hero-desktop.mp4');
     $heroMobileMp4 = $heroCustom ? ($heroCustom['mobile_mp4'] ?? null) : $heroMediaUrl('hero-mobile.mp4');
@@ -29,7 +35,12 @@
 @endphp
 
 @push('styles')
-    <link rel="preload" as="image" href="{{ $heroPoster }}" fetchpriority="high">
+    @if ($heroPosterWebp && $heroPosterMobileWebp)
+        <link rel="preload" as="image" type="image/webp" href="{{ $heroPosterMobileWebp }}" media="(max-width: 767.98px)" fetchpriority="high">
+        <link rel="preload" as="image" type="image/webp" href="{{ $heroPosterWebp }}" media="(min-width: 768px)" fetchpriority="high">
+    @else
+        <link rel="preload" as="image" href="{{ $heroPoster }}" fetchpriority="high">
+    @endif
     <script>
         // Hide the hero copy until the word-by-word reveal is ready (no flash of
         // unanimated text). Failsafe: always show it after 3 s.
@@ -209,7 +220,12 @@
 
 <div class="hero-media" data-hero-media aria-hidden="true">
     <div class="hero-media__frame">
-        <img class="hero-media__poster" src="{{ $heroPoster }}" alt="" fetchpriority="high" decoding="async">
+        <picture>
+            @if ($heroPosterMobileWebp)<source media="(max-width: 767.98px)" srcset="{{ $heroPosterMobileWebp }}" type="image/webp">@endif
+            @if ($heroPosterMobile)<source media="(max-width: 767.98px)" srcset="{{ $heroPosterMobile }}" type="image/jpeg">@endif
+            @if ($heroPosterWebp)<source srcset="{{ $heroPosterWebp }}" type="image/webp">@endif
+            <img class="hero-media__poster" src="{{ $heroPoster }}" alt="{{ $heroCeoStill ? 'Muhammad Karim, CEO and founder of Sky Link Technologies' : '' }}" fetchpriority="high" decoding="async">
+        </picture>
         @if ($heroHasVideo)
             {{-- Sources are attached by JS after the viewport / motion / data-saver checks. --}}
             {{-- A second copy is cloned from this one by JS for the seamless loop. --}}
