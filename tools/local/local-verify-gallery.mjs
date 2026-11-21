@@ -13,13 +13,15 @@ const results = [];
 const rec = (name, pass, note = '') => { results.push({ name, pass, note }); console.log(pass ? 'ok  ' : 'FAIL', name, note ? '- ' + note : ''); };
 const browser = await chromium.launch();
 const newPage = async (opts = {}) => { const c = await browser.newContext({ viewport: { width: 1440, height: 900 }, reducedMotion: 'no-preference', ...opts }); const p = await c.newPage(); return [c, p]; };
-const caption = (p) => p.locator('#gallery [data-caption]').first().innerText();
+// Photos have no auto labels any more: the centre photo is the slide whose button is focusable (+ its caption, if the admin typed one).
+const caption = (p) => p.evaluate(() => { const b = document.querySelector('#gallery .sk-gallery__open[tabindex="0"]'); return 'slide ' + (b ? b.parentNode.dataset.i : '?') + ' ' + document.querySelector('#gallery [data-caption]').innerText; });
 // With the anniversary ceremony forced on, a full-screen intro plays once per visit: wait for it to finish first.
 const introDone = (p) => p.waitForFunction(() => { const i = document.querySelector('.anniv5-intro'); return !i || getComputedStyle(i).display === 'none' || getComputedStyle(i).visibility === 'hidden' || i.hidden || parseFloat(getComputedStyle(i).opacity) === 0; }, null, { timeout: 40000 }).catch(() => {});
 const toGallery = async (p) => { await p.goto(base + '/about', { waitUntil: 'load' }); await introDone(p); await p.locator('#gallery').scrollIntoViewIfNeeded(); await p.waitForTimeout(1500); };
 
 // ---- cinematic, autoplay, pause rules ----
 let [c, p] = await newPage(); await toGallery(p);
+rec('section header is just "Gallery", no tag/description, plain background, no visible "Photo N"', await p.evaluate(() => { const g = document.querySelector('#gallery'); const cs = getComputedStyle(g); const vis = [...g.querySelectorAll('*')].filter((e) => e.children.length === 0 && e.textContent.trim() && getComputedStyle(e).position !== 'absolute' && e.tagName !== 'SCRIPT' && e.tagName !== 'STYLE').map((e) => e.textContent.trim()); return g.querySelector('h2').textContent.trim() === 'Gallery' && !g.querySelector('.sk-gallery__head p, .sk-gallery__tag') && cs.backgroundImage === 'none' && /rgba\(0, 0, 0, 0\)|transparent/.test(cs.backgroundColor) && !vis.some((t) => /^photo\s*\d/i.test(t)); }));
 rec('cinematic mode on (3+ photos, motion allowed)', await p.evaluate(() => document.querySelector('#gallery').classList.contains('is-cinematic')));
 const c0 = await caption(p); await p.waitForTimeout(6500); const c1 = await caption(p);
 rec('auto-advances by itself', c0 !== c1, `${c0.slice(0, 28)} -> ${c1.slice(0, 28)}`);
@@ -43,7 +45,7 @@ await opener.focus(); const reopen = async () => { await p.waitForTimeout(1300);
 const capBefore = await caption(p); await opener.click({ force: true }); await p.waitForSelector('.sk-lb:not([hidden])');
 const dlg = await p.evaluate(() => { const d = document.querySelector('.sk-lb'); return { role: d.getAttribute('role'), modal: d.getAttribute('aria-modal'), focus: document.activeElement.className, img: d.querySelector('img').src, cap: d.querySelector('.sk-lb__cap').innerText.replace(/\s+/g, ' '), body: getComputedStyle(document.body).overflow }; });
 rec('lightbox is a modal dialog, focus on Close, page scroll locked', dlg.role === 'dialog' && dlg.modal === 'true' && /sk-lb__close/.test(dlg.focus) && dlg.body === 'hidden', JSON.stringify({ focus: dlg.focus }));
-rec('lightbox shows the large image (display size), caption and counter', /-display\.webp/.test(dlg.img) && /\d+ \/ \d+/.test(dlg.cap), dlg.cap.slice(0, 70));
+rec('lightbox shows the large image (display size), caption and counter', /-display\.webp/.test(dlg.img) && /Photo \d+ of \d+/.test(dlg.cap), dlg.cap.slice(0, 70));
 await p.screenshot({ path: path.join(out, 'lightbox-local.png') });
 const f = [];
 for (let i = 0; i < 4; i++) { await p.keyboard.press('Tab'); f.push(await p.evaluate(() => document.activeElement.className.split(' ').pop())); }

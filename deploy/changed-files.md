@@ -41,3 +41,14 @@ No new migrations. Rollback for every item below: re-upload the previous version
 - Portfolio video: **no code change**. The cause was the missing admin step (choose the clip `elida`); see `footage/_review/PORTFOLIO-VIDEO-FIX.md`.
 - bedru only: the Basic Auth was removed from `/home/skylinkictcom/bedru.skylinkict.com/.htaccess` (backups `.htaccess.basic-auth.bak`, `.bak2`).
 - Not shipped (local only): `tools/local/build-ceo-hero.php`, tests, `storage/app/private/archive/ceo/` (original photo).
+
+# Added 2026-11-21 (2): About page gallery plain, Head of Marketing, safety
+
+No migrations. Rollback: re-upload the previous version of each file (previous release zip) or `git revert`.
+- `resources/views/partials/gallery.blade.php`: header is only "Gallery"; plain section background (class `py-5`, no panel/gradient); no visible "Photo N" (the lightbox counter is screen-reader-only); gentler side-slide dimming for the light page.
+- `app/Models/GalleryImage.php`: neutral alt fallback "Sky Link gallery photo".
+- `config/team.php` (new): the ONE place for the CEO name/title/photo and the Head of Marketing name/photo (TODO placeholders).
+- `app/Http/Controllers/AboutController.php`, `resources/views/pages/aboutpage.blade.php`, `resources/views/partials/hero-media.blade.php`: read names from `config/team.php`; team = CEO on top + 4 cards (Bedru, Oumer, Hanan, Head of Marketing).
+- `public/assets/images/about/head-of-marketing.jpg` (new, placeholder silhouette 480x600). Replace this file with the real photo (same name).
+- `app/Support/TeamPlaceholder.php`, `app/Console/Commands/CheckTeamPlaceholder.php` (new): `php artisan team:check-placeholder`; `deploy/server-deploy.sh` warns and exits 1 on the live site while the placeholder is in use.
+- Removed on bedru only: `deploy/mkadmin.php` (backup in `deploy/backups/removed-files/`); added `deploy/.htaccess` (deny all) on bedru.

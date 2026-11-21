@@ -945,7 +945,7 @@ We lead the market by creating disciplined culture that will have much bigger ef
                 @include('components.team-member-card', ['member' => $managementTeam[0]])
             </div>
         </div>
-        <div class="row g-4 mt-1 justify-content-center">
+        <div class="row g-4 mt-1 justify-content-center px-2 px-sm-0">
             @foreach (array_slice($managementTeam, 1) as $member)
                 <div class="col-6 col-md-6 col-lg-3">
                     @include('components.team-member-card', ['member' => $member])

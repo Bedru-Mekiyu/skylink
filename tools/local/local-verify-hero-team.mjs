@@ -23,17 +23,17 @@ for (const [w, h, dsf] of sizes) {
         const h1 = document.querySelector('.hero h1'); const r = img.getBoundingClientRect(); const t = h1 && h1.getBoundingClientRect();
         return { src: img.currentSrc.split('/').pop().split('?')[0], alt: img.alt, ovf: document.documentElement.scrollWidth - innerWidth, loaded: img.complete && img.naturalWidth > 0, nat: img.naturalWidth + 'x' + img.naturalHeight, h1: t ? [Math.round(t.left), Math.round(t.right)] : null };
     });
-    rec(`hero still @${label}: CEO file, alt text, no sideways scroll`, /^poster(-mobile)?\.webp$/.test(m.src) && /Muhammad Karim/.test(m.alt) && m.ovf <= 0 && m.loaded, JSON.stringify(m));
+    rec(`hero still @${label}: CEO file, alt text, no sideways scroll`, /^poster(-mobile)?\.webp$/.test(m.src) && /Mohammedkerem Ahmed/.test(m.alt) && m.ovf <= 0 && m.loaded, JSON.stringify(m));
     await p.screenshot({ path: path.join(out, `home-${label}.png`) });
     await p.goto(base + '/about', { waitUntil: 'load' });
     const team = p.locator('text=Our Management Team');
     await team.scrollIntoViewIfNeeded(); await p.waitForTimeout(800);
     const t = await p.evaluate(() => {
         const cards = [...document.querySelectorAll('.team-section .mb-5 .row')].map((r) => [...r.children].map((c) => Math.round(c.getBoundingClientRect().top)));
-        return { rows: cards.map((c) => c.length), ovf: document.documentElement.scrollWidth - innerWidth };
+        const cs = [...document.querySelectorAll('.team-section .mb-5 .row')[1].querySelectorAll('.team-card__photo')].map((e) => Math.round(e.getBoundingClientRect().width)); return { rows: cards.map((c) => c.length), widths: cs, equal: new Set(cs).size === 1, ovf: document.documentElement.scrollWidth - innerWidth };
     });
-    rec(`team @${label}: first row 1 card (CEO), second row 3, no sideways scroll`, t.rows[0] === 1 && t.rows[1] === 3 && t.ovf <= 0, JSON.stringify(t));
-    await p.locator('.team-section .mb-5').first().screenshot({ path: path.join(out, `team-${label}.png`) });
+    rec(`team @${label}: first row 1 card (CEO), second row 4, no sideways scroll`, t.rows[0] === 1 && t.rows[1] === 4 && t.equal && t.ovf <= 0, JSON.stringify(t));
+    await p.locator('text=Our Management Team').locator('xpath=..').screenshot({ path: path.join(out, `team-${label}.png`) });
     await ctx.close();
 }
 await browser.close();

@@ -250,3 +250,26 @@ On bedru the staging guard allows only `info@skylinkict.com` and `info5@skylinki
 ## Addendum 2026-11-21: what changed in this release
 
 See `deploy/changed-files.md` (last section). Upload nothing special: the release zips carry the new views and the new hero stills. Afterwards, on the live site, do the one admin step for the portfolio video (Admin > Portfolio > Edit "Elida Ethiopia Website" > clip **elida** > Save); the full non-developer steps are in `footage/_review/PORTFOLIO-VIDEO-FIX.md`. The homepage hero still is now the CEO picture; the hero video itself is untouched.
+
+## Addendum 2026-11-21 (2): About page, Head of Marketing, cron, safety
+
+### Before going live: replace the Head of Marketing placeholder
+- [ ] **Replace the Head of Marketing placeholder before going live.** The About page shows a grey silhouette and the name "Full Name" until you do two things (one file + one word):
+  1. Put the real photo at `public/assets/images/about/head-of-marketing.jpg` (same file name, JPG, 4:5 portrait, 480 x 600 px or larger in that ratio, under 150 KB). Upload it with File Manager into `public/assets/images/about/` and overwrite.
+  2. Edit `config/team.php` (File Manager > Edit): change `'name' => 'Full Name'` under `'marketing'` to the real name. Then run `php artisan config:clear`.
+  The CEO's name is also in that one file (`'ceo' => ['name' => ...]`) and is used on the About page text, the photo alt texts and the homepage hero photo.
+- The deploy script prints `!! The Head of Marketing PLACEHOLDER ... is still on this live site` and exits with an error on the live site (production without `MAIL_STAGING_GUARD`) while the placeholder is in use. `php artisan team:check-placeholder` runs the same check by hand.
+
+### Cron (scheduled news, email retries) - bedru and the live server
+What it does: every minute it runs Laravel's scheduler: publishes scheduled news when their time comes, sends and retries queued website emails (`queue:work`), and the daily/monthly clean-ups. Without it those things do not happen. **Not added yet; add it only when you decide to.**
+1. cPanel > **Advanced > Cron Jobs**. Common Settings: **Once Per Minute (* * * * *)**.
+2. Command, for **bedru** (test site):
+   `cd /home/skylinkictcom/bedru.skylinkict.com && /opt/cpanel/ea-php82/root/usr/bin/php artisan schedule:run >> /dev/null 2>&1 # skylink-bedru`
+3. Command, for the **live server** (do this only on go-live day):
+   `cd /home/skylinkictcom/s.skylinkict.com && /opt/cpanel/ea-php82/root/usr/bin/php artisan schedule:run >> /dev/null 2>&1 # skylink`
+4. Click **Add New Cron Job**. Do not change other cron jobs. On bedru the mail guard stays on, so test emails still go only to the allowed address.
+5. Check after 2 minutes: schedule a news post 2 minutes ahead (Admin > News) and see it publish; or in Terminal `php artisan schedule:list`.
+6. Undo: delete that one line in Cron Jobs.
+
+### Safety: `deploy/mkadmin.php` and non-public folders
+`deploy/mkadmin.php` was a helper that created or reset a test admin on bedru (guarded to the `skylinkictcom_staging` database). It was never in git or any package and was not reachable from the web (the web root is `public/`; `/deploy/mkadmin.php` gave 404). It is deleted from bedru (copy kept in `deploy/backups/removed-files/`, not served). The live server never had it. Check on the live server in File Manager that `/home/skylinkictcom/s.skylinkict.com/deploy/` holds no `mkadmin.php`, and add a `.htaccess` there with `Require all denied` (the file bedru now has).

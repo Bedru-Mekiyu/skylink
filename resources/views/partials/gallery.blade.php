@@ -110,12 +110,12 @@
             s.classList.toggle('is-jump', jump);
             s.classList.toggle('is-far', abs > 3);
             s.classList.toggle('is-edge', abs >= 3);
-            var o = abs === 0 ? 1 : abs === 1 ? 0.8 : abs === 2 ? 0.45 : 0;
+            var o = abs === 0 ? 1 : abs === 1 ? 0.92 : abs === 2 ? 0.6 : 0;
             s.style.setProperty('--x', (off * X) + 'px');
             s.style.setProperty('--z', (-abs * 170) + 'px');
             s.style.setProperty('--ry', (-Math.sign(off) * Math.min(abs, 3) * 24) + 'deg');
             s.style.setProperty('--o', o);
-            s.style.setProperty('--b', 1 - Math.min(abs, 3) * 0.2);
+            s.style.setProperty('--b', 1 - Math.min(abs, 3) * 0.06); // light page: only a gentle dim
             s.style.setProperty('--zi', 10 - abs);
             s.style.setProperty('--off', off);
             var btn = s.firstElementChild; btn.tabIndex = off === 0 ? 0 : -1;
