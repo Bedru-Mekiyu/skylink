@@ -5,6 +5,12 @@
 
     RewriteEngine On
 
+    # STAGE 2: send s.skylinkict.com to https://skylinkict.com (301, path and query kept). Asset, build and upload URLs stay answered here.
+    RewriteCond %{HTTP_HOST} ^s\.skylinkict\.com$ [NC]
+    RewriteCond %{REQUEST_URI} !^/(assets|build|storage)/
+    RewriteRule ^(.*)$ https://skylinkict.com/$1 [L,R=301]
+
+
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
