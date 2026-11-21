@@ -33,6 +33,7 @@ use App\Http\Controllers\Admin\ProductadminController;
 // Public routes (visible to anyone)
 // --------------------------------------------------
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/sitemap.xml', \App\Http\Controllers\SitemapController::class)->name('sitemap');
 Route::get('/about', [AboutController::class, 'about'])->name('about');
 Route::get('/contact', fn() => view('pages.contact'))->name('contact');
 Route::get('/products', [ProductController::class, 'index'])->name('products');
