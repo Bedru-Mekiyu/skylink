@@ -187,6 +187,10 @@
             position: relative;
         }
 
+        /* The email address is a link now: same look as the other card texts, and it may wrap on very narrow screens. */
+        .contact-card p a { color: inherit; text-decoration: none; overflow-wrap: anywhere; }
+        .contact-card p a:hover { text-decoration: underline; }
+
         .map-image iframe {
             max-width: 100%; /* the embed is 600 px wide: never wider than its column */
         }
