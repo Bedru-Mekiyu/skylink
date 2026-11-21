@@ -21,4 +21,10 @@ class TeamPlaceholder
     {
         return app()->isProduction() && ! config('mail.staging_guard.enabled') && self::inUse();
     }
+
+    /** True when the card must not be shown: the real live site, placeholder photo, and the show flag is off. */
+    public static function hideCard(): bool
+    {
+        return self::blocksThisSite() && ! config('team.marketing.show_placeholder_on_live');
+    }
 }

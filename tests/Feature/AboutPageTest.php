@@ -57,30 +57,41 @@ class AboutPageTest extends TestCase
         $this->assertStringContainsString('alt="'.$name.', CEO of Sky Link Technologies"', $this->get('/')->getContent());
     }
 
-    public function test_head_of_marketing_placeholder_is_a_neutral_4_5_image_and_marked_todo(): void
+    public function test_head_of_marketing_card_has_the_name_and_a_4_5_portrait_placeholder(): void
     {
         $html = $this->get(route('about'))->getContent();
-        $this->assertStringContainsString('Full Name', $html);
+        $this->assertSame('Frezer Maru', config('team.marketing.name'));
+        $this->assertStringContainsString('Frezer Maru', $html);
+        $this->assertStringContainsString('Head of Marketing', $html);
         $this->assertStringContainsString('assets/images/about/head-of-marketing.jpg', $html);
         [$w, $h] = getimagesize(public_path('assets/images/about/head-of-marketing.jpg'));
         $this->assertSame(4 / 5, $w / $h);
-        $this->assertStringContainsString('TODO', file_get_contents(config_path('team.php')));
+        $this->assertGreaterThanOrEqual(480, $w);
+        $this->assertFileDoesNotExist(public_path('assets/images/about/head-of-marketing.webp'), 'one-file swap: no stale webp copy');
+        $this->assertTrue(\App\Support\TeamPlaceholder::inUse());
     }
 
-    public function test_placeholder_cannot_reach_the_real_live_site(): void
+    public function test_the_placeholder_card_is_hidden_on_the_real_live_site_unless_the_flag_is_on(): void
     {
-        $this->assertTrue(\App\Support\TeamPlaceholder::inUse(), 'placeholder is still in use');
-        // test site (not production), or production with the test-site guard on: allowed
-        $this->artisan('team:check-placeholder')->assertSuccessful();
-        // real live site = production without MAIL_STAGING_GUARD: must fail
-        $this->app['env'] = 'production';
-        config(['mail.staging_guard.enabled' => false]);
-        $this->artisan('team:check-placeholder')->assertFailed();
+        // local / bedru (not production, or production with the test-site guard): the card shows
+        $this->assertStringContainsString('Frezer Maru', $this->get(route('about'))->getContent());
         config(['mail.staging_guard.enabled' => true]);
+        $this->app['env'] = 'production';
+        $this->assertStringContainsString('Frezer Maru', $this->get(route('about'))->getContent());
         $this->artisan('team:check-placeholder')->assertSuccessful();
-        // real name and photo: production is fine
-        config(['mail.staging_guard.enabled' => false, 'team.marketing.name' => 'Real Person', 'team.marketing.image' => 'assets/images/about/hanan.jpg']);
-        $this->artisan('team:check-placeholder')->assertSuccessful();
+        // real live site: production without the test-site guard -> hidden, and the page still has the other 3 cards
+        config(['mail.staging_guard.enabled' => false]);
+        $html = $this->get(route('about'))->getContent();
+        $this->assertStringNotContainsString('Frezer Maru', $html);
+        $this->assertStringContainsString('Hanan Nesru', $html);
+        $this->artisan('team:check-placeholder')->assertSuccessful(); // hidden = nothing to warn about
+        // the one documented flag shows it (the check then warns with a failure code)
+        config(['team.marketing.show_placeholder_on_live' => true]);
+        $this->assertStringContainsString('Frezer Maru', $this->get(route('about'))->getContent());
+        $this->artisan('team:check-placeholder')->assertFailed();
+        // the real photo replaces the file: the card shows on the live site without any flag
+        config(['team.marketing.show_placeholder_on_live' => false, 'team.marketing.image' => 'assets/images/about/hanan.jpg']);
+        $this->assertStringContainsString('Frezer Maru', $this->get(route('about'))->getContent());
     }
 
     public function test_about_intro_has_no_phone_item_keeps_all_words_and_reads_years_from_config(): void

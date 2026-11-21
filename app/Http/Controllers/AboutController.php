@@ -52,7 +52,7 @@ class AboutController extends Controller
             // PLACEHOLDER until the real name and photo arrive: see config/team.php (one-file swap).
             'name' => config('team.marketing.name'),
             'title' => config('team.marketing.title'),
-            'image' => asset(config('team.marketing.image')),
+            'image' => asset(config('team.marketing.image')).(is_file(public_path(config('team.marketing.image'))) ? '?v='.filemtime(public_path(config('team.marketing.image'))) : ''),
             'bgColor' => '#f7f7f7ff',
         ],
         // [
@@ -64,6 +64,11 @@ class AboutController extends Controller
         
         
     ];
+
+    // Real live site with the placeholder photo: the Head of Marketing card stays hidden until the real photo is set.
+    if (\App\Support\TeamPlaceholder::hideCard()) {
+        $managementTeam = array_values(array_filter($managementTeam, fn ($m) => ($m['name'] ?? null) !== config('team.marketing.name')));
+    }
 
     return view('pages.aboutpage', compact('managementTeam'));
 }

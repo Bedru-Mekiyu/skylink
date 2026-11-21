@@ -28,7 +28,7 @@ s = await go('/about');
 const a = await p.evaluate(() => ({
     intro: !!document.getElementById('about-intro') && !/Call to ask any question/.test(document.body.innerText), count: document.querySelector('[data-ai-count]')?.textContent,
     lead: !!document.querySelector('.team-card--lead'), rows: [...document.querySelectorAll('.team-section .row')].slice(0, 2).map((r) => r.children.length).join(','),
-    names: ['Bedru Hussen', 'Mohammed Oumer', 'Hanan Nesru', 'Head of Marketing', 'Full Name'].every((t) => document.body.innerText.includes(t)),
+    names: ['Bedru Hussen', 'Mohammed Oumer', 'Hanan Nesru', 'Head of Marketing', 'Frezer Maru'].every((t) => document.body.innerText.includes(t)),
     gallery: !!document.getElementById('gallery'), journey: !!document.getElementById('journey'),
 }));
 rec('about 200, intro card without phone item, CEO lead card, team 1 + 4, Journey anchor', s === 200 && a.intro && a.lead && a.names && a.journey && (await ovf()) <= 0 && !errs.length && !bad.length, JSON.stringify({ a, errs, bad }));

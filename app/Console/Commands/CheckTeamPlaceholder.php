@@ -13,6 +13,11 @@ class CheckTeamPlaceholder extends Command
 
     public function handle(): int
     {
+        if (TeamPlaceholder::blocksThisSite() && TeamPlaceholder::hideCard()) {
+            $this->warn('Live site with the placeholder photo: the Head of Marketing card is HIDDEN until the real photo is in place (or TEAM_SHOW_PLACEHOLDER=true).');
+
+            return self::SUCCESS;
+        }
         if (TeamPlaceholder::blocksThisSite()) {
             $this->error('The Head of Marketing placeholder is still in use. Replace it before going live (see config/team.php).');
 
