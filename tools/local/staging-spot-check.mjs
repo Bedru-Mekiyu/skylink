@@ -15,7 +15,7 @@ const nap = (ms = 3000) => new Promise((r) => setTimeout(r, ms));
 let loads = 0;
 
 const noAuth = await fetch(base + '/robots.txt'); loads++;
-rec('Basic Auth is ON (no password gives 401)', noAuth.status === 401, String(noAuth.status));
+rec('public pages are open: no password (200) and noindex header', noAuth.status === 200 && /noindex/i.test(noAuth.headers.get('x-robots-tag') || ''), String(noAuth.status));
 await nap();
 const auth = 'Basic ' + Buffer.from('staging:' + basicPw).toString('base64');
 const hdr = await fetch(base + '/', { headers: { Authorization: auth } }); loads++;

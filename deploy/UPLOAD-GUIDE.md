@@ -246,3 +246,7 @@ On bedru the staging guard allows only `info@skylinkict.com` and `info5@skylinki
 - **Test-site marker:** a `<meta name="robots" content="noindex, nofollow">` is added on every non-production environment and wherever `MAIL_STAGING_GUARD=true`. The live site (production, no guard) gets none.
 - **Fonts:** the two Ethiopic WOFF2 files were cut to weights 400-700 and Ethiopic glyphs (42 KB and 56 KB instead of 198 and 189 KB). This fixed a slower homepage (the news cards contain Amharic).
 - **Folders that must be writable:** `storage/app/public/gallery`, `storage/app/public/partners`, `storage/app/public/hero-video`, `storage/app/private/archive`.
+
+## Addendum 2026-11-21: what changed in this release
+
+See `deploy/changed-files.md` (last section). Upload nothing special: the release zips carry the new views and the new hero stills. Afterwards, on the live site, do the one admin step for the portfolio video (Admin > Portfolio > Edit "Elida Ethiopia Website" > clip **elida** > Save); the full non-developer steps are in `footage/_review/PORTFOLIO-VIDEO-FIX.md`. The homepage hero still is now the CEO picture; the hero video itself is untouched.

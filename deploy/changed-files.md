@@ -27,3 +27,17 @@ Public files:
 
 Writable folders: `storage/app/public/{hero-video,partners,gallery}`, `storage/app/private/archive`.
 Not shipped: tests, tools, `.env`, uploads (`storage/app/public`), the archive.
+
+# Added 2026-11-21 (gallery without controls, CEO hero still, team layout, anniversary, bedru open)
+
+No new migrations. Rollback for every item below: re-upload the previous version of the file (the previous release zip), or `git revert` the commit before building.
+
+- `resources/views/partials/gallery.blade.php`: the visible prev / next / pause buttons are gone; the gallery turns by itself (hover/focus pause, swipe, arrow keys and the lightbox are unchanged).
+- `resources/views/pages/aboutpage.blade.php`: CEO alone on top, the other three centred below.
+- `resources/views/components/anniversary/seal.blade.php`: homepage anniversary shows only the two lines (kicker + headline); `lang/*/anniversary.php` is unchanged (the long `message` key is simply unused).
+- `resources/views/partials/hero-media.blade.php`: the default hero still is a `<picture>` (WebP + JPEG, phone version) with alt text; an admin-uploaded poster is used as before; "Reset to default" shows the CEO still again.
+- `public/assets/videos/hero/poster.jpg` (replaced: CEO instead of the woman), new `poster.webp`, `poster-mobile.jpg`, `poster-mobile.webp`. Rollback: restore the old `poster.jpg` (59 KB, git history) and delete the three new files.
+- The video files, the loop engine and the Homepage Video admin page are **unchanged**.
+- Portfolio video: **no code change**. The cause was the missing admin step (choose the clip `elida`); see `footage/_review/PORTFOLIO-VIDEO-FIX.md`.
+- bedru only: the Basic Auth was removed from `/home/skylinkictcom/bedru.skylinkict.com/.htaccess` (backups `.htaccess.basic-auth.bak`, `.bak2`).
+- Not shipped (local only): `tools/local/build-ceo-hero.php`, tests, `storage/app/private/archive/ceo/` (original photo).

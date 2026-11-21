@@ -1,6 +1,6 @@
 # Sky Link: go-live plan (not executed)
 
-Prepared 2026-11-19 after testing the release on the password-protected test site `https://bedru.skylinkict.com`
+Prepared 2026-11-19 after testing the release on the test site `https://bedru.skylinkict.com`
 (login in `deploy/STAGING-ACCESS.txt`, local and gitignored). **The live site and all other sites were not changed.**
 
 ## 1. Deploy day to https://s.skylinkict.com (same package, same scripts that passed on bedru)
@@ -20,7 +20,7 @@ Separate section of the guide ("Stage 2"). **Not between Nov 23 and Dec 7**, onl
 
 ## 3. What was verified on bedru, and the result
 
-Setup: new subdomain, document root `/home/skylinkictcom/bedru.skylinkict.com/public` (outside `public_html`), PHP 8.2.35 (answered in the `X-Powered-By` header), basic auth, `noindex`, `MAIL_MAILER=log`, a fresh copy of the live database and uploads, `server-deploy.sh` run on it twice and `server-rollback.sh` twice. All screenshots are in `storage/app/staging-checks/<area>/` (local, gitignored).
+Setup: new subdomain, document root `/home/skylinkictcom/bedru.skylinkict.com/public` (outside `public_html`), PHP 8.2.35 (answered in the `X-Powered-By` header), no password for public pages (2026-11-21; only the admin login protects the admin), `noindex`, `MAIL_MAILER=log`, a fresh copy of the live database and uploads, `server-deploy.sh` run on it twice and `server-rollback.sh` twice. All screenshots are in `storage/app/staging-checks/<area>/` (local, gitignored).
 
 | Area | Result | Evidence |
 |---|---|---|
@@ -118,5 +118,5 @@ Setup: new subdomain, document root `/home/skylinkictcom/bedru.skylinkict.com/pu
 ## 12. Added 2026-11-20 (round 3): gallery, security clean-up of bedru, verification (live was not changed)
 
 - **Gallery** (Admin > Gallery, new migration `create_gallery_images_table`): see UPLOAD-GUIDE section 14. Verified locally (GD on, 367 tests, browser checks: autoplay, hover / focus / pause, swipe, keyboard, lightbox with focus trap, reduced motion, Save-Data, 4x CPU throttle about 50 fps, CLS 0, 1 / 3 / 12 / 60 photos).
-- **bedru clean-up:** Basic Auth restored with a new random password; `admin@gmail.com` password changed to a random one; all customer data (inbox 280 + 229 messages, 16 subscribers, 17 subscriptions, 1 service request, sessions) deleted from the staging database after a backup inside the bedru folder (`deploy/backups/pre-anonymize-*`). Older backups and `deploy/live-data.sql.gz` on bedru still contain the copied customer data: delete them when testing is over. The real admin `info@skylinkict.com` was not touched.
+- **bedru clean-up:** Basic Auth was restored at that time and **removed again on 2026-11-21** (public pages open to everyone, `noindex` kept; backups `.htaccess.basic-auth.bak` and `.bak2` in the bedru folder); `admin@gmail.com` password changed to a random one; all customer data (inbox 280 + 229 messages, 16 subscribers, 17 subscriptions, 1 service request, sessions) deleted from the staging database after a backup inside the bedru folder (`deploy/backups/pre-anonymize-*`). Older backups and `deploy/live-data.sql.gz` on bedru still contain the copied customer data: delete them when testing is over. The real admin `info@skylinkict.com` was not touched.
 - **Homepage speed:** local Lighthouse (mobile, simulated slow 4G) Home LCP before this work 4.5 to 5.1 s, after the Ethiopic font fix 5.0 to 5.3 s (it was 7.4 s before the fix). About LCP 10.7 s (before 11.4 s) with the gallery in place. SEO shows 66 locally only because of the test-site noindex tag.
