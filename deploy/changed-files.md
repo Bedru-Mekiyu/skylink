@@ -111,3 +111,7 @@ No new migrations. Rollback: re-upload the previous files or `git revert`.
 - app/Http/Controllers/SitemapController.php, resources/views/partials/seo.blade.php, public/robots.txt, routes/web.php (/sitemap.xml), tests/Feature/SeoTest.php
 - app/Console/Commands/EnableAnniversary.php, SetAdminPassword.php (+ tests)
 - deploy/golive-*.sh, deploy/GO-LIVE-DONE.md
+
+## Evening 2026-11-21: admin login, gallery
+- `app/Console/Commands/SetAdminPassword.php`, `app/Http/Controllers/Admin/ProfileController.php` (audit log), `tests/Feature/SetAdminPasswordTest.php`, `tests/Feature/Admin/AdminProfileTest.php`
+- `tools/local/live-*.mjs` (live checks, credentials only from the environment), `deploy/golive-backup2.sh`
