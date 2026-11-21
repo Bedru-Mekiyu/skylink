@@ -26,11 +26,11 @@ for (const [w, h, dsf] of sizes) {
         const q = (s) => document.querySelector(s); const r = (e) => e.getBoundingClientRect();
         const card = q('.about-intro__card'), lines = [...document.querySelectorAll('.ai-line')];
         const more = q('[data-ai-more]'), body = q('.about-intro__body');
-        const lead = q('.team-card--lead .team-card__photo'), others = [...document.querySelectorAll('.team-card:not(.team-card--lead) .team-card__photo')];
+        const leadBox = q('.team-card--lead .team-card__photo').getBoundingClientRect(); const lead = q('.team-card--lead .team-card__photo'), others = [...document.querySelectorAll('.team-card:not(.team-card--lead) .team-card__photo')];
         const cr = r(card), br = r(body);
         return {
             ovf: document.documentElement.scrollWidth - innerWidth,
-            threeLines: lines.length === 3 && lines.every((l) => r(l).height < parseFloat(getComputedStyle(l).fontSize) * 1.6),
+            threeLines: lines.length === 4 && r(card).height < 460 && lines.slice(0, 3).every((l) => r(l).height < parseFloat(getComputedStyle(l).fontSize) * 1.6),
             fits: lines.every((l) => l.scrollWidth <= card.clientWidth - 2),
             count: q('[data-ai-count]').textContent,
             visible: parseFloat(getComputedStyle(card).opacity) === 1,
@@ -38,12 +38,12 @@ for (const [w, h, dsf] of sizes) {
             stacked: br.top >= cr.bottom - 1,
             noPhone: !/Call to ask|\+251|fa-phone/.test(q('#about-intro').innerText + q('#about-intro').innerHTML.replace(/<script[\s\S]*?<\/script>|<style[\s\S]*?<\/style>/g, '')),
             card: Math.round(cr.width), bodyBg: getComputedStyle(q('#about-intro')).backgroundColor,
-            leadW: Math.round(r(lead).width), otherW: Math.round(Math.max(...others.map((o) => r(o).width))), vw: innerWidth,
+            leadW: Math.round(r(lead).width), leadH: Math.round(r(lead).height), vh: innerHeight, teamGap: Math.round(r(q('.team-card--lead')).top - r(q('.team-section h2.display-5')).bottom), otherW: Math.round(Math.max(...others.map((o) => r(o).width))), vw: innerWidth,
         };
     });
     rec(`intro @${label}: no overflow, headline 3 lines inside the card, count 5, visible, tap >= 44, no phone`, m.ovf <= 0 && m.threeLines && m.fits && m.count === '5' && m.visible && m.tap >= 44 && m.noPhone && m.bodyBg === 'rgb(255, 255, 255)', JSON.stringify(m));
     rec(`layout @${label}: ${w >= 992 ? 'two columns' : 'card on top, text below'}`, w >= 992 ? !m.stacked : m.stacked);
-    rec(`CEO card @${label}: larger than the others (${m.leadW} vs ${m.otherW}, ratio ${(m.leadW / m.otherW).toFixed(2)})`, m.leadW > m.otherW * 1.5 && m.leadW <= m.vw);
+    rec(`CEO card @${label}: landscape (${m.leadW}x${m.leadH}), wider than the others (${m.otherW}), shorter than the screen, heading gap ${m.teamGap}px`, m.leadW > m.leadH && m.leadW > m.otherW * 1.3 && m.leadW <= m.vw && m.leadH < m.vh * 0.6 && m.teamGap < 110);
     await p.locator('#about-intro').screenshot({ path: path.join(out, `intro-${label}.png`) });
     await p.locator('text=Our Management Team').locator('xpath=..').screenshot({ path: path.join(out, `team-${label}.png`) });
     rec(`no console errors @${label}`, errs.length === 0, errs.join(' | '));

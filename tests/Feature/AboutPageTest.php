@@ -127,7 +127,7 @@ class AboutPageTest extends TestCase
         $this->assertMatchesRegularExpression('/\.team-card__photo \{[^}]*width: min\(100%, 240px\)/', $html);
         $this->assertGreaterThanOrEqual(1.6, 410 / 240);
         $this->assertLessThanOrEqual(1.8, 410 / 240);
-        $this->assertStringContainsString('width="820"', $html);
+        $this->assertStringContainsString('width="1000"', $html);
     }
 
     public function test_homepage_years_counter_uses_the_same_config_figure_as_the_about_intro(): void

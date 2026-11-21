@@ -365,7 +365,9 @@ object-position: 50% 15%;
     .team-card__photo { position: relative; width: min(100%, 240px); aspect-ratio: 4 / 5; border-radius: 12px; overflow: hidden; display: grid; place-items: center; }
     .team-card__photo picture { display: contents; }
     /* CEO / founder card: clearly the largest (about 1.7x the other photos on desktop, ~86% of the width on phones, capped). */
-    .team-card--lead .team-card__photo { width: min(86%, 410px); border-radius: 14px; box-shadow: 0 18px 44px rgba(15, 42, 92, 0.18); }
+    .team-card--lead .team-card__photo { --lead-ratio: 4 / 3; width: min(90%, 400px); aspect-ratio: var(--lead-ratio); border-radius: 14px; box-shadow: 0 18px 44px rgba(15, 42, 92, 0.18); margin-bottom: 0.75rem !important; }
+    .team-card--lead .team-card__photo img { object-position: 50% 24%; } /* landscape frame: head and shoulders of the large original */
+    .team-card--lead p { margin-bottom: 0.5rem; }
     .team-card--lead h3 { font-size: clamp(1.375rem, 1.2rem + 0.7vw, 1.75rem); }
     .team-card--lead p { font-size: clamp(1.0625rem, 1rem + 0.3vw, 1.25rem); }
     .team-card__photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 20%; display: block; }
@@ -389,9 +391,10 @@ object-position: 50% 15%;
 
     /* Awards Section */
     .awards-section {
-        padding: 100px 0;
+        padding: 100px 0 32px; /* the Gallery follows: only a modest gap (about 64 px with the Gallery's own top padding) */
         background: #f8f9fa;
     }
+    @media (max-width: 575.98px) { .awards-section { padding-bottom: 20px; } }
 
     .awards-header {
         text-align: center;
@@ -796,24 +799,24 @@ We lead the market by creating disciplined culture that will have much bigger ef
 </section>
 
 <!-- Team Section -->
-<section class="team-section py-5 bg-light">
+<section class="team-section pt-5 pb-4 bg-light">
     <div class="container">
         <!-- Section Title -->
-        <div class="text-center mb-5">
-        <h2 class="display-5 fw-bold text-dark mb-5">Meet the People Behind the Vision</h2>
+        <div class="text-center mb-3">
+        <h2 class="display-5 fw-bold text-dark mb-2">Meet the People Behind the Vision</h2>
         
     </div>
 
         <!-- Management Team -->
-        <div class="mb-5">
-        <h2 class="h4 text-uppercase text-center fw-semibold mb-4 text-dark">Our Management Team</h2>
+        <div class="mb-4">
+        <h2 class="h4 text-uppercase text-center fw-semibold mb-3 text-dark">Our Management Team</h2>
         {{-- CEO alone on top, the rest centred below --}}
         <div class="row g-4 justify-content-center">
             <div class="col-12">
                 @include('components.team-member-card', ['member' => $managementTeam[0]])
             </div>
         </div>
-        <div class="row g-4 mt-1 justify-content-center px-2 px-sm-0">
+        <div class="row g-4 mt-0 justify-content-center px-2 px-sm-0">
             @foreach (array_slice($managementTeam, 1) as $member)
                 <div class="col-6 col-md-6 col-lg-3">
                     @include('components.team-member-card', ['member' => $member])
@@ -823,7 +826,7 @@ We lead the market by creating disciplined culture that will have much bigger ef
     </div>
     
     <!-- Teams Grid -->
-        <div class="row g-5 mt-5">
+        <div class="row g-4 mt-3">
             <!-- Software Team -->
             <div class="col-lg-6" data-aos="fade-right" data-aos-duration="1000">
                 <div class="team-showcase-card h-100 bg-white rounded-4 shadow-lg overflow-hidden position-relative">

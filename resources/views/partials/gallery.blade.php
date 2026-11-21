@@ -8,7 +8,7 @@
 @php($gallery = \App\Models\GalleryImage::publicList())
 @if (count($gallery))
 @php($n = count($gallery))
-<section class="sk-gallery py-5" id="gallery" aria-labelledby="sk-gallery-title" data-count="{{ $n }}">
+<section class="sk-gallery pt-4 pb-4" id="gallery" aria-labelledby="sk-gallery-title" data-count="{{ $n }}">
     <script>
         // Decide the mode before first paint so the section never changes size after load.
         (function (s) {
@@ -41,7 +41,7 @@
 <style>
     /* Plain section: same background as its neighbours (no panel, gradient or glow). */
     .sk-gallery { position: relative; overflow: hidden; isolation: isolate; }
-    .sk-gallery__head { text-align: center; padding: 0 20px; margin-bottom: clamp(20px, 3vw, 36px); }
+    .sk-gallery__head { text-align: center; padding: 0 20px; margin-bottom: clamp(12px, 2vw, 24px); }
     .sk-gallery__head h2 { margin: 0; }
     .sk-gallery__track { list-style: none; margin: 0 auto; padding: 0 20px; max-width: 1200px; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 220px), 1fr)); gap: 14px; }
     .sk-gallery[data-count="1"] .sk-gallery__track { grid-template-columns: minmax(0, 720px); justify-content: center; }
@@ -64,7 +64,7 @@
     .sk-gallery.is-cinematic .sk-gallery__slide.is-edge { pointer-events: none; }
     .sk-gallery.is-cinematic .sk-gallery__open img { transform: translateX(calc(var(--off, 0) * -4%)) scale(1.12); transition: transform 1s cubic-bezier(0.22, 0.7, 0.2, 1); }
     .sk-gallery.is-cinematic .sk-gallery__slide.is-jump .sk-gallery__open img { transition: none; }
-    .sk-gallery.is-cinematic .sk-gallery__caption { display: block; text-align: center; min-height: 3.2em; margin: 10px auto 0; padding: 0 20px; max-width: 760px; color: #334155; }
+    .sk-gallery.is-cinematic .sk-gallery__caption { display: block; text-align: center; min-height: 2.4em; margin: 6px auto 0; padding: 0 20px; max-width: 760px; color: #334155; }
     .sk-gallery__caption [lang="am"] { display: block; margin-top: 2px; }
 
     /* ---- lightbox ---- */

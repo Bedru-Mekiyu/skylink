@@ -6,7 +6,7 @@
         @if (!empty($member['image']))
             <picture>
                 @if (!empty($member['webp']))<source type="image/webp" srcset="{{ $member['webp'] }}">@endif
-                <img src="{{ $member['image'] }}" alt="{{ $member['name'] }}, {{ $member['title'] }}" width="{{ !empty($member['lead']) ? 820 : 480 }}" height="{{ !empty($member['lead']) ? 1025 : 600 }}" loading="lazy" decoding="async">
+                <img src="{{ $member['image'] }}" alt="{{ $member['name'] }}, {{ $member['title'] }}" width="{{ !empty($member['lead']) ? 1000 : 480 }}" height="{{ !empty($member['lead']) ? 1333 : 600 }}" loading="lazy" decoding="async">
             </picture>
         @else
             <span class="team-card__initials" role="img" aria-label="{{ $member['name'] }}, {{ $member['title'] }}">{{ collect(explode(' ', $member['name']))->map(fn ($w) => mb_substr($w, 0, 1))->take(2)->implode('') }}</span>

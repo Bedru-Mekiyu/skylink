@@ -35,12 +35,14 @@ for (const [w, h] of sizes) {
             seamGalleryFooter: gal ? Math.round(top(footer) - bottom(gal)) : Math.round(top(footer) - bottom(awards)),
             galBg: gal ? getComputedStyle(gal).backgroundColor : null, awardsBg: getComputedStyle(awards).backgroundColor, footerBg: getComputedStyle(footer).backgroundColor,
             introOk: !!intro && !!document.querySelector('.team-card--lead') && !!document.querySelector('.about-hero'),
+            gapMilestonesGallery: gal ? Math.round(gal.querySelector('h2').getBoundingClientRect().top + scrollY - Math.max(...[...document.querySelectorAll('.awards-section .award-item')].map((e) => e.getBoundingClientRect().bottom + scrollY))) : null,
             dupIds: document.querySelectorAll('#gallery').length, oldBetween: (() => { const t = document.querySelector('.team-section'); const prev = t.previousElementSibling; return prev ? prev.id : ''; })(),
         };
     });
     rec(`@${label}: no sideways scroll, intro/team/CEO/banner present, no console errors`, m.ovf <= 0 && m.introOk && errs.length === 0, JSON.stringify({ ovf: m.ovf, errs }));
     if (expect === 'photos') {
         rec(`@${label}: order Milestones -> Gallery -> footer, no gap or overlap (gaps ${m.seamAwardsGallery}/${m.seamGalleryFooter})`, m.hasGallery && m.orderOk && Math.abs(m.seamAwardsGallery) <= 1 && Math.abs(m.seamGalleryFooter) <= 1);
+        rec(`@${label}: gap from the last Milestones item to the Gallery title is modest (${m.gapMilestonesGallery}px)`, m.gapMilestonesGallery >= 30 && m.gapMilestonesGallery <= (w >= 768 ? 110 : 90));
         rec(`@${label}: plain white gallery between light Milestones and light footer (${m.awardsBg} | ${m.galBg} | ${m.footerBg})`, m.galBg === 'rgba(0, 0, 0, 0)' || m.galBg === 'rgb(255, 255, 255)');
         rec(`@${label}: images lazy, none decoded before the section is near (${m.loadedAtTop} loaded at top)`, m.lazy && m.loadedAtTop < 6);
         rec(`@${label}: old spot is empty (nothing with id gallery before the team section: "${m.oldBetween}")`, m.dupIds === 1 && m.oldBetween !== 'gallery');

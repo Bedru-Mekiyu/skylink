@@ -117,7 +117,7 @@ class GalleryTest extends TestCase
         $visible = preg_replace('#<script.*?</script>|<[^>]+>#s', ' ', $sec);
         $this->assertDoesNotMatchRegularExpression('/Photo\s*\d/i', $visible);
         // same plain background as the neighbours: no panel, gradient or glow on the section
-        $this->assertStringContainsString('class="sk-gallery py-5"', $sec);
+        $this->assertStringContainsString('class="sk-gallery pt-4 pb-4"', $sec);
         $css = substr($html, strpos($html, '.sk-gallery {'), 200);
         $this->assertStringNotContainsString('gradient', $css);
         $this->assertStringNotContainsString('background', $css);
