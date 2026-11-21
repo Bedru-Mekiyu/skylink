@@ -30,7 +30,7 @@ class GalleryImage extends Model
 
     public function altText(): string
     {
-        return $this->caption_en ?: ($this->caption_am ?: 'Sky Link photo gallery');
+        return $this->caption_en ?: ($this->caption_am ?: 'Sky Link gallery photo');
     }
 
     /**

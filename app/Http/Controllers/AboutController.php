@@ -22,9 +22,9 @@ class AboutController extends Controller
 {
     $managementTeam = [
         [
-            'name' => 'Mohammedkerem Ahmed',
-            'title' => 'CEO',
-            'image' => asset('assets/images/about/mohammedkerem.JPG'),
+            'name' => config('team.ceo.name'),
+            'title' => config('team.ceo.title'),
+            'image' => asset(config('team.ceo.image')),
             'bgColor' => '#f7f7f7ff',
         ],
         [
@@ -45,6 +45,13 @@ class AboutController extends Controller
             // Cropped 4:5 copy of the owner's photo (480x600); the original is archived privately.
             'image' => asset('assets/images/about/hanan.jpg'),
             'webp' => asset('assets/images/_opt/about/hanan-480.webp'),
+            'bgColor' => '#f7f7f7ff',
+        ],
+        [
+            // PLACEHOLDER until the real name and photo arrive: see config/team.php (one-file swap).
+            'name' => config('team.marketing.name'),
+            'title' => config('team.marketing.title'),
+            'image' => asset(config('team.marketing.image')),
             'bgColor' => '#f7f7f7ff',
         ],
         // [

@@ -8,7 +8,7 @@
 @php($gallery = \App\Models\GalleryImage::publicList())
 @if (count($gallery))
 @php($n = count($gallery))
-<section class="sk-gallery" id="gallery" aria-labelledby="sk-gallery-title" data-count="{{ $n }}">
+<section class="sk-gallery py-5" id="gallery" aria-labelledby="sk-gallery-title" data-count="{{ $n }}">
     <script>
         // Decide the mode before first paint so the section never changes size after load.
         (function (s) {
@@ -18,16 +18,14 @@
         })(document.currentScript.parentNode);
     </script>
     <div class="sk-gallery__head">
-        <span class="sk-gallery__tag">GALLERY</span>
-        <h2 id="sk-gallery-title">Moments with our partners and clients</h2>
-        <p>Our work and our time with the companies we serve.</p>
+        <h2 class="display-5 fw-bold text-dark" id="sk-gallery-title">Gallery</h2>
     </div>
 
     <div class="sk-gallery__stage" role="region" aria-roledescription="carousel" aria-label="Photo gallery">
         <div class="sk-gallery__track">
             @foreach ($gallery as $i => $g)
                 <div class="sk-gallery__slide" data-i="{{ $i }}" role="group" aria-roledescription="slide" aria-label="{{ $i + 1 }} of {{ $n }}">
-                    <button type="button" class="sk-gallery__open" aria-haspopup="dialog" aria-label="Open photo {{ $i + 1 }} of {{ $n }}: {{ $g['alt'] }}">
+                    <button type="button" class="sk-gallery__open" aria-haspopup="dialog" aria-label="Open photo: {{ $g['alt'] }}">
                         <img src="{{ $g['thumb'] }}" alt="{{ $g['alt'] }}" width="{{ $g['tw'] }}" height="{{ $g['th'] }}" loading="lazy" decoding="async" draggable="false">
                     </button>
                 </div>
@@ -41,18 +39,17 @@
 </section>
 
 <style>
-    .sk-gallery { position: relative; padding: clamp(40px, 6vw, 80px) 0 clamp(32px, 5vw, 64px); background: radial-gradient(120% 90% at 50% 0%, #0f2a5c 0%, #081836 55%, #050f24 100%); color: #fff; overflow: hidden; isolation: isolate; }
+    /* Plain section: same background as its neighbours (no panel, gradient or glow). */
+    .sk-gallery { position: relative; overflow: hidden; isolation: isolate; }
     .sk-gallery__head { text-align: center; padding: 0 20px; margin-bottom: clamp(20px, 3vw, 36px); }
-    .sk-gallery__tag { display: inline-block; font: 700 0.8125rem/1 var(--font-body); letter-spacing: 0.3em; color: #7db4ff; margin-bottom: 10px; }
-    .sk-gallery__head h2 { font-family: var(--font-heading); font-weight: 700; font-size: var(--fs-h2); color: #fff; margin: 0 0 8px; }
-    .sk-gallery__head p { margin: 0; color: rgba(226, 236, 255, 0.82); }
+    .sk-gallery__head h2 { margin: 0; }
     .sk-gallery__track { list-style: none; margin: 0 auto; padding: 0 20px; max-width: 1200px; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 220px), 1fr)); gap: 14px; }
     .sk-gallery[data-count="1"] .sk-gallery__track { grid-template-columns: minmax(0, 720px); justify-content: center; }
     .sk-gallery[data-count="2"] .sk-gallery__track { grid-template-columns: repeat(2, minmax(0, 520px)); justify-content: center; }
     @media (max-width: 575.98px) { .sk-gallery[data-count="2"] .sk-gallery__track { grid-template-columns: minmax(0, 1fr); } }
-    .sk-gallery__slide { margin: 0; aspect-ratio: 3 / 2; border-radius: 14px; overflow: hidden; background: #0b1f46; box-shadow: 0 14px 34px rgba(0, 0, 0, 0.35); }
+    .sk-gallery__slide { margin: 0; aspect-ratio: 3 / 2; border-radius: 14px; overflow: hidden; background: #e2e8f0; box-shadow: 0 10px 28px rgba(15, 23, 42, 0.16); }
     .sk-gallery__open { display: block; width: 100%; height: 100%; padding: 0; border: 0; background: none; cursor: zoom-in; border-radius: inherit; }
-    .sk-gallery__open:focus-visible { outline: 3px solid #7db4ff; outline-offset: 3px; }
+    .sk-gallery__open:focus-visible { outline: 3px solid #3b82f6; outline-offset: 3px; }
     .sk-gallery__open img { display: block; width: 100%; height: 100%; object-fit: cover; }
     .sk-gallery__caption { display: none; }
 
@@ -67,7 +64,7 @@
     .sk-gallery.is-cinematic .sk-gallery__slide.is-edge { pointer-events: none; }
     .sk-gallery.is-cinematic .sk-gallery__open img { transform: translateX(calc(var(--off, 0) * -4%)) scale(1.12); transition: transform 1s cubic-bezier(0.22, 0.7, 0.2, 1); }
     .sk-gallery.is-cinematic .sk-gallery__slide.is-jump .sk-gallery__open img { transition: none; }
-    .sk-gallery.is-cinematic .sk-gallery__caption { display: block; text-align: center; min-height: 3.2em; margin: 10px auto 0; padding: 0 20px; max-width: 760px; color: rgba(226, 236, 255, 0.92); }
+    .sk-gallery.is-cinematic .sk-gallery__caption { display: block; text-align: center; min-height: 3.2em; margin: 10px auto 0; padding: 0 20px; max-width: 760px; color: #334155; }
     .sk-gallery__caption [lang="am"] { display: block; margin-top: 2px; }
 
     /* ---- lightbox ---- */
@@ -77,6 +74,7 @@
     .sk-lb__fig img { user-select: none; -webkit-user-drag: none; max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; border-radius: 6px; }
     .sk-lb__cap { text-align: center; padding: 8px 64px 22px; min-height: 4.2em; }
     .sk-lb__cap [lang="am"] { display: block; }
+    .sk-lb__n { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
     .sk-lb__count { display: block; font-size: 0.875rem; opacity: 0.75; margin-top: 4px; }
     .sk-lb__btn { position: absolute; width: 48px; height: 48px; border-radius: 50%; border: 1px solid rgba(255, 255, 255, 0.4); background: rgba(255, 255, 255, 0.1); color: #fff; font-size: 1.25rem; display: grid; place-items: center; cursor: pointer; }
     .sk-lb__btn:hover { background: rgba(255, 255, 255, 0.25); }
@@ -184,7 +182,7 @@
         lbIdx = (i + n) % n; var g = data[lbIdx];
         lbImg.src = g.full; lbImg.alt = g.alt; lbImg.width = g.fw; lbImg.height = g.fh;
         caption(g, lbCap);
-        var c = document.createElement('span'); c.className = 'sk-lb__count'; c.textContent = (lbIdx + 1) + ' / ' + n; lbCap.appendChild(c);
+        var c = document.createElement('span'); c.className = 'sk-lb__n'; c.textContent = 'Photo ' + (lbIdx + 1) + ' of ' + n; lbCap.appendChild(c); // screen readers only
         [lbIdx + 1, lbIdx - 1].forEach(function (k) { new Image().src = data[(k + n) % n].full; }); // neighbours ready
     }
     function open(i, from) {

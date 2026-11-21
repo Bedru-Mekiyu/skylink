@@ -90,6 +90,32 @@ class GalleryTest extends TestCase
         }
     }
 
+    public function test_gallery_header_is_just_gallery_no_photo_n_text_and_a_plain_background(): void
+    {
+        $this->addPhotos(4);
+        $html = $this->get(route('about'))->assertOk()->getContent();
+        $sec = substr($html, strpos($html, '<section class="sk-gallery'));
+        $sec = substr($sec, 0, strpos($sec, '</section>'));
+        $this->assertSame(1, preg_match_all('#<h2[^>]*>(.*?)</h2>#s', $sec, $m));
+        $this->assertSame('Gallery', trim($m[1][0]));
+        $this->assertStringNotContainsString('sk-gallery__tag', $sec);
+        $this->assertStringNotContainsString('<p>', $sec);
+        // no auto-generated visible label: nothing renders "Photo N" as text (screen-reader-only text is allowed)
+        $visible = preg_replace('#<script.*?</script>|<[^>]+>#s', ' ', $sec);
+        $this->assertDoesNotMatchRegularExpression('/Photo\s*\d/i', $visible);
+        // same plain background as the neighbours: no panel, gradient or glow on the section
+        $this->assertStringContainsString('class="sk-gallery py-5"', $sec);
+        $css = substr($html, strpos($html, '.sk-gallery {'), 200);
+        $this->assertStringNotContainsString('gradient', $css);
+        $this->assertStringNotContainsString('background', $css);
+    }
+
+    public function test_alt_text_falls_back_to_a_neutral_text_without_numbers(): void
+    {
+        $g = new GalleryImage();
+        $this->assertSame('Sky Link gallery photo', $g->altText());
+    }
+
     public function test_hidden_photos_do_not_show_and_order_is_respected(): void
     {
         $this->addPhotos(3);

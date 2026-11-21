@@ -137,9 +137,14 @@ say "   ceremony for visitors (from the app): $("$PHP" artisan tinker --execute=
 say "   still-pending migrations: $("$PHP" artisan migrate:status --pending 2>/dev/null | grep -c 'Pending' || true)"
 [ "$(env_get APP_DEBUG)" = "false" ] || say "   !! APP_DEBUG is not false in .env. Fix it now."
 grep -Eq '^[[:space:]]*ANNIVERSARY_FORCE=' "$ENVF" && say "   !! .env has ANNIVERSARY_FORCE. Remove that line."
+# Head of Marketing placeholder (config/team.php): fails only on a live site (production, no MAIL_STAGING_GUARD).
+PLACEHOLDER_BAD=0
+"$PHP" artisan team:check-placeholder >/dev/null 2>&1 || PLACEHOLDER_BAD=1
+[ "$PLACEHOLDER_BAD" = "0" ] || say "   !! The Head of Marketing PLACEHOLDER (name 'Full Name', silhouette photo) is still on this live site. Replace it now: config/team.php."
 crontab -l 2>/dev/null | grep -q 's.skylinkict.com' || say "   note: no cron line for this site yet (guide: Deploy Day, step 'Cron')."
 
 step "9/9 Done"
 say "Backup folder : $BK"
 say "Roll back     : bash deploy/server-rollback.sh $BK"
 say "Not done on purpose: news:publish-anniversary (run it on the ceremony day), turning the ceremony on (Admin > Anniversary Ceremony)."
+[ "$PLACEHOLDER_BAD" = "0" ] || { say "STOPPED WITH A WARNING: replace the Head of Marketing placeholder before going live."; exit 1; }

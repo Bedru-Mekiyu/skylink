@@ -136,7 +136,7 @@ class HeroVideoTest extends TestCase
     public function test_default_still_is_the_ceo_portrait_and_reset_brings_it_back(): void
     {
         $home = $this->get('/')->assertOk()->getContent();
-        $this->assertStringContainsString('alt="Muhammad Karim, CEO and founder of Sky Link Technologies"', $home);
+        $this->assertStringContainsString('alt="'.config('team.ceo.name').', CEO of Sky Link Technologies"', $home);
         $this->assertStringContainsString('assets/videos/hero/poster.webp', $home);
         $this->assertStringContainsString('assets/videos/hero/poster-mobile.webp', $home);
         foreach (['poster.jpg' => 250, 'poster.webp' => 250, 'poster-mobile.jpg' => 150, 'poster-mobile.webp' => 150] as $f => $kb) {

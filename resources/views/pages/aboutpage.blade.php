@@ -817,15 +817,15 @@ object-position: 50% 15%;
     }
 </style>
 
-<img src="{{ asset('assets/images/about/mohammedkerem.JPG') }}"
-     alt="CEO Mohammedkerem Ahmed"
+<img src="{{ $managementTeam[0]['image'] }}"
+     alt="CEO {{ $managementTeam[0]['name'] }}"
      class="ceo-photo-mask img-fluid">
 
 
                 <blockquote class="blockquote text-muted fst-italic mt-4">
                     “We're always here to support and continue delivering excellence.”
                 </blockquote>
-                <p class="fw-semibold text-dark">_CEO, Mohammedkerem Ahmed</p>
+                <p class="fw-semibold text-dark">_CEO, {{ $managementTeam[0]['name'] }}</p>
             </div>
 
             <div class="col-lg-6">
@@ -947,7 +947,7 @@ We lead the market by creating disciplined culture that will have much bigger ef
         </div>
         <div class="row g-4 mt-1 justify-content-center">
             @foreach (array_slice($managementTeam, 1) as $member)
-                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                <div class="col-6 col-md-6 col-lg-3">
                     @include('components.team-member-card', ['member' => $member])
                 </div>
             @endforeach

@@ -224,7 +224,7 @@
             @if ($heroPosterMobileWebp)<source media="(max-width: 767.98px), (max-aspect-ratio: 1/1)" srcset="{{ $heroPosterMobileWebp }}" type="image/webp">@endif
             @if ($heroPosterMobile)<source media="(max-width: 767.98px), (max-aspect-ratio: 1/1)" srcset="{{ $heroPosterMobile }}" type="image/jpeg">@endif
             @if ($heroPosterWebp)<source srcset="{{ $heroPosterWebp }}" type="image/webp">@endif
-            <img class="hero-media__poster" src="{{ $heroPoster }}" alt="{{ $heroCeoStill ? 'Muhammad Karim, CEO and founder of Sky Link Technologies' : '' }}" fetchpriority="high" decoding="async">
+            <img class="hero-media__poster" src="{{ $heroPoster }}" alt="{{ $heroCeoStill ? config('team.ceo.name').', CEO of Sky Link Technologies' : '' }}" fetchpriority="high" decoding="async">
         </picture>
         @if ($heroHasVideo)
             {{-- Sources are attached by JS after the viewport / motion / data-saver checks. --}}
