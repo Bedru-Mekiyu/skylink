@@ -187,6 +187,10 @@
             position: relative;
         }
 
+        .map-image iframe {
+            max-width: 100%; /* the embed is 600 px wide: never wider than its column */
+        }
+
         /* Responsive Design */
         @media (max-width: 991.98px) {
             .contact-cards-row {

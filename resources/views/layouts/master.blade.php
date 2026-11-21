@@ -304,7 +304,8 @@
 
         .social-footer {
             display: flex;
-            gap: 15px;
+            flex-wrap: wrap; /* five 44 px icons no longer push the page sideways on very narrow or zoomed screens */
+            gap: 4px 15px;
             margin-top: 20px;
         }
 
