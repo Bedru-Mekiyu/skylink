@@ -35,8 +35,13 @@ function place($canvas, $photo, array $crop, array $box, callable $alpha, array 
     [$dx, $dy, $w, $h] = $box;
     $tmp = imagecreatetruecolor($w, $h);
     imagecopyresampled($tmp, $photo, 0, 0, $cx, $cy, $w, $h, $cw, $ch);
+    $cw0 = imagesx($canvas);
+    $ch0 = imagesy($canvas);
     for ($y = 0; $y < $h; $y++) {
         for ($x = 0; $x < $w; $x++) {
+            if ($dx + $x < 0 || $dy + $y < 0 || $dx + $x >= $cw0 || $dy + $y >= $ch0) {
+                continue; // the box may start outside the canvas
+            }
             $a = $alpha($x / $w, $y / $h);
             $c = imagecolorat($tmp, $x, $y);
             $n = imagecolorat($canvas, $dx + $x, $dy + $y); // blend into the backdrop, so there is no visible seam
@@ -77,18 +82,18 @@ function save($im, string $base, int $maxKb, int $q = 92): void
     printf("%s: q%d jpg %d KB, webp %d KB\n", basename($base), $q, filesize($base.'.jpg') / 1024, filesize($base.'.webp') / 1024);
 }
 
-// ---- desktop 1920x1080: portrait on the right, soft fade into navy on the left and bottom ----
+// Head and shoulders are scaled down and raised so that the face stays clear of the anniversary seal (desktop,
+// seal sits right of centre) and of the headline (phones, copy sits mid-screen). Source head: y 410..1254 of 2560.
+// ---- desktop 1920x1080: portrait on the right (face about y 100..390), fades into navy on the left and below ----
 $d = backdrop(1920, 1080, $navy, false);
-$bw = 1040;
-$cropH = (int) round($sw * 1080 / $bw);
-place($d, $photo, [0, 120, $sw, $cropH], [1920 - $bw, 0, $bw, 1080], function ($u, $v) {
-    return max(0.2, 1 - smooth($u / 0.65) * 0.8, smooth(($v - 0.8) / 0.2));
+place($d, $photo, [0, 0, $sw, $sh], [1260, -41, 660, 880], function ($u, $v) {
+    return max(0.2, 1 - smooth($u / 0.5) * 0.8, smooth(($v - 0.7) / 0.3));
 }, $navy);
 save($d, $out.'poster', 250);
 
-// ---- mobile 900x1200: whole portrait, face in the upper third, navy towards the bottom ----
+// ---- mobile 900x1200: face in the top fifth (above the headline), suit fades into navy ----
 $m = backdrop(900, 1200, $navy, true);
-place($m, $photo, [0, 0, $sw, $sh], [0, 0, 900, 1200], function ($u, $v) {
-    return max(0.25, smooth(($v - 0.55) / 0.45));
+place($m, $photo, [0, 0, $sw, $sh], [86, -125, 728, 970], function ($u, $v) {
+    return max(0.22, 1 - smooth($u / 0.18) * 0.78, 1 - smooth((1 - $u) / 0.18) * 0.78, smooth(($v - 0.55) / 0.45));
 }, $navy);
 save($m, $out.'poster-mobile', 150);

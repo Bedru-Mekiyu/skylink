@@ -36,8 +36,8 @@
 
 @push('styles')
     @if ($heroPosterWebp && $heroPosterMobileWebp)
-        <link rel="preload" as="image" type="image/webp" href="{{ $heroPosterMobileWebp }}" media="(max-width: 767.98px)" fetchpriority="high">
-        <link rel="preload" as="image" type="image/webp" href="{{ $heroPosterWebp }}" media="(min-width: 768px)" fetchpriority="high">
+        <link rel="preload" as="image" type="image/webp" href="{{ $heroPosterMobileWebp }}" media="(max-width: 767.98px), (max-aspect-ratio: 1/1)" fetchpriority="high">
+        <link rel="preload" as="image" type="image/webp" href="{{ $heroPosterWebp }}" media="(min-width: 768px) and (min-aspect-ratio: 101/100)" fetchpriority="high">
     @else
         <link rel="preload" as="image" href="{{ $heroPoster }}" fetchpriority="high">
     @endif
@@ -221,8 +221,8 @@
 <div class="hero-media" data-hero-media aria-hidden="true">
     <div class="hero-media__frame">
         <picture>
-            @if ($heroPosterMobileWebp)<source media="(max-width: 767.98px)" srcset="{{ $heroPosterMobileWebp }}" type="image/webp">@endif
-            @if ($heroPosterMobile)<source media="(max-width: 767.98px)" srcset="{{ $heroPosterMobile }}" type="image/jpeg">@endif
+            @if ($heroPosterMobileWebp)<source media="(max-width: 767.98px), (max-aspect-ratio: 1/1)" srcset="{{ $heroPosterMobileWebp }}" type="image/webp">@endif
+            @if ($heroPosterMobile)<source media="(max-width: 767.98px), (max-aspect-ratio: 1/1)" srcset="{{ $heroPosterMobile }}" type="image/jpeg">@endif
             @if ($heroPosterWebp)<source srcset="{{ $heroPosterWebp }}" type="image/webp">@endif
             <img class="hero-media__poster" src="{{ $heroPoster }}" alt="{{ $heroCeoStill ? 'Muhammad Karim, CEO and founder of Sky Link Technologies' : '' }}" fetchpriority="high" decoding="async">
         </picture>
