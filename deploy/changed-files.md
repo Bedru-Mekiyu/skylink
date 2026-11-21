@@ -115,3 +115,8 @@ No new migrations. Rollback: re-upload the previous files or `git revert`.
 ## Evening 2026-11-21: admin login, gallery
 - `app/Console/Commands/SetAdminPassword.php`, `app/Http/Controllers/Admin/ProfileController.php` (audit log), `tests/Feature/SetAdminPasswordTest.php`, `tests/Feature/Admin/AdminProfileTest.php`
 - `tools/local/live-*.mjs` (live checks, credentials only from the environment), `deploy/golive-backup2.sh`
+
+## 2026-11-22: phone format and SEO
+- Phone: `app/Support/PhoneNumber.php`, `resources/views/layouts/master.blade.php`, `pages/contact.blade.php`, `services/index.blade.php`, `partials/contact-launcher.blade.php`, `tests/Feature/PhoneNumberTest.php`, `tests/Feature/AboutPageTest.php`
+- SEO: `config/seo.php`, `app/Support/Seo.php`, `resources/views/partials/seo.blade.php`, `resources/views/errors/404.blade.php`, `app/Http/Controllers/SitemapController.php`, `app/Console/Commands/SeoPing.php`, `routes/web.php` (/home 301, IndexNow key file), `public/assets/images/og-default.jpg`, `public/.htaccess` (s. -> skylinkict.com 301 kept), views (news-detail, product-detail, news-events, servicecategory), `tests/Feature/SeoHeadTest.php`, `SeoTest.php`
+- Live only (not in the zip): `public_html/.htaccess` rule for `/index.php`, `/index.html`, `/home`; `public_html/robots.txt`

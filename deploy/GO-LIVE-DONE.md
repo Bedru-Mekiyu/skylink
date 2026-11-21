@@ -50,3 +50,36 @@ cp -p .env.before-golive.<time> .env && php artisan optimize:clear
 - **Download the backups:** `scp -r -i <key> skylinkictcom@91.204.209.13:/home/skylinkictcom/s.skylinkict.com/deploy/backups ./skylink-backups` (or cPanel File Manager > compress > download).
 - **Bing image:** product id 6 "Learning Management System (LMS)" points to a dead Bing address. Fix in Admin > Products > edit > upload an image, or run `php artisan products:fix-lms-image`. Products 5 and 20 also hotlink Bing thumbnails (work today, fragile).
 - **Not changed:** other admin pages work (200). The 404 page is the plain default "Not Found" (a branded 404 is a design decision for you).
+
+## Update 2026-11-22: Ethiopian phone format and SEO
+**Releases on live:** 505d5c2c (phone format), then 01adea35 (SEO). Backups made by `server-deploy.sh`: `deploy/backups/20261121-204827` (before phone) and `deploy/backups/20261121-211647` (before SEO, also holds `public_html.htaccess.pre-seo`). Rollback: `bash deploy/server-rollback.sh <backup folder>`; apex rule: `cp -p <backup>/public_html.htaccess.pre-seo /home/skylinkictcom/public_html/.htaccess`.
+Both were tested locally (447 tests), then deployed to bedru, then live.
+
+### Phone numbers (one formatter: `app/Support/PhoneNumber.php`; numbers from `config/company_contact.php`)
+| Place | Before | After |
+|---|---|---|
+| Nav bar (2 numbers) | `+251-974-967171`, tel link with the raw text | `+251 974 967 171`, `+251 936 177 777`, `tel:+251974967171` |
+| Footer | `+251-974-967171`, plain text | `+251 974 967 171`, tap-to-call |
+| Contact page card | `+251-974-967171`, plain text | `+251 974 967 171`, tap-to-call |
+| Services quote box | `+251-974-967171` | `+251 974 967 171`, tap-to-call |
+| Contact launcher | raw config text, copy button copied the raw text | formatted, copy gives `+251974967171` |
+| JSON-LD (new, SEO) | none | `telephone: "+251974967171"` |
+Digits were not changed. Spaces inside a number are non-breaking and the links use `white-space: nowrap`. Checked at 1440, 1024, 768 and 360 px (nothing wrapped or overflowed; between 992 and 1199 px the nav hides the numbers by design, the footer shows them). There is no Amharic version of the nav/footer. Not changed: an unused placeholder `+251 123 456 789` in `ServiceController` (not shown anywhere). Invalid numbers are shown unchanged and logged as a warning.
+
+### SEO (one mechanism: `config/seo.php` + `app/Support/Seo.php` + `partials/seo.blade.php`)
+- Unique titles and descriptions per page (home title is your wording, 61 characters), canonical always `https://skylinkict.com`, og:* and twitter:* tags, default share image `assets/images/og-default.jpg` (1200x630), `og:locale`, `<html lang>` (`am` for Amharic articles), robots `noindex` only on the 404 and on previews.
+- JSON-LD: Organization + LocalBusiness (home), NewsArticle (articles), BreadcrumbList (inner pages). Opening hours are not published because they are not in `config/seo.php` (`organization.opening_hours`).
+- `sitemap.xml`: pages, news, products, videos, service categories and services with real lastmod; all 129 URLs return 200 (two uncached pages took 16 s on the first request). No per-project portfolio pages exist, so none are listed.
+- Real 404 status with a friendly page; `/home`, `/index.php` and `/index.html` give a 301 to `/` (Laravel route and a rule in `public_html/.htaccess` for the apex host). `s.` and `www` still give a 301 with the path kept.
+- Alt text added to the logo, article banner, featured news and video thumbnails. Left as they are: partner logos (handled with aria labels), news card thumbnails (decorative next to the headline), product images (no width/height known).
+- `php artisan seo:ping` (dry run; `--send` submits the sitemap URLs to Bing IndexNow) needs `INDEXNOW_KEY` in `.env` (the key file is then served at `/<key>.txt`). It never runs by itself.
+- `BING_SITE_VERIFICATION` and `GOOGLE_SITE_VERIFICATION` in `.env` add the verification meta tags (empty = no tag).
+- Core Web Vitals (Pixel 7, no throttling): home LCP 3.3 s, CLS 0; About LCP 1.9 s, CLS 0. Static files already cache for 7 days and CSS is brotli. No safe small fix was needed, so nothing was changed (hero video engine untouched).
+- `test.skylinkict.com`: serves a stock Laravel welcome page from an old separate app, robots allows everything and there is no noindex. NOT touched. Decide: add noindex, or remove the subdomain/redirect it.
+
+### SEO to-do (you)
+1. Google Search Console: add `https://skylinkict.com`, verify (or set `GOOGLE_SITE_VERIFICATION` in `.env` and `php artisan config:cache`), submit `https://skylinkict.com/sitemap.xml`.
+2. Bing Webmaster Tools: add the site (can import from Search Console), submit the sitemap; for IndexNow set `INDEXNOW_KEY=<8-128 letters/digits>` in `.env`, `php artisan config:cache`, then `php artisan seo:ping` (dry run) and `php artisan seo:ping --send`.
+3. Google Business Profile and social profiles: website `https://skylinkict.com`.
+4. Decide about `test.skylinkict.com`.
+5. Optional: fill `organization.opening_hours` in `config/seo.php` (e.g. `Mo-Fr 08:00-17:00`, `Sa 08:00-12:00`).
