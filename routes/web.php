@@ -172,6 +172,27 @@ Route::resource('products', ProductadminController::class);
     Route::put('/partners/{partner}', [\App\Http\Controllers\Admin\PartnerController::class, 'update'])->middleware('throttle:partner-upload')->name('partners.update');
     Route::put('/partners/{partner}/toggle', [\App\Http\Controllers\Admin\PartnerController::class, 'toggle'])->middleware('throttle:60,1')->name('partners.toggle');
 
+    // Testimonials (homepage + Services strip) and Departments (About page cards).
+    $t = \App\Http\Controllers\Admin\TestimonialController::class;
+    Route::get('/testimonials', [$t, 'index'])->name('testimonials.index');
+    Route::get('/testimonials/create', [$t, 'create'])->name('testimonials.create');
+    Route::post('/testimonials', [$t, 'store'])->middleware('throttle:partner-upload')->name('testimonials.store');
+    Route::get('/testimonials/{testimonial}/edit', [$t, 'edit'])->name('testimonials.edit');
+    Route::put('/testimonials/{testimonial}', [$t, 'update'])->middleware('throttle:partner-upload')->name('testimonials.update');
+    Route::put('/testimonials/{testimonial}/toggle', [$t, 'toggle'])->middleware('throttle:60,1')->name('testimonials.toggle');
+    Route::put('/testimonials/{testimonial}/move', [$t, 'move'])->middleware('throttle:60,1')->name('testimonials.move');
+    Route::delete('/testimonials/{testimonial}', [$t, 'destroy'])->middleware('throttle:60,1')->name('testimonials.destroy');
+
+    $d = \App\Http\Controllers\Admin\DepartmentController::class;
+    Route::get('/departments', [$d, 'index'])->name('departments.index');
+    Route::get('/departments/create', [$d, 'create'])->name('departments.create');
+    Route::post('/departments', [$d, 'store'])->middleware('throttle:partner-upload')->name('departments.store');
+    Route::get('/departments/{department}/edit', [$d, 'edit'])->name('departments.edit');
+    Route::put('/departments/{department}', [$d, 'update'])->middleware('throttle:partner-upload')->name('departments.update');
+    Route::put('/departments/{department}/toggle', [$d, 'toggle'])->middleware('throttle:60,1')->name('departments.toggle');
+    Route::put('/departments/{department}/move', [$d, 'move'])->middleware('throttle:60,1')->name('departments.move');
+    Route::delete('/departments/{department}', [$d, 'destroy'])->middleware('throttle:60,1')->name('departments.destroy');
+
     // About-page gallery: bulk upload, captions, order, hide. Never deletes.
     Route::get('/gallery', [\App\Http\Controllers\Admin\GalleryController::class, 'index'])->name('gallery.index');
     Route::post('/gallery', [\App\Http\Controllers\Admin\GalleryController::class, 'store'])->middleware('throttle:gallery-upload')->name('gallery.store');

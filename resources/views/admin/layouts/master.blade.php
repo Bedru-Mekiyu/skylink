@@ -135,6 +135,8 @@
                 <li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.hero-video.*') ? 'active' : '' }}" href="{{ route('admin.hero-video.edit') }}"><i class="fas fa-film fa-fw"></i> Homepage Video</a></li>
                 <li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.partners.*') ? 'active' : '' }}" href="{{ route('admin.partners.index') }}"><i class="fas fa-handshake fa-fw"></i> Partners</a></li>
                 <li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.gallery.*') ? 'active' : '' }}" href="{{ route('admin.gallery.index') }}"><i class="fas fa-images fa-fw"></i> Gallery</a></li>
+                <li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.testimonials.*') ? 'active' : '' }}" href="{{ route('admin.testimonials.index') }}"><i class="fas fa-comment-dots fa-fw"></i> Testimonials</a></li>
+                <li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.departments.*') ? 'active' : '' }}" href="{{ route('admin.departments.index') }}"><i class="fas fa-people-group fa-fw"></i> Departments</a></li>
                 <li class="sidebar-heading mt-2">Content</li>
                 <li class="nav-item">
                     <a class="nav-link" data-bs-toggle="collapse" href="#contentCollapseDesktop"><i class="fas fa-file-alt fa-fw"></i> Manage Content <i class="fas fa-chevron-down ms-auto"></i></a>
@@ -173,6 +175,8 @@
                 <li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.hero-video.*') ? 'active' : '' }}" href="{{ route('admin.hero-video.edit') }}"><i class="fas fa-film fa-fw"></i> Homepage Video</a></li>
                 <li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.partners.*') ? 'active' : '' }}" href="{{ route('admin.partners.index') }}"><i class="fas fa-handshake fa-fw"></i> Partners</a></li>
                 <li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.gallery.*') ? 'active' : '' }}" href="{{ route('admin.gallery.index') }}"><i class="fas fa-images fa-fw"></i> Gallery</a></li>
+                <li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.testimonials.*') ? 'active' : '' }}" href="{{ route('admin.testimonials.index') }}"><i class="fas fa-comment-dots fa-fw"></i> Testimonials</a></li>
+                <li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.departments.*') ? 'active' : '' }}" href="{{ route('admin.departments.index') }}"><i class="fas fa-people-group fa-fw"></i> Departments</a></li>
                     <li class="sidebar-heading mt-2">Content</li>
                     <li class="nav-item">
                         <a class="nav-link" data-bs-toggle="collapse" href="#contentCollapseMobile"><i class="fas fa-file-alt fa-fw"></i> Manage Content <i class="fas fa-chevron-down ms-auto"></i></a>
@@ -204,6 +208,15 @@
     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none"> @csrf </form>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="{{ asset('assets/js/sky-confirm.js') }}"></script>
+    <script>
+    // Double-submit protection for every admin form (POST/PUT/DELETE): after the first real submit the buttons are locked.
+    document.addEventListener('submit', function (e) {
+        var f = e.target; if (!f || !f.tagName || f.tagName !== 'FORM' || (f.method || '').toLowerCase() === 'get') return;
+        if (f.dataset.locked === '1') { e.preventDefault(); return; }
+        setTimeout(function () { if (e.defaultPrevented) return; f.dataset.locked = '1'; [].forEach.call(f.querySelectorAll('button[type=submit]'), function (b) { b.setAttribute('aria-disabled', 'true'); b.style.pointerEvents = 'none'; b.style.opacity = '.65'; }); }, 0);
+    });
+    window.addEventListener('pageshow', function () { [].forEach.call(document.querySelectorAll('form[data-locked]'), function (f) { delete f.dataset.locked; [].forEach.call(f.querySelectorAll('button[type=submit]'), function (b) { b.removeAttribute('aria-disabled'); b.style.pointerEvents = ''; b.style.opacity = ''; }); }); });
+    </script>
 @stack('scripts')
 </body>
 </html>

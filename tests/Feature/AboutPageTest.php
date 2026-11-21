@@ -28,7 +28,7 @@ class AboutPageTest extends TestCase
     {
         $html = $this->get(route('about'))->assertOk()->getContent();
         $team = substr($html, strpos($html, 'Our Management Team'));
-        $team = substr($team, 0, strpos($team, 'Teams Grid'));
+        $team = substr($team, 0, strpos($team, '</section>'));
         $rows = explode('class="row g-4', $team);
         $this->assertStringContainsString('Mohammedkerem Ahmed', $rows[1]);
         $this->assertSame(1, substr_count($rows[1], 'team-card--lead'), 'the CEO card is the large one');
