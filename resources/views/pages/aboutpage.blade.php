@@ -391,10 +391,11 @@ object-position: 50% 15%;
 
     /* Awards Section */
     .awards-section {
-        padding: 100px 0 32px; /* the Gallery follows: only a modest gap (about 64 px with the Gallery's own top padding) */
+        display: flow-root; /* keeps the last item margin inside the section (no white strip before the Gallery) */
+        padding: 100px 0 8px; /* the Gallery follows: modest gap (about 60 px incl. the Gallery top padding and the last item margin) */
         background: #f8f9fa;
     }
-    @media (max-width: 575.98px) { .awards-section { padding-bottom: 20px; } }
+    @media (max-width: 575.98px) { .awards-section { padding-bottom: 0; } }
 
     .awards-header {
         text-align: center;

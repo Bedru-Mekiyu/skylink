@@ -42,7 +42,7 @@ for (const [w, h] of sizes) {
     rec(`@${label}: no sideways scroll, intro/team/CEO/banner present, no console errors`, m.ovf <= 0 && m.introOk && errs.length === 0, JSON.stringify({ ovf: m.ovf, errs }));
     if (expect === 'photos') {
         rec(`@${label}: order Milestones -> Gallery -> footer, no gap or overlap (gaps ${m.seamAwardsGallery}/${m.seamGalleryFooter})`, m.hasGallery && m.orderOk && Math.abs(m.seamAwardsGallery) <= 1 && Math.abs(m.seamGalleryFooter) <= 1);
-        rec(`@${label}: gap from the last Milestones item to the Gallery title is modest (${m.gapMilestonesGallery}px)`, m.gapMilestonesGallery >= 30 && m.gapMilestonesGallery <= (w >= 768 ? 110 : 90));
+        rec(`@${label}: gap from the last Milestones item to the Gallery title is modest (${m.gapMilestonesGallery}px)`, m.gapMilestonesGallery >= 36 && m.gapMilestonesGallery <= (w >= 768 ? 66 : 56));
         rec(`@${label}: plain white gallery between light Milestones and light footer (${m.awardsBg} | ${m.galBg} | ${m.footerBg})`, m.galBg === 'rgba(0, 0, 0, 0)' || m.galBg === 'rgb(255, 255, 255)');
         rec(`@${label}: images lazy, none decoded before the section is near (${m.loadedAtTop} loaded at top)`, m.lazy && m.loadedAtTop < 6);
         rec(`@${label}: old spot is empty (nothing with id gallery before the team section: "${m.oldBetween}")`, m.dupIds === 1 && m.oldBetween !== 'gallery');
