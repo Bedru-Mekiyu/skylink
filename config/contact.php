@@ -8,14 +8,14 @@
 |
 | QUOTE_INBOX and SUPPORT_INBOX are optional. Left empty (or missing), they
 | fall back to CONTACT_INBOX, so changing that one line changes everything.
-| If CONTACT_INBOX itself is missing, the site's sender address
-| (MAIL_FROM_ADDRESS) is used, so messages are never dropped silently.
+| If CONTACT_INBOX itself is missing, the company email (COMPANY_EMAIL, default
+| info@skylinkictet.com, see config/company.php) is used, so messages are never dropped silently.
 |
 | After changing .env on the server, clear the config cache
 | (php artisan config:clear); see the release runbook.
 */
 
-$inbox = env('CONTACT_INBOX') ?: env('MAIL_FROM_ADDRESS');
+$inbox = env('CONTACT_INBOX') ?: env('COMPANY_EMAIL', 'info@skylinkictet.com');
 $quoteInbox = env('QUOTE_INBOX') ?: $inbox;
 
 return [

@@ -61,7 +61,7 @@ class InquiryTest extends TestCase
     /** Re-evaluates config/contact.php with the given environment. */
     private function contactConfigWith(array $env): array
     {
-        $keys = ['CONTACT_INBOX', 'QUOTE_INBOX', 'SUPPORT_INBOX', 'MAIL_FROM_ADDRESS'];
+        $keys = ['CONTACT_INBOX', 'QUOTE_INBOX', 'SUPPORT_INBOX', 'MAIL_FROM_ADDRESS', 'COMPANY_EMAIL'];
         $saved = [];
         foreach ($keys as $k) {
             $saved[$k] = [$_ENV[$k] ?? null, $_SERVER[$k] ?? null, getenv($k)];
@@ -100,9 +100,11 @@ class InquiryTest extends TestCase
         $this->assertSame('help@example.test', $c['inboxes']['support']);
         $this->assertSame('team@example.test', $c['inboxes']['contact']);
 
-        // No CONTACT_INBOX at all: the site's sender address, never nothing.
-        $c = $this->contactConfigWith(['MAIL_FROM_ADDRESS' => 'from@example.test']);
-        $this->assertSame('from@example.test', $c['inboxes']['subscription']);
+        // No CONTACT_INBOX at all: the company address (COMPANY_EMAIL), never nothing.
+        $c = $this->contactConfigWith(['COMPANY_EMAIL' => 'company@example.test']);
+        $this->assertSame('company@example.test', $c['inboxes']['subscription']);
+        $c = $this->contactConfigWith([]);
+        $this->assertSame('info@skylinkictet.com', $c['inboxes']['subscription']);
     }
 
     // ----- every form type ----------------------------------------------------

@@ -336,7 +336,7 @@
                                 <i class="fas fa-envelope"></i>
                             </div>
                             <h6>Email Us</h6>
-                            <p>info@skylinkict.com</p>
+                            <p><a href="mailto:{{ config('company.email') }}">{{ config('company.email') }}</a></p>
                         </div>
                         
                         <div class="contact-card">
