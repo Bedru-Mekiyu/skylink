@@ -23,7 +23,7 @@ SEL = [
     (62, True, 'team-office-white-shirts.jpg', None, 'Team around a desk in front of our logo.'),
     (79, True, 'logo-wall-two-men.jpg', None, 'Two people in front of our big logo sign.'),
     (11, False, 'contract-signing.jpg', None, 'HIDDEN (owner rule: no agreement or contract documents visible). Contract signing at a desk.'),
-    (116, True, 'partner-handshake-map.jpg', None, 'Partnership handshake, world map. Faces of a partner.'),
+    (116, False, 'partner-handshake-map.jpg', None, 'HIDDEN (a paper is held in the hand). Partnership handshake, world map.'),
     (119, False, 'partner-handshake-office.jpg', None, 'HIDDEN (papers in hands). Handshake with an older client representative.'),
     # hidden: uncertain
     (6, False, 'dire-dawa-administration.jpg', None, 'Client banner (Dire Dawa Administration) prominent; group of client staff.'),

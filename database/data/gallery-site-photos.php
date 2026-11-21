@@ -21,7 +21,7 @@ return [
     ['file' => 'team-office-white-shirts.jpg', 'visible' => true, 'caption_en' => null, 'sort' => 15],
     ['file' => 'logo-wall-two-men.jpg', 'visible' => true, 'caption_en' => null, 'sort' => 16],
     ['file' => 'contract-signing.jpg', 'visible' => false, 'caption_en' => null, 'sort' => 17],
-    ['file' => 'partner-handshake-map.jpg', 'visible' => true, 'caption_en' => null, 'sort' => 18],
+    ['file' => 'partner-handshake-map.jpg', 'visible' => false, 'caption_en' => null, 'sort' => 18],
     ['file' => 'partner-handshake-office.jpg', 'visible' => false, 'caption_en' => null, 'sort' => 19],
     ['file' => 'dire-dawa-administration.jpg', 'visible' => false, 'caption_en' => null, 'sort' => 20],
     ['file' => 'team-thank-you.jpg', 'visible' => false, 'caption_en' => null, 'sort' => 21],
