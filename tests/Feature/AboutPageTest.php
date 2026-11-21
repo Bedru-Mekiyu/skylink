@@ -90,9 +90,15 @@ class AboutPageTest extends TestCase
         $intro = substr($intro, 0, strpos($intro, '</section>'));
         $this->assertStringNotContainsString('Call to ask any question', $html);
         $this->assertDoesNotMatchRegularExpression('/\+?251[\s-]?9\d|fa-phone|tel:/', $intro);
-        foreach (['About Us', 'The Best IT Solution With Many Years of Experience', 'At Sky Link Technologies, we turn visionary concepts into cutting-edge digital solutions.', 'Award Winning', 'Dedicated Support', 'Professional Staff', 'Fair Prices', 'MORE INFORMATION', 'YEARS', 'EXPERIENCE', 'INDUSTRY.'] as $words) {
+        foreach (['At Sky Link Technologies, we turn visionary concepts into cutting-edge digital solutions.', 'Award Winning', 'Dedicated Support', 'Professional Staff', 'Fair Prices', 'MORE ABOUT US'] as $words) {
             $this->assertStringContainsString($words, $intro, $words);
         }
+        // the label and the lead-in line are gone; the headline text is exact
+        $this->assertStringNotContainsString('The Best IT Solution With Many Years of Experience', $html);
+        $this->assertStringNotContainsString('section-tag">About Us', $intro);
+        $this->assertStringNotContainsString('MORE INFORMATION', $intro);
+        preg_match('#<h2 class="about-intro__headline".*?</h2>#s', $intro, $h);
+        $this->assertSame('5+ YEARS OF DRIVING DIGITAL INNOVATION AND TECHNOLOGICAL EXCELLENCE.', trim(preg_replace('/\s+/', ' ', strip_tags($h[0]))));
         $this->assertStringContainsString('data-ai-count="5"', $intro);
         config(['company.years_experience' => 7]);
         $this->assertStringContainsString('data-ai-count="7"', $this->get(route('about'))->getContent());

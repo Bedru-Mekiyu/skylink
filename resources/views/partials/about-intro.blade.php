@@ -11,15 +11,14 @@
     <div class="about-intro__wrap">
         <div class="about-intro__card">
             <h2 class="about-intro__headline" id="about-intro-headline">
-                <span class="ai-line ai-strong"><span class="ai-w" style="--i:0"><span data-ai-count="{{ $aiYears }}">{{ $aiYears }}</span>+</span> <span class="ai-w" style="--i:1">YEARS</span></span>
-                <span class="ai-line ai-light"><span class="ai-w" style="--i:2">of</span> <span class="ai-w" style="--i:3">EXPERIENCE</span> <span class="ai-w" style="--i:4">in</span></span>
-                <span class="ai-line ai-strong"><span class="ai-w" style="--i:5">the</span> <span class="ai-w" style="--i:6">IT</span> <span class="ai-w" style="--i:7">INDUSTRY.</span></span>
+                <span class="ai-line ai-years"><span class="ai-w" style="--i:0"><span data-ai-count="{{ $aiYears }}">{{ $aiYears }}</span>+</span> <span class="ai-w" style="--i:1">YEARS</span></span>
+                <span class="ai-line ai-light"><span class="ai-w" style="--i:2">OF</span> <span class="ai-w" style="--i:3">DRIVING</span> <span class="ai-w ai-key" style="--i:4">DIGITAL</span></span>
+                <span class="ai-line ai-light"><span class="ai-w ai-key" style="--i:5">INNOVATION</span> <span class="ai-w" style="--i:6">AND</span></span>
+                <span class="ai-line ai-light ai-wrap"><span class="ai-w" style="--i:7">TECHNOLOGICAL</span> <span class="ai-w ai-key" style="--i:8">EXCELLENCE.</span></span>
             </h2>
-            <a class="about-intro__more" href="#journey" data-ai-more>MORE INFORMATION <span class="about-intro__arrow" aria-hidden="true">&rarr;</span></a>
+            <a class="about-intro__more" href="#journey" data-ai-more>MORE ABOUT US <span class="about-intro__arrow" aria-hidden="true">&rarr;</span></a>
         </div>
         <div class="about-intro__body">
-            <div class="section-tag">About Us</div>
-            <p class="about-intro__lead">The Best IT Solution With Many Years of Experience</p>
             <p class="about-intro__text">
                 At Sky Link Technologies, we turn visionary concepts into cutting-edge digital solutions. With a passion for technology and a commitment to excellence, we empower businesses to thrive in the digital age.
             </p>
@@ -36,18 +35,18 @@
         .about-intro__wrap { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(32px, 5vw, 72px); align-items: center; }
         .about-intro__card { background: #fff; border-radius: 8px; padding: clamp(28px, 3.4vw, 40px); box-shadow: 0 30px 80px rgba(15, 42, 92, 0.12); color: #0f2a5c; transition: transform 0.35s ease, box-shadow 0.35s ease; }
         .about-intro__card:hover { transform: translateY(-4px); box-shadow: 0 38px 90px rgba(15, 42, 92, 0.16); }
-        .about-intro__headline { margin: 0 0 clamp(20px, 2.4vw, 28px); font-family: var(--font-heading); font-size: clamp(1.5rem, 0.9rem + 2.8vw, 2.75rem); line-height: 1.12; color: #0f2a5c; letter-spacing: -0.01em; }
+        .about-intro__headline { margin: 0 0 clamp(20px, 2.4vw, 28px); font-family: var(--font-heading); font-size: clamp(1.125rem, 0.75rem + 1.9vw, 1.875rem); line-height: 1.18; color: #0f2a5c; letter-spacing: -0.01em; }
         .ai-line { display: block; white-space: nowrap; }
-        .ai-strong { font-weight: 800; }
+        .ai-years { font-weight: 800; font-size: 1.55em; line-height: 1.05; margin-bottom: 0.12em; }
+        .ai-key { font-weight: 800; }
         .ai-light { font-weight: 300; }
+        .ai-wrap { white-space: normal; }
         .ai-w { display: inline-block; }
         .ai-w [data-ai-count] { font-variant-numeric: tabular-nums; }
         .about-intro__more { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; font: 500 0.8125rem/1 var(--font-body); letter-spacing: 0.2em; text-transform: uppercase; color: #0f2a5c; text-decoration: none; }
         .about-intro__arrow { display: inline-block; transition: transform 0.25s ease; }
         .about-intro__more:hover .about-intro__arrow, .about-intro__more:focus-visible .about-intro__arrow { transform: translateX(6px); }
         .about-intro__more:focus-visible { outline: 3px solid #3b82f6; outline-offset: 4px; border-radius: 4px; }
-        .about-intro__body .section-tag { margin-bottom: 10px; }
-        .about-intro__lead { margin: 0 0 14px; font-family: var(--font-heading); font-weight: 700; font-size: clamp(1.125rem, 1rem + 0.5vw, 1.375rem); line-height: 1.35; color: #0f2a5c; }
         .about-intro__text { margin: 0 0 24px; font-size: clamp(1rem, 0.96rem + 0.2vw, 1.0625rem); line-height: 1.8; color: #5f6b7a; }
         .about-intro__points { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 24px; }
         .about-intro__points li { display: flex; align-items: center; gap: 10px; min-height: 28px; }
