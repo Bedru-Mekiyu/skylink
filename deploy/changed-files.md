@@ -62,3 +62,10 @@ No migrations. Rollback: re-upload the previous version of each file (previous r
 - `resources/views/pages/aboutpage.blade.php`: the Gallery section now sits at the very bottom (after Milestones, before the footer); nothing left at the old place.
 - `resources/views/admin/services/show.blade.php` (bug fix: wrong route names gave a 500), `resources/views/admin/products/show.blade.php` (full-URL product images).
 - Not shipped: tests, tools.
+
+# Added 2026-11-21 (4): gallery photo import, homepage years figure, test isolation
+
+No migrations. Rollback: re-upload the previous files, or `git revert`.
+- `app/Console/Commands/ImportSitePhotos.php` (new): `php artisan gallery:import-site-photos` (dry run by default; `--apply`; `--rollback` removes everything it imported; `--rollback --hide-only` hides it). List: `database/data/gallery-site-photos.php` (15 visible, 23 hidden). Source photos (NOT in git or the package, 99 MB): `storage/app/private/gallery-import-src/`. Manifest: `storage/app/private/gallery-import/manifest.json`.
+- `resources/views/pages/index.blade.php`: the "Years Experience" counter reads `config/company.php` (5+).
+- `tests/TestCase.php`: test-only (each test process uses its own temporary storage).

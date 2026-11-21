@@ -129,3 +129,7 @@ Setup: new subdomain, document root `/home/skylinkictcom/bedru.skylinkict.com/pu
 ## Added 2026-11-21 (3)
 - About page: new intro card, bigger CEO card, Gallery moved to the bottom (above the footer). Admin service detail page fixed.
 - Decision pending: the homepage shows "4+ Years Experience" while the About intro says "5+ YEARS" (`config/company.php`); make them agree before going live.
+
+## Added 2026-11-21 (4)
+- Gallery photos are imported on bedru only (15 visible, 23 hidden). Decide what stays visible; review faces and stock photos (GALLERY-IMPORT-REPORT.md) BEFORE importing on the live site (steps in UPLOAD-GUIDE.md addendum 4; rollback: `php artisan gallery:import-site-photos --rollback`).
+- The homepage Years Experience counter now reads `config/company.php` (5+), same as the About intro.

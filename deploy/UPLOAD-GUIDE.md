@@ -279,3 +279,12 @@ What it does: every minute it runs Laravel's scheduler: publishes scheduled news
 - The Gallery is now the last section of the About page. It still only shows when Admin > Gallery has visible photos.
 - Admin: the service detail page (Admin > Services > a service) no longer gives an error.
 - The homepage counter "4+ Years Experience" is a separate hard-coded number; change it with the owner's decision.
+
+## Addendum 2026-11-21 (4): importing the site photos into the gallery
+The About gallery can be filled from the site's own photos (15 shown, 23 hidden for you to review in Admin > Gallery).
+1. Copy the folder `storage/app/private/gallery-import-src/` (38 photos, 99 MB, kept on the owner's PC, not in the release package) into the same path of the site folder (File Manager or `scp`; for bedru: `/home/skylinkictcom/bedru.skylinkict.com/storage/app/private/gallery-import-src/`).
+2. In the site folder, with the folder set explicitly (bedru: `export SKYLINK_APP_DIR=/home/skylinkictcom/bedru.skylinkict.com`; live: your live folder):
+   `php artisan gallery:import-site-photos` (dry run, lists what would happen), then `php artisan gallery:import-site-photos --apply`.
+3. `php artisan cache:clear` (the About page can show the old empty gallery for a few minutes otherwise).
+4. **Undo:** `php artisan gallery:import-site-photos --rollback` (removes everything it imported) or `--rollback --hide-only`. Single photos: Admin > Gallery.
+5. Before showing these on the live site, review the faces and the stock-style photos (footage/_review/GALLERY-IMPORT-REPORT.md).
