@@ -31,7 +31,7 @@ class PortfolioController extends Controller
             'description' => 'required|string',
             'project_url' => 'nullable|url',
             'image' => ImageUploadRules::rules(true),
-        ] + $this->videoRules());
+        ] + $this->videoRules(), $this->messages());
 
         $imagePath = $request->file('image')->store('portfolio_images', 'public');
 
@@ -64,7 +64,7 @@ class PortfolioController extends Controller
             'description' => 'required|string',
             'project_url' => 'nullable|url',
             'image' => ImageUploadRules::rules(),
-        ] + $this->videoRules());
+        ] + $this->videoRules(), $this->messages());
 
         $updateData = collect($validated)->only(['title', 'description', 'project_url'])->all();
 
@@ -86,6 +86,22 @@ class PortfolioController extends Controller
     {
         $portfolio->delete();
         return back()->with('success', 'Project deleted!');
+    }
+
+    /** Clear messages for files that are too large or rejected by the server. */
+    private function messages(): array
+    {
+        $server = round(HeroVideoController::serverLimitBytes() / 1048576).' MB';
+        $max = intdiv(ShowcaseVideos::MAX_KILOBYTES, 1024);
+
+        return [
+            'video_file.max' => "The video is larger than {$max} MB. Make it shorter or smaller (about 10 seconds is enough), or put the clip in the site's video folder and pick it from the list.",
+            'video_file.uploaded' => "The video could not be uploaded: this server accepts files up to {$server} per upload. Use a smaller clip, or put it in the site's video folder and pick it from the list.",
+            'video_file.mimetypes' => 'Only MP4 or WebM videos are allowed.',
+            'video_file.extensions' => 'Only MP4 or WebM videos are allowed.',
+            'image.uploaded' => "The image could not be uploaded: this server accepts files up to {$server} per upload.",
+            'image.max' => 'The image is larger than 5 MB.',
+        ];
     }
 
     /** Optional showcase video: a clip from the site's library, or an upload. */
@@ -117,6 +133,7 @@ class PortfolioController extends Controller
         if ($request->hasFile('video_file')) {
             $file = $request->file('video_file');
             $kind = ShowcaseVideos::signatureOf($file); // mp4 | webm (validated)
+            \App\Support\UploadLock::ensure('portfolio_videos'); // script-blocking .htaccess in the upload folder
             $path = $file->storeAs('portfolio_videos', Str::random(40).'.'.$kind, 'public');
             // One uploaded file replaces both formats.
             $portfolio->forceFill([

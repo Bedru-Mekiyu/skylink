@@ -23,6 +23,13 @@ class Portfolio extends Model
     ];
 
     /** Newest first (id breaks ties). */
+    protected static function booted(): void
+    {
+        foreach (['saved', 'deleted'] as $event) {
+            static::$event(fn () => \App\Support\PublicCache::bust());
+        }
+    }
+
     public function scopeNewestFirst(Builder $query): Builder
     {
         return $query->orderByDesc('created_at')->orderByDesc('id');

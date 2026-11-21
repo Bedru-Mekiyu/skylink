@@ -53,7 +53,7 @@
     <div class="form-check">
         <input type="hidden" name="is_featured" value="0">
         <input class="form-check-input" type="checkbox" name="is_featured" value="1" id="is_featured" @checked(old('is_featured', $project?->is_featured))>
-        <label class="form-check-label" for="is_featured">Feature on top of the Portfolio page (banner)</label>
-        <div class="form-text mt-0">Only one project is featured; ticking this replaces the current one. Without a featured project, the newest project with a video is used.</div>
+        <label class="form-check-label" for="is_featured">Pin as banner <span class="badge text-bg-warning">Overrides the newest project</span></label>
+        <div class="form-text mt-0">Normally the NEWEST project becomes the banner of the Portfolio page by itself (with its video if it has one, otherwise its image). Tick this to keep THIS project in the banner instead. Only one project can be pinned; ticking it here replaces the pinned one.</div>
     </div>
 </fieldset>

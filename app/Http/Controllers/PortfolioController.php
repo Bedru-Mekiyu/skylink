@@ -13,10 +13,9 @@ public function index()
     
 {
         
-// Banner project: the one marked "Feature on top"; else the newest project
-// with a video; else the newest project (shown with its image).
+// Banner project: the one pinned in the admin ("Pin as banner"); otherwise the NEWEST project
+// (by creation date, then id), with its video if it has one, else with its image.
 $heroProject = Portfolio::where('is_featured', true)->newestFirst()->first()
-    ?? Portfolio::withVideo()->newestFirst()->first()
     ?? Portfolio::newestFirst()->first();
 
 // Cards: every other project, each exactly once (the banner project is not
