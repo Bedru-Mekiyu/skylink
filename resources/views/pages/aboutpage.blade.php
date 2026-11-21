@@ -939,9 +939,15 @@ We lead the market by creating disciplined culture that will have much bigger ef
         <!-- Management Team -->
         <div class="mb-5">
         <h2 class="h4 text-uppercase text-center fw-semibold mb-4 text-dark">Our Management Team</h2>
-        <div class="row g-4">
-            @foreach ($managementTeam as $member)
-                <div class="col-12 col-sm-6 col-md-6 col-lg-3">
+        {{-- CEO alone on top, the rest centred below --}}
+        <div class="row g-4 justify-content-center">
+            <div class="col-12 col-sm-6 col-lg-3">
+                @include('components.team-member-card', ['member' => $managementTeam[0]])
+            </div>
+        </div>
+        <div class="row g-4 mt-1 justify-content-center">
+            @foreach (array_slice($managementTeam, 1) as $member)
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                     @include('components.team-member-card', ['member' => $member])
                 </div>
             @endforeach

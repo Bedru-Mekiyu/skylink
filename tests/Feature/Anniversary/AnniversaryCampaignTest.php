@@ -118,14 +118,15 @@ class AnniversaryCampaignTest extends TestCase
         $this->assertStringNotContainsString('2026-11-23', $html, 'Campaign dates must not leak into the page.');
     }
 
-    public function test_homepage_carries_the_full_message_and_other_pages_a_short_line(): void
+    public function test_homepage_carries_the_two_line_message_and_other_pages_a_short_line(): void
     {
         $this->automatic();
         $this->at('2026-11-23 00:00:00');
 
         $this->get('/')->assertOk()
+            ->assertSee(__('anniversary.kicker'))
             ->assertSee(__('anniversary.headline'))
-            ->assertSee(__('anniversary.message'));
+            ->assertDontSee(__('anniversary.message'));
 
         $this->get('/services')->assertOk()
             ->assertSee(__('anniversary.context.services'))
