@@ -92,6 +92,16 @@ Rolling back drops the table; uploaded pictures in `storage/app/public/{testimon
 **Public changes:** homepage anniversary headline "Happy 5th Anniversary!" (block 20 px higher); About Milestones labels removed; About banner photo cropped (`public/assets/images/about/team-banner.jpg` + `_opt/about/team-banner-*.webp`); testimonial strip is now an endless loop without a jump (home + Services); department cards come from the admin.
 **New files/folders:** `config/team.php`, `config/company.php` (years + `email`), `app/Models/{Testimonial,Department}.php`, `app/Support/{SmallImageProcessor,MediaCleanup}.php`, `database/data/testimonials-initial.php`, partials `testimonials-strip`, `departments`; upload folders `storage/app/public/{testimonials,departments}` (script-blocking .htaccess is created automatically).
 **Limits:** testimonial photo / department picture: JPG/PNG/WebP, 4 MB, min 80 px; portfolio video clip 20 MB (the server limit is named in the error message).
-**Email:** new env variable `COMPANY_EMAIL` (default `info@skylinkictet.com`) is the one setting for the Contact page, the inbox (`CONTACT_INBOX` still overrides) and the sender (`MAIL_FROM_ADDRESS` still overrides). **DNS: the domain skylinkictet.com does not exist yet (no A, MX, SPF, DKIM, DMARC): mail to or from it will not arrive until the domain and its mail records exist.**
+**Email:** new env variable `COMPANY_EMAIL` (default `info@skylinkict.com`) is the one setting for the Contact page, the inbox (`CONTACT_INBOX` still overrides) and the sender (`MAIL_FROM_ADDRESS` still overrides). (The decision changed: the address is info@skylinkict.com. The domain skylinkictet.com does not exist in DNS and is NOT used.)
 **New commands:** `php artisan mail:send-test` (dry run; `--send` sends 5 labelled test mails to COMPANY_EMAIL only), `php artisan email:replace-old-addresses` (dry run; `--apply`), `php artisan gallery:import-site-photos` (earlier).
 Not shipped: tests, tools, the photo sources.
+
+# Added 2026-11-21 (7): Frezer Maru card, no public password, intro close icon, news video on phones, delete audit, email address
+
+No new migrations. Rollback: re-upload the previous files or `git revert`.
+- Marketing card: `config/team.php` name "Frezer Maru"; `public/assets/images/about/head-of-marketing.jpg` (960x1200 studio-style portrait placeholder, no webp on purpose); `app/Support/TeamPlaceholder.php` + `AboutController`: on the real live site the card is HIDDEN while the placeholder photo is in place; `TEAM_SHOW_PLACEHOLDER=true` in .env shows it anyway.
+- No Basic Auth can come back: `deploy/staging/02-lockdown.sh` is disabled; `deploy/server-deploy.sh` warns if an .htaccess contains AuthType; test `NoPublicPasswordTest`.
+- Anniversary intro: the "Skip intro" text is replaced by an icon-only close button (`lang/*/anniversary.php` key `close`, `partials/anniversary/{intro,head}.blade.php`).
+- News video: `public/assets/js/sky-video-guard.js` (slow start no longer replaced after 25 s; helper bar after 15 s; fallback only on a real player error or after 3 minutes), `partials/news/hero.blade.php`, `pages/video-detail.blade.php` (script URL versioned).
+- Delete audit: Subscribers and Subscriptions (delete, delete selected, CSV export; `app/Http/Controllers/Admin/Concerns/ManagesRecordList.php`, `admin/partials/record-list.blade.php`), Inbox messages are now deleted for good with CSV export (an imported older message row is removed too).
+- Email: default `COMPANY_EMAIL` is `info@skylinkict.com`.

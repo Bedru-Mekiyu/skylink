@@ -139,5 +139,10 @@ Setup: new subdomain, document root `/home/skylinkictcom/bedru.skylinkict.com/pu
 
 ## Added 2026-11-21 (6)
 - 2 new migrations (testimonials, departments) with import and tested rollback; new admin pages; delete buttons with file cleanup; Portfolio banner rule (newest, pin overrides); new `COMPANY_EMAIL` setting.
-- **Go-live blocker:** the domain **skylinkictet.com does not exist in DNS** (no MX/SPF/DKIM/DMARC). Create the domain and its mail records (or confirm the address) BEFORE using info@skylinkictet.com on the live site; until then website emails to/from it will not arrive. skylinkict.com does have MX + SPF + DKIM (no DMARC).
+- Email address is info@skylinkict.com (skylinkict.com has MX + SPF + DKIM; no DMARC yet: add the monitoring record from UPLOAD-GUIDE addendum 7).
 - Replace the Head of Marketing placeholder (see earlier item).
+
+## Added 2026-11-21 (7)
+- Head of Marketing: replace `public/assets/images/about/head-of-marketing.jpg` with the real photo (the card is hidden on the live site until then).
+- Set the live admin password to a strong one; `admin@gmail.com` (test account, weak password) must not exist or must be changed.
+- Email: fill the MAIL_* variables (UPLOAD-GUIDE addendum 7, items 4-6), add the DMARC TXT record (item 7), run the labelled test send, then enable.
