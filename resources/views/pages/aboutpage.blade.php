@@ -173,11 +173,11 @@
     @media (max-width: 575.98px) { .about-hero { height: clamp(220px, 32svh, 300px); } }
     @media (max-height: 500px) and (orientation: landscape) { .about-hero { height: clamp(220px, 62svh, 320px); } }
     .about-hero__zoom { animation: none; }
-    .about-hero__img { top: 0; height: 100%; transform: none; object-fit: cover; object-position: 50% 6%; }
+    .about-hero__img { top: 0; height: 100%; transform: none; object-fit: cover; object-position: 50% 0%; }
     @supports (animation-timeline: scroll(root)) {
         @media (prefers-reduced-motion: no-preference) {
             .about-hero__img { animation: aboutHeroReveal linear both; animation-timeline: scroll(root); animation-range: 0 80svh; }
-            @keyframes aboutHeroReveal { from { object-position: 50% 6%; } to { object-position: 50% 85%; } }
+            @keyframes aboutHeroReveal { from { object-position: 50% 0%; } to { object-position: 50% 85%; } }
         }
     }
     .about-hero__tint { background: linear-gradient(0deg, rgba(6, 18, 43, 0.85) 0%, rgba(6, 18, 43, 0.5) 20%, rgba(6, 18, 43, 0) 42%); }
@@ -399,7 +399,7 @@ object-position: 50% 15%;
 
     .awards-header {
         text-align: center;
-        margin-bottom: 60px;
+        margin-bottom: 44px;
     }
 
     .awards-header .section-tag {
@@ -1187,14 +1187,6 @@ We lead the market by creating disciplined culture that will have much bigger ef
         <div class="awards-header">
             <span class="section-tag">Our Achievements</span>
             <h2>We Have Achieved Different<br>Milestones</h2>
-        </div>
-        
-        <div class="awards-categories">
-            <div class="award-category">
-                <h4>Achievements/Features</h4>
-                <span>Achievements</span>
-            </div>
-            
         </div>
         
         <div class="awards-grid">

@@ -179,7 +179,7 @@
     @media (min-width: 992px) {
         .anniv5-hero-slot { position: relative; align-self: stretch; }
         .anniv5-hero-slot > .anniv5--feature {
-            position: absolute; top: 50%; left: calc(var(--bs-gutter-x, 1.5rem) * .5); right: calc(var(--bs-gutter-x, 1.5rem) * .5);
+            position: absolute; top: calc(50% - 28px); left: calc(var(--bs-gutter-x, 1.5rem) * .5); right: calc(var(--bs-gutter-x, 1.5rem) * .5);
             width: auto; transform: translateY(-50%);
         }
     }

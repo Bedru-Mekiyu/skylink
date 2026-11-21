@@ -5,7 +5,7 @@ return [
     'years' => 'ዓመታት',
     // NEEDS NATIVE-SPEAKER REVIEW: kicker and headline were rewritten for the headline update.
     'kicker' => 'ትጋትን፣ ቁርጠኝነትንና ብቃትን እናከብራለን',
-    'headline' => 'መልካም 5ኛ ዓመት የምሥረታ በዓል፣ ስካይ ሊንክ ቴክኖሎጂስ ኃ/የተ/የግ/ማ!',
+    'headline' => 'መልካም 5ኛ ዓመት የምሥረታ በዓል!',
     'message' => 'በቴክኖሎጂው ዘርፍ ላለፉት አምስት ዓመታት ያሳየነውን ቁርጠኝነት፣ ዕድገት እና አስተዋጽኦ ስናከብር አብረውን ይሁኑ። ይህንን ትልቅ ምዕራፍ ከቡድናችን፣ ደንበኞቻችን፣ አጋሮቻችን እና ማህበረሰባችን ጋር በጋራ ለማክበር በጉጉት እንጠብቃለን።',
 
     'context' => [
