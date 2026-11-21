@@ -82,10 +82,18 @@ class PortfolioController extends Controller
         return redirect()->route('admin.portfolio.index')->with('success', 'Project updated!');
     }
 
-    public function destroy(Portfolio $portfolio) // Using Route Model Binding
+    public function destroy(Request $request, Portfolio $portfolio) // Using Route Model Binding
     {
+        // The pinned banner project cannot be deleted by accident: unpin it first.
+        if ($portfolio->is_featured) {
+            return back()->with('error', 'This project is pinned as the Portfolio banner. Untick "Pin as banner" on it first, then delete it.');
+        }
+        $title = $portfolio->title;
+        \App\Support\MediaCleanup::remove([$portfolio->image, $portfolio->video_mp4, $portfolio->video_webm, $portfolio->video_poster]);
         $portfolio->delete();
-        return back()->with('success', 'Project deleted!');
+        \Illuminate\Support\Facades\Log::notice('portfolio deleted', ['user_id' => $request->user()->id, 'portfolio_id' => $portfolio->id, 'title' => $title]);
+
+        return back()->with('success', "Project \"{$title}\" was deleted (its uploaded image and video files too).");
     }
 
     /** Clear messages for files that are too large or rejected by the server. */

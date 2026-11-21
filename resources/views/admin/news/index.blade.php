@@ -149,6 +149,10 @@
                                             <i class="fas fa-trash" aria-hidden="true"></i><span class="visually-hidden">Delete: {{ $item->title }}</span>
                                         </button>
                                     </form>
+                                    <form action="{{ route('admin.news.force-destroy', $item->id) }}" method="POST" data-sky-confirm="Delete &quot;{{ $item->title }}&quot; PERMANENTLY? The article, its image files and its old web addresses (redirects) are removed for good and its address will show &quot;not found&quot;. This cannot be undone. (To only hide it from the site, use the other button.)" data-sky-title="Delete permanently?" data-sky-variant="danger" data-sky-ok="Delete permanently">
+                                        @csrf @method('DELETE')
+                                        <button type="submit" class="btn btn-sm btn-outline-danger" title="Delete permanently" style="min-width:44px;min-height:44px"><i class="fas fa-trash-can" aria-hidden="true"></i><span class="visually-hidden">Delete permanently: {{ $item->title }}</span></button>
+                                    </form>
                                 </div>
                                 @endif
                             </td>

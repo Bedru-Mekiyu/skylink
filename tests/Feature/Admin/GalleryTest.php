@@ -64,7 +64,7 @@ class GalleryTest extends TestCase
         foreach ($routes as [$verb, $url]) {
             $this->$verb($url)->assertForbidden();
         }
-        $this->delete(route('admin.gallery.update', $g))->assertStatus(405);
+        $this->get(route('admin.gallery.destroy', $g))->assertStatus(405); // deleting is DELETE only (see DeleteEverythingTest)
     }
 
     public function test_no_visible_photos_means_no_gallery_section_at_all(): void

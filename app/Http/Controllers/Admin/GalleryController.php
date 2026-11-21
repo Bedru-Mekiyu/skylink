@@ -96,6 +96,17 @@ class GalleryController extends Controller
         return back()->with('success', $image->visible ? 'The photo is visible again.' : 'The photo is hidden from the gallery. You can show it again any time.');
     }
 
+    /** Deletes the photo AND its files (thumbnail, display copy, archived original). */
+    public function destroy(Request $request, GalleryImage $image): RedirectResponse
+    {
+        $label = $image->caption_en ?: 'photo';
+        \App\Support\MediaCleanup::remove([$image->thumb_path, $image->display_path], [$image->original_path]);
+        $image->delete();
+        Log::notice('gallery photo deleted', ['user_id' => $request->user()->id, 'image_id' => $image->id]);
+
+        return redirect()->route('admin.gallery.index')->with('success', "The {$label} was deleted.");
+    }
+
     public function reorder(Request $request): JsonResponse
     {
         $ids = $request->validate(['ids' => ['required', 'array', 'min:1', 'max:200'], 'ids.*' => ['integer', 'distinct']])['ids'];

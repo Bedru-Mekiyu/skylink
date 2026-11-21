@@ -69,7 +69,7 @@ class PartnerTest extends TestCase
         $this->actingAs($this->admin());
         $p = Partner::first();
         $this->get(route('admin.partners.toggle', $p))->assertStatus(405);
-        $this->delete(route('admin.partners.update', $p))->assertStatus(405);
+        $this->get(route('admin.partners.destroy', $p))->assertStatus(405); // deleting is DELETE only (see DeleteEverythingTest)
         $this->assertSame(27, Partner::count(), 'nothing can be deleted');
     }
 

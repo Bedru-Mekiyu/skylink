@@ -192,6 +192,25 @@ class AdminNewsController extends Controller
         return redirect()->route('admin.news.index')->with('success', 'Article deleted (hidden from the site; it is kept in the database).');
     }
 
+    /**
+     * PERMANENT delete: the article row, its image files and its old-address redirects are removed.
+     * (Hiding keeps the row; duplicate-cleanup hides and restore are unchanged.)
+     */
+    public function forceDestroy(Request $request, News $news): RedirectResponse
+    {
+        $title = $news->title;
+        \Illuminate\Support\Facades\DB::transaction(function () use ($news) {
+            \App\Models\NewsSlugRedirect::where('news_id', $news->id)->delete();
+            News::withTrashed()->where('duplicate_of_id', $news->id)->update(['duplicate_of_id' => null]);
+            \App\Support\MediaCleanup::remove([$news->image, $news->image_thumb, $news->image_share, $news->image_original], [$news->image_original]);
+            $news->forceDelete();
+        });
+        \App\Support\PublicCache::bust();
+        \Illuminate\Support\Facades\Log::notice('news permanently deleted', ['user_id' => $request->user()->id, 'news_id' => $news->id, 'title' => $title]);
+
+        return redirect()->route('admin.news.index')->with('success', "Article \"{$title}\" was deleted permanently (with its image files and redirects).");
+    }
+
     /** Live "similar title" hint while the admin types (JSON, admin only). */
     public function similar(Request $request): JsonResponse
     {

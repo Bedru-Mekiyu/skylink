@@ -74,6 +74,18 @@ class PartnerController extends Controller
         return back()->with('success', $partner->active ? "\"{$partner->name}\" is visible on the homepage again." : "\"{$partner->name}\" is hidden from the homepage. You can show it again any time.");
     }
 
+    /** Deletes the partner AND its logo files (web copies and the archived original). */
+    public function destroy(Request $request, Partner $partner): RedirectResponse
+    {
+        $name = $partner->name;
+        \App\Support\MediaCleanup::remove([$partner->logo_path, $partner->logo_fallback], [$partner->original_path]);
+        $partner->delete();
+        \App\Support\PublicCache::bust();
+        Log::notice('partner deleted', ['user_id' => $request->user()->id, 'partner_id' => $partner->id, 'name' => $name]);
+
+        return redirect()->route('admin.partners.index')->with('success', "Partner \"{$name}\" was deleted.");
+    }
+
     /** Drag-and-drop / arrow buttons send the ids of the page in their new order. */
     public function reorder(Request $request)
     {

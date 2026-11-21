@@ -66,6 +66,10 @@
                                         <button type="submit" class="btn btn-sm btn-outline-success" aria-label="Show {{ $p->name }}"><i class="fas fa-eye" aria-hidden="true"></i></button>
                                     </form>
                                 @endif
+                                <form action="{{ route('admin.partners.destroy', $p) }}" method="POST" data-sky-confirm="Delete the partner &quot;{{ $p->name }}&quot;? Its logo files (web copies and the archived original) are removed for good. (To keep it, use Hide instead.)" data-sky-title="Delete partner?" data-sky-variant="danger" data-sky-ok="Delete">
+                                    @csrf @method('DELETE')
+                                    <button type="submit" class="btn btn-sm btn-outline-danger" aria-label="Delete {{ $p->name }}" style="min-width:44px;min-height:44px"><i class="fas fa-trash" aria-hidden="true"></i></button>
+                                </form>
                             </div>
                         </td>
                     </tr>

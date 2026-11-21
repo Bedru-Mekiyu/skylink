@@ -99,7 +99,9 @@ public function update(Request $request, Product $product)
 
     public function destroy(Product $product)
     {
+        \App\Support\MediaCleanup::remove([$product->image]);
         $product->delete();
+        \Illuminate\Support\Facades\Log::notice('product deleted', ['user_id' => auth()->id(), 'product_id' => $product->id]);
         return redirect()->route('admin.products.index')->with('success', 'Product deleted successfully.');
     }
 }

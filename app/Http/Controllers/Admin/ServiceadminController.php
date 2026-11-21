@@ -79,7 +79,9 @@ class ServiceadminController extends Controller
 
     public function destroy(Service $service)
     {
+        \App\Support\MediaCleanup::remove([$service->image]);
         $service->delete();
+        \Illuminate\Support\Facades\Log::notice('service deleted', ['user_id' => auth()->id(), 'service_id' => $service->id]);
         return redirect()->route('admin.services.index')->with('success', 'Service deleted successfully.');
     }
 }

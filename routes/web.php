@@ -116,6 +116,9 @@ Route::get('/portfolio/{portfolio}/edit', [AdminPortfolioController::class, 'edi
     Route::get('/news/{news}/edit', [AdminNewsController::class, 'edit'])->name('news.edit');
     Route::put('/news/{news}', [AdminNewsController::class, 'update'])->name('news.update');
     Route::delete('/news/{news}', [AdminNewsController::class, 'destroy'])->name('news.destroy');
+    Route::delete('/news/{news}/permanent', [AdminNewsController::class, 'forceDestroy'])->withTrashed()->name('news.force-destroy');
+    Route::delete('/partners/{partner}', [\App\Http\Controllers\Admin\PartnerController::class, 'destroy'])->middleware('throttle:60,1')->name('partners.destroy');
+    Route::delete('/gallery/{image}', [\App\Http\Controllers\Admin\GalleryController::class, 'destroy'])->middleware('throttle:60,1')->name('gallery.destroy');
  
  // Admin Videos 
  

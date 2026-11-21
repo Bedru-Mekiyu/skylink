@@ -53,6 +53,13 @@
         </div>
     </div>
 </div>
+<div class="card mt-4 border-danger-subtle"><div class="card-body d-flex flex-wrap gap-3 justify-content-between align-items-center">
+    <div><h2 class="h6 mb-1">Delete this photo</h2><p class="small text-muted mb-0">Removes the photo and its files (thumbnail, display copy and the archived original) for good. To keep it, untick &quot;Visible&quot; and save instead.</p></div>
+    <form action="{{ route('admin.gallery.destroy', $image) }}" method="POST" data-sky-confirm="Delete this photo? The photo and all its files are removed for good. (To keep it, use Hide instead.)" data-sky-title="Delete photo?" data-sky-variant="danger" data-sky-ok="Delete">
+        @csrf @method('DELETE')
+        <button type="submit" class="btn btn-outline-danger" style="min-height:44px"><i class="fas fa-trash me-1" aria-hidden="true"></i>Delete photo</button>
+    </form>
+</div></div>
 @endsection
 
 @push('scripts')

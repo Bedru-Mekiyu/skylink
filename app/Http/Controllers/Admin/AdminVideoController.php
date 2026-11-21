@@ -104,12 +104,9 @@ class AdminVideoController extends Controller
      */
     public function destroy(Video $video)
     {
-        // Optional: Add logic here to delete the thumbnail image file from storage
-        // if ($video->thumbnail_image) {
-        //     \Illuminate\Support\Facades\Storage::disk('public')->delete($video->thumbnail_image);
-        // }
-        
+        \App\Support\MediaCleanup::remove([$video->thumbnail_image]);
         $video->delete();
+        \Illuminate\Support\Facades\Log::notice('video deleted', ['user_id' => auth()->id(), 'video_id' => $video->id]);
         return redirect()->route('admin.videos.index')->with('success', 'Video deleted successfully.');
     }
 }
