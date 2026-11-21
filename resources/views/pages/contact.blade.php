@@ -332,7 +332,7 @@
                                 <i class="fas fa-phone"></i>
                             </div>
                             <h6>Call Us</h6>
-                            <p>+251-974-967171</p>
+                            <p><a class="tel-nowrap tel-plain" href="{{ \App\Support\PhoneNumber::tel(config('company_contact.phones')[0]) }}">{{ \App\Support\PhoneNumber::international(config('company_contact.phones')[0]) }}</a></p>
                         </div>
                         
                         <div class="contact-card">

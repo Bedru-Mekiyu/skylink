@@ -168,6 +168,18 @@
         color: #ccc;
     }
 
+    /* Phone numbers never wrap inside a group (the number text also uses non-breaking spaces). */
+    .tel-nowrap {
+        white-space: nowrap;
+    }
+
+    /* A number that is a tap-to-call link but keeps the look of the text around it. */
+    .tel-plain,
+    .tel-plain:hover {
+        color: inherit;
+        text-decoration: none;
+    }
+
     @media (min-width: 1200px) {
         .nav-contact {
             display: block;
@@ -669,7 +681,7 @@
                             <i class="fas fa-phone" aria-hidden="true"></i>
                             @foreach (config('company_contact.phones') as $navPhone)
                                 @if (! $loop->first)<span class="nav-contact__sep" aria-hidden="true">|</span>@endif
-                                <a href="tel:{{ preg_replace('/[^\d+]/', '', $navPhone) }}">{{ $navPhone }}</a>
+                                <a class="tel-nowrap" href="{{ \App\Support\PhoneNumber::tel($navPhone) }}">{{ \App\Support\PhoneNumber::international($navPhone) }}</a>
                             @endforeach
                         </div>
                         <div class="nav-contact__row">
@@ -746,7 +758,8 @@
                 <h5>Contact</h5>
                 <p><i class="fas fa-map-marker-alt"></i> A.A Bole, Tropical Mall, 2nd Floor No.217</p>
                 <p><i class="fas fa-globe"></i> www.skylinkict.com</p>
-                <p><i class="fas fa-phone"></i> +251-974-967171</p>
+                @php($footerPhone = config('company_contact.phones')[0])
+                <p><i class="fas fa-phone"></i> <a class="tel-nowrap tel-plain" href="{{ \App\Support\PhoneNumber::tel($footerPhone) }}">{{ \App\Support\PhoneNumber::international($footerPhone) }}</a></p>
                 <p><i class="far fa-clock"></i> Mon - Fri 8:00AM - 17:00 <br> Saturday 8:00-12:00 </p>
             </div>
         </div>

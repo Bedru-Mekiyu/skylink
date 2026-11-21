@@ -1140,7 +1140,7 @@
                             </div>
                             <div>
                                 <h5 style="font-weight: 600; margin-bottom: 5px;">Call to ask any Question</h5>
-                                <p style="color: #3B82F6; font-weight: 600; margin: 0;">+251-974-967171</p>
+                                <p style="color: #3B82F6; font-weight: 600; margin: 0;"><a class="tel-nowrap" style="color: inherit; text-decoration: none;" href="{{ \App\Support\PhoneNumber::tel(config('company_contact.phones')[0]) }}">{{ \App\Support\PhoneNumber::international(config('company_contact.phones')[0]) }}</a></p>
                             </div>
                         </div>
                     </div>

@@ -351,8 +351,8 @@
                 @foreach ($contactPhones as $phone)
                     <li class="sk-contact__row">
                         <i class="fas fa-phone" aria-hidden="true"></i>
-                        <a class="sk-contact__value" href="tel:{{ preg_replace('/[^\d+]/', '', $phone) }}">{{ $phone }}</a>
-                        <button type="button" class="sk-contact__copy" data-copy="{{ $phone }}" aria-label="Copy phone number {{ $phone }}">
+                        <a class="sk-contact__value tel-nowrap" href="{{ \App\Support\PhoneNumber::tel($phone) }}">{{ \App\Support\PhoneNumber::international($phone) }}</a>
+                        <button type="button" class="sk-contact__copy" data-copy="{{ \App\Support\PhoneNumber::e164($phone) }}" aria-label="Copy phone number {{ \App\Support\PhoneNumber::international($phone) }}">
                             <i class="far fa-copy" aria-hidden="true"></i>
                             <i class="fas fa-check" aria-hidden="true"></i>
                             <span class="sk-contact__tip" aria-hidden="true"></span>
