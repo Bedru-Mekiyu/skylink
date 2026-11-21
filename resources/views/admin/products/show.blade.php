@@ -39,7 +39,7 @@
                         </th>
                         <td>
                             @if($product->image)
-                                <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" class="img-fluid rounded" style="max-width:200px;">
+                                <img src="{{ \Illuminate\Support\Str::startsWith($product->image, ['http://', 'https://']) ? $product->image : asset('storage/' . $product->image) }}" alt="{{ $product->name }}" class="img-fluid rounded" style="max-width:200px;">
                             @else
                                 <span class="text-muted">No image available</span>
                             @endif

@@ -76,6 +76,26 @@ class AdminCanAddContentTest extends TestCase
         $this->assertSame(1, Service::where('slug', 'test-service')->count());
     }
 
+    public function test_service_and_product_detail_pages_render_for_the_admin(): void
+    {
+        // Regression: the service detail page used route names without the admin. prefix (500), and the
+        // product page built /storage/<url> for an image that is already a full web address.
+        $category = ServiceCategory::query()->first() ?? ServiceCategory::create([
+            'slug' => 'cat', 'name' => 'Cat', 'description' => 'd', 'image' => 'assets/x.jpg', 'sort_order' => 1, 'is_published' => true,
+        ]);
+        $this->actingAs($this->admin)->post(route('admin.services.store'), [
+            'slug' => 'detail-service', 'title' => 'Detail Service', 'desc' => 'Text.', 'image' => $this->jpeg(),
+            'features' => ['One'], 'category_id' => $category->id,
+        ])->assertSessionHasNoErrors();
+        $service = Service::where('slug', 'detail-service')->firstOrFail();
+        $this->actingAs($this->admin)->get(route('admin.services.show', $service))->assertOk()
+            ->assertSee(route('admin.services.edit', $service), false);
+
+        $product = Product::forceCreate(['name' => 'Remote image product', 'slug' => 'remote-image-product', 'description' => 'd', 'image' => 'https://example.test/pic.jpg', 'category' => 'Cat', 'price' => 1, 'features' => json_encode(['One'])]);
+        $this->actingAs($this->admin)->get(route('admin.products.show', $product))->assertOk()
+            ->assertSee('src="https://example.test/pic.jpg"', false)->assertDontSee('/storage/https:', false);
+    }
+
     public function test_admin_adds_a_product(): void
     {
         $this->actingAs($this->admin)->get(route('admin.products.create'))->assertOk();

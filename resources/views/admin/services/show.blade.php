@@ -20,8 +20,8 @@
     <img src="{{ asset($service->image) }}" alt="{{ $service->title }}" width="300">
 
     <br><br>
-    <a href="{{ route('services.edit', $service->id) }}">Edit</a>
-    <form action="{{ route('services.destroy', $service->id) }}" method="POST" style="display:inline;">
+    <a href="{{ route('admin.services.edit', $service->id) }}">Edit</a>
+    <form action="{{ route('admin.services.destroy', $service->id) }}" method="POST" style="display:inline;">
         @csrf
         @method('DELETE')
         <button type="submit" data-sky-confirm="Delete this service? This can't be undone from the admin." data-sky-title="Delete service?" data-sky-variant="danger" data-sky-ok="Delete" onclick="return confirm('Delete this service?')">Delete</button>
