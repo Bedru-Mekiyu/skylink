@@ -83,3 +83,43 @@ Digits were not changed. Spaces inside a number are non-breaking and the links u
 3. Google Business Profile and social profiles: website `https://skylinkict.com`.
 4. Decide about `test.skylinkict.com`.
 5. Optional: fill `organization.opening_hours` in `config/seo.php` (e.g. `Mo-Fr 08:00-17:00`, `Sa 08:00-12:00`).
+
+## Update 2026-11-23: Trusted Clients, Marketing Photo, Price Visibility Toggles, Admin Scroll Fix, Partner Logo Shapes
+**Release on live:** 9722c36e (457 tests passed, verified).
+**Backup made by server-deploy.sh:** `/home/skylinkictcom/s.skylinkict.com/deploy/backups/20261123-150934` (database dump `db.sql.gz` 341 KB, `files-before.tar.gz` 89 MB, 6,481 existing files backed up, 10 new files).
+**Rollback:**
+```bash
+cd /home/skylinkictcom/s.skylinkict.com && bash deploy/server-rollback.sh /home/skylinkictcom/s.skylinkict.com/deploy/backups/20261123-150934
+```
+Database rollback if reverting without the backup script: `php artisan migrate:rollback --step=3`.
+
+### What Changed on Live
+1. **Home Page Section Title**:
+   - English: "Trusted Clients"
+   - Amharic: "የታመኑ ደንበኞች"
+   - Section heading updated in `resources/views/partials/partners.blade.php`.
+2. **Head of Marketing Portrait (Frezer Maru)**:
+   - Optimized real photo: `public/assets/images/about/head-of-marketing.jpg` (960x1200 4:5 ratio, 134 KB JPEG, top-anchored crop).
+   - Date-stamped backup of placeholder kept: `public/assets/images/about/head-of-marketing.placeholder-20261123.jpg`.
+   - Card displayed with alt text "Frezer Maru, Head of Marketing", layout verified (CEO alone on top, 4 team cards below across 1440, 1024, 768, 360 px).
+   - Live `.env`: `TEAM_SHOW_PLACEHOLDER=false` (line retained, not deleted). Original `marketing manager.png` left in root untouched and gitignored.
+3. **Admin Price Visibility Controls**:
+   - 3 additive migrations ran: `site_settings` table, `services.show_price` column, `products.show_price` and `products.price_text` columns.
+   - Global toggle under **Site Management > Settings** (`/admin/settings`).
+   - Per-item toggles in Service and Product admin forms.
+   - Blade directives `@price` and `@priceVisible` hide prices cleanly when disabled, and suppress the "Price: N/A" fallback.
+   - Audit logging in `laravel.log` on settings update.
+4. **Admin Sidebar Scroll Fix**:
+   - Cause: `.sidebar` had `position: sticky; top: 0; height: 100vh;` with `overflow: visible`, clipping sidebar items below the viewport height.
+   - Fix: Added `height: 100dvh; max-height: 100dvh; overflow-y: auto; overflow-x: hidden; overscroll-behavior: contain; padding-bottom: 2rem;` to `.sidebar` in `resources/views/admin/layouts/master.blade.php`.
+   - All sidebar links ("Site Management", "Settings", "Logout") are fully visible and clickable without double scrollbars.
+5. **Partner Logo Shapes (Natural Aspect Ratio)**:
+   - Forced circular crop (`border-radius: 50%`) removed from `resources/views/pages/index.blade.php`, `resources/views/partials/partners.blade.php`, and admin previews.
+   - Replaced with `.partner-logo { height: 90px; width: auto; max-width: 220px; object-fit: contain; border-radius: 0; }`.
+   - Wide logos (UKAZ, Safaricom, Ethio telecom, Betopia, ZamZam Bank) now display full branding without clipped edges.
+   - Marquee speed, spacing, and height are identical to before.
+6. **Live Data Protection Verification**:
+   - Exactly 41 partner rows remain in `partners` table (unchanged).
+   - All 83 logo files in `storage/app/public/partners/` remain intact and return HTTP 200.
+   - All public pages (`/`, `/about`, `/services`, `/products`, `/portfolio`, `/news`, `/contact`, `/login`) return HTTP 200.
+   - Zero errors in server logs.
