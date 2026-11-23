@@ -55,6 +55,25 @@
                 <textarea class="form-control" id="description" name="description" rows="4" required>{{ $product->description }}</textarea>
             </div>
 
+            <!-- Price and Price Display Text -->
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="price" class="form-label fw-semibold">Price (Numeric ETB)</label>
+                    <input type="number" class="form-control" id="price" name="price" value="{{ old('price', $product->price) }}" min="0" step="0.01">
+                </div>
+                <div class="col-md-6">
+                    <label for="price_text" class="form-label fw-semibold">Display Price Text (e.g. "From 25,000 ETB")</label>
+                    <input type="text" class="form-control" id="price_text" name="price_text" value="{{ old('price_text', $product->price_text) }}" placeholder="e.g. From 25,000 ETB">
+                </div>
+            </div>
+
+            <!-- Show Price Checkbox -->
+            <div class="mb-3 form-check form-switch">
+                <input type="hidden" name="show_price" value="0">
+                <input class="form-check-input" type="checkbox" role="switch" id="show_price" name="show_price" value="1" {{ old('show_price', $product->show_price ?? true) ? 'checked' : '' }}>
+                <label class="form-check-label fw-semibold" for="show_price">Show price on the public site</label>
+            </div>
+
             <!-- Submit Button -->
             <div class="d-grid gap-2">
                 <button type="submit" class="btn btn-primary btn-lg fw-semibold">

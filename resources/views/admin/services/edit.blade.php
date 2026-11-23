@@ -33,8 +33,13 @@
             </div>
 
             <div class="col-md-6">
-                <label class="form-label">Price (ETB)</label>
-                <input name="price" value="{{ old('price', $service->price) }}" class="form-control">
+                <label class="form-label">Price (ETB / Display Text)</label>
+                <input name="price" value="{{ old('price', $service->price) }}" class="form-control" placeholder="e.g. From 10,000 ETB">
+                <div class="form-check form-switch mt-2">
+                    <input type="hidden" name="show_price" value="0">
+                    <input class="form-check-input" type="checkbox" role="switch" id="show_price" name="show_price" value="1" {{ old('show_price', $service->show_price ?? true) ? 'checked' : '' }}>
+                    <label class="form-check-label fw-semibold" for="show_price">Show price on the public site</label>
+                </div>
             </div>
         </div>
 

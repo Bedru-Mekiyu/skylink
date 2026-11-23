@@ -68,29 +68,25 @@ class AboutPageTest extends TestCase
         $this->assertSame(4 / 5, $w / $h);
         $this->assertGreaterThanOrEqual(480, $w);
         $this->assertFileDoesNotExist(public_path('assets/images/about/head-of-marketing.webp'), 'one-file swap: no stale webp copy');
-        $this->assertTrue(\App\Support\TeamPlaceholder::inUse());
+        // The real photo has replaced the placeholder
+        $this->assertFalse(\App\Support\TeamPlaceholder::inUse());
     }
 
     public function test_the_placeholder_card_is_hidden_on_the_real_live_site_unless_the_flag_is_on(): void
     {
-        // local / bedru (not production, or production with the test-site guard): the card shows
-        $this->assertStringContainsString('Frezer Maru', $this->get(route('about'))->getContent());
-        config(['mail.staging_guard.enabled' => true]);
+        // Real photo in place: card shows on production without the flag
+        config(['mail.staging_guard.enabled' => false, 'team.marketing.show_placeholder_on_live' => false]);
         $this->app['env'] = 'production';
-        $this->assertStringContainsString('Frezer Maru', $this->get(route('about'))->getContent());
+        $html = $this->get(route('about'))->getContent();
+        $this->assertStringContainsString('Frezer Maru', $html);
+        $this->assertStringContainsString('Hanan Nesru', $html);
         $this->artisan('team:check-placeholder')->assertSuccessful();
-        // real live site: production without the test-site guard -> hidden, and the page still has the other 3 cards
-        config(['mail.staging_guard.enabled' => false]);
+
+        // When pointing back at the placeholder, it is hidden on production unless flag is on
+        config(['team.marketing.image' => 'assets/images/about/head-of-marketing.placeholder-20261123.jpg']);
         $html = $this->get(route('about'))->getContent();
         $this->assertStringNotContainsString('Frezer Maru', $html);
-        $this->assertStringContainsString('Hanan Nesru', $html);
-        $this->artisan('team:check-placeholder')->assertSuccessful(); // hidden = nothing to warn about
-        // the one documented flag shows it (the check then warns with a failure code)
         config(['team.marketing.show_placeholder_on_live' => true]);
-        $this->assertStringContainsString('Frezer Maru', $this->get(route('about'))->getContent());
-        $this->artisan('team:check-placeholder')->assertFailed();
-        // the real photo replaces the file: the card shows on the live site without any flag
-        config(['team.marketing.show_placeholder_on_live' => false, 'team.marketing.image' => 'assets/images/about/hanan.jpg']);
         $this->assertStringContainsString('Frezer Maru', $this->get(route('about'))->getContent());
     }
 

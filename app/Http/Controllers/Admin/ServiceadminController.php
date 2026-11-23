@@ -32,12 +32,14 @@ class ServiceadminController extends Controller
             'image' => ImageUploadRules::rules(true),
             'price' => 'nullable',
             'features' => 'required|array',
-        'category_id' => 'required|exists:service_categories,id',
+            'category_id' => 'required|exists:service_categories,id',
+            'show_price' => 'nullable|boolean',
         ]);
 
         $imagePath = $request->file('image')->store('services', 'public');
 
         $validated['image'] = 'storage/' . $imagePath;
+        $validated['show_price'] = $request->boolean('show_price', true);
 
         Service::create($validated);
 
@@ -64,13 +66,16 @@ class ServiceadminController extends Controller
             'image' => ImageUploadRules::rules(),
             'price' => 'nullable',
             'features' => 'required|array',
-            'category_id' => 'required|exists:service_categories,id'
+            'category_id' => 'required|exists:service_categories,id',
+            'show_price' => 'nullable|boolean',
         ]);
 
         if ($request->hasFile('image')) {
             $imagePath = $request->file('image')->store('services', 'public');
             $validated['image'] = 'storage/' . $imagePath;
         }
+
+        $validated['show_price'] = $request->boolean('show_price', true);
 
         $service->update($validated);
 

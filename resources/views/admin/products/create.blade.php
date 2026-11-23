@@ -48,11 +48,25 @@
                 <div class="invalid-feedback">Please enter a description.</div>
             </div>
 
-            <!-- Price -->
-            <div class="mb-3">
-                <label for="price" class="form-label fw-semibold">Price ($)</label>
-                <input type="number" class="form-control form-control-lg" id="price" name="price" min="0" step="0.01" placeholder="0.00" required>
-                <div class="invalid-feedback">Please enter a valid price.</div>
+            <!-- Price and Display Text -->
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="price" class="form-label fw-semibold">Price ($ / ETB numeric)</label>
+                    <input type="number" class="form-control form-control-lg" id="price" name="price" min="0" step="0.01" placeholder="0.00" value="{{ old('price') }}" required>
+                    <div class="invalid-feedback">Please enter a valid price.</div>
+                </div>
+                <div class="col-md-6">
+                    <label for="price_text" class="form-label fw-semibold">Price Display Text (optional, e.g. "From 25,000 ETB")</label>
+                    <input type="text" class="form-control form-control-lg" id="price_text" name="price_text" placeholder="e.g. From 25,000 ETB" value="{{ old('price_text') }}">
+                    <div class="form-text">Custom text shown to visitors. Leave blank to default to numeric price.</div>
+                </div>
+            </div>
+
+            <!-- Show Price Checkbox -->
+            <div class="mb-3 form-check form-switch">
+                <input type="hidden" name="show_price" value="0">
+                <input class="form-check-input" type="checkbox" role="switch" id="show_price" name="show_price" value="1" {{ old('show_price', '1') == '1' ? 'checked' : '' }}>
+                <label class="form-check-label fw-semibold" for="show_price">Show price on the public site</label>
             </div>
 
             <!-- Features (Tokens) -->

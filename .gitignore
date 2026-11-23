@@ -37,6 +37,7 @@ Thumbs.db
 /deploy/STAGING-ACCESS.txt
 
 # Raw photos and videos handed over for the site (large, never committed), test clips and the local dev router
+/marketing manager.png
 /new video and photo resource/
 /.local-router.php
 *.mp4

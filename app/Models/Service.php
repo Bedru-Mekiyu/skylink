@@ -11,12 +11,12 @@ class Service extends Model
     use HasFactory;
 
     protected $fillable = [
-        'slug', 'title', 'desc', 'image', 'price', 'features', 'category_id'
+        'slug', 'title', 'desc', 'image', 'price', 'show_price', 'features', 'category_id'
     ];
 
     protected $casts = [
         'features' => 'array',
-        
+        'show_price' => 'boolean',
     ];
     
 

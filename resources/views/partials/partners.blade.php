@@ -46,7 +46,7 @@
 </style>
 <section class="partners-section">
     <div class="container">
-        <h5 class="h5 text-uppercase text-center fw-semibold mb-4 text-dark">Trusted Partners</h5>
+        <h5 class="h5 text-uppercase text-center fw-semibold mb-4 text-dark">{{ app()->getLocale() === 'am' ? 'የታመኑ ደንበኞች' : 'Trusted Clients' }}</h5>
         <div class="partners-slider {{ $loop ? '' : 'partners-slider--still' }}">
             <div class="partners-track {{ $loop ? 'is-loop' : '' }}" style="--partners-dur: {{ $dur }}s">
                 @foreach ($copies as $isCopy)

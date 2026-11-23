@@ -148,6 +148,10 @@ Route::resource('services', ServiceadminController::class);
 
 Route::resource('products', ProductadminController::class);
 
+    // Site Settings (global price toggle, etc.)
+    Route::get('/settings', [\App\Http\Controllers\Admin\SettingController::class, 'edit'])->name('settings.edit');
+    Route::put('/settings', [\App\Http\Controllers\Admin\SettingController::class, 'update'])->name('settings.update');
+
 
     // Subscribers
     Route::resource('subscribers', AdminSubscriberController::class)->only(['index']);

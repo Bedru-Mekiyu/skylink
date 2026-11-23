@@ -90,7 +90,10 @@ class PartnerTest extends TestCase
         $mid = strpos($html, 'assets/images/trusted/ad.png');
         $last = strpos($html, 'assets/images/trusted/maroli.JPG');
         $this->assertTrue($first < $mid && $mid < $last);
-        $this->assertStringContainsString('Trusted Partners', $html);
+        $this->assertStringContainsString('Trusted Clients', $html);
+        app()->setLocale('am');
+        $this->assertStringContainsString('የታመኑ ደንበኞች', $this->get(route('home'))->getContent());
+        app()->setLocale('en');
         $this->assertStringContainsString('width="', $html);
         $this->assertStringContainsString('prefers-reduced-motion', $html);
     }

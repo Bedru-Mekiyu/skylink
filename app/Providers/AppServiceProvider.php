@@ -27,11 +27,19 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         // Public pages keep their data in a short cache; any change to this content rebuilds it (see App\Support\PublicCache).
-        foreach ([\App\Models\Product::class, \App\Models\Service::class, \App\Models\ServiceCategory::class, \App\Models\Portfolio::class, \App\Models\News::class, \App\Models\NewsCategory::class, \App\Models\Video::class] as $model) {
+        foreach ([\App\Models\Product::class, \App\Models\Service::class, \App\Models\ServiceCategory::class, \App\Models\Portfolio::class, \App\Models\News::class, \App\Models\NewsCategory::class, \App\Models\Video::class, \App\Models\SiteSetting::class] as $model) {
             foreach (['saved', 'deleted'] as $event) {
                 $model::$event(fn () => \App\Support\PublicCache::bust());
             }
         }
+
+        // Blade price visibility directives
+        \Illuminate\Support\Facades\Blade::directive('price', function ($expression) {
+            return "<?php echo e(\App\Support\PriceVisibility::render($expression) ?? ''); ?>";
+        });
+        \Illuminate\Support\Facades\Blade::if('priceVisible', function ($item = null) {
+            return \App\Support\PriceVisibility::shouldShow($item);
+        });
         // Test site only (MAIL_STAGING_GUARD=true): real customers in the copied database never get test emails.
         Event::listen(MessageSending::class, [StagingMailGuard::class, 'handle']);
 

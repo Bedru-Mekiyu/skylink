@@ -29,6 +29,8 @@ class ProductadminController extends Controller
         'image' => 'required|url',
         'description' => 'required|string',
         'price' => 'required|numeric|min:0',
+        'price_text' => 'nullable|string|max:255',
+        'show_price' => 'nullable|boolean',
         'features' => 'required|string',
         'additional_info' => 'nullable|string',
     ]);
@@ -44,6 +46,8 @@ class ProductadminController extends Controller
         'image' => $validated['image'],
         'description' => $validated['description'],
         'price' => $validated['price'],
+        'price_text' => $validated['price_text'] ?? ('ETB ' . number_format($validated['price'])),
+        'show_price' => $request->boolean('show_price', true),
         'features' => $featuresArray, // Make sure your model casts features as array
         'additional_info' => $validated['additional_info'] ?? null,
     ]);
@@ -88,8 +92,13 @@ public function update(Request $request, Product $product)
     $data = $request->all();
 
     // Convert comma-separated string to array
-    if (isset($data['features'])) {
+    if (isset($data['features']) && is_string($data['features'])) {
         $data['features'] = array_map('trim', explode(',', $data['features']));
+    }
+
+    $data['show_price'] = $request->boolean('show_price', true);
+    if (empty($data['price_text']) && isset($data['price']) && is_numeric($data['price'])) {
+        $data['price_text'] = 'ETB ' . number_format($data['price']);
     }
 
     $product->update($data);

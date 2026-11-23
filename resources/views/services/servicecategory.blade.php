@@ -44,9 +44,11 @@
           <div class="card-body d-flex flex-column">
             <h5 class="card-title">{{ $item->title ?? 'Untitled' }}</h5>
             <p class="card-text text-muted">{{ \Illuminate\Support\Str::limit($item->desc ?? 'No description available.', 100) }}</p>
+            @priceVisible($item)
             <p class="fw-bold">
-                Price: {{ $item->price_formatted ?? 'N/A' }} {{ $item->currency ?? '' }}
+                Price: @price($item)
             </p>
+            @endpriceVisible
 
 
             <a 

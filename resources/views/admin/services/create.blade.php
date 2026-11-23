@@ -37,8 +37,8 @@
 
         <div class="row mb-3">
             <div class="col-md-6">
-                <label class="form-label">Price (ETB)</label>
-                <input type="text" name="price" class="form-control" placeholder="e.g. 1000">
+                <label class="form-label">Price (ETB / Display Text)</label>
+                <input type="text" name="price" class="form-control" placeholder="e.g. From 10,000 ETB">
             </div>
 
             <div class="col-md-6">
@@ -46,6 +46,15 @@
                 <input type="file" name="image" class="form-control" onchange="previewImage(event)" required>
                 <img id="imagePreview" src="#" alt="Image Preview" class="img-thumbnail mt-2" style="display: none; max-height: 150px;">
             </div>
+        </div>
+
+        <div class="mb-3">
+            <div class="form-check form-switch">
+                <input type="hidden" name="show_price" value="0">
+                <input class="form-check-input" type="checkbox" role="switch" id="show_price" name="show_price" value="1" {{ old('show_price', '1') == '1' ? 'checked' : '' }}>
+                <label class="form-check-label fw-semibold" for="show_price">Show price on the public site</label>
+            </div>
+            <div class="form-text">When off, this service will not show pricing on the public site.</div>
         </div>
 
         <div class="mb-3">

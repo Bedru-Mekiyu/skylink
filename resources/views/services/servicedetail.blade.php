@@ -122,7 +122,9 @@
             <div class="card-body d-flex flex-column justify-content-between">
               <div>
                 <h3 class="fw-bold mb-2 text-primary">{{ $plan['name'] }}</h3>
-                <h2 class="mb-4">{{ $plan['price'] }}</h2>
+                @priceVisible($service)
+                <h2 class="mb-4">@price($service)</h2>
+                @endpriceVisible
                 <a href="{{ url('/subscribe/'.$plan['slug']) }}" class="btn btn-outline-primary mb-4 w-100">Subscribe Now</a>
                 <ul class="list-unstyled text-start mb-4">
                   @foreach($plan['features'] as $feat)

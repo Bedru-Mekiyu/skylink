@@ -42,7 +42,9 @@
                             @endif
 
                         </ul>
-                        <span class="badge bg-info fs-6 mt-2 mb-3 text-dark">ETB {{ number_format($product['price']) }}</span>
+                        @priceVisible($product)
+                        <span class="badge bg-info fs-6 mt-2 mb-3 text-dark">@price($product)</span>
+                        @endpriceVisible
                     </div>
                     <div class="col-md-2 text-end d-flex flex-column align-items-end justify-content-center">
                         <a href="{{ url('products/'.$category.'/'.$product['slug']) }}" 
