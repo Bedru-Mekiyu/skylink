@@ -30,13 +30,13 @@
     .partners-slider { overflow: hidden; white-space: nowrap; }
     .partners-track { display: inline-flex; align-items: center; }
     .partners-track > * { flex: 0 0 auto; }
-    .partners-track .partner-logo { height: 90px; width: auto; max-width: 220px; object-fit: contain; }
+    .partners-track .partner-logo { height: 90px; width: auto; max-width: 220px; object-fit: contain; border-radius: 0; }
     .partners-track.is-loop { animation: partnersLoop var(--partners-dur, 25s) linear infinite; will-change: transform; }
     @keyframes partnersLoop { from { transform: translateX(0); } to { transform: translateX(-50%); } }
     .partners-track.is-loop:hover, .partners-track.is-loop:focus-within { animation-play-state: paused; }
     .partners-slider--still { white-space: normal; text-align: center; }
     .partners-slider--still .partners-track { flex-wrap: wrap; justify-content: center; width: 100%; }
-    .partner-link { display: inline-flex; border-radius: 50%; }
+    .partner-link { display: inline-flex; border-radius: 4px; }
     .partner-link:focus-visible { outline: 3px solid #3B82F6; outline-offset: 2px; }
     @media (prefers-reduced-motion: reduce) {
         .partners-slider { white-space: normal; text-align: center; }

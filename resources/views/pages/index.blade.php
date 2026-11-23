@@ -131,8 +131,10 @@
 
         .partner-logo {
             height: 90px;
-            object-fit: cover;
-            border-radius:50%;
+            width: auto;
+            max-width: 220px;
+            object-fit: contain;
+            border-radius: 0;
             transition: filter 0.3s;
         }
 

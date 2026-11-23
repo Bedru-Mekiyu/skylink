@@ -46,7 +46,7 @@
                                 {{ $p->sort_order }}
                             @endif
                         </td>
-                        <td data-label="Logo"><img src="{{ $p->imgUrl() }}" alt="" width="48" height="48" loading="lazy" style="height:48px;width:48px;object-fit:contain;border-radius:50%;background:#f1f3f5"></td>
+                        <td data-label="Logo"><img src="{{ $p->imgUrl() }}" alt="" width="48" height="48" loading="lazy" style="height:48px;width:48px;object-fit:contain;border-radius:4px;background:#f1f3f5"></td>
                         <td data-label="Name" class="fw-semibold">{{ $p->name }}@if ($p->website_url)<div class="small text-muted text-truncate" style="max-width:18rem">{{ $p->website_url }}</div>@endif</td>
                         <td data-label="Status">
                             @if ($p->active) <span class="badge text-bg-success">Visible</span> @else <span class="badge text-bg-secondary">Hidden</span> @endif

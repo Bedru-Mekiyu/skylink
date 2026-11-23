@@ -96,6 +96,8 @@ class PartnerTest extends TestCase
         app()->setLocale('en');
         $this->assertStringContainsString('width="', $html);
         $this->assertStringContainsString('prefers-reduced-motion', $html);
+        $this->assertStringNotContainsString('border-radius:50%', $html);
+        $this->assertStringContainsString('object-fit: contain', $html);
     }
 
     public function test_hidden_partners_do_not_show_and_featured_come_first(): void

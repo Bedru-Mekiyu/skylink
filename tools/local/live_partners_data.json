@@ -1,0 +1,3002 @@
+{
+    "summary": {
+        "total_partners_rows": 41,
+        "active_partners": 41,
+        "featured_partners": 16,
+        "unique_files_referenced": 109,
+        "files_in_storage_partners_dir": 83
+    },
+    "files_referenced": [
+        {
+            "field": "logo_path",
+            "rel_path": "storage/app/public/partners/U1DF5wol5hutWYpQZPwf0XFWWegDP9eokchDBEs1.webp",
+            "filename": "U1DF5wol5hutWYpQZPwf0XFWWegDP9eokchDBEs1.webp",
+            "size_bytes": 8304,
+            "size_formatted": "8.1 KB",
+            "mtime": "2026-11-21 19:43:30",
+            "exists": true
+        },
+        {
+            "field": "logo_fallback",
+            "rel_path": "storage/app/public/partners/U1DF5wol5hutWYpQZPwf0XFWWegDP9eokchDBEs1.png",
+            "filename": "U1DF5wol5hutWYpQZPwf0XFWWegDP9eokchDBEs1.png",
+            "size_bytes": 35753,
+            "size_formatted": "34.9 KB",
+            "mtime": "2026-11-21 19:43:30",
+            "exists": true
+        },
+        {
+            "field": "legacy_src",
+            "rel_path": "public/assets/images/minbertv.webp",
+            "filename": "minbertv.webp",
+            "size_bytes": 23174,
+            "size_formatted": "22.6 KB",
+            "mtime": "2026-11-21 21:09:38",
+            "exists": true
+        },
+        {
+            "field": "logo_path",
+            "rel_path": "storage/app/public/partners/SFEnITMeTruKondg5DohluYLZGTxiMRC7DJ8RkO0.webp",
+            "filename": "SFEnITMeTruKondg5DohluYLZGTxiMRC7DJ8RkO0.webp",
+            "size_bytes": 18620,
+            "size_formatted": "18.2 KB",
+            "mtime": "2026-11-21 19:43:30",
+            "exists": true
+        },
+        {
+            "field": "logo_fallback",
+            "rel_path": "storage/app/public/partners/SFEnITMeTruKondg5DohluYLZGTxiMRC7DJ8RkO0.png",
+            "filename": "SFEnITMeTruKondg5DohluYLZGTxiMRC7DJ8RkO0.png",
+            "size_bytes": 62621,
+            "size_formatted": "61.2 KB",
+            "mtime": "2026-11-21 19:43:30",
+            "exists": true
+        },
+        {
+            "field": "legacy_src",
+            "rel_path": "public/assets/images/iman.webp",
+            "filename": "iman.webp",
+            "size_bytes": 95644,
+            "size_formatted": "93.4 KB",
+            "mtime": "2026-11-21 21:09:38",
+            "exists": true
+        },
+        {
+            "field": "logo_path",
+            "rel_path": "storage/app/public/partners/YmWwgu2r5zalAGX6gsdtyIziyMQ0MltCYG8Xj5CX.webp",
+            "filename": "YmWwgu2r5zalAGX6gsdtyIziyMQ0MltCYG8Xj5CX.webp",
+            "size_bytes": 3504,
+            "size_formatted": "3.4 KB",
+            "mtime": "2026-11-21 19:43:30",
+            "exists": true
+        },
+        {
+            "field": "logo_fallback",
+            "rel_path": "storage/app/public/partners/YmWwgu2r5zalAGX6gsdtyIziyMQ0MltCYG8Xj5CX.jpg",
+            "filename": "YmWwgu2r5zalAGX6gsdtyIziyMQ0MltCYG8Xj5CX.jpg",
+            "size_bytes": 6664,
+            "size_formatted": "6.5 KB",
+            "mtime": "2026-11-21 19:43:30",
+            "exists": true
+        },
+        {
+            "field": "legacy_src",
+            "rel_path": "public/assets/images/Ethiotel.jpg",
+            "filename": "Ethiotel.jpg",
+            "size_bytes": 22964,
+            "size_formatted": "22.4 KB",
+            "mtime": "2026-11-21 21:09:38",
+            "exists": true
+        },
+        {
+            "field": "logo_path",
+            "rel_path": "storage/app/public/partners/1JzjEBASDcmwhlHwbuUA3dHtkdMpVtPGWwhBRqCT.webp",
+            "filename": "1JzjEBASDcmwhlHwbuUA3dHtkdMpVtPGWwhBRqCT.webp",
+            "size_bytes": 4626,
+            "size_formatted": "4.5 KB",
+            "mtime": "2026-11-21 19:43:31",
+            "exists": true
+        },
+        {
+            "field": "logo_fallback",
+            "rel_path": "storage/app/public/partners/1JzjEBASDcmwhlHwbuUA3dHtkdMpVtPGWwhBRqCT.png",
+            "filename": "1JzjEBASDcmwhlHwbuUA3dHtkdMpVtPGWwhBRqCT.png",
+            "size_bytes": 6959,
+            "size_formatted": "6.8 KB",
+            "mtime": "2026-11-21 19:43:31",
+            "exists": true
+        },
+        {
+            "field": "legacy_src",
+            "rel_path": "public/assets/images/Safaricom.png",
+            "filename": "Safaricom.png",
+            "size_bytes": 29258,
+            "size_formatted": "28.6 KB",
+            "mtime": "2026-11-21 21:09:38",
+            "exists": true
+        },
+        {
+            "field": "logo_path",
+            "rel_path": "storage/app/public/partners/dPD41pWf3BTGTaouzRZgnp5fF4fUwuYFXnBHjYRK.webp",
+            "filename": "dPD41pWf3BTGTaouzRZgnp5fF4fUwuYFXnBHjYRK.webp",
+            "size_bytes": 7636,
+            "size_formatted": "7.5 KB",
+            "mtime": "2026-11-21 19:43:31",
+            "exists": true
+        },
+        {
+            "field": "logo_fallback",
+            "rel_path": "storage/app/public/partners/dPD41pWf3BTGTaouzRZgnp5fF4fUwuYFXnBHjYRK.png",
+            "filename": "dPD41pWf3BTGTaouzRZgnp5fF4fUwuYFXnBHjYRK.png",
+            "size_bytes": 10733,
+            "size_formatted": "10.5 KB",
+            "mtime": "2026-11-21 19:43:31",
+            "exists": true
+        },
+        {
+            "field": "legacy_src",
+            "rel_path": "public/assets/images/trusted/ad.png",
+            "filename": "ad.png",
+            "size_bytes": 32612,
+            "size_formatted": "31.8 KB",
+            "mtime": "2026-11-21 21:09:38",
+            "exists": true
+        },
+        {
+            "field": "logo_path",
+            "rel_path": "storage/app/public/partners/b4s1eAbladsI8S9cgXKQHUHoqdAVEbOLnDCEbLjO.webp",
+            "filename": "b4s1eAbladsI8S9cgXKQHUHoqdAVEbOLnDCEbLjO.webp",
+            "size_bytes": 4196,
+            "size_formatted": "4.1 KB",
+            "mtime": "2026-11-21 19:43:31",
+            "exists": true
+        },
+        {
+            "field": "logo_fallback",
+            "rel_path": "storage/app/public/partners/b4s1eAbladsI8S9cgXKQHUHoqdAVEbOLnDCEbLjO.jpg",
+            "filename": "b4s1eAbladsI8S9cgXKQHUHoqdAVEbOLnDCEbLjO.jpg",
+            "size_bytes": 8474,
+            "size_formatted": "8.3 KB",
+            "mtime": "2026-11-21 19:43:31",
+            "exists": true
+        },
+        {
+            "field": "legacy_src",
+            "rel_path": "public/assets/images/trusted/amar.jpg",
+            "filename": "amar.jpg",
+            "size_bytes": 17901,
+            "size_formatted": "17.5 KB",
+            "mtime": "2026-11-21 21:09:38",
+            "exists": true
+        },
+        {
+            "field": "logo_path",
+            "rel_path": "storage/app/public/partners/tfouegeHAu7JtO2eweMwjZavLbaB8iNbj4zHqJLQ.webp",
+            "filename": "tfouegeHAu7JtO2eweMwjZavLbaB8iNbj4zHqJLQ.webp",
+            "size_bytes": 4324,
+            "size_formatted": "4.2 KB",
+            "mtime": "2026-11-21 19:43:31",
+            "exists": true
+        },
+        {
+            "field": "logo_fallback",
+            "rel_path": "storage/app/public/partners/tfouegeHAu7JtO2eweMwjZavLbaB8iNbj4zHqJLQ.png",
+            "filename": "tfouegeHAu7JtO2eweMwjZavLbaB8iNbj4zHqJLQ.png",
+            "size_bytes": 16597,
+            "size_formatted": "16.2 KB",
+            "mtime": "2026-11-21 19:43:31",
+            "exists": true
+        },
+        {
+            "field": "legacy_src",
+            "rel_path": "public/assets/images/trusted/amin.png",
+            "filename": "amin.png",
+            "size_bytes": 6809,
+            "size_formatted": "6.6 KB",
+            "mtime": "2026-11-21 21:09:38",
+            "exists": true
+        },
+        {
+            "field": "logo_path",
+            "rel_path": "storage/app/public/partners/MAVJHu7zxoWjKUhFPeFKcfSHfcELsSyBJ3KOPHRi.webp",
+            "filename": "MAVJHu7zxoWjKUhFPeFKcfSHfcELsSyBJ3KOPHRi.webp",
+            "size_bytes": 5954,
+            "size_formatted": "5.8 KB",
+            "mtime": "2026-11-21 19:43:31",
+            "exists": true
+        },
+        {
+            "field": "logo_fallback",
+            "rel_path": "storage/app/public/partners/MAVJHu7zxoWjKUhFPeFKcfSHfcELsSyBJ3KOPHRi.png",
+            "filename": "MAVJHu7zxoWjKUhFPeFKcfSHfcELsSyBJ3KOPHRi.png",
+            "size_bytes": 7856,
+            "size_formatted": "7.7 KB",
+            "mtime": "2026-11-21 19:43:31",
+            "exists": true
+        },
+        {
+            "field": "legacy_src",
+            "rel_path": "public/assets/images/trusted/basira.png",
+            "filename": "basira.png",
+            "size_bytes": 123118,
+            "size_formatted": "120.2 KB",
+            "mtime": "2026-11-21 21:09:38",
+            "exists": true
+        },
+        {
+            "field": "logo_path",
+            "rel_path": "storage/app/public/partners/1kg55Ir3nbqZLhtko2UxYGhwL8ZuZrUtgzDFfqKz.webp",
+            "filename": "1kg55Ir3nbqZLhtko2UxYGhwL8ZuZrUtgzDFfqKz.webp",
+            "size_bytes": 17126,
+            "size_formatted": "16.7 KB",
+            "mtime": "2026-11-21 19:43:32",
+            "exists": true
+        },
+        {
+            "field": "logo_fallback",
+            "rel_path": "storage/app/public/partners/1kg55Ir3nbqZLhtko2UxYGhwL8ZuZrUtgzDFfqKz.png",
+            "filename": "1kg55Ir3nbqZLhtko2UxYGhwL8ZuZrUtgzDFfqKz.png",
+            "size_bytes": 37282,
+            "size_formatted": "36.4 KB",
+            "mtime": "2026-11-21 19:43:32",
+            "exists": true
+        },
+        {
+            "field": "legacy_src",
+            "rel_path": "public/assets/images/trusted/bilalul.png",
+            "filename": "bilalul.png",
+            "size_bytes": 90131,
+            "size_formatted": "88 KB",
+            "mtime": "2026-11-21 21:09:38",
+            "exists": true
+        },
+        {
+            "field": "logo_path",
+            "rel_path": "storage/app/public/partners/AN1lU4qTAglanpvqr8IuyWBXwhOC8w2g0VE5RrOJ.webp",
+            "filename": "AN1lU4qTAglanpvqr8IuyWBXwhOC8w2g0VE5RrOJ.webp",
+            "size_bytes": 10148,
+            "size_formatted": "9.9 KB",
+            "mtime": "2026-11-21 19:43:32",
+            "exists": true
+        },
+        {
+            "field": "logo_fallback",
+            "rel_path": "storage/app/public/partners/AN1lU4qTAglanpvqr8IuyWBXwhOC8w2g0VE5RrOJ.png",
+            "filename": "AN1lU4qTAglanpvqr8IuyWBXwhOC8w2g0VE5RrOJ.png",
+            "size_bytes": 18990,
+            "size_formatted": "18.5 KB",
+            "mtime": "2026-11-21 19:43:32",
+            "exists": true
+        },
+        {
+            "field": "legacy_src",
+            "rel_path": "public/assets/images/trusted/kasma.png",
+            "filename": "kasma.png",
+            "size_bytes": 138576,
+            "size_formatted": "135.3 KB",
+            "mtime": "2026-11-21 21:09:38",
+            "exists": true
+        },
+        {
+            "field": "logo_path",
+            "rel_path": "storage/app/public/partners/u7ggkfP5d6USMAeDbDrJ9qqxwW0Kew4V69ITqQ8s.webp",
+            "filename": "u7ggkfP5d6USMAeDbDrJ9qqxwW0Kew4V69ITqQ8s.webp",
+            "size_bytes": 9906,
+            "size_formatted": "9.7 KB",
+            "mtime": "2026-11-21 19:43:32",
+            "exists": true
+        },
+        {
+            "field": "logo_fallback",
+            "rel_path": "storage/app/public/partners/u7ggkfP5d6USMAeDbDrJ9qqxwW0Kew4V69ITqQ8s.jpg",
+            "filename": "u7ggkfP5d6USMAeDbDrJ9qqxwW0Kew4V69ITqQ8s.jpg",
+            "size_bytes": 18534,
+            "size_formatted": "18.1 KB",
+            "mtime": "2026-11-21 19:43:32",
+            "exists": true
+        },
+        {
+            "field": "legacy_src",
+            "rel_path": "public/assets/images/trusted/mslegue.JPG",
+            "filename": "mslegue.JPG",
+            "size_bytes": 59667,
+            "size_formatted": "58.3 KB",
+            "mtime": "2026-11-21 21:09:38",
+            "exists": true
+        },
+        {
+            "field": "logo_path",
+            "rel_path": "storage/app/public/partners/zBlYeh2dmkc35sxT3VIM7eEfx6JrwSULVc5v61Zv.webp",
+            "filename": "zBlYeh2dmkc35sxT3VIM7eEfx6JrwSULVc5v61Zv.webp",
+            "size_bytes": 20656,
+            "size_formatted": "20.2 KB",
+            "mtime": "2026-11-21 19:43:32",
+            "exists": true
+        },
+        {
+            "field": "logo_fallback",
+            "rel_path": "storage/app/public/partners/zBlYeh2dmkc35sxT3VIM7eEfx6JrwSULVc5v61Zv.png",
+            "filename": "zBlYeh2dmkc35sxT3VIM7eEfx6JrwSULVc5v61Zv.png",
+            "size_bytes": 45957,
+            "size_formatted": "44.9 KB",
+            "mtime": "2026-11-21 19:43:32",
+            "exists": true
+        },
+        {
+            "field": "legacy_src",
+            "rel_path": "public/assets/images/newleaf.webp",
+            "filename": "newleaf.webp",
+            "size_bytes": 48520,
+            "size_formatted": "47.4 KB",
+            "mtime": "2026-11-21 21:09:38",
+            "exists": true
+        },
+        {
+            "field": "logo_path",
+            "rel_path": "storage/app/public/partners/RtJrYTetxyzCCppMZLRVuyN5l7w79oZwyxoXJIRz.webp",
+            "filename": "RtJrYTetxyzCCppMZLRVuyN5l7w79oZwyxoXJIRz.webp",
+            "size_bytes": 4906,
+            "size_formatted": "4.8 KB",
+            "mtime": "2026-11-21 19:43:32",
+            "exists": true
+        },
+        {
+            "field": "logo_fallback",
+            "rel_path": "storage/app/public/partners/RtJrYTetxyzCCppMZLRVuyN5l7w79oZwyxoXJIRz.jpg",
+            "filename": "RtJrYTetxyzCCppMZLRVuyN5l7w79oZwyxoXJIRz.jpg",
+            "size_bytes": 9422,
+            "size_formatted": "9.2 KB",
+            "mtime": "2026-11-21 19:43:32",
+            "exists": true
+        },
+        {
+            "field": "legacy_src",
+            "rel_path": "public/assets/images/trusted/nujum.jpg",
+            "filename": "nujum.jpg",
+            "size_bytes": 32792,
+            "size_formatted": "32 KB",
+            "mtime": "2026-11-21 21:09:38",
+            "exists": true
+        },
+        {
+            "field": "logo_path",
+            "rel_path": "storage/app/public/partners/EThCwADWhzl4BnSYLtpm5nXmmEtuVgPmgCUxBPtq.webp",
+            "filename": "EThCwADWhzl4BnSYLtpm5nXmmEtuVgPmgCUxBPtq.webp",
+            "size_bytes": 5606,
+            "size_formatted": "5.5 KB",
+            "mtime": "2026-11-21 19:43:33",
+            "exists": true
+        },
+        {
+            "field": "logo_fallback",
+            "rel_path": "storage/app/public/partners/EThCwADWhzl4BnSYLtpm5nXmmEtuVgPmgCUxBPtq.png",
+            "filename": "EThCwADWhzl4BnSYLtpm5nXmmEtuVgPmgCUxBPtq.png",
+            "size_bytes": 13046,
+            "size_formatted": "12.7 KB",
+            "mtime": "2026-11-21 19:43:33",
+            "exists": true
+        },
+        {
+            "field": "legacy_src",
+            "rel_path": "public/assets/images/trusted/popular.png",
+            "filename": "popular.png",
+            "size_bytes": 141453,
+            "size_formatted": "138.1 KB",
+            "mtime": "2026-11-21 21:09:38",
+            "exists": true
+        },
+        {
+            "field": "logo_path",
+            "rel_path": "storage/app/public/partners/hkCxxSXiaAbpXt3OkR3TwKV0KeZgjtmRVZzTIiuB.webp",
+            "filename": "hkCxxSXiaAbpXt3OkR3TwKV0KeZgjtmRVZzTIiuB.webp",
+            "size_bytes": 2738,
+            "size_formatted": "2.7 KB",
+            "mtime": "2026-11-21 19:43:33",
+            "exists": true
+        },
+        {
+            "field": "logo_fallback",
+            "rel_path": "storage/app/public/partners/hkCxxSXiaAbpXt3OkR3TwKV0KeZgjtmRVZzTIiuB.jpg",
+            "filename": "hkCxxSXiaAbpXt3OkR3TwKV0KeZgjtmRVZzTIiuB.jpg",
+            "size_bytes": 5711,
+            "size_formatted": "5.6 KB",
+            "mtime": "2026-11-21 19:43:33",
+            "exists": true
+        },
+        {
+            "field": "legacy_src",
+            "rel_path": "public/assets/images/trusted/ethioceramics.jpg",
+            "filename": "ethioceramics.jpg",
+            "size_bytes": 3966,
+            "size_formatted": "3.9 KB",
+            "mtime": "2026-11-21 21:09:38",
+            "exists": true
+        },
+        {
+            "field": "logo_path",
+            "rel_path": "storage/app/public/partners/MW6Od1gXG2wu9fyRDjbdp2fdtO5TtvsSV5lbrpxG.webp",
+            "filename": "MW6Od1gXG2wu9fyRDjbdp2fdtO5TtvsSV5lbrpxG.webp",
+            "size_bytes": 4694,
+            "size_formatted": "4.6 KB",
+            "mtime": "2026-11-21 19:43:33",
+            "exists": true
+        },
+        {
+            "field": "logo_fallback",
+            "rel_path": "storage/app/public/partners/MW6Od1gXG2wu9fyRDjbdp2fdtO5TtvsSV5lbrpxG.jpg",
+            "filename": "MW6Od1gXG2wu9fyRDjbdp2fdtO5TtvsSV5lbrpxG.jpg",
+            "size_bytes": 9250,
+            "size_formatted": "9 KB",
+            "mtime": "2026-11-21 19:43:33",
+            "exists": true
+        },
+        {
+            "field": "legacy_src",
+            "rel_path": "public/assets/images/trusted/softvalley.jpg",
+            "filename": "softvalley.jpg",
+            "size_bytes": 22374,
+            "size_formatted": "21.8 KB",
+            "mtime": "2026-11-21 21:09:38",
+            "exists": true
+        },
+        {
+            "field": "logo_path",
+            "rel_path": "storage/app/public/partners/I0yLtMp99eHu7weLCBRWAwmN8PFD77Hc1fB4cuCp.webp",
+            "filename": "I0yLtMp99eHu7weLCBRWAwmN8PFD77Hc1fB4cuCp.webp",
+            "size_bytes": 10540,
+            "size_formatted": "10.3 KB",
+            "mtime": "2026-11-21 19:43:33",
+            "exists": true
+        },
+        {
+            "field": "logo_fallback",
+            "rel_path": "storage/app/public/partners/I0yLtMp99eHu7weLCBRWAwmN8PFD77Hc1fB4cuCp.jpg",
+            "filename": "I0yLtMp99eHu7weLCBRWAwmN8PFD77Hc1fB4cuCp.jpg",
+            "size_bytes": 17828,
+            "size_formatted": "17.4 KB",
+            "mtime": "2026-11-21 19:43:33",
+            "exists": true
+        },
+        {
+            "field": "legacy_src",
+            "rel_path": "public/assets/images/befan.jpg",
+            "filename": "befan.jpg",
+            "size_bytes": 25308,
+            "size_formatted": "24.7 KB",
+            "mtime": "2026-11-21 21:09:38",
+            "exists": true
+        },
+        {
+            "field": "logo_path",
+            "rel_path": "storage/app/public/partners/kvBVg8b6q2BSQ7Ag6Fr6ZNgu4Xi7zkHUSefednM1.webp",
+            "filename": "kvBVg8b6q2BSQ7Ag6Fr6ZNgu4Xi7zkHUSefednM1.webp",
+            "size_bytes": 9094,
+            "size_formatted": "8.9 KB",
+            "mtime": "2026-11-22 16:42:31",
+            "exists": true
+        },
+        {
+            "field": "logo_fallback",
+            "rel_path": "storage/app/public/partners/kvBVg8b6q2BSQ7Ag6Fr6ZNgu4Xi7zkHUSefednM1.jpg",
+            "filename": "kvBVg8b6q2BSQ7Ag6Fr6ZNgu4Xi7zkHUSefednM1.jpg",
+            "size_bytes": 14460,
+            "size_formatted": "14.1 KB",
+            "mtime": "2026-11-22 16:42:31",
+            "exists": true
+        },
+        {
+            "field": "legacy_src",
+            "rel_path": "public/assets/images/trusted/ukaz.jpg",
+            "filename": "ukaz.jpg",
+            "size_bytes": 5674,
+            "size_formatted": "5.5 KB",
+            "mtime": "2026-11-21 21:09:38",
+            "exists": true
+        },
+        {
+            "field": "logo_path",
+            "rel_path": "storage/app/public/partners/rNXASF4qQJd4oHeme2RFM8xhF4ctkifuWw1LSPs9.webp",
+            "filename": "rNXASF4qQJd4oHeme2RFM8xhF4ctkifuWw1LSPs9.webp",
+            "size_bytes": 9552,
+            "size_formatted": "9.3 KB",
+            "mtime": "2026-11-21 19:43:33",
+            "exists": true
+        },
+        {
+            "field": "logo_fallback",
+            "rel_path": "storage/app/public/partners/rNXASF4qQJd4oHeme2RFM8xhF4ctkifuWw1LSPs9.png",
+            "filename": "rNXASF4qQJd4oHeme2RFM8xhF4ctkifuWw1LSPs9.png",
+            "size_bytes": 12679,
+            "size_formatted": "12.4 KB",
+            "mtime": "2026-11-21 19:43:33",
+            "exists": true
+        },
+        {
+            "field": "legacy_src",
+            "rel_path": "public/assets/images/trusted/sms.png",
+            "filename": "sms.png",
+            "size_bytes": 19496,
+            "size_formatted": "19 KB",
+            "mtime": "2026-11-21 21:09:38",
+            "exists": true
+        },
+        {
+            "field": "logo_path",
+            "rel_path": "storage/app/public/partners/muYc5f59emVwaQNc1o8ATXqOp3jafkZgrWyOL6lw.webp",
+            "filename": "muYc5f59emVwaQNc1o8ATXqOp3jafkZgrWyOL6lw.webp",
+            "size_bytes": 3994,
+            "size_formatted": "3.9 KB",
+            "mtime": "2026-11-21 19:43:33",
+            "exists": true
+        },
+        {
+            "field": "logo_fallback",
+            "rel_path": "storage/app/public/partners/muYc5f59emVwaQNc1o8ATXqOp3jafkZgrWyOL6lw.png",
+            "filename": "muYc5f59emVwaQNc1o8ATXqOp3jafkZgrWyOL6lw.png",
+            "size_bytes": 7209,
+            "size_formatted": "7 KB",
+            "mtime": "2026-11-21 19:43:33",
+            "exists": true
+        },
+        {
+            "field": "legacy_src",
+            "rel_path": "public/assets/images/trusted/unknown.PNG",
+            "filename": "unknown.PNG",
+            "size_bytes": 120144,
+            "size_formatted": "117.3 KB",
+            "mtime": "2026-11-21 21:09:38",
+            "exists": true
+        },
+        {
+            "field": "logo_path",
+            "rel_path": "storage/app/public/partners/NtfmWRWaf76Wj0D5lVng5mn9tcdNsBjPfdOKDZOk.webp",
+            "filename": "NtfmWRWaf76Wj0D5lVng5mn9tcdNsBjPfdOKDZOk.webp",
+            "size_bytes": 5140,
+            "size_formatted": "5 KB",
+            "mtime": "2026-11-21 19:43:33",
+            "exists": true
+        },
+        {
+            "field": "logo_fallback",
+            "rel_path": "storage/app/public/partners/NtfmWRWaf76Wj0D5lVng5mn9tcdNsBjPfdOKDZOk.jpg",
+            "filename": "NtfmWRWaf76Wj0D5lVng5mn9tcdNsBjPfdOKDZOk.jpg",
+            "size_bytes": 11511,
+            "size_formatted": "11.2 KB",
+            "mtime": "2026-11-21 19:43:33",
+            "exists": true
+        },
+        {
+            "field": "legacy_src",
+            "rel_path": "public/assets/images/evergreen.jfif",
+            "filename": "evergreen.jfif",
+            "size_bytes": 19610,
+            "size_formatted": "19.2 KB",
+            "mtime": "2026-11-21 21:09:38",
+            "exists": true
+        },
+        {
+            "field": "logo_path",
+            "rel_path": "storage/app/public/partners/k0onvmuyHwZL8zfkHalfJtmXsox2EW0CbU6kaXip.webp",
+            "filename": "k0onvmuyHwZL8zfkHalfJtmXsox2EW0CbU6kaXip.webp",
+            "size_bytes": 29262,
+            "size_formatted": "28.6 KB",
+            "mtime": "2026-11-21 19:43:33",
+            "exists": true
+        },
+        {
+            "field": "logo_fallback",
+            "rel_path": "storage/app/public/partners/k0onvmuyHwZL8zfkHalfJtmXsox2EW0CbU6kaXip.png",
+            "filename": "k0onvmuyHwZL8zfkHalfJtmXsox2EW0CbU6kaXip.png",
+            "size_bytes": 208724,
+            "size_formatted": "203.8 KB",
+            "mtime": "2026-11-21 19:43:34",
+            "exists": true
+        },
+        {
+            "field": "legacy_src",
+            "rel_path": "public/assets/images/aauLogo.png",
+            "filename": "aauLogo.png",
+            "size_bytes": 83802,
+            "size_formatted": "81.8 KB",
+            "mtime": "2026-11-21 21:09:38",
+            "exists": true
+        },
+        {
+            "field": "logo_path",
+            "rel_path": "storage/app/public/partners/N4YbGc8iTxyLnXPTwCJGepq1lQeYifZwspkRP2dR.webp",
+            "filename": "N4YbGc8iTxyLnXPTwCJGepq1lQeYifZwspkRP2dR.webp",
+            "size_bytes": 22098,
+            "size_formatted": "21.6 KB",
+            "mtime": "2026-11-21 19:43:34",
+            "exists": true
+        },
+        {
+            "field": "logo_fallback",
+            "rel_path": "storage/app/public/partners/N4YbGc8iTxyLnXPTwCJGepq1lQeYifZwspkRP2dR.png",
+            "filename": "N4YbGc8iTxyLnXPTwCJGepq1lQeYifZwspkRP2dR.png",
+            "size_bytes": 127988,
+            "size_formatted": "125 KB",
+            "mtime": "2026-11-21 19:43:34",
+            "exists": true
+        },
+        {
+            "field": "legacy_src",
+            "rel_path": "public/assets/images/trusted/diredawa.png",
+            "filename": "diredawa.png",
+            "size_bytes": 117190,
+            "size_formatted": "114.4 KB",
+            "mtime": "2026-11-21 21:09:38",
+            "exists": true
+        },
+        {
+            "field": "logo_path",
+            "rel_path": "storage/app/public/partners/CLV5zMrjMsff1jubhEwXt3XC7qfDHWQOWQVKnywN.webp",
+            "filename": "CLV5zMrjMsff1jubhEwXt3XC7qfDHWQOWQVKnywN.webp",
+            "size_bytes": 16248,
+            "size_formatted": "15.9 KB",
+            "mtime": "2026-11-21 19:43:34",
+            "exists": true
+        },
+        {
+            "field": "logo_fallback",
+            "rel_path": "storage/app/public/partners/CLV5zMrjMsff1jubhEwXt3XC7qfDHWQOWQVKnywN.png",
+            "filename": "CLV5zMrjMsff1jubhEwXt3XC7qfDHWQOWQVKnywN.png",
+            "size_bytes": 91777,
+            "size_formatted": "89.6 KB",
+            "mtime": "2026-11-21 19:43:34",
+            "exists": true
+        },
+        {
+            "field": "legacy_src",
+            "rel_path": "public/assets/images/trusted/addis.png",
+            "filename": "addis.png",
+            "size_bytes": 1037628,
+            "size_formatted": "1013.3 KB",
+            "mtime": "2026-11-21 21:09:38",
+            "exists": true
+        },
+        {
+            "field": "logo_path",
+            "rel_path": "storage/app/public/partners/LUZisrXRgdX4XQyIwK5LJXZ7Zy5JFw1igJ7OiuoW.webp",
+            "filename": "LUZisrXRgdX4XQyIwK5LJXZ7Zy5JFw1igJ7OiuoW.webp",
+            "size_bytes": 14802,
+            "size_formatted": "14.5 KB",
+            "mtime": "2026-11-21 19:43:34",
+            "exists": true
+        },
+        {
+            "field": "logo_fallback",
+            "rel_path": "storage/app/public/partners/LUZisrXRgdX4XQyIwK5LJXZ7Zy5JFw1igJ7OiuoW.jpg",
+            "filename": "LUZisrXRgdX4XQyIwK5LJXZ7Zy5JFw1igJ7OiuoW.jpg",
+            "size_bytes": 18510,
+            "size_formatted": "18.1 KB",
+            "mtime": "2026-11-21 19:43:34",
+            "exists": true
+        },
+        {
+            "field": "legacy_src",
+            "rel_path": "public/assets/images/trusted/alfa.jpeg",
+            "filename": "alfa.jpeg",
+            "size_bytes": 13207,
+            "size_formatted": "12.9 KB",
+            "mtime": "2026-11-21 21:09:38",
+            "exists": true
+        },
+        {
+            "field": "logo_path",
+            "rel_path": "storage/app/public/partners/AdF4WMBZxzcrZM3IWumwadkUBcZtPRejTYS2Bdis.webp",
+            "filename": "AdF4WMBZxzcrZM3IWumwadkUBcZtPRejTYS2Bdis.webp",
+            "size_bytes": 13980,
+            "size_formatted": "13.7 KB",
+            "mtime": "2026-11-21 19:43:34",
+            "exists": true
+        },
+        {
+            "field": "logo_fallback",
+            "rel_path": "storage/app/public/partners/AdF4WMBZxzcrZM3IWumwadkUBcZtPRejTYS2Bdis.png",
+            "filename": "AdF4WMBZxzcrZM3IWumwadkUBcZtPRejTYS2Bdis.png",
+            "size_bytes": 78595,
+            "size_formatted": "76.8 KB",
+            "mtime": "2026-11-21 19:43:34",
+            "exists": true
+        },
+        {
+            "field": "legacy_src",
+            "rel_path": "public/assets/images/trusted/hilco.png",
+            "filename": "hilco.png",
+            "size_bytes": 81079,
+            "size_formatted": "79.2 KB",
+            "mtime": "2026-11-21 21:09:38",
+            "exists": true
+        },
+        {
+            "field": "logo_path",
+            "rel_path": "storage/app/public/partners/bHu58o0YQ5nJCF1okthERJRb3tMX6RWXQSTMIpTc.webp",
+            "filename": "bHu58o0YQ5nJCF1okthERJRb3tMX6RWXQSTMIpTc.webp",
+            "size_bytes": 13138,
+            "size_formatted": "12.8 KB",
+            "mtime": "2026-11-21 19:43:34",
+            "exists": true
+        },
+        {
+            "field": "logo_fallback",
+            "rel_path": "storage/app/public/partners/bHu58o0YQ5nJCF1okthERJRb3tMX6RWXQSTMIpTc.jpg",
+            "filename": "bHu58o0YQ5nJCF1okthERJRb3tMX6RWXQSTMIpTc.jpg",
+            "size_bytes": 24505,
+            "size_formatted": "23.9 KB",
+            "mtime": "2026-11-21 19:43:34",
+            "exists": true
+        },
+        {
+            "field": "legacy_src",
+            "rel_path": "public/assets/images/trusted/maroli.JPG",
+            "filename": "maroli.JPG",
+            "size_bytes": 35676,
+            "size_formatted": "34.8 KB",
+            "mtime": "2026-11-21 21:09:38",
+            "exists": true
+        },
+        {
+            "field": "logo_path",
+            "rel_path": "storage/app/public/partners/AJPxpbWPS9732hM355Py6FV4ri0koxKIH6qPn3mi.webp",
+            "filename": "AJPxpbWPS9732hM355Py6FV4ri0koxKIH6qPn3mi.webp",
+            "size_bytes": 11964,
+            "size_formatted": "11.7 KB",
+            "mtime": "2026-11-22 16:16:43",
+            "exists": true
+        },
+        {
+            "field": "logo_fallback",
+            "rel_path": "storage/app/public/partners/AJPxpbWPS9732hM355Py6FV4ri0koxKIH6qPn3mi.png",
+            "filename": "AJPxpbWPS9732hM355Py6FV4ri0koxKIH6qPn3mi.png",
+            "size_bytes": 23027,
+            "size_formatted": "22.5 KB",
+            "mtime": "2026-11-22 16:16:43",
+            "exists": true
+        },
+        {
+            "field": "logo_path",
+            "rel_path": "storage/app/public/partners/zOsvR7L7AtuLwgeYnZkGmx9Fv6sG9AHfI1Yl7BFH.webp",
+            "filename": "zOsvR7L7AtuLwgeYnZkGmx9Fv6sG9AHfI1Yl7BFH.webp",
+            "size_bytes": 8164,
+            "size_formatted": "8 KB",
+            "mtime": "2026-11-22 16:25:57",
+            "exists": true
+        },
+        {
+            "field": "logo_fallback",
+            "rel_path": "storage/app/public/partners/zOsvR7L7AtuLwgeYnZkGmx9Fv6sG9AHfI1Yl7BFH.jpg",
+            "filename": "zOsvR7L7AtuLwgeYnZkGmx9Fv6sG9AHfI1Yl7BFH.jpg",
+            "size_bytes": 13739,
+            "size_formatted": "13.4 KB",
+            "mtime": "2026-11-22 16:25:57",
+            "exists": true
+        },
+        {
+            "field": "logo_path",
+            "rel_path": "storage/app/public/partners/wLUZBJthhmao3wPXNFJEwHnFANraQkffjaLsfPYu.webp",
+            "filename": "wLUZBJthhmao3wPXNFJEwHnFANraQkffjaLsfPYu.webp",
+            "size_bytes": 39764,
+            "size_formatted": "38.8 KB",
+            "mtime": "2026-11-22 16:36:01",
+            "exists": true
+        },
+        {
+            "field": "logo_fallback",
+            "rel_path": "storage/app/public/partners/wLUZBJthhmao3wPXNFJEwHnFANraQkffjaLsfPYu.jpg",
+            "filename": "wLUZBJthhmao3wPXNFJEwHnFANraQkffjaLsfPYu.jpg",
+            "size_bytes": 50068,
+            "size_formatted": "48.9 KB",
+            "mtime": "2026-11-22 16:36:01",
+            "exists": true
+        },
+        {
+            "field": "logo_path",
+            "rel_path": "storage/app/public/partners/pU2E8rYhDszKqCWiRwJ0t2s2qoeSEwBLWQZPfORU.webp",
+            "filename": "pU2E8rYhDszKqCWiRwJ0t2s2qoeSEwBLWQZPfORU.webp",
+            "size_bytes": 29186,
+            "size_formatted": "28.5 KB",
+            "mtime": "2026-11-22 16:37:09",
+            "exists": true
+        },
+        {
+            "field": "logo_fallback",
+            "rel_path": "storage/app/public/partners/pU2E8rYhDszKqCWiRwJ0t2s2qoeSEwBLWQZPfORU.jpg",
+            "filename": "pU2E8rYhDszKqCWiRwJ0t2s2qoeSEwBLWQZPfORU.jpg",
+            "size_bytes": 44372,
+            "size_formatted": "43.3 KB",
+            "mtime": "2026-11-22 16:37:09",
+            "exists": true
+        },
+        {
+            "field": "logo_path",
+            "rel_path": "storage/app/public/partners/4KMoEPxUcXHPK8E1zGKtVRVlhXyOhaOekASRcv7e.webp",
+            "filename": "4KMoEPxUcXHPK8E1zGKtVRVlhXyOhaOekASRcv7e.webp",
+            "size_bytes": 16552,
+            "size_formatted": "16.2 KB",
+            "mtime": "2026-11-22 16:40:04",
+            "exists": true
+        },
+        {
+            "field": "logo_fallback",
+            "rel_path": "storage/app/public/partners/4KMoEPxUcXHPK8E1zGKtVRVlhXyOhaOekASRcv7e.png",
+            "filename": "4KMoEPxUcXHPK8E1zGKtVRVlhXyOhaOekASRcv7e.png",
+            "size_bytes": 34052,
+            "size_formatted": "33.3 KB",
+            "mtime": "2026-11-22 16:40:04",
+            "exists": true
+        },
+        {
+            "field": "logo_path",
+            "rel_path": "storage/app/public/partners/dNhnhDSiQ8C2s57DkSSbvcNcscsvV9126iG5nTsk.webp",
+            "filename": "dNhnhDSiQ8C2s57DkSSbvcNcscsvV9126iG5nTsk.webp",
+            "size_bytes": 7240,
+            "size_formatted": "7.1 KB",
+            "mtime": "2026-11-22 16:45:30",
+            "exists": true
+        },
+        {
+            "field": "logo_fallback",
+            "rel_path": "storage/app/public/partners/dNhnhDSiQ8C2s57DkSSbvcNcscsvV9126iG5nTsk.jpg",
+            "filename": "dNhnhDSiQ8C2s57DkSSbvcNcscsvV9126iG5nTsk.jpg",
+            "size_bytes": 11798,
+            "size_formatted": "11.5 KB",
+            "mtime": "2026-11-22 16:45:30",
+            "exists": true
+        },
+        {
+            "field": "logo_path",
+            "rel_path": "storage/app/public/partners/ZL8qYRFFFBtK8FiPi3ZunslUlM9W5Q0LqXn6xyXg.webp",
+            "filename": "ZL8qYRFFFBtK8FiPi3ZunslUlM9W5Q0LqXn6xyXg.webp",
+            "size_bytes": 27356,
+            "size_formatted": "26.7 KB",
+            "mtime": "2026-11-22 16:46:22",
+            "exists": true
+        },
+        {
+            "field": "logo_fallback",
+            "rel_path": "storage/app/public/partners/ZL8qYRFFFBtK8FiPi3ZunslUlM9W5Q0LqXn6xyXg.jpg",
+            "filename": "ZL8qYRFFFBtK8FiPi3ZunslUlM9W5Q0LqXn6xyXg.jpg",
+            "size_bytes": 40040,
+            "size_formatted": "39.1 KB",
+            "mtime": "2026-11-22 16:46:22",
+            "exists": true
+        },
+        {
+            "field": "logo_path",
+            "rel_path": "storage/app/public/partners/foQXnjD09y5Ci2m4h4kGIP2oDcLXwBCLS74TE2nD.webp",
+            "filename": "foQXnjD09y5Ci2m4h4kGIP2oDcLXwBCLS74TE2nD.webp",
+            "size_bytes": 7316,
+            "size_formatted": "7.1 KB",
+            "mtime": "2026-11-22 16:46:58",
+            "exists": true
+        },
+        {
+            "field": "logo_fallback",
+            "rel_path": "storage/app/public/partners/foQXnjD09y5Ci2m4h4kGIP2oDcLXwBCLS74TE2nD.jpg",
+            "filename": "foQXnjD09y5Ci2m4h4kGIP2oDcLXwBCLS74TE2nD.jpg",
+            "size_bytes": 9811,
+            "size_formatted": "9.6 KB",
+            "mtime": "2026-11-22 16:46:58",
+            "exists": true
+        },
+        {
+            "field": "logo_path",
+            "rel_path": "storage/app/public/partners/0dffyelShU8v5uAxyQ8AHwP0KOG1Lvc0pXFdqEGG.webp",
+            "filename": "0dffyelShU8v5uAxyQ8AHwP0KOG1Lvc0pXFdqEGG.webp",
+            "size_bytes": 23722,
+            "size_formatted": "23.2 KB",
+            "mtime": "2026-11-22 16:47:44",
+            "exists": true
+        },
+        {
+            "field": "logo_fallback",
+            "rel_path": "storage/app/public/partners/0dffyelShU8v5uAxyQ8AHwP0KOG1Lvc0pXFdqEGG.png",
+            "filename": "0dffyelShU8v5uAxyQ8AHwP0KOG1Lvc0pXFdqEGG.png",
+            "size_bytes": 47733,
+            "size_formatted": "46.6 KB",
+            "mtime": "2026-11-22 16:47:44",
+            "exists": true
+        },
+        {
+            "field": "logo_path",
+            "rel_path": "storage/app/public/partners/8OLuPWZfLD8c8wnalow2u9hPnWJ1DKcJCImGU6GS.webp",
+            "filename": "8OLuPWZfLD8c8wnalow2u9hPnWJ1DKcJCImGU6GS.webp",
+            "size_bytes": 6364,
+            "size_formatted": "6.2 KB",
+            "mtime": "2026-11-22 16:58:11",
+            "exists": true
+        },
+        {
+            "field": "logo_fallback",
+            "rel_path": "storage/app/public/partners/8OLuPWZfLD8c8wnalow2u9hPnWJ1DKcJCImGU6GS.png",
+            "filename": "8OLuPWZfLD8c8wnalow2u9hPnWJ1DKcJCImGU6GS.png",
+            "size_bytes": 18859,
+            "size_formatted": "18.4 KB",
+            "mtime": "2026-11-22 16:58:11",
+            "exists": true
+        },
+        {
+            "field": "logo_path",
+            "rel_path": "storage/app/public/partners/MhazC5zKuNM8cOqjqElwJi6vFAKJr9ggmKtK1yNO.webp",
+            "filename": "MhazC5zKuNM8cOqjqElwJi6vFAKJr9ggmKtK1yNO.webp",
+            "size_bytes": 32668,
+            "size_formatted": "31.9 KB",
+            "mtime": "2026-11-22 17:02:57",
+            "exists": true
+        },
+        {
+            "field": "logo_fallback",
+            "rel_path": "storage/app/public/partners/MhazC5zKuNM8cOqjqElwJi6vFAKJr9ggmKtK1yNO.jpg",
+            "filename": "MhazC5zKuNM8cOqjqElwJi6vFAKJr9ggmKtK1yNO.jpg",
+            "size_bytes": 48549,
+            "size_formatted": "47.4 KB",
+            "mtime": "2026-11-22 17:02:57",
+            "exists": true
+        },
+        {
+            "field": "logo_path",
+            "rel_path": "storage/app/public/partners/VtcNNO2VUPSXcvwEARcNHJMRt8d4uL2lRTD8hivj.webp",
+            "filename": "VtcNNO2VUPSXcvwEARcNHJMRt8d4uL2lRTD8hivj.webp",
+            "size_bytes": 7712,
+            "size_formatted": "7.5 KB",
+            "mtime": "2026-11-22 17:25:35",
+            "exists": true
+        },
+        {
+            "field": "logo_fallback",
+            "rel_path": "storage/app/public/partners/VtcNNO2VUPSXcvwEARcNHJMRt8d4uL2lRTD8hivj.jpg",
+            "filename": "VtcNNO2VUPSXcvwEARcNHJMRt8d4uL2lRTD8hivj.jpg",
+            "size_bytes": 13949,
+            "size_formatted": "13.6 KB",
+            "mtime": "2026-11-22 17:25:35",
+            "exists": true
+        },
+        {
+            "field": "logo_path",
+            "rel_path": "storage/app/public/partners/OF5PvIapa3HWrd4XxGUR1Ts2mK1rrlAM5brpnjgr.webp",
+            "filename": "OF5PvIapa3HWrd4XxGUR1Ts2mK1rrlAM5brpnjgr.webp",
+            "size_bytes": 6508,
+            "size_formatted": "6.4 KB",
+            "mtime": "2026-11-22 17:37:06",
+            "exists": true
+        },
+        {
+            "field": "logo_fallback",
+            "rel_path": "storage/app/public/partners/OF5PvIapa3HWrd4XxGUR1Ts2mK1rrlAM5brpnjgr.png",
+            "filename": "OF5PvIapa3HWrd4XxGUR1Ts2mK1rrlAM5brpnjgr.png",
+            "size_bytes": 14033,
+            "size_formatted": "13.7 KB",
+            "mtime": "2026-11-22 17:37:06",
+            "exists": true
+        },
+        {
+            "field": "logo_path",
+            "rel_path": "storage/app/public/partners/nF7RCnNAQSgciWoc7CWhpnpofKWi0MbtHv6ce0jm.webp",
+            "filename": "nF7RCnNAQSgciWoc7CWhpnpofKWi0MbtHv6ce0jm.webp",
+            "size_bytes": 7962,
+            "size_formatted": "7.8 KB",
+            "mtime": "2026-11-22 19:10:51",
+            "exists": true
+        },
+        {
+            "field": "logo_fallback",
+            "rel_path": "storage/app/public/partners/nF7RCnNAQSgciWoc7CWhpnpofKWi0MbtHv6ce0jm.png",
+            "filename": "nF7RCnNAQSgciWoc7CWhpnpofKWi0MbtHv6ce0jm.png",
+            "size_bytes": 22946,
+            "size_formatted": "22.4 KB",
+            "mtime": "2026-11-22 19:10:51",
+            "exists": true
+        }
+    ],
+    "storage_partners_dir_files": [
+        {
+            "filename": ".htaccess",
+            "rel_path": "storage/app/public/partners/.htaccess",
+            "size_bytes": 392,
+            "size_formatted": "0.4 KB",
+            "mtime": "2026-11-21 19:43:30"
+        },
+        {
+            "filename": "0dffyelShU8v5uAxyQ8AHwP0KOG1Lvc0pXFdqEGG.png",
+            "rel_path": "storage/app/public/partners/0dffyelShU8v5uAxyQ8AHwP0KOG1Lvc0pXFdqEGG.png",
+            "size_bytes": 47733,
+            "size_formatted": "46.6 KB",
+            "mtime": "2026-11-22 16:47:44"
+        },
+        {
+            "filename": "0dffyelShU8v5uAxyQ8AHwP0KOG1Lvc0pXFdqEGG.webp",
+            "rel_path": "storage/app/public/partners/0dffyelShU8v5uAxyQ8AHwP0KOG1Lvc0pXFdqEGG.webp",
+            "size_bytes": 23722,
+            "size_formatted": "23.2 KB",
+            "mtime": "2026-11-22 16:47:44"
+        },
+        {
+            "filename": "1JzjEBASDcmwhlHwbuUA3dHtkdMpVtPGWwhBRqCT.png",
+            "rel_path": "storage/app/public/partners/1JzjEBASDcmwhlHwbuUA3dHtkdMpVtPGWwhBRqCT.png",
+            "size_bytes": 6959,
+            "size_formatted": "6.8 KB",
+            "mtime": "2026-11-21 19:43:31"
+        },
+        {
+            "filename": "1JzjEBASDcmwhlHwbuUA3dHtkdMpVtPGWwhBRqCT.webp",
+            "rel_path": "storage/app/public/partners/1JzjEBASDcmwhlHwbuUA3dHtkdMpVtPGWwhBRqCT.webp",
+            "size_bytes": 4626,
+            "size_formatted": "4.5 KB",
+            "mtime": "2026-11-21 19:43:31"
+        },
+        {
+            "filename": "1kg55Ir3nbqZLhtko2UxYGhwL8ZuZrUtgzDFfqKz.png",
+            "rel_path": "storage/app/public/partners/1kg55Ir3nbqZLhtko2UxYGhwL8ZuZrUtgzDFfqKz.png",
+            "size_bytes": 37282,
+            "size_formatted": "36.4 KB",
+            "mtime": "2026-11-21 19:43:32"
+        },
+        {
+            "filename": "1kg55Ir3nbqZLhtko2UxYGhwL8ZuZrUtgzDFfqKz.webp",
+            "rel_path": "storage/app/public/partners/1kg55Ir3nbqZLhtko2UxYGhwL8ZuZrUtgzDFfqKz.webp",
+            "size_bytes": 17126,
+            "size_formatted": "16.7 KB",
+            "mtime": "2026-11-21 19:43:32"
+        },
+        {
+            "filename": "4KMoEPxUcXHPK8E1zGKtVRVlhXyOhaOekASRcv7e.png",
+            "rel_path": "storage/app/public/partners/4KMoEPxUcXHPK8E1zGKtVRVlhXyOhaOekASRcv7e.png",
+            "size_bytes": 34052,
+            "size_formatted": "33.3 KB",
+            "mtime": "2026-11-22 16:40:04"
+        },
+        {
+            "filename": "4KMoEPxUcXHPK8E1zGKtVRVlhXyOhaOekASRcv7e.webp",
+            "rel_path": "storage/app/public/partners/4KMoEPxUcXHPK8E1zGKtVRVlhXyOhaOekASRcv7e.webp",
+            "size_bytes": 16552,
+            "size_formatted": "16.2 KB",
+            "mtime": "2026-11-22 16:40:04"
+        },
+        {
+            "filename": "8OLuPWZfLD8c8wnalow2u9hPnWJ1DKcJCImGU6GS.png",
+            "rel_path": "storage/app/public/partners/8OLuPWZfLD8c8wnalow2u9hPnWJ1DKcJCImGU6GS.png",
+            "size_bytes": 18859,
+            "size_formatted": "18.4 KB",
+            "mtime": "2026-11-22 16:58:11"
+        },
+        {
+            "filename": "8OLuPWZfLD8c8wnalow2u9hPnWJ1DKcJCImGU6GS.webp",
+            "rel_path": "storage/app/public/partners/8OLuPWZfLD8c8wnalow2u9hPnWJ1DKcJCImGU6GS.webp",
+            "size_bytes": 6364,
+            "size_formatted": "6.2 KB",
+            "mtime": "2026-11-22 16:58:11"
+        },
+        {
+            "filename": "AJPxpbWPS9732hM355Py6FV4ri0koxKIH6qPn3mi.png",
+            "rel_path": "storage/app/public/partners/AJPxpbWPS9732hM355Py6FV4ri0koxKIH6qPn3mi.png",
+            "size_bytes": 23027,
+            "size_formatted": "22.5 KB",
+            "mtime": "2026-11-22 16:16:43"
+        },
+        {
+            "filename": "AJPxpbWPS9732hM355Py6FV4ri0koxKIH6qPn3mi.webp",
+            "rel_path": "storage/app/public/partners/AJPxpbWPS9732hM355Py6FV4ri0koxKIH6qPn3mi.webp",
+            "size_bytes": 11964,
+            "size_formatted": "11.7 KB",
+            "mtime": "2026-11-22 16:16:43"
+        },
+        {
+            "filename": "AN1lU4qTAglanpvqr8IuyWBXwhOC8w2g0VE5RrOJ.png",
+            "rel_path": "storage/app/public/partners/AN1lU4qTAglanpvqr8IuyWBXwhOC8w2g0VE5RrOJ.png",
+            "size_bytes": 18990,
+            "size_formatted": "18.5 KB",
+            "mtime": "2026-11-21 19:43:32"
+        },
+        {
+            "filename": "AN1lU4qTAglanpvqr8IuyWBXwhOC8w2g0VE5RrOJ.webp",
+            "rel_path": "storage/app/public/partners/AN1lU4qTAglanpvqr8IuyWBXwhOC8w2g0VE5RrOJ.webp",
+            "size_bytes": 10148,
+            "size_formatted": "9.9 KB",
+            "mtime": "2026-11-21 19:43:32"
+        },
+        {
+            "filename": "AdF4WMBZxzcrZM3IWumwadkUBcZtPRejTYS2Bdis.png",
+            "rel_path": "storage/app/public/partners/AdF4WMBZxzcrZM3IWumwadkUBcZtPRejTYS2Bdis.png",
+            "size_bytes": 78595,
+            "size_formatted": "76.8 KB",
+            "mtime": "2026-11-21 19:43:34"
+        },
+        {
+            "filename": "AdF4WMBZxzcrZM3IWumwadkUBcZtPRejTYS2Bdis.webp",
+            "rel_path": "storage/app/public/partners/AdF4WMBZxzcrZM3IWumwadkUBcZtPRejTYS2Bdis.webp",
+            "size_bytes": 13980,
+            "size_formatted": "13.7 KB",
+            "mtime": "2026-11-21 19:43:34"
+        },
+        {
+            "filename": "CLV5zMrjMsff1jubhEwXt3XC7qfDHWQOWQVKnywN.png",
+            "rel_path": "storage/app/public/partners/CLV5zMrjMsff1jubhEwXt3XC7qfDHWQOWQVKnywN.png",
+            "size_bytes": 91777,
+            "size_formatted": "89.6 KB",
+            "mtime": "2026-11-21 19:43:34"
+        },
+        {
+            "filename": "CLV5zMrjMsff1jubhEwXt3XC7qfDHWQOWQVKnywN.webp",
+            "rel_path": "storage/app/public/partners/CLV5zMrjMsff1jubhEwXt3XC7qfDHWQOWQVKnywN.webp",
+            "size_bytes": 16248,
+            "size_formatted": "15.9 KB",
+            "mtime": "2026-11-21 19:43:34"
+        },
+        {
+            "filename": "EThCwADWhzl4BnSYLtpm5nXmmEtuVgPmgCUxBPtq.png",
+            "rel_path": "storage/app/public/partners/EThCwADWhzl4BnSYLtpm5nXmmEtuVgPmgCUxBPtq.png",
+            "size_bytes": 13046,
+            "size_formatted": "12.7 KB",
+            "mtime": "2026-11-21 19:43:33"
+        },
+        {
+            "filename": "EThCwADWhzl4BnSYLtpm5nXmmEtuVgPmgCUxBPtq.webp",
+            "rel_path": "storage/app/public/partners/EThCwADWhzl4BnSYLtpm5nXmmEtuVgPmgCUxBPtq.webp",
+            "size_bytes": 5606,
+            "size_formatted": "5.5 KB",
+            "mtime": "2026-11-21 19:43:33"
+        },
+        {
+            "filename": "I0yLtMp99eHu7weLCBRWAwmN8PFD77Hc1fB4cuCp.jpg",
+            "rel_path": "storage/app/public/partners/I0yLtMp99eHu7weLCBRWAwmN8PFD77Hc1fB4cuCp.jpg",
+            "size_bytes": 17828,
+            "size_formatted": "17.4 KB",
+            "mtime": "2026-11-21 19:43:33"
+        },
+        {
+            "filename": "I0yLtMp99eHu7weLCBRWAwmN8PFD77Hc1fB4cuCp.webp",
+            "rel_path": "storage/app/public/partners/I0yLtMp99eHu7weLCBRWAwmN8PFD77Hc1fB4cuCp.webp",
+            "size_bytes": 10540,
+            "size_formatted": "10.3 KB",
+            "mtime": "2026-11-21 19:43:33"
+        },
+        {
+            "filename": "LUZisrXRgdX4XQyIwK5LJXZ7Zy5JFw1igJ7OiuoW.jpg",
+            "rel_path": "storage/app/public/partners/LUZisrXRgdX4XQyIwK5LJXZ7Zy5JFw1igJ7OiuoW.jpg",
+            "size_bytes": 18510,
+            "size_formatted": "18.1 KB",
+            "mtime": "2026-11-21 19:43:34"
+        },
+        {
+            "filename": "LUZisrXRgdX4XQyIwK5LJXZ7Zy5JFw1igJ7OiuoW.webp",
+            "rel_path": "storage/app/public/partners/LUZisrXRgdX4XQyIwK5LJXZ7Zy5JFw1igJ7OiuoW.webp",
+            "size_bytes": 14802,
+            "size_formatted": "14.5 KB",
+            "mtime": "2026-11-21 19:43:34"
+        },
+        {
+            "filename": "MAVJHu7zxoWjKUhFPeFKcfSHfcELsSyBJ3KOPHRi.png",
+            "rel_path": "storage/app/public/partners/MAVJHu7zxoWjKUhFPeFKcfSHfcELsSyBJ3KOPHRi.png",
+            "size_bytes": 7856,
+            "size_formatted": "7.7 KB",
+            "mtime": "2026-11-21 19:43:31"
+        },
+        {
+            "filename": "MAVJHu7zxoWjKUhFPeFKcfSHfcELsSyBJ3KOPHRi.webp",
+            "rel_path": "storage/app/public/partners/MAVJHu7zxoWjKUhFPeFKcfSHfcELsSyBJ3KOPHRi.webp",
+            "size_bytes": 5954,
+            "size_formatted": "5.8 KB",
+            "mtime": "2026-11-21 19:43:31"
+        },
+        {
+            "filename": "MW6Od1gXG2wu9fyRDjbdp2fdtO5TtvsSV5lbrpxG.jpg",
+            "rel_path": "storage/app/public/partners/MW6Od1gXG2wu9fyRDjbdp2fdtO5TtvsSV5lbrpxG.jpg",
+            "size_bytes": 9250,
+            "size_formatted": "9 KB",
+            "mtime": "2026-11-21 19:43:33"
+        },
+        {
+            "filename": "MW6Od1gXG2wu9fyRDjbdp2fdtO5TtvsSV5lbrpxG.webp",
+            "rel_path": "storage/app/public/partners/MW6Od1gXG2wu9fyRDjbdp2fdtO5TtvsSV5lbrpxG.webp",
+            "size_bytes": 4694,
+            "size_formatted": "4.6 KB",
+            "mtime": "2026-11-21 19:43:33"
+        },
+        {
+            "filename": "MhazC5zKuNM8cOqjqElwJi6vFAKJr9ggmKtK1yNO.jpg",
+            "rel_path": "storage/app/public/partners/MhazC5zKuNM8cOqjqElwJi6vFAKJr9ggmKtK1yNO.jpg",
+            "size_bytes": 48549,
+            "size_formatted": "47.4 KB",
+            "mtime": "2026-11-22 17:02:57"
+        },
+        {
+            "filename": "MhazC5zKuNM8cOqjqElwJi6vFAKJr9ggmKtK1yNO.webp",
+            "rel_path": "storage/app/public/partners/MhazC5zKuNM8cOqjqElwJi6vFAKJr9ggmKtK1yNO.webp",
+            "size_bytes": 32668,
+            "size_formatted": "31.9 KB",
+            "mtime": "2026-11-22 17:02:57"
+        },
+        {
+            "filename": "N4YbGc8iTxyLnXPTwCJGepq1lQeYifZwspkRP2dR.png",
+            "rel_path": "storage/app/public/partners/N4YbGc8iTxyLnXPTwCJGepq1lQeYifZwspkRP2dR.png",
+            "size_bytes": 127988,
+            "size_formatted": "125 KB",
+            "mtime": "2026-11-21 19:43:34"
+        },
+        {
+            "filename": "N4YbGc8iTxyLnXPTwCJGepq1lQeYifZwspkRP2dR.webp",
+            "rel_path": "storage/app/public/partners/N4YbGc8iTxyLnXPTwCJGepq1lQeYifZwspkRP2dR.webp",
+            "size_bytes": 22098,
+            "size_formatted": "21.6 KB",
+            "mtime": "2026-11-21 19:43:34"
+        },
+        {
+            "filename": "NtfmWRWaf76Wj0D5lVng5mn9tcdNsBjPfdOKDZOk.jpg",
+            "rel_path": "storage/app/public/partners/NtfmWRWaf76Wj0D5lVng5mn9tcdNsBjPfdOKDZOk.jpg",
+            "size_bytes": 11511,
+            "size_formatted": "11.2 KB",
+            "mtime": "2026-11-21 19:43:33"
+        },
+        {
+            "filename": "NtfmWRWaf76Wj0D5lVng5mn9tcdNsBjPfdOKDZOk.webp",
+            "rel_path": "storage/app/public/partners/NtfmWRWaf76Wj0D5lVng5mn9tcdNsBjPfdOKDZOk.webp",
+            "size_bytes": 5140,
+            "size_formatted": "5 KB",
+            "mtime": "2026-11-21 19:43:33"
+        },
+        {
+            "filename": "OF5PvIapa3HWrd4XxGUR1Ts2mK1rrlAM5brpnjgr.png",
+            "rel_path": "storage/app/public/partners/OF5PvIapa3HWrd4XxGUR1Ts2mK1rrlAM5brpnjgr.png",
+            "size_bytes": 14033,
+            "size_formatted": "13.7 KB",
+            "mtime": "2026-11-22 17:37:06"
+        },
+        {
+            "filename": "OF5PvIapa3HWrd4XxGUR1Ts2mK1rrlAM5brpnjgr.webp",
+            "rel_path": "storage/app/public/partners/OF5PvIapa3HWrd4XxGUR1Ts2mK1rrlAM5brpnjgr.webp",
+            "size_bytes": 6508,
+            "size_formatted": "6.4 KB",
+            "mtime": "2026-11-22 17:37:06"
+        },
+        {
+            "filename": "RtJrYTetxyzCCppMZLRVuyN5l7w79oZwyxoXJIRz.jpg",
+            "rel_path": "storage/app/public/partners/RtJrYTetxyzCCppMZLRVuyN5l7w79oZwyxoXJIRz.jpg",
+            "size_bytes": 9422,
+            "size_formatted": "9.2 KB",
+            "mtime": "2026-11-21 19:43:32"
+        },
+        {
+            "filename": "RtJrYTetxyzCCppMZLRVuyN5l7w79oZwyxoXJIRz.webp",
+            "rel_path": "storage/app/public/partners/RtJrYTetxyzCCppMZLRVuyN5l7w79oZwyxoXJIRz.webp",
+            "size_bytes": 4906,
+            "size_formatted": "4.8 KB",
+            "mtime": "2026-11-21 19:43:32"
+        },
+        {
+            "filename": "SFEnITMeTruKondg5DohluYLZGTxiMRC7DJ8RkO0.png",
+            "rel_path": "storage/app/public/partners/SFEnITMeTruKondg5DohluYLZGTxiMRC7DJ8RkO0.png",
+            "size_bytes": 62621,
+            "size_formatted": "61.2 KB",
+            "mtime": "2026-11-21 19:43:30"
+        },
+        {
+            "filename": "SFEnITMeTruKondg5DohluYLZGTxiMRC7DJ8RkO0.webp",
+            "rel_path": "storage/app/public/partners/SFEnITMeTruKondg5DohluYLZGTxiMRC7DJ8RkO0.webp",
+            "size_bytes": 18620,
+            "size_formatted": "18.2 KB",
+            "mtime": "2026-11-21 19:43:30"
+        },
+        {
+            "filename": "U1DF5wol5hutWYpQZPwf0XFWWegDP9eokchDBEs1.png",
+            "rel_path": "storage/app/public/partners/U1DF5wol5hutWYpQZPwf0XFWWegDP9eokchDBEs1.png",
+            "size_bytes": 35753,
+            "size_formatted": "34.9 KB",
+            "mtime": "2026-11-21 19:43:30"
+        },
+        {
+            "filename": "U1DF5wol5hutWYpQZPwf0XFWWegDP9eokchDBEs1.webp",
+            "rel_path": "storage/app/public/partners/U1DF5wol5hutWYpQZPwf0XFWWegDP9eokchDBEs1.webp",
+            "size_bytes": 8304,
+            "size_formatted": "8.1 KB",
+            "mtime": "2026-11-21 19:43:30"
+        },
+        {
+            "filename": "VtcNNO2VUPSXcvwEARcNHJMRt8d4uL2lRTD8hivj.jpg",
+            "rel_path": "storage/app/public/partners/VtcNNO2VUPSXcvwEARcNHJMRt8d4uL2lRTD8hivj.jpg",
+            "size_bytes": 13949,
+            "size_formatted": "13.6 KB",
+            "mtime": "2026-11-22 17:25:35"
+        },
+        {
+            "filename": "VtcNNO2VUPSXcvwEARcNHJMRt8d4uL2lRTD8hivj.webp",
+            "rel_path": "storage/app/public/partners/VtcNNO2VUPSXcvwEARcNHJMRt8d4uL2lRTD8hivj.webp",
+            "size_bytes": 7712,
+            "size_formatted": "7.5 KB",
+            "mtime": "2026-11-22 17:25:35"
+        },
+        {
+            "filename": "YmWwgu2r5zalAGX6gsdtyIziyMQ0MltCYG8Xj5CX.jpg",
+            "rel_path": "storage/app/public/partners/YmWwgu2r5zalAGX6gsdtyIziyMQ0MltCYG8Xj5CX.jpg",
+            "size_bytes": 6664,
+            "size_formatted": "6.5 KB",
+            "mtime": "2026-11-21 19:43:30"
+        },
+        {
+            "filename": "YmWwgu2r5zalAGX6gsdtyIziyMQ0MltCYG8Xj5CX.webp",
+            "rel_path": "storage/app/public/partners/YmWwgu2r5zalAGX6gsdtyIziyMQ0MltCYG8Xj5CX.webp",
+            "size_bytes": 3504,
+            "size_formatted": "3.4 KB",
+            "mtime": "2026-11-21 19:43:30"
+        },
+        {
+            "filename": "ZL8qYRFFFBtK8FiPi3ZunslUlM9W5Q0LqXn6xyXg.jpg",
+            "rel_path": "storage/app/public/partners/ZL8qYRFFFBtK8FiPi3ZunslUlM9W5Q0LqXn6xyXg.jpg",
+            "size_bytes": 40040,
+            "size_formatted": "39.1 KB",
+            "mtime": "2026-11-22 16:46:22"
+        },
+        {
+            "filename": "ZL8qYRFFFBtK8FiPi3ZunslUlM9W5Q0LqXn6xyXg.webp",
+            "rel_path": "storage/app/public/partners/ZL8qYRFFFBtK8FiPi3ZunslUlM9W5Q0LqXn6xyXg.webp",
+            "size_bytes": 27356,
+            "size_formatted": "26.7 KB",
+            "mtime": "2026-11-22 16:46:22"
+        },
+        {
+            "filename": "b4s1eAbladsI8S9cgXKQHUHoqdAVEbOLnDCEbLjO.jpg",
+            "rel_path": "storage/app/public/partners/b4s1eAbladsI8S9cgXKQHUHoqdAVEbOLnDCEbLjO.jpg",
+            "size_bytes": 8474,
+            "size_formatted": "8.3 KB",
+            "mtime": "2026-11-21 19:43:31"
+        },
+        {
+            "filename": "b4s1eAbladsI8S9cgXKQHUHoqdAVEbOLnDCEbLjO.webp",
+            "rel_path": "storage/app/public/partners/b4s1eAbladsI8S9cgXKQHUHoqdAVEbOLnDCEbLjO.webp",
+            "size_bytes": 4196,
+            "size_formatted": "4.1 KB",
+            "mtime": "2026-11-21 19:43:31"
+        },
+        {
+            "filename": "bHu58o0YQ5nJCF1okthERJRb3tMX6RWXQSTMIpTc.jpg",
+            "rel_path": "storage/app/public/partners/bHu58o0YQ5nJCF1okthERJRb3tMX6RWXQSTMIpTc.jpg",
+            "size_bytes": 24505,
+            "size_formatted": "23.9 KB",
+            "mtime": "2026-11-21 19:43:34"
+        },
+        {
+            "filename": "bHu58o0YQ5nJCF1okthERJRb3tMX6RWXQSTMIpTc.webp",
+            "rel_path": "storage/app/public/partners/bHu58o0YQ5nJCF1okthERJRb3tMX6RWXQSTMIpTc.webp",
+            "size_bytes": 13138,
+            "size_formatted": "12.8 KB",
+            "mtime": "2026-11-21 19:43:34"
+        },
+        {
+            "filename": "dNhnhDSiQ8C2s57DkSSbvcNcscsvV9126iG5nTsk.jpg",
+            "rel_path": "storage/app/public/partners/dNhnhDSiQ8C2s57DkSSbvcNcscsvV9126iG5nTsk.jpg",
+            "size_bytes": 11798,
+            "size_formatted": "11.5 KB",
+            "mtime": "2026-11-22 16:45:30"
+        },
+        {
+            "filename": "dNhnhDSiQ8C2s57DkSSbvcNcscsvV9126iG5nTsk.webp",
+            "rel_path": "storage/app/public/partners/dNhnhDSiQ8C2s57DkSSbvcNcscsvV9126iG5nTsk.webp",
+            "size_bytes": 7240,
+            "size_formatted": "7.1 KB",
+            "mtime": "2026-11-22 16:45:30"
+        },
+        {
+            "filename": "dPD41pWf3BTGTaouzRZgnp5fF4fUwuYFXnBHjYRK.png",
+            "rel_path": "storage/app/public/partners/dPD41pWf3BTGTaouzRZgnp5fF4fUwuYFXnBHjYRK.png",
+            "size_bytes": 10733,
+            "size_formatted": "10.5 KB",
+            "mtime": "2026-11-21 19:43:31"
+        },
+        {
+            "filename": "dPD41pWf3BTGTaouzRZgnp5fF4fUwuYFXnBHjYRK.webp",
+            "rel_path": "storage/app/public/partners/dPD41pWf3BTGTaouzRZgnp5fF4fUwuYFXnBHjYRK.webp",
+            "size_bytes": 7636,
+            "size_formatted": "7.5 KB",
+            "mtime": "2026-11-21 19:43:31"
+        },
+        {
+            "filename": "foQXnjD09y5Ci2m4h4kGIP2oDcLXwBCLS74TE2nD.jpg",
+            "rel_path": "storage/app/public/partners/foQXnjD09y5Ci2m4h4kGIP2oDcLXwBCLS74TE2nD.jpg",
+            "size_bytes": 9811,
+            "size_formatted": "9.6 KB",
+            "mtime": "2026-11-22 16:46:58"
+        },
+        {
+            "filename": "foQXnjD09y5Ci2m4h4kGIP2oDcLXwBCLS74TE2nD.webp",
+            "rel_path": "storage/app/public/partners/foQXnjD09y5Ci2m4h4kGIP2oDcLXwBCLS74TE2nD.webp",
+            "size_bytes": 7316,
+            "size_formatted": "7.1 KB",
+            "mtime": "2026-11-22 16:46:58"
+        },
+        {
+            "filename": "hkCxxSXiaAbpXt3OkR3TwKV0KeZgjtmRVZzTIiuB.jpg",
+            "rel_path": "storage/app/public/partners/hkCxxSXiaAbpXt3OkR3TwKV0KeZgjtmRVZzTIiuB.jpg",
+            "size_bytes": 5711,
+            "size_formatted": "5.6 KB",
+            "mtime": "2026-11-21 19:43:33"
+        },
+        {
+            "filename": "hkCxxSXiaAbpXt3OkR3TwKV0KeZgjtmRVZzTIiuB.webp",
+            "rel_path": "storage/app/public/partners/hkCxxSXiaAbpXt3OkR3TwKV0KeZgjtmRVZzTIiuB.webp",
+            "size_bytes": 2738,
+            "size_formatted": "2.7 KB",
+            "mtime": "2026-11-21 19:43:33"
+        },
+        {
+            "filename": "k0onvmuyHwZL8zfkHalfJtmXsox2EW0CbU6kaXip.png",
+            "rel_path": "storage/app/public/partners/k0onvmuyHwZL8zfkHalfJtmXsox2EW0CbU6kaXip.png",
+            "size_bytes": 208724,
+            "size_formatted": "203.8 KB",
+            "mtime": "2026-11-21 19:43:34"
+        },
+        {
+            "filename": "k0onvmuyHwZL8zfkHalfJtmXsox2EW0CbU6kaXip.webp",
+            "rel_path": "storage/app/public/partners/k0onvmuyHwZL8zfkHalfJtmXsox2EW0CbU6kaXip.webp",
+            "size_bytes": 29262,
+            "size_formatted": "28.6 KB",
+            "mtime": "2026-11-21 19:43:33"
+        },
+        {
+            "filename": "kvBVg8b6q2BSQ7Ag6Fr6ZNgu4Xi7zkHUSefednM1.jpg",
+            "rel_path": "storage/app/public/partners/kvBVg8b6q2BSQ7Ag6Fr6ZNgu4Xi7zkHUSefednM1.jpg",
+            "size_bytes": 14460,
+            "size_formatted": "14.1 KB",
+            "mtime": "2026-11-22 16:42:31"
+        },
+        {
+            "filename": "kvBVg8b6q2BSQ7Ag6Fr6ZNgu4Xi7zkHUSefednM1.webp",
+            "rel_path": "storage/app/public/partners/kvBVg8b6q2BSQ7Ag6Fr6ZNgu4Xi7zkHUSefednM1.webp",
+            "size_bytes": 9094,
+            "size_formatted": "8.9 KB",
+            "mtime": "2026-11-22 16:42:31"
+        },
+        {
+            "filename": "muYc5f59emVwaQNc1o8ATXqOp3jafkZgrWyOL6lw.png",
+            "rel_path": "storage/app/public/partners/muYc5f59emVwaQNc1o8ATXqOp3jafkZgrWyOL6lw.png",
+            "size_bytes": 7209,
+            "size_formatted": "7 KB",
+            "mtime": "2026-11-21 19:43:33"
+        },
+        {
+            "filename": "muYc5f59emVwaQNc1o8ATXqOp3jafkZgrWyOL6lw.webp",
+            "rel_path": "storage/app/public/partners/muYc5f59emVwaQNc1o8ATXqOp3jafkZgrWyOL6lw.webp",
+            "size_bytes": 3994,
+            "size_formatted": "3.9 KB",
+            "mtime": "2026-11-21 19:43:33"
+        },
+        {
+            "filename": "nF7RCnNAQSgciWoc7CWhpnpofKWi0MbtHv6ce0jm.png",
+            "rel_path": "storage/app/public/partners/nF7RCnNAQSgciWoc7CWhpnpofKWi0MbtHv6ce0jm.png",
+            "size_bytes": 22946,
+            "size_formatted": "22.4 KB",
+            "mtime": "2026-11-22 19:10:51"
+        },
+        {
+            "filename": "nF7RCnNAQSgciWoc7CWhpnpofKWi0MbtHv6ce0jm.webp",
+            "rel_path": "storage/app/public/partners/nF7RCnNAQSgciWoc7CWhpnpofKWi0MbtHv6ce0jm.webp",
+            "size_bytes": 7962,
+            "size_formatted": "7.8 KB",
+            "mtime": "2026-11-22 19:10:51"
+        },
+        {
+            "filename": "pU2E8rYhDszKqCWiRwJ0t2s2qoeSEwBLWQZPfORU.jpg",
+            "rel_path": "storage/app/public/partners/pU2E8rYhDszKqCWiRwJ0t2s2qoeSEwBLWQZPfORU.jpg",
+            "size_bytes": 44372,
+            "size_formatted": "43.3 KB",
+            "mtime": "2026-11-22 16:37:09"
+        },
+        {
+            "filename": "pU2E8rYhDszKqCWiRwJ0t2s2qoeSEwBLWQZPfORU.webp",
+            "rel_path": "storage/app/public/partners/pU2E8rYhDszKqCWiRwJ0t2s2qoeSEwBLWQZPfORU.webp",
+            "size_bytes": 29186,
+            "size_formatted": "28.5 KB",
+            "mtime": "2026-11-22 16:37:09"
+        },
+        {
+            "filename": "rNXASF4qQJd4oHeme2RFM8xhF4ctkifuWw1LSPs9.png",
+            "rel_path": "storage/app/public/partners/rNXASF4qQJd4oHeme2RFM8xhF4ctkifuWw1LSPs9.png",
+            "size_bytes": 12679,
+            "size_formatted": "12.4 KB",
+            "mtime": "2026-11-21 19:43:33"
+        },
+        {
+            "filename": "rNXASF4qQJd4oHeme2RFM8xhF4ctkifuWw1LSPs9.webp",
+            "rel_path": "storage/app/public/partners/rNXASF4qQJd4oHeme2RFM8xhF4ctkifuWw1LSPs9.webp",
+            "size_bytes": 9552,
+            "size_formatted": "9.3 KB",
+            "mtime": "2026-11-21 19:43:33"
+        },
+        {
+            "filename": "tfouegeHAu7JtO2eweMwjZavLbaB8iNbj4zHqJLQ.png",
+            "rel_path": "storage/app/public/partners/tfouegeHAu7JtO2eweMwjZavLbaB8iNbj4zHqJLQ.png",
+            "size_bytes": 16597,
+            "size_formatted": "16.2 KB",
+            "mtime": "2026-11-21 19:43:31"
+        },
+        {
+            "filename": "tfouegeHAu7JtO2eweMwjZavLbaB8iNbj4zHqJLQ.webp",
+            "rel_path": "storage/app/public/partners/tfouegeHAu7JtO2eweMwjZavLbaB8iNbj4zHqJLQ.webp",
+            "size_bytes": 4324,
+            "size_formatted": "4.2 KB",
+            "mtime": "2026-11-21 19:43:31"
+        },
+        {
+            "filename": "u7ggkfP5d6USMAeDbDrJ9qqxwW0Kew4V69ITqQ8s.jpg",
+            "rel_path": "storage/app/public/partners/u7ggkfP5d6USMAeDbDrJ9qqxwW0Kew4V69ITqQ8s.jpg",
+            "size_bytes": 18534,
+            "size_formatted": "18.1 KB",
+            "mtime": "2026-11-21 19:43:32"
+        },
+        {
+            "filename": "u7ggkfP5d6USMAeDbDrJ9qqxwW0Kew4V69ITqQ8s.webp",
+            "rel_path": "storage/app/public/partners/u7ggkfP5d6USMAeDbDrJ9qqxwW0Kew4V69ITqQ8s.webp",
+            "size_bytes": 9906,
+            "size_formatted": "9.7 KB",
+            "mtime": "2026-11-21 19:43:32"
+        },
+        {
+            "filename": "wLUZBJthhmao3wPXNFJEwHnFANraQkffjaLsfPYu.jpg",
+            "rel_path": "storage/app/public/partners/wLUZBJthhmao3wPXNFJEwHnFANraQkffjaLsfPYu.jpg",
+            "size_bytes": 50068,
+            "size_formatted": "48.9 KB",
+            "mtime": "2026-11-22 16:36:01"
+        },
+        {
+            "filename": "wLUZBJthhmao3wPXNFJEwHnFANraQkffjaLsfPYu.webp",
+            "rel_path": "storage/app/public/partners/wLUZBJthhmao3wPXNFJEwHnFANraQkffjaLsfPYu.webp",
+            "size_bytes": 39764,
+            "size_formatted": "38.8 KB",
+            "mtime": "2026-11-22 16:36:01"
+        },
+        {
+            "filename": "zBlYeh2dmkc35sxT3VIM7eEfx6JrwSULVc5v61Zv.png",
+            "rel_path": "storage/app/public/partners/zBlYeh2dmkc35sxT3VIM7eEfx6JrwSULVc5v61Zv.png",
+            "size_bytes": 45957,
+            "size_formatted": "44.9 KB",
+            "mtime": "2026-11-21 19:43:32"
+        },
+        {
+            "filename": "zBlYeh2dmkc35sxT3VIM7eEfx6JrwSULVc5v61Zv.webp",
+            "rel_path": "storage/app/public/partners/zBlYeh2dmkc35sxT3VIM7eEfx6JrwSULVc5v61Zv.webp",
+            "size_bytes": 20656,
+            "size_formatted": "20.2 KB",
+            "mtime": "2026-11-21 19:43:32"
+        },
+        {
+            "filename": "zOsvR7L7AtuLwgeYnZkGmx9Fv6sG9AHfI1Yl7BFH.jpg",
+            "rel_path": "storage/app/public/partners/zOsvR7L7AtuLwgeYnZkGmx9Fv6sG9AHfI1Yl7BFH.jpg",
+            "size_bytes": 13739,
+            "size_formatted": "13.4 KB",
+            "mtime": "2026-11-22 16:25:57"
+        },
+        {
+            "filename": "zOsvR7L7AtuLwgeYnZkGmx9Fv6sG9AHfI1Yl7BFH.webp",
+            "rel_path": "storage/app/public/partners/zOsvR7L7AtuLwgeYnZkGmx9Fv6sG9AHfI1Yl7BFH.webp",
+            "size_bytes": 8164,
+            "size_formatted": "8 KB",
+            "mtime": "2026-11-22 16:25:57"
+        }
+    ],
+    "records": [
+        {
+            "id": 1,
+            "name": "Minber",
+            "active": true,
+            "featured": false,
+            "sort_order": 5,
+            "files": {
+                "logo_path": {
+                    "field": "logo_path",
+                    "rel_path": "storage/app/public/partners/U1DF5wol5hutWYpQZPwf0XFWWegDP9eokchDBEs1.webp",
+                    "filename": "U1DF5wol5hutWYpQZPwf0XFWWegDP9eokchDBEs1.webp",
+                    "size_bytes": 8304,
+                    "size_formatted": "8.1 KB",
+                    "mtime": "2026-11-21 19:43:30",
+                    "exists": true
+                },
+                "logo_fallback": {
+                    "field": "logo_fallback",
+                    "rel_path": "storage/app/public/partners/U1DF5wol5hutWYpQZPwf0XFWWegDP9eokchDBEs1.png",
+                    "filename": "U1DF5wol5hutWYpQZPwf0XFWWegDP9eokchDBEs1.png",
+                    "size_bytes": 35753,
+                    "size_formatted": "34.9 KB",
+                    "mtime": "2026-11-21 19:43:30",
+                    "exists": true
+                },
+                "legacy_src": {
+                    "field": "legacy_src",
+                    "rel_path": "public/assets/images/minbertv.webp",
+                    "filename": "minbertv.webp",
+                    "size_bytes": 23174,
+                    "size_formatted": "22.6 KB",
+                    "mtime": "2026-11-21 21:09:38",
+                    "exists": true
+                }
+            }
+        },
+        {
+            "id": 2,
+            "name": "Iman",
+            "active": true,
+            "featured": false,
+            "sort_order": 6,
+            "files": {
+                "logo_path": {
+                    "field": "logo_path",
+                    "rel_path": "storage/app/public/partners/SFEnITMeTruKondg5DohluYLZGTxiMRC7DJ8RkO0.webp",
+                    "filename": "SFEnITMeTruKondg5DohluYLZGTxiMRC7DJ8RkO0.webp",
+                    "size_bytes": 18620,
+                    "size_formatted": "18.2 KB",
+                    "mtime": "2026-11-21 19:43:30",
+                    "exists": true
+                },
+                "logo_fallback": {
+                    "field": "logo_fallback",
+                    "rel_path": "storage/app/public/partners/SFEnITMeTruKondg5DohluYLZGTxiMRC7DJ8RkO0.png",
+                    "filename": "SFEnITMeTruKondg5DohluYLZGTxiMRC7DJ8RkO0.png",
+                    "size_bytes": 62621,
+                    "size_formatted": "61.2 KB",
+                    "mtime": "2026-11-21 19:43:30",
+                    "exists": true
+                },
+                "legacy_src": {
+                    "field": "legacy_src",
+                    "rel_path": "public/assets/images/iman.webp",
+                    "filename": "iman.webp",
+                    "size_bytes": 95644,
+                    "size_formatted": "93.4 KB",
+                    "mtime": "2026-11-21 21:09:38",
+                    "exists": true
+                }
+            }
+        },
+        {
+            "id": 3,
+            "name": "Ethiotel",
+            "active": true,
+            "featured": false,
+            "sort_order": 1,
+            "files": {
+                "logo_path": {
+                    "field": "logo_path",
+                    "rel_path": "storage/app/public/partners/YmWwgu2r5zalAGX6gsdtyIziyMQ0MltCYG8Xj5CX.webp",
+                    "filename": "YmWwgu2r5zalAGX6gsdtyIziyMQ0MltCYG8Xj5CX.webp",
+                    "size_bytes": 3504,
+                    "size_formatted": "3.4 KB",
+                    "mtime": "2026-11-21 19:43:30",
+                    "exists": true
+                },
+                "logo_fallback": {
+                    "field": "logo_fallback",
+                    "rel_path": "storage/app/public/partners/YmWwgu2r5zalAGX6gsdtyIziyMQ0MltCYG8Xj5CX.jpg",
+                    "filename": "YmWwgu2r5zalAGX6gsdtyIziyMQ0MltCYG8Xj5CX.jpg",
+                    "size_bytes": 6664,
+                    "size_formatted": "6.5 KB",
+                    "mtime": "2026-11-21 19:43:30",
+                    "exists": true
+                },
+                "legacy_src": {
+                    "field": "legacy_src",
+                    "rel_path": "public/assets/images/Ethiotel.jpg",
+                    "filename": "Ethiotel.jpg",
+                    "size_bytes": 22964,
+                    "size_formatted": "22.4 KB",
+                    "mtime": "2026-11-21 21:09:38",
+                    "exists": true
+                }
+            }
+        },
+        {
+            "id": 4,
+            "name": "Safaricom",
+            "active": true,
+            "featured": false,
+            "sort_order": 2,
+            "files": {
+                "logo_path": {
+                    "field": "logo_path",
+                    "rel_path": "storage/app/public/partners/1JzjEBASDcmwhlHwbuUA3dHtkdMpVtPGWwhBRqCT.webp",
+                    "filename": "1JzjEBASDcmwhlHwbuUA3dHtkdMpVtPGWwhBRqCT.webp",
+                    "size_bytes": 4626,
+                    "size_formatted": "4.5 KB",
+                    "mtime": "2026-11-21 19:43:31",
+                    "exists": true
+                },
+                "logo_fallback": {
+                    "field": "logo_fallback",
+                    "rel_path": "storage/app/public/partners/1JzjEBASDcmwhlHwbuUA3dHtkdMpVtPGWwhBRqCT.png",
+                    "filename": "1JzjEBASDcmwhlHwbuUA3dHtkdMpVtPGWwhBRqCT.png",
+                    "size_bytes": 6959,
+                    "size_formatted": "6.8 KB",
+                    "mtime": "2026-11-21 19:43:31",
+                    "exists": true
+                },
+                "legacy_src": {
+                    "field": "legacy_src",
+                    "rel_path": "public/assets/images/Safaricom.png",
+                    "filename": "Safaricom.png",
+                    "size_bytes": 29258,
+                    "size_formatted": "28.6 KB",
+                    "mtime": "2026-11-21 21:09:38",
+                    "exists": true
+                }
+            }
+        },
+        {
+            "id": 5,
+            "name": "Ad",
+            "active": true,
+            "featured": false,
+            "sort_order": 7,
+            "files": {
+                "logo_path": {
+                    "field": "logo_path",
+                    "rel_path": "storage/app/public/partners/dPD41pWf3BTGTaouzRZgnp5fF4fUwuYFXnBHjYRK.webp",
+                    "filename": "dPD41pWf3BTGTaouzRZgnp5fF4fUwuYFXnBHjYRK.webp",
+                    "size_bytes": 7636,
+                    "size_formatted": "7.5 KB",
+                    "mtime": "2026-11-21 19:43:31",
+                    "exists": true
+                },
+                "logo_fallback": {
+                    "field": "logo_fallback",
+                    "rel_path": "storage/app/public/partners/dPD41pWf3BTGTaouzRZgnp5fF4fUwuYFXnBHjYRK.png",
+                    "filename": "dPD41pWf3BTGTaouzRZgnp5fF4fUwuYFXnBHjYRK.png",
+                    "size_bytes": 10733,
+                    "size_formatted": "10.5 KB",
+                    "mtime": "2026-11-21 19:43:31",
+                    "exists": true
+                },
+                "legacy_src": {
+                    "field": "legacy_src",
+                    "rel_path": "public/assets/images/trusted/ad.png",
+                    "filename": "ad.png",
+                    "size_bytes": 32612,
+                    "size_formatted": "31.8 KB",
+                    "mtime": "2026-11-21 21:09:38",
+                    "exists": true
+                }
+            }
+        },
+        {
+            "id": 6,
+            "name": "Amar",
+            "active": true,
+            "featured": false,
+            "sort_order": 3,
+            "files": {
+                "logo_path": {
+                    "field": "logo_path",
+                    "rel_path": "storage/app/public/partners/b4s1eAbladsI8S9cgXKQHUHoqdAVEbOLnDCEbLjO.webp",
+                    "filename": "b4s1eAbladsI8S9cgXKQHUHoqdAVEbOLnDCEbLjO.webp",
+                    "size_bytes": 4196,
+                    "size_formatted": "4.1 KB",
+                    "mtime": "2026-11-21 19:43:31",
+                    "exists": true
+                },
+                "logo_fallback": {
+                    "field": "logo_fallback",
+                    "rel_path": "storage/app/public/partners/b4s1eAbladsI8S9cgXKQHUHoqdAVEbOLnDCEbLjO.jpg",
+                    "filename": "b4s1eAbladsI8S9cgXKQHUHoqdAVEbOLnDCEbLjO.jpg",
+                    "size_bytes": 8474,
+                    "size_formatted": "8.3 KB",
+                    "mtime": "2026-11-21 19:43:31",
+                    "exists": true
+                },
+                "legacy_src": {
+                    "field": "legacy_src",
+                    "rel_path": "public/assets/images/trusted/amar.jpg",
+                    "filename": "amar.jpg",
+                    "size_bytes": 17901,
+                    "size_formatted": "17.5 KB",
+                    "mtime": "2026-11-21 21:09:38",
+                    "exists": true
+                }
+            }
+        },
+        {
+            "id": 7,
+            "name": "Amin",
+            "active": true,
+            "featured": false,
+            "sort_order": 8,
+            "files": {
+                "logo_path": {
+                    "field": "logo_path",
+                    "rel_path": "storage/app/public/partners/tfouegeHAu7JtO2eweMwjZavLbaB8iNbj4zHqJLQ.webp",
+                    "filename": "tfouegeHAu7JtO2eweMwjZavLbaB8iNbj4zHqJLQ.webp",
+                    "size_bytes": 4324,
+                    "size_formatted": "4.2 KB",
+                    "mtime": "2026-11-21 19:43:31",
+                    "exists": true
+                },
+                "logo_fallback": {
+                    "field": "logo_fallback",
+                    "rel_path": "storage/app/public/partners/tfouegeHAu7JtO2eweMwjZavLbaB8iNbj4zHqJLQ.png",
+                    "filename": "tfouegeHAu7JtO2eweMwjZavLbaB8iNbj4zHqJLQ.png",
+                    "size_bytes": 16597,
+                    "size_formatted": "16.2 KB",
+                    "mtime": "2026-11-21 19:43:31",
+                    "exists": true
+                },
+                "legacy_src": {
+                    "field": "legacy_src",
+                    "rel_path": "public/assets/images/trusted/amin.png",
+                    "filename": "amin.png",
+                    "size_bytes": 6809,
+                    "size_formatted": "6.6 KB",
+                    "mtime": "2026-11-21 21:09:38",
+                    "exists": true
+                }
+            }
+        },
+        {
+            "id": 8,
+            "name": "Basira",
+            "active": true,
+            "featured": false,
+            "sort_order": 9,
+            "files": {
+                "logo_path": {
+                    "field": "logo_path",
+                    "rel_path": "storage/app/public/partners/MAVJHu7zxoWjKUhFPeFKcfSHfcELsSyBJ3KOPHRi.webp",
+                    "filename": "MAVJHu7zxoWjKUhFPeFKcfSHfcELsSyBJ3KOPHRi.webp",
+                    "size_bytes": 5954,
+                    "size_formatted": "5.8 KB",
+                    "mtime": "2026-11-21 19:43:31",
+                    "exists": true
+                },
+                "logo_fallback": {
+                    "field": "logo_fallback",
+                    "rel_path": "storage/app/public/partners/MAVJHu7zxoWjKUhFPeFKcfSHfcELsSyBJ3KOPHRi.png",
+                    "filename": "MAVJHu7zxoWjKUhFPeFKcfSHfcELsSyBJ3KOPHRi.png",
+                    "size_bytes": 7856,
+                    "size_formatted": "7.7 KB",
+                    "mtime": "2026-11-21 19:43:31",
+                    "exists": true
+                },
+                "legacy_src": {
+                    "field": "legacy_src",
+                    "rel_path": "public/assets/images/trusted/basira.png",
+                    "filename": "basira.png",
+                    "size_bytes": 123118,
+                    "size_formatted": "120.2 KB",
+                    "mtime": "2026-11-21 21:09:38",
+                    "exists": true
+                }
+            }
+        },
+        {
+            "id": 9,
+            "name": "Bilalul",
+            "active": true,
+            "featured": false,
+            "sort_order": 10,
+            "files": {
+                "logo_path": {
+                    "field": "logo_path",
+                    "rel_path": "storage/app/public/partners/1kg55Ir3nbqZLhtko2UxYGhwL8ZuZrUtgzDFfqKz.webp",
+                    "filename": "1kg55Ir3nbqZLhtko2UxYGhwL8ZuZrUtgzDFfqKz.webp",
+                    "size_bytes": 17126,
+                    "size_formatted": "16.7 KB",
+                    "mtime": "2026-11-21 19:43:32",
+                    "exists": true
+                },
+                "logo_fallback": {
+                    "field": "logo_fallback",
+                    "rel_path": "storage/app/public/partners/1kg55Ir3nbqZLhtko2UxYGhwL8ZuZrUtgzDFfqKz.png",
+                    "filename": "1kg55Ir3nbqZLhtko2UxYGhwL8ZuZrUtgzDFfqKz.png",
+                    "size_bytes": 37282,
+                    "size_formatted": "36.4 KB",
+                    "mtime": "2026-11-21 19:43:32",
+                    "exists": true
+                },
+                "legacy_src": {
+                    "field": "legacy_src",
+                    "rel_path": "public/assets/images/trusted/bilalul.png",
+                    "filename": "bilalul.png",
+                    "size_bytes": 90131,
+                    "size_formatted": "88 KB",
+                    "mtime": "2026-11-21 21:09:38",
+                    "exists": true
+                }
+            }
+        },
+        {
+            "id": 10,
+            "name": "Kasma",
+            "active": true,
+            "featured": false,
+            "sort_order": 11,
+            "files": {
+                "logo_path": {
+                    "field": "logo_path",
+                    "rel_path": "storage/app/public/partners/AN1lU4qTAglanpvqr8IuyWBXwhOC8w2g0VE5RrOJ.webp",
+                    "filename": "AN1lU4qTAglanpvqr8IuyWBXwhOC8w2g0VE5RrOJ.webp",
+                    "size_bytes": 10148,
+                    "size_formatted": "9.9 KB",
+                    "mtime": "2026-11-21 19:43:32",
+                    "exists": true
+                },
+                "logo_fallback": {
+                    "field": "logo_fallback",
+                    "rel_path": "storage/app/public/partners/AN1lU4qTAglanpvqr8IuyWBXwhOC8w2g0VE5RrOJ.png",
+                    "filename": "AN1lU4qTAglanpvqr8IuyWBXwhOC8w2g0VE5RrOJ.png",
+                    "size_bytes": 18990,
+                    "size_formatted": "18.5 KB",
+                    "mtime": "2026-11-21 19:43:32",
+                    "exists": true
+                },
+                "legacy_src": {
+                    "field": "legacy_src",
+                    "rel_path": "public/assets/images/trusted/kasma.png",
+                    "filename": "kasma.png",
+                    "size_bytes": 138576,
+                    "size_formatted": "135.3 KB",
+                    "mtime": "2026-11-21 21:09:38",
+                    "exists": true
+                }
+            }
+        },
+        {
+            "id": 11,
+            "name": "Msleguer",
+            "active": true,
+            "featured": false,
+            "sort_order": 12,
+            "files": {
+                "logo_path": {
+                    "field": "logo_path",
+                    "rel_path": "storage/app/public/partners/u7ggkfP5d6USMAeDbDrJ9qqxwW0Kew4V69ITqQ8s.webp",
+                    "filename": "u7ggkfP5d6USMAeDbDrJ9qqxwW0Kew4V69ITqQ8s.webp",
+                    "size_bytes": 9906,
+                    "size_formatted": "9.7 KB",
+                    "mtime": "2026-11-21 19:43:32",
+                    "exists": true
+                },
+                "logo_fallback": {
+                    "field": "logo_fallback",
+                    "rel_path": "storage/app/public/partners/u7ggkfP5d6USMAeDbDrJ9qqxwW0Kew4V69ITqQ8s.jpg",
+                    "filename": "u7ggkfP5d6USMAeDbDrJ9qqxwW0Kew4V69ITqQ8s.jpg",
+                    "size_bytes": 18534,
+                    "size_formatted": "18.1 KB",
+                    "mtime": "2026-11-21 19:43:32",
+                    "exists": true
+                },
+                "legacy_src": {
+                    "field": "legacy_src",
+                    "rel_path": "public/assets/images/trusted/mslegue.JPG",
+                    "filename": "mslegue.JPG",
+                    "size_bytes": 59667,
+                    "size_formatted": "58.3 KB",
+                    "mtime": "2026-11-21 21:09:38",
+                    "exists": true
+                }
+            }
+        },
+        {
+            "id": 12,
+            "name": "Newleaf",
+            "active": true,
+            "featured": false,
+            "sort_order": 13,
+            "files": {
+                "logo_path": {
+                    "field": "logo_path",
+                    "rel_path": "storage/app/public/partners/zBlYeh2dmkc35sxT3VIM7eEfx6JrwSULVc5v61Zv.webp",
+                    "filename": "zBlYeh2dmkc35sxT3VIM7eEfx6JrwSULVc5v61Zv.webp",
+                    "size_bytes": 20656,
+                    "size_formatted": "20.2 KB",
+                    "mtime": "2026-11-21 19:43:32",
+                    "exists": true
+                },
+                "logo_fallback": {
+                    "field": "logo_fallback",
+                    "rel_path": "storage/app/public/partners/zBlYeh2dmkc35sxT3VIM7eEfx6JrwSULVc5v61Zv.png",
+                    "filename": "zBlYeh2dmkc35sxT3VIM7eEfx6JrwSULVc5v61Zv.png",
+                    "size_bytes": 45957,
+                    "size_formatted": "44.9 KB",
+                    "mtime": "2026-11-21 19:43:32",
+                    "exists": true
+                },
+                "legacy_src": {
+                    "field": "legacy_src",
+                    "rel_path": "public/assets/images/newleaf.webp",
+                    "filename": "newleaf.webp",
+                    "size_bytes": 48520,
+                    "size_formatted": "47.4 KB",
+                    "mtime": "2026-11-21 21:09:38",
+                    "exists": true
+                }
+            }
+        },
+        {
+            "id": 13,
+            "name": "Nujum",
+            "active": true,
+            "featured": false,
+            "sort_order": 4,
+            "files": {
+                "logo_path": {
+                    "field": "logo_path",
+                    "rel_path": "storage/app/public/partners/RtJrYTetxyzCCppMZLRVuyN5l7w79oZwyxoXJIRz.webp",
+                    "filename": "RtJrYTetxyzCCppMZLRVuyN5l7w79oZwyxoXJIRz.webp",
+                    "size_bytes": 4906,
+                    "size_formatted": "4.8 KB",
+                    "mtime": "2026-11-21 19:43:32",
+                    "exists": true
+                },
+                "logo_fallback": {
+                    "field": "logo_fallback",
+                    "rel_path": "storage/app/public/partners/RtJrYTetxyzCCppMZLRVuyN5l7w79oZwyxoXJIRz.jpg",
+                    "filename": "RtJrYTetxyzCCppMZLRVuyN5l7w79oZwyxoXJIRz.jpg",
+                    "size_bytes": 9422,
+                    "size_formatted": "9.2 KB",
+                    "mtime": "2026-11-21 19:43:32",
+                    "exists": true
+                },
+                "legacy_src": {
+                    "field": "legacy_src",
+                    "rel_path": "public/assets/images/trusted/nujum.jpg",
+                    "filename": "nujum.jpg",
+                    "size_bytes": 32792,
+                    "size_formatted": "32 KB",
+                    "mtime": "2026-11-21 21:09:38",
+                    "exists": true
+                }
+            }
+        },
+        {
+            "id": 14,
+            "name": "Poplar",
+            "active": true,
+            "featured": false,
+            "sort_order": 14,
+            "files": {
+                "logo_path": {
+                    "field": "logo_path",
+                    "rel_path": "storage/app/public/partners/EThCwADWhzl4BnSYLtpm5nXmmEtuVgPmgCUxBPtq.webp",
+                    "filename": "EThCwADWhzl4BnSYLtpm5nXmmEtuVgPmgCUxBPtq.webp",
+                    "size_bytes": 5606,
+                    "size_formatted": "5.5 KB",
+                    "mtime": "2026-11-21 19:43:33",
+                    "exists": true
+                },
+                "logo_fallback": {
+                    "field": "logo_fallback",
+                    "rel_path": "storage/app/public/partners/EThCwADWhzl4BnSYLtpm5nXmmEtuVgPmgCUxBPtq.png",
+                    "filename": "EThCwADWhzl4BnSYLtpm5nXmmEtuVgPmgCUxBPtq.png",
+                    "size_bytes": 13046,
+                    "size_formatted": "12.7 KB",
+                    "mtime": "2026-11-21 19:43:33",
+                    "exists": true
+                },
+                "legacy_src": {
+                    "field": "legacy_src",
+                    "rel_path": "public/assets/images/trusted/popular.png",
+                    "filename": "popular.png",
+                    "size_bytes": 141453,
+                    "size_formatted": "138.1 KB",
+                    "mtime": "2026-11-21 21:09:38",
+                    "exists": true
+                }
+            }
+        },
+        {
+            "id": 15,
+            "name": "Ethioceramics",
+            "active": true,
+            "featured": false,
+            "sort_order": 15,
+            "files": {
+                "logo_path": {
+                    "field": "logo_path",
+                    "rel_path": "storage/app/public/partners/hkCxxSXiaAbpXt3OkR3TwKV0KeZgjtmRVZzTIiuB.webp",
+                    "filename": "hkCxxSXiaAbpXt3OkR3TwKV0KeZgjtmRVZzTIiuB.webp",
+                    "size_bytes": 2738,
+                    "size_formatted": "2.7 KB",
+                    "mtime": "2026-11-21 19:43:33",
+                    "exists": true
+                },
+                "logo_fallback": {
+                    "field": "logo_fallback",
+                    "rel_path": "storage/app/public/partners/hkCxxSXiaAbpXt3OkR3TwKV0KeZgjtmRVZzTIiuB.jpg",
+                    "filename": "hkCxxSXiaAbpXt3OkR3TwKV0KeZgjtmRVZzTIiuB.jpg",
+                    "size_bytes": 5711,
+                    "size_formatted": "5.6 KB",
+                    "mtime": "2026-11-21 19:43:33",
+                    "exists": true
+                },
+                "legacy_src": {
+                    "field": "legacy_src",
+                    "rel_path": "public/assets/images/trusted/ethioceramics.jpg",
+                    "filename": "ethioceramics.jpg",
+                    "size_bytes": 3966,
+                    "size_formatted": "3.9 KB",
+                    "mtime": "2026-11-21 21:09:38",
+                    "exists": true
+                }
+            }
+        },
+        {
+            "id": 16,
+            "name": "Softvalley",
+            "active": true,
+            "featured": false,
+            "sort_order": 16,
+            "files": {
+                "logo_path": {
+                    "field": "logo_path",
+                    "rel_path": "storage/app/public/partners/MW6Od1gXG2wu9fyRDjbdp2fdtO5TtvsSV5lbrpxG.webp",
+                    "filename": "MW6Od1gXG2wu9fyRDjbdp2fdtO5TtvsSV5lbrpxG.webp",
+                    "size_bytes": 4694,
+                    "size_formatted": "4.6 KB",
+                    "mtime": "2026-11-21 19:43:33",
+                    "exists": true
+                },
+                "logo_fallback": {
+                    "field": "logo_fallback",
+                    "rel_path": "storage/app/public/partners/MW6Od1gXG2wu9fyRDjbdp2fdtO5TtvsSV5lbrpxG.jpg",
+                    "filename": "MW6Od1gXG2wu9fyRDjbdp2fdtO5TtvsSV5lbrpxG.jpg",
+                    "size_bytes": 9250,
+                    "size_formatted": "9 KB",
+                    "mtime": "2026-11-21 19:43:33",
+                    "exists": true
+                },
+                "legacy_src": {
+                    "field": "legacy_src",
+                    "rel_path": "public/assets/images/trusted/softvalley.jpg",
+                    "filename": "softvalley.jpg",
+                    "size_bytes": 22374,
+                    "size_formatted": "21.8 KB",
+                    "mtime": "2026-11-21 21:09:38",
+                    "exists": true
+                }
+            }
+        },
+        {
+            "id": 17,
+            "name": "Befam",
+            "active": true,
+            "featured": false,
+            "sort_order": 17,
+            "files": {
+                "logo_path": {
+                    "field": "logo_path",
+                    "rel_path": "storage/app/public/partners/I0yLtMp99eHu7weLCBRWAwmN8PFD77Hc1fB4cuCp.webp",
+                    "filename": "I0yLtMp99eHu7weLCBRWAwmN8PFD77Hc1fB4cuCp.webp",
+                    "size_bytes": 10540,
+                    "size_formatted": "10.3 KB",
+                    "mtime": "2026-11-21 19:43:33",
+                    "exists": true
+                },
+                "logo_fallback": {
+                    "field": "logo_fallback",
+                    "rel_path": "storage/app/public/partners/I0yLtMp99eHu7weLCBRWAwmN8PFD77Hc1fB4cuCp.jpg",
+                    "filename": "I0yLtMp99eHu7weLCBRWAwmN8PFD77Hc1fB4cuCp.jpg",
+                    "size_bytes": 17828,
+                    "size_formatted": "17.4 KB",
+                    "mtime": "2026-11-21 19:43:33",
+                    "exists": true
+                },
+                "legacy_src": {
+                    "field": "legacy_src",
+                    "rel_path": "public/assets/images/befan.jpg",
+                    "filename": "befan.jpg",
+                    "size_bytes": 25308,
+                    "size_formatted": "24.7 KB",
+                    "mtime": "2026-11-21 21:09:38",
+                    "exists": true
+                }
+            }
+        },
+        {
+            "id": 18,
+            "name": "Ukaz",
+            "active": true,
+            "featured": true,
+            "sort_order": 18,
+            "files": {
+                "logo_path": {
+                    "field": "logo_path",
+                    "rel_path": "storage/app/public/partners/kvBVg8b6q2BSQ7Ag6Fr6ZNgu4Xi7zkHUSefednM1.webp",
+                    "filename": "kvBVg8b6q2BSQ7Ag6Fr6ZNgu4Xi7zkHUSefednM1.webp",
+                    "size_bytes": 9094,
+                    "size_formatted": "8.9 KB",
+                    "mtime": "2026-11-22 16:42:31",
+                    "exists": true
+                },
+                "logo_fallback": {
+                    "field": "logo_fallback",
+                    "rel_path": "storage/app/public/partners/kvBVg8b6q2BSQ7Ag6Fr6ZNgu4Xi7zkHUSefednM1.jpg",
+                    "filename": "kvBVg8b6q2BSQ7Ag6Fr6ZNgu4Xi7zkHUSefednM1.jpg",
+                    "size_bytes": 14460,
+                    "size_formatted": "14.1 KB",
+                    "mtime": "2026-11-22 16:42:31",
+                    "exists": true
+                },
+                "legacy_src": {
+                    "field": "legacy_src",
+                    "rel_path": "public/assets/images/trusted/ukaz.jpg",
+                    "filename": "ukaz.jpg",
+                    "size_bytes": 5674,
+                    "size_formatted": "5.5 KB",
+                    "mtime": "2026-11-21 21:09:38",
+                    "exists": true
+                },
+                "original_path": {
+                    "field": "original_path",
+                    "rel_path": "storage/app/archive/partners/kvBVg8b6q2BSQ7Ag6Fr6ZNgu4Xi7zkHUSefednM1.jpg",
+                    "exists": false
+                }
+            }
+        },
+        {
+            "id": 19,
+            "name": "SMS",
+            "active": true,
+            "featured": false,
+            "sort_order": 19,
+            "files": {
+                "logo_path": {
+                    "field": "logo_path",
+                    "rel_path": "storage/app/public/partners/rNXASF4qQJd4oHeme2RFM8xhF4ctkifuWw1LSPs9.webp",
+                    "filename": "rNXASF4qQJd4oHeme2RFM8xhF4ctkifuWw1LSPs9.webp",
+                    "size_bytes": 9552,
+                    "size_formatted": "9.3 KB",
+                    "mtime": "2026-11-21 19:43:33",
+                    "exists": true
+                },
+                "logo_fallback": {
+                    "field": "logo_fallback",
+                    "rel_path": "storage/app/public/partners/rNXASF4qQJd4oHeme2RFM8xhF4ctkifuWw1LSPs9.png",
+                    "filename": "rNXASF4qQJd4oHeme2RFM8xhF4ctkifuWw1LSPs9.png",
+                    "size_bytes": 12679,
+                    "size_formatted": "12.4 KB",
+                    "mtime": "2026-11-21 19:43:33",
+                    "exists": true
+                },
+                "legacy_src": {
+                    "field": "legacy_src",
+                    "rel_path": "public/assets/images/trusted/sms.png",
+                    "filename": "sms.png",
+                    "size_bytes": 19496,
+                    "size_formatted": "19 KB",
+                    "mtime": "2026-11-21 21:09:38",
+                    "exists": true
+                }
+            }
+        },
+        {
+            "id": 20,
+            "name": "Unknown",
+            "active": true,
+            "featured": false,
+            "sort_order": 20,
+            "files": {
+                "logo_path": {
+                    "field": "logo_path",
+                    "rel_path": "storage/app/public/partners/muYc5f59emVwaQNc1o8ATXqOp3jafkZgrWyOL6lw.webp",
+                    "filename": "muYc5f59emVwaQNc1o8ATXqOp3jafkZgrWyOL6lw.webp",
+                    "size_bytes": 3994,
+                    "size_formatted": "3.9 KB",
+                    "mtime": "2026-11-21 19:43:33",
+                    "exists": true
+                },
+                "logo_fallback": {
+                    "field": "logo_fallback",
+                    "rel_path": "storage/app/public/partners/muYc5f59emVwaQNc1o8ATXqOp3jafkZgrWyOL6lw.png",
+                    "filename": "muYc5f59emVwaQNc1o8ATXqOp3jafkZgrWyOL6lw.png",
+                    "size_bytes": 7209,
+                    "size_formatted": "7 KB",
+                    "mtime": "2026-11-21 19:43:33",
+                    "exists": true
+                },
+                "legacy_src": {
+                    "field": "legacy_src",
+                    "rel_path": "public/assets/images/trusted/unknown.PNG",
+                    "filename": "unknown.PNG",
+                    "size_bytes": 120144,
+                    "size_formatted": "117.3 KB",
+                    "mtime": "2026-11-21 21:09:38",
+                    "exists": true
+                }
+            }
+        },
+        {
+            "id": 21,
+            "name": "Evergreen",
+            "active": true,
+            "featured": false,
+            "sort_order": 35,
+            "files": {
+                "logo_path": {
+                    "field": "logo_path",
+                    "rel_path": "storage/app/public/partners/NtfmWRWaf76Wj0D5lVng5mn9tcdNsBjPfdOKDZOk.webp",
+                    "filename": "NtfmWRWaf76Wj0D5lVng5mn9tcdNsBjPfdOKDZOk.webp",
+                    "size_bytes": 5140,
+                    "size_formatted": "5 KB",
+                    "mtime": "2026-11-21 19:43:33",
+                    "exists": true
+                },
+                "logo_fallback": {
+                    "field": "logo_fallback",
+                    "rel_path": "storage/app/public/partners/NtfmWRWaf76Wj0D5lVng5mn9tcdNsBjPfdOKDZOk.jpg",
+                    "filename": "NtfmWRWaf76Wj0D5lVng5mn9tcdNsBjPfdOKDZOk.jpg",
+                    "size_bytes": 11511,
+                    "size_formatted": "11.2 KB",
+                    "mtime": "2026-11-21 19:43:33",
+                    "exists": true
+                },
+                "legacy_src": {
+                    "field": "legacy_src",
+                    "rel_path": "public/assets/images/evergreen.jfif",
+                    "filename": "evergreen.jfif",
+                    "size_bytes": 19610,
+                    "size_formatted": "19.2 KB",
+                    "mtime": "2026-11-21 21:09:38",
+                    "exists": true
+                }
+            }
+        },
+        {
+            "id": 22,
+            "name": "AAU",
+            "active": true,
+            "featured": false,
+            "sort_order": 25,
+            "files": {
+                "logo_path": {
+                    "field": "logo_path",
+                    "rel_path": "storage/app/public/partners/k0onvmuyHwZL8zfkHalfJtmXsox2EW0CbU6kaXip.webp",
+                    "filename": "k0onvmuyHwZL8zfkHalfJtmXsox2EW0CbU6kaXip.webp",
+                    "size_bytes": 29262,
+                    "size_formatted": "28.6 KB",
+                    "mtime": "2026-11-21 19:43:33",
+                    "exists": true
+                },
+                "logo_fallback": {
+                    "field": "logo_fallback",
+                    "rel_path": "storage/app/public/partners/k0onvmuyHwZL8zfkHalfJtmXsox2EW0CbU6kaXip.png",
+                    "filename": "k0onvmuyHwZL8zfkHalfJtmXsox2EW0CbU6kaXip.png",
+                    "size_bytes": 208724,
+                    "size_formatted": "203.8 KB",
+                    "mtime": "2026-11-21 19:43:34",
+                    "exists": true
+                },
+                "legacy_src": {
+                    "field": "legacy_src",
+                    "rel_path": "public/assets/images/aauLogo.png",
+                    "filename": "aauLogo.png",
+                    "size_bytes": 83802,
+                    "size_formatted": "81.8 KB",
+                    "mtime": "2026-11-21 21:09:38",
+                    "exists": true
+                }
+            }
+        },
+        {
+            "id": 23,
+            "name": "Diredawa",
+            "active": true,
+            "featured": false,
+            "sort_order": 22,
+            "files": {
+                "logo_path": {
+                    "field": "logo_path",
+                    "rel_path": "storage/app/public/partners/N4YbGc8iTxyLnXPTwCJGepq1lQeYifZwspkRP2dR.webp",
+                    "filename": "N4YbGc8iTxyLnXPTwCJGepq1lQeYifZwspkRP2dR.webp",
+                    "size_bytes": 22098,
+                    "size_formatted": "21.6 KB",
+                    "mtime": "2026-11-21 19:43:34",
+                    "exists": true
+                },
+                "logo_fallback": {
+                    "field": "logo_fallback",
+                    "rel_path": "storage/app/public/partners/N4YbGc8iTxyLnXPTwCJGepq1lQeYifZwspkRP2dR.png",
+                    "filename": "N4YbGc8iTxyLnXPTwCJGepq1lQeYifZwspkRP2dR.png",
+                    "size_bytes": 127988,
+                    "size_formatted": "125 KB",
+                    "mtime": "2026-11-21 19:43:34",
+                    "exists": true
+                },
+                "legacy_src": {
+                    "field": "legacy_src",
+                    "rel_path": "public/assets/images/trusted/diredawa.png",
+                    "filename": "diredawa.png",
+                    "size_bytes": 117190,
+                    "size_formatted": "114.4 KB",
+                    "mtime": "2026-11-21 21:09:38",
+                    "exists": true
+                }
+            }
+        },
+        {
+            "id": 24,
+            "name": "Addis",
+            "active": true,
+            "featured": false,
+            "sort_order": 30,
+            "files": {
+                "logo_path": {
+                    "field": "logo_path",
+                    "rel_path": "storage/app/public/partners/CLV5zMrjMsff1jubhEwXt3XC7qfDHWQOWQVKnywN.webp",
+                    "filename": "CLV5zMrjMsff1jubhEwXt3XC7qfDHWQOWQVKnywN.webp",
+                    "size_bytes": 16248,
+                    "size_formatted": "15.9 KB",
+                    "mtime": "2026-11-21 19:43:34",
+                    "exists": true
+                },
+                "logo_fallback": {
+                    "field": "logo_fallback",
+                    "rel_path": "storage/app/public/partners/CLV5zMrjMsff1jubhEwXt3XC7qfDHWQOWQVKnywN.png",
+                    "filename": "CLV5zMrjMsff1jubhEwXt3XC7qfDHWQOWQVKnywN.png",
+                    "size_bytes": 91777,
+                    "size_formatted": "89.6 KB",
+                    "mtime": "2026-11-21 19:43:34",
+                    "exists": true
+                },
+                "legacy_src": {
+                    "field": "legacy_src",
+                    "rel_path": "public/assets/images/trusted/addis.png",
+                    "filename": "addis.png",
+                    "size_bytes": 1037628,
+                    "size_formatted": "1013.3 KB",
+                    "mtime": "2026-11-21 21:09:38",
+                    "exists": true
+                }
+            }
+        },
+        {
+            "id": 25,
+            "name": "Alfa University College",
+            "active": true,
+            "featured": true,
+            "sort_order": 36,
+            "files": {
+                "logo_path": {
+                    "field": "logo_path",
+                    "rel_path": "storage/app/public/partners/LUZisrXRgdX4XQyIwK5LJXZ7Zy5JFw1igJ7OiuoW.webp",
+                    "filename": "LUZisrXRgdX4XQyIwK5LJXZ7Zy5JFw1igJ7OiuoW.webp",
+                    "size_bytes": 14802,
+                    "size_formatted": "14.5 KB",
+                    "mtime": "2026-11-21 19:43:34",
+                    "exists": true
+                },
+                "logo_fallback": {
+                    "field": "logo_fallback",
+                    "rel_path": "storage/app/public/partners/LUZisrXRgdX4XQyIwK5LJXZ7Zy5JFw1igJ7OiuoW.jpg",
+                    "filename": "LUZisrXRgdX4XQyIwK5LJXZ7Zy5JFw1igJ7OiuoW.jpg",
+                    "size_bytes": 18510,
+                    "size_formatted": "18.1 KB",
+                    "mtime": "2026-11-21 19:43:34",
+                    "exists": true
+                },
+                "legacy_src": {
+                    "field": "legacy_src",
+                    "rel_path": "public/assets/images/trusted/alfa.jpeg",
+                    "filename": "alfa.jpeg",
+                    "size_bytes": 13207,
+                    "size_formatted": "12.9 KB",
+                    "mtime": "2026-11-21 21:09:38",
+                    "exists": true
+                }
+            }
+        },
+        {
+            "id": 26,
+            "name": "Hilco",
+            "active": true,
+            "featured": false,
+            "sort_order": 34,
+            "files": {
+                "logo_path": {
+                    "field": "logo_path",
+                    "rel_path": "storage/app/public/partners/AdF4WMBZxzcrZM3IWumwadkUBcZtPRejTYS2Bdis.webp",
+                    "filename": "AdF4WMBZxzcrZM3IWumwadkUBcZtPRejTYS2Bdis.webp",
+                    "size_bytes": 13980,
+                    "size_formatted": "13.7 KB",
+                    "mtime": "2026-11-21 19:43:34",
+                    "exists": true
+                },
+                "logo_fallback": {
+                    "field": "logo_fallback",
+                    "rel_path": "storage/app/public/partners/AdF4WMBZxzcrZM3IWumwadkUBcZtPRejTYS2Bdis.png",
+                    "filename": "AdF4WMBZxzcrZM3IWumwadkUBcZtPRejTYS2Bdis.png",
+                    "size_bytes": 78595,
+                    "size_formatted": "76.8 KB",
+                    "mtime": "2026-11-21 19:43:34",
+                    "exists": true
+                },
+                "legacy_src": {
+                    "field": "legacy_src",
+                    "rel_path": "public/assets/images/trusted/hilco.png",
+                    "filename": "hilco.png",
+                    "size_bytes": 81079,
+                    "size_formatted": "79.2 KB",
+                    "mtime": "2026-11-21 21:09:38",
+                    "exists": true
+                }
+            }
+        },
+        {
+            "id": 27,
+            "name": "Maroli",
+            "active": true,
+            "featured": false,
+            "sort_order": 37,
+            "files": {
+                "logo_path": {
+                    "field": "logo_path",
+                    "rel_path": "storage/app/public/partners/bHu58o0YQ5nJCF1okthERJRb3tMX6RWXQSTMIpTc.webp",
+                    "filename": "bHu58o0YQ5nJCF1okthERJRb3tMX6RWXQSTMIpTc.webp",
+                    "size_bytes": 13138,
+                    "size_formatted": "12.8 KB",
+                    "mtime": "2026-11-21 19:43:34",
+                    "exists": true
+                },
+                "logo_fallback": {
+                    "field": "logo_fallback",
+                    "rel_path": "storage/app/public/partners/bHu58o0YQ5nJCF1okthERJRb3tMX6RWXQSTMIpTc.jpg",
+                    "filename": "bHu58o0YQ5nJCF1okthERJRb3tMX6RWXQSTMIpTc.jpg",
+                    "size_bytes": 24505,
+                    "size_formatted": "23.9 KB",
+                    "mtime": "2026-11-21 19:43:34",
+                    "exists": true
+                },
+                "legacy_src": {
+                    "field": "legacy_src",
+                    "rel_path": "public/assets/images/trusted/maroli.JPG",
+                    "filename": "maroli.JPG",
+                    "size_bytes": 35676,
+                    "size_formatted": "34.8 KB",
+                    "mtime": "2026-11-21 21:09:38",
+                    "exists": true
+                }
+            }
+        },
+        {
+            "id": 28,
+            "name": "Zemzem Bank",
+            "active": true,
+            "featured": true,
+            "sort_order": 32,
+            "files": {
+                "logo_path": {
+                    "field": "logo_path",
+                    "rel_path": "storage/app/public/partners/AJPxpbWPS9732hM355Py6FV4ri0koxKIH6qPn3mi.webp",
+                    "filename": "AJPxpbWPS9732hM355Py6FV4ri0koxKIH6qPn3mi.webp",
+                    "size_bytes": 11964,
+                    "size_formatted": "11.7 KB",
+                    "mtime": "2026-11-22 16:16:43",
+                    "exists": true
+                },
+                "logo_fallback": {
+                    "field": "logo_fallback",
+                    "rel_path": "storage/app/public/partners/AJPxpbWPS9732hM355Py6FV4ri0koxKIH6qPn3mi.png",
+                    "filename": "AJPxpbWPS9732hM355Py6FV4ri0koxKIH6qPn3mi.png",
+                    "size_bytes": 23027,
+                    "size_formatted": "22.5 KB",
+                    "mtime": "2026-11-22 16:16:43",
+                    "exists": true
+                },
+                "original_path": {
+                    "field": "original_path",
+                    "rel_path": "storage/app/archive/partners/AJPxpbWPS9732hM355Py6FV4ri0koxKIH6qPn3mi.png",
+                    "exists": false
+                }
+            }
+        },
+        {
+            "id": 29,
+            "name": "Hijra Bank",
+            "active": true,
+            "featured": true,
+            "sort_order": 33,
+            "files": {
+                "logo_path": {
+                    "field": "logo_path",
+                    "rel_path": "storage/app/public/partners/zOsvR7L7AtuLwgeYnZkGmx9Fv6sG9AHfI1Yl7BFH.webp",
+                    "filename": "zOsvR7L7AtuLwgeYnZkGmx9Fv6sG9AHfI1Yl7BFH.webp",
+                    "size_bytes": 8164,
+                    "size_formatted": "8 KB",
+                    "mtime": "2026-11-22 16:25:57",
+                    "exists": true
+                },
+                "logo_fallback": {
+                    "field": "logo_fallback",
+                    "rel_path": "storage/app/public/partners/zOsvR7L7AtuLwgeYnZkGmx9Fv6sG9AHfI1Yl7BFH.jpg",
+                    "filename": "zOsvR7L7AtuLwgeYnZkGmx9Fv6sG9AHfI1Yl7BFH.jpg",
+                    "size_bytes": 13739,
+                    "size_formatted": "13.4 KB",
+                    "mtime": "2026-11-22 16:25:57",
+                    "exists": true
+                },
+                "original_path": {
+                    "field": "original_path",
+                    "rel_path": "storage/app/archive/partners/zOsvR7L7AtuLwgeYnZkGmx9Fv6sG9AHfI1Yl7BFH.jpg",
+                    "exists": false
+                }
+            }
+        },
+        {
+            "id": 30,
+            "name": "Dire Dawa Police",
+            "active": true,
+            "featured": true,
+            "sort_order": 23,
+            "files": {
+                "logo_path": {
+                    "field": "logo_path",
+                    "rel_path": "storage/app/public/partners/wLUZBJthhmao3wPXNFJEwHnFANraQkffjaLsfPYu.webp",
+                    "filename": "wLUZBJthhmao3wPXNFJEwHnFANraQkffjaLsfPYu.webp",
+                    "size_bytes": 39764,
+                    "size_formatted": "38.8 KB",
+                    "mtime": "2026-11-22 16:36:01",
+                    "exists": true
+                },
+                "logo_fallback": {
+                    "field": "logo_fallback",
+                    "rel_path": "storage/app/public/partners/wLUZBJthhmao3wPXNFJEwHnFANraQkffjaLsfPYu.jpg",
+                    "filename": "wLUZBJthhmao3wPXNFJEwHnFANraQkffjaLsfPYu.jpg",
+                    "size_bytes": 50068,
+                    "size_formatted": "48.9 KB",
+                    "mtime": "2026-11-22 16:36:01",
+                    "exists": true
+                },
+                "original_path": {
+                    "field": "original_path",
+                    "rel_path": "storage/app/archive/partners/wLUZBJthhmao3wPXNFJEwHnFANraQkffjaLsfPYu.jpg",
+                    "exists": false
+                }
+            }
+        },
+        {
+            "id": 31,
+            "name": "Dire Dawa Police Comition",
+            "active": true,
+            "featured": true,
+            "sort_order": 24,
+            "files": {
+                "logo_path": {
+                    "field": "logo_path",
+                    "rel_path": "storage/app/public/partners/pU2E8rYhDszKqCWiRwJ0t2s2qoeSEwBLWQZPfORU.webp",
+                    "filename": "pU2E8rYhDszKqCWiRwJ0t2s2qoeSEwBLWQZPfORU.webp",
+                    "size_bytes": 29186,
+                    "size_formatted": "28.5 KB",
+                    "mtime": "2026-11-22 16:37:09",
+                    "exists": true
+                },
+                "logo_fallback": {
+                    "field": "logo_fallback",
+                    "rel_path": "storage/app/public/partners/pU2E8rYhDszKqCWiRwJ0t2s2qoeSEwBLWQZPfORU.jpg",
+                    "filename": "pU2E8rYhDszKqCWiRwJ0t2s2qoeSEwBLWQZPfORU.jpg",
+                    "size_bytes": 44372,
+                    "size_formatted": "43.3 KB",
+                    "mtime": "2026-11-22 16:37:09",
+                    "exists": true
+                },
+                "original_path": {
+                    "field": "original_path",
+                    "rel_path": "storage/app/archive/partners/pU2E8rYhDszKqCWiRwJ0t2s2qoeSEwBLWQZPfORU.jpg",
+                    "exists": false
+                }
+            }
+        },
+        {
+            "id": 32,
+            "name": "AK Trading",
+            "active": true,
+            "featured": true,
+            "sort_order": 38,
+            "files": {
+                "logo_path": {
+                    "field": "logo_path",
+                    "rel_path": "storage/app/public/partners/4KMoEPxUcXHPK8E1zGKtVRVlhXyOhaOekASRcv7e.webp",
+                    "filename": "4KMoEPxUcXHPK8E1zGKtVRVlhXyOhaOekASRcv7e.webp",
+                    "size_bytes": 16552,
+                    "size_formatted": "16.2 KB",
+                    "mtime": "2026-11-22 16:40:04",
+                    "exists": true
+                },
+                "logo_fallback": {
+                    "field": "logo_fallback",
+                    "rel_path": "storage/app/public/partners/4KMoEPxUcXHPK8E1zGKtVRVlhXyOhaOekASRcv7e.png",
+                    "filename": "4KMoEPxUcXHPK8E1zGKtVRVlhXyOhaOekASRcv7e.png",
+                    "size_bytes": 34052,
+                    "size_formatted": "33.3 KB",
+                    "mtime": "2026-11-22 16:40:04",
+                    "exists": true
+                },
+                "original_path": {
+                    "field": "original_path",
+                    "rel_path": "storage/app/archive/partners/4KMoEPxUcXHPK8E1zGKtVRVlhXyOhaOekASRcv7e.png",
+                    "exists": false
+                }
+            }
+        },
+        {
+            "id": 33,
+            "name": "Dana Steel Factory",
+            "active": true,
+            "featured": true,
+            "sort_order": 28,
+            "files": {
+                "logo_path": {
+                    "field": "logo_path",
+                    "rel_path": "storage/app/public/partners/dNhnhDSiQ8C2s57DkSSbvcNcscsvV9126iG5nTsk.webp",
+                    "filename": "dNhnhDSiQ8C2s57DkSSbvcNcscsvV9126iG5nTsk.webp",
+                    "size_bytes": 7240,
+                    "size_formatted": "7.1 KB",
+                    "mtime": "2026-11-22 16:45:30",
+                    "exists": true
+                },
+                "logo_fallback": {
+                    "field": "logo_fallback",
+                    "rel_path": "storage/app/public/partners/dNhnhDSiQ8C2s57DkSSbvcNcscsvV9126iG5nTsk.jpg",
+                    "filename": "dNhnhDSiQ8C2s57DkSSbvcNcscsvV9126iG5nTsk.jpg",
+                    "size_bytes": 11798,
+                    "size_formatted": "11.5 KB",
+                    "mtime": "2026-11-22 16:45:30",
+                    "exists": true
+                },
+                "original_path": {
+                    "field": "original_path",
+                    "rel_path": "storage/app/archive/partners/dNhnhDSiQ8C2s57DkSSbvcNcscsvV9126iG5nTsk.jpg",
+                    "exists": false
+                }
+            }
+        },
+        {
+            "id": 34,
+            "name": "Dire Dawa Food Complex",
+            "active": true,
+            "featured": true,
+            "sort_order": 26,
+            "files": {
+                "logo_path": {
+                    "field": "logo_path",
+                    "rel_path": "storage/app/public/partners/ZL8qYRFFFBtK8FiPi3ZunslUlM9W5Q0LqXn6xyXg.webp",
+                    "filename": "ZL8qYRFFFBtK8FiPi3ZunslUlM9W5Q0LqXn6xyXg.webp",
+                    "size_bytes": 27356,
+                    "size_formatted": "26.7 KB",
+                    "mtime": "2026-11-22 16:46:22",
+                    "exists": true
+                },
+                "logo_fallback": {
+                    "field": "logo_fallback",
+                    "rel_path": "storage/app/public/partners/ZL8qYRFFFBtK8FiPi3ZunslUlM9W5Q0LqXn6xyXg.jpg",
+                    "filename": "ZL8qYRFFFBtK8FiPi3ZunslUlM9W5Q0LqXn6xyXg.jpg",
+                    "size_bytes": 40040,
+                    "size_formatted": "39.1 KB",
+                    "mtime": "2026-11-22 16:46:22",
+                    "exists": true
+                },
+                "original_path": {
+                    "field": "original_path",
+                    "rel_path": "storage/app/archive/partners/ZL8qYRFFFBtK8FiPi3ZunslUlM9W5Q0LqXn6xyXg.jpg",
+                    "exists": false
+                }
+            }
+        },
+        {
+            "id": 35,
+            "name": "Fam Water Factory",
+            "active": true,
+            "featured": true,
+            "sort_order": 27,
+            "files": {
+                "logo_path": {
+                    "field": "logo_path",
+                    "rel_path": "storage/app/public/partners/foQXnjD09y5Ci2m4h4kGIP2oDcLXwBCLS74TE2nD.webp",
+                    "filename": "foQXnjD09y5Ci2m4h4kGIP2oDcLXwBCLS74TE2nD.webp",
+                    "size_bytes": 7316,
+                    "size_formatted": "7.1 KB",
+                    "mtime": "2026-11-22 16:46:58",
+                    "exists": true
+                },
+                "logo_fallback": {
+                    "field": "logo_fallback",
+                    "rel_path": "storage/app/public/partners/foQXnjD09y5Ci2m4h4kGIP2oDcLXwBCLS74TE2nD.jpg",
+                    "filename": "foQXnjD09y5Ci2m4h4kGIP2oDcLXwBCLS74TE2nD.jpg",
+                    "size_bytes": 9811,
+                    "size_formatted": "9.6 KB",
+                    "mtime": "2026-11-22 16:46:58",
+                    "exists": true
+                },
+                "original_path": {
+                    "field": "original_path",
+                    "rel_path": "storage/app/archive/partners/foQXnjD09y5Ci2m4h4kGIP2oDcLXwBCLS74TE2nD.jpg",
+                    "exists": false
+                }
+            }
+        },
+        {
+            "id": 36,
+            "name": "Betopia Property",
+            "active": true,
+            "featured": true,
+            "sort_order": 29,
+            "files": {
+                "logo_path": {
+                    "field": "logo_path",
+                    "rel_path": "storage/app/public/partners/0dffyelShU8v5uAxyQ8AHwP0KOG1Lvc0pXFdqEGG.webp",
+                    "filename": "0dffyelShU8v5uAxyQ8AHwP0KOG1Lvc0pXFdqEGG.webp",
+                    "size_bytes": 23722,
+                    "size_formatted": "23.2 KB",
+                    "mtime": "2026-11-22 16:47:44",
+                    "exists": true
+                },
+                "logo_fallback": {
+                    "field": "logo_fallback",
+                    "rel_path": "storage/app/public/partners/0dffyelShU8v5uAxyQ8AHwP0KOG1Lvc0pXFdqEGG.png",
+                    "filename": "0dffyelShU8v5uAxyQ8AHwP0KOG1Lvc0pXFdqEGG.png",
+                    "size_bytes": 47733,
+                    "size_formatted": "46.6 KB",
+                    "mtime": "2026-11-22 16:47:44",
+                    "exists": true
+                },
+                "original_path": {
+                    "field": "original_path",
+                    "rel_path": "storage/app/archive/partners/0dffyelShU8v5uAxyQ8AHwP0KOG1Lvc0pXFdqEGG.png",
+                    "exists": false
+                }
+            }
+        },
+        {
+            "id": 37,
+            "name": "Prime Realstate",
+            "active": true,
+            "featured": true,
+            "sort_order": 31,
+            "files": {
+                "logo_path": {
+                    "field": "logo_path",
+                    "rel_path": "storage/app/public/partners/8OLuPWZfLD8c8wnalow2u9hPnWJ1DKcJCImGU6GS.webp",
+                    "filename": "8OLuPWZfLD8c8wnalow2u9hPnWJ1DKcJCImGU6GS.webp",
+                    "size_bytes": 6364,
+                    "size_formatted": "6.2 KB",
+                    "mtime": "2026-11-22 16:58:11",
+                    "exists": true
+                },
+                "logo_fallback": {
+                    "field": "logo_fallback",
+                    "rel_path": "storage/app/public/partners/8OLuPWZfLD8c8wnalow2u9hPnWJ1DKcJCImGU6GS.png",
+                    "filename": "8OLuPWZfLD8c8wnalow2u9hPnWJ1DKcJCImGU6GS.png",
+                    "size_bytes": 18859,
+                    "size_formatted": "18.4 KB",
+                    "mtime": "2026-11-22 16:58:11",
+                    "exists": true
+                },
+                "original_path": {
+                    "field": "original_path",
+                    "rel_path": "storage/app/archive/partners/8OLuPWZfLD8c8wnalow2u9hPnWJ1DKcJCImGU6GS.png",
+                    "exists": false
+                }
+            }
+        },
+        {
+            "id": 38,
+            "name": "Dire Dawa Administration",
+            "active": true,
+            "featured": true,
+            "sort_order": 21,
+            "files": {
+                "logo_path": {
+                    "field": "logo_path",
+                    "rel_path": "storage/app/public/partners/MhazC5zKuNM8cOqjqElwJi6vFAKJr9ggmKtK1yNO.webp",
+                    "filename": "MhazC5zKuNM8cOqjqElwJi6vFAKJr9ggmKtK1yNO.webp",
+                    "size_bytes": 32668,
+                    "size_formatted": "31.9 KB",
+                    "mtime": "2026-11-22 17:02:57",
+                    "exists": true
+                },
+                "logo_fallback": {
+                    "field": "logo_fallback",
+                    "rel_path": "storage/app/public/partners/MhazC5zKuNM8cOqjqElwJi6vFAKJr9ggmKtK1yNO.jpg",
+                    "filename": "MhazC5zKuNM8cOqjqElwJi6vFAKJr9ggmKtK1yNO.jpg",
+                    "size_bytes": 48549,
+                    "size_formatted": "47.4 KB",
+                    "mtime": "2026-11-22 17:02:57",
+                    "exists": true
+                },
+                "original_path": {
+                    "field": "original_path",
+                    "rel_path": "storage/app/archive/partners/MhazC5zKuNM8cOqjqElwJi6vFAKJr9ggmKtK1yNO.jpg",
+                    "exists": false
+                }
+            }
+        },
+        {
+            "id": 39,
+            "name": "Motion Media and Promotions",
+            "active": true,
+            "featured": true,
+            "sort_order": 39,
+            "files": {
+                "logo_path": {
+                    "field": "logo_path",
+                    "rel_path": "storage/app/public/partners/VtcNNO2VUPSXcvwEARcNHJMRt8d4uL2lRTD8hivj.webp",
+                    "filename": "VtcNNO2VUPSXcvwEARcNHJMRt8d4uL2lRTD8hivj.webp",
+                    "size_bytes": 7712,
+                    "size_formatted": "7.5 KB",
+                    "mtime": "2026-11-22 17:25:35",
+                    "exists": true
+                },
+                "logo_fallback": {
+                    "field": "logo_fallback",
+                    "rel_path": "storage/app/public/partners/VtcNNO2VUPSXcvwEARcNHJMRt8d4uL2lRTD8hivj.jpg",
+                    "filename": "VtcNNO2VUPSXcvwEARcNHJMRt8d4uL2lRTD8hivj.jpg",
+                    "size_bytes": 13949,
+                    "size_formatted": "13.6 KB",
+                    "mtime": "2026-11-22 17:25:35",
+                    "exists": true
+                },
+                "original_path": {
+                    "field": "original_path",
+                    "rel_path": "storage/app/archive/partners/VtcNNO2VUPSXcvwEARcNHJMRt8d4uL2lRTD8hivj.jpg",
+                    "exists": false
+                }
+            }
+        },
+        {
+            "id": 40,
+            "name": "Al Faruk",
+            "active": true,
+            "featured": true,
+            "sort_order": 40,
+            "files": {
+                "logo_path": {
+                    "field": "logo_path",
+                    "rel_path": "storage/app/public/partners/OF5PvIapa3HWrd4XxGUR1Ts2mK1rrlAM5brpnjgr.webp",
+                    "filename": "OF5PvIapa3HWrd4XxGUR1Ts2mK1rrlAM5brpnjgr.webp",
+                    "size_bytes": 6508,
+                    "size_formatted": "6.4 KB",
+                    "mtime": "2026-11-22 17:37:06",
+                    "exists": true
+                },
+                "logo_fallback": {
+                    "field": "logo_fallback",
+                    "rel_path": "storage/app/public/partners/OF5PvIapa3HWrd4XxGUR1Ts2mK1rrlAM5brpnjgr.png",
+                    "filename": "OF5PvIapa3HWrd4XxGUR1Ts2mK1rrlAM5brpnjgr.png",
+                    "size_bytes": 14033,
+                    "size_formatted": "13.7 KB",
+                    "mtime": "2026-11-22 17:37:06",
+                    "exists": true
+                },
+                "original_path": {
+                    "field": "original_path",
+                    "rel_path": "storage/app/archive/partners/OF5PvIapa3HWrd4XxGUR1Ts2mK1rrlAM5brpnjgr.png",
+                    "exists": false
+                }
+            }
+        },
+        {
+            "id": 41,
+            "name": "Inaya Record",
+            "active": true,
+            "featured": true,
+            "sort_order": 41,
+            "files": {
+                "logo_path": {
+                    "field": "logo_path",
+                    "rel_path": "storage/app/public/partners/nF7RCnNAQSgciWoc7CWhpnpofKWi0MbtHv6ce0jm.webp",
+                    "filename": "nF7RCnNAQSgciWoc7CWhpnpofKWi0MbtHv6ce0jm.webp",
+                    "size_bytes": 7962,
+                    "size_formatted": "7.8 KB",
+                    "mtime": "2026-11-22 19:10:51",
+                    "exists": true
+                },
+                "logo_fallback": {
+                    "field": "logo_fallback",
+                    "rel_path": "storage/app/public/partners/nF7RCnNAQSgciWoc7CWhpnpofKWi0MbtHv6ce0jm.png",
+                    "filename": "nF7RCnNAQSgciWoc7CWhpnpofKWi0MbtHv6ce0jm.png",
+                    "size_bytes": 22946,
+                    "size_formatted": "22.4 KB",
+                    "mtime": "2026-11-22 19:10:51",
+                    "exists": true
+                },
+                "original_path": {
+                    "field": "original_path",
+                    "rel_path": "storage/app/archive/partners/nF7RCnNAQSgciWoc7CWhpnpofKWi0MbtHv6ce0jm.png",
+                    "exists": false
+                }
+            }
+        }
+    ]
+}

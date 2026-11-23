@@ -86,9 +86,9 @@
         <div class="card">
             <div class="card-header"><h2 class="h5 mb-0"><i class="fas fa-eye me-2" aria-hidden="true"></i>Live preview</h2></div>
             <div class="card-body">
-                <p class="small text-muted">How the logo looks in the homepage marquee (round, 90 px high).</p>
+                <p class="small text-muted">How the logo looks in the homepage marquee (90 px high).</p>
                 <div class="d-flex align-items-center justify-content-center gap-4 py-3 bg-white border rounded overflow-hidden" aria-live="polite">
-                    <img id="pv-logo" src="{{ $editing ? $partner->imgUrl() : '' }}" alt="" style="height:90px;max-width:220px;object-fit:contain;border-radius:50%" @unless ($editing) hidden @endunless>
+                    <img id="pv-logo" src="{{ $editing ? $partner->imgUrl() : '' }}" alt="" style="height:90px;max-width:220px;object-fit:contain;border-radius:0" @unless ($editing) hidden @endunless>
                     <span id="pv-empty" class="text-muted small" @if ($editing) hidden @endif>Choose a logo to preview it.</span>
                 </div>
                 <p class="fw-semibold text-center mt-3 mb-0" id="pv-name">{{ old('name', $partner->name) }}</p>
