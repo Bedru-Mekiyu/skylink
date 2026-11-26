@@ -194,7 +194,7 @@
         .news-list-card td[data-label="Category"],
         .news-list-card td[data-label="Date"] { white-space: nowrap; word-break: normal; hyphens: manual; }
     }
-    .news-list-title:hover { color: #2563eb !important; text-decoration: underline !important; }
+    .news-list-title:hover { color: #2b4c9d !important; text-decoration: underline !important; }
     .news-list-title[lang="am"] { font-family: var(--font-ui); }
 </style>
 @endpush

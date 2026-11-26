@@ -1,0 +1,140 @@
+/* Catalogue, cart and payment pages: the same gradient pill buttons as the rest of the site
+   (see .btn-view-more on the home page), a shade deeper so white text meets WCAG AA (4.5:1). */
+.sky-commerce .btn-primary {
+    background: linear-gradient(135deg, #1a6fb0, #2b4c9d);
+    border: 0;
+    border-radius: 50px;
+    color: #fff;
+    box-shadow: 0 4px 15px rgba(26, 111, 176, 0.3);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.sky-commerce .btn-primary:hover,
+.sky-commerce .btn-primary:focus,
+.sky-commerce .btn-primary:active {
+    background: linear-gradient(135deg, #2b4c9d, #2b4c9d);
+    color: #fff;
+}
+.sky-commerce .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(26, 111, 176, 0.4); }
+.sky-commerce .btn-primary:disabled { opacity: 0.65; transform: none; }
+
+.sky-commerce .btn-outline-primary,
+.sky-commerce .btn-outline-secondary {
+    border: 1px solid #1a6fb0;
+    border-radius: 50px;
+    color: #2b4c9d;
+    background: transparent;
+}
+.sky-commerce .btn-outline-primary:hover,
+.sky-commerce .btn-outline-secondary:hover { background: #eaf2fd; color: #2b4c9d; }
+
+.sky-commerce .btn:focus-visible { outline: 3px solid #2b4c9d; outline-offset: 2px; }
+
+/* The blue panels (sidebar headings, help icon) use the same blue as the buttons. */
+.sky-commerce .card-header.bg-primary,
+.sky-commerce span.bg-primary.rounded-circle { background: linear-gradient(135deg, #1a6fb0, #2b4c9d) !important; }
+
+@media (prefers-reduced-motion: reduce) {
+    .sky-commerce .btn-primary, .sky-commerce .btn-primary:hover { transition: none; transform: none; }
+}
+
+/* ---- Product and service cards: one shape on every list ---------------------------------------- */
+.sky-commerce, .sky-catalog { --sky-ink: #16213a; --sky-muted: #52607a; --sky-line: #e1e7f1; --sky-blue: #2b4c9d; --sky-tint: #f4f7fc; }
+
+.sky-card { position: relative; display: flex; flex-direction: column; height: 100%; background: #fff;
+    border: 1px solid var(--sky-line); border-radius: 16px; overflow: hidden; transition: border-color .2s ease, box-shadow .2s ease; }
+.sky-card:hover { border-color: #7ccdee; box-shadow: 0 12px 28px rgba(26, 58, 112, .12); }
+.sky-card:focus-within { border-color: var(--sky-blue); box-shadow: 0 0 0 3px rgba(43, 76, 157, .35); }
+.sky-card__media { position: relative; aspect-ratio: 16 / 10; overflow: hidden; background: var(--sky-tint); border-bottom: 1px solid var(--sky-line); }
+/* Out of the flow, so a tall picture can never stretch one card's frame. */
+.sky-card__media picture, .sky-card__media img { position: absolute; inset: 0; width: 100% !important; height: 100% !important; object-fit: cover; display: block; }
+.sky-card__body { display: flex; flex-direction: column; flex: 1; padding: 1.1rem 1.15rem 1.15rem; text-align: left; }
+.sky-card__category { margin: 0 0 .3rem; font-size: .8125rem; font-weight: 600; color: var(--sky-blue); }
+.sky-card__title { margin: 0 0 .45rem; font-size: 1.125rem; line-height: 1.3; font-weight: 700; }
+.sky-card__title a { color: var(--sky-ink); text-decoration: none; }
+.sky-card__title a:focus-visible { outline: none; }
+.sky-card:hover .sky-card__title a { color: var(--sky-blue); }
+.sky-card__desc { margin: 0 0 .75rem; font-size: .9rem; line-height: 1.55; color: var(--sky-muted);
+    display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.sky-card__features { list-style: none; margin: 0 0 1rem; padding: 0; font-size: .8125rem; color: var(--sky-ink); }
+.sky-card__features li { display: flex; gap: .5rem; align-items: baseline; margin-bottom: .25rem; }
+.sky-card__features i { color: var(--sky-blue); font-size: .7rem; }
+.sky-card__foot { margin-top: auto; border-top: 1px solid var(--sky-line); padding-top: .85rem; }
+.sky-card__price { min-height: 2rem; margin: 0 0 .75rem; display: flex; flex-wrap: wrap; align-items: baseline; gap: .35rem; color: var(--sky-ink); }
+.sky-card__price strong { font-size: 1.25rem; font-weight: 800; font-variant-numeric: tabular-nums; }
+.sky-card__note { font-size: .8125rem; color: var(--sky-muted); }
+.sky-card__actions { position: relative; z-index: 2; } /* above the stretched link */
+.sky-card__actions form { display: flex; gap: .5rem; margin: 0; }
+.sky-card__actions .btn { min-height: 44px; display: inline-flex; align-items: center; justify-content: center; }
+.sky-card__actions form .btn-primary { flex: 1; }
+.sky-card__add { width: 48px; flex: 0 0 48px; }
+
+/* Detail pages and sidebars use the same border and radius as the cards. */
+.sky-catalog .card { border: 1px solid var(--sky-line) !important; border-radius: 16px !important; box-shadow: none !important; }
+.sky-catalog h1, .sky-catalog h4, .sky-catalog h5 { color: var(--sky-ink); }
+.sky-catalog [id^="price-val-"] { font-variant-numeric: tabular-nums; }
+
+@media (prefers-reduced-motion: reduce) { .sky-card { transition: none; } }
+
+/* ---- Plans on the detail pages ----------------------------------------------------------------- */
+.sky-switch { display: flex; flex-wrap: wrap; justify-content: center; gap: .25rem; width: max-content; max-width: 100%;
+    margin: 0 auto 1.75rem; padding: .3rem; background: var(--sky-tint); border: 1px solid var(--sky-line); border-radius: 999px; }
+.sky-switch label { position: relative; margin: 0; cursor: pointer; }
+.sky-switch input { position: absolute; opacity: 0; }
+.sky-switch span { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 44px; padding: .25rem 1.1rem;
+    border-radius: 999px; font-weight: 600; font-size: .9rem; line-height: 1.2; color: var(--sky-ink); }
+.sky-switch small { font-size: .6875rem; font-weight: 600; color: #146c43; }
+.sky-switch input:checked + span { background: var(--sky-blue); color: #fff; }
+.sky-switch input:checked + span small { color: #fff; }
+.sky-switch input:focus-visible + span { outline: 3px solid #2b4c9d; outline-offset: 2px; }
+@media (max-width: 575.98px) { .sky-switch { width: 100%; border-radius: 16px; } .sky-switch label { flex: 1 1 45%; } }
+
+.sky-plan { position: relative; display: flex; flex-direction: column; height: 100%; padding: 1.5rem 1.25rem; background: #fff;
+    border: 1px solid var(--sky-line); border-radius: 16px; text-align: left; }
+.sky-plan--best { border: 2px solid var(--sky-blue); box-shadow: 0 16px 36px rgba(26, 58, 112, .16); background: linear-gradient(180deg, #eef4fd 0, #fff 11rem); }
+.sky-plan__badge { position: absolute; top: -.8rem; left: 1.25rem; margin: 0; padding: .15rem .75rem; border-radius: 999px;
+    background: var(--sky-blue); color: #fff; font-size: .75rem; font-weight: 700; }
+.sky-plan__name { margin: 0 0 .15rem; font-size: 1.25rem; font-weight: 800; color: var(--sky-ink); }
+.sky-plan__tagline { margin: 0; font-size: .875rem; color: var(--sky-muted); }
+.sky-plan__price { display: flex; flex-wrap: wrap; align-items: baseline; gap: .15rem .4rem; min-height: 4.25rem; margin: 1rem 0 .5rem; color: var(--sky-muted); font-size: .875rem; }
+.sky-plan__price strong { flex-basis: 100%; font-size: 1.55rem; font-weight: 800; color: var(--sky-ink); font-variant-numeric: tabular-nums; }
+.sky-plan__price em { font-style: normal; font-weight: 700; color: #146c43; }
+.sky-plan__tax { font-size: .75rem; color: var(--sky-muted); }
+.sky-plan__qty { display: flex; align-items: center; justify-content: space-between; gap: .75rem; margin-bottom: .75rem; font-size: .875rem; }
+.sky-plan__qty input { width: 5rem; min-height: 40px; }
+.sky-plan .btn { min-height: 44px; }
+.sky-plan__add { font-weight: 600; color: var(--sky-blue); }
+.sky-plan__features { list-style: none; margin: 1rem 0 0; padding: 1rem 0 0; border-top: 1px solid var(--sky-line); font-size: .875rem; color: var(--sky-ink); }
+.sky-plan__features li { display: flex; gap: .55rem; align-items: baseline; margin-bottom: .5rem; }
+.sky-plan__features i { color: var(--sky-blue); font-size: .75rem; }
+
+/* ---- Forms and choices on catalogue, cart and payment pages ------------------------------------ */
+.sky-commerce .form-label { margin-bottom: .35rem; font-weight: 600; color: var(--sky-ink); }
+.sky-commerce .form-control, .sky-commerce .form-select { min-height: 48px; padding: .65rem .9rem; border: 1px solid #c3cede; border-radius: 12px; background-color: #fff; font-size: 1rem; transition: border-color .15s ease, box-shadow .15s ease; }
+.sky-commerce textarea.form-control { min-height: 112px; }
+.sky-commerce .form-control:hover:not(:focus), .sky-commerce .form-select:hover:not(:focus) { border-color: #93a8c8; }
+.sky-commerce .form-control:focus, .sky-commerce .form-select:focus { border-color: var(--sky-blue); box-shadow: 0 0 0 4px rgba(43, 76, 157, .2); }
+.sky-commerce .form-control.is-invalid { border-color: #b02a37; }
+.sky-commerce .input-group > .form-control { border-radius: 0 12px 12px 0; }
+.sky-commerce .input-group > .input-group-text { border-radius: 12px 0 0 12px; border-color: #c3cede; }
+.sky-commerce .form-check-input { width: 1.15em; height: 1.15em; border-color: #7d90b0; }
+.sky-commerce .form-check-input:focus-visible { outline: 3px solid #2b4c9d; outline-offset: 2px; box-shadow: none; }
+.sky-commerce .btn:not(.btn-link):not(.btn-sm):not(.btn-close) { min-height: 44px; font-weight: 600; }
+.sky-commerce .btn[aria-busy="true"] { pointer-events: none; opacity: .75; }
+
+/* Pay online or request a quotation: two selectable cards. */
+.sky-commerce .sky-choice { position: relative; padding: .9rem .9rem .9rem 2.6rem !important; border: 2px solid var(--sky-line) !important; border-radius: 14px !important; transition: border-color .15s ease, background-color .15s ease; }
+.sky-commerce .sky-choice .form-check-input { position: absolute; left: .9rem; top: 1.1rem; margin: 0 !important; }
+.sky-commerce .sky-choice .form-check-label { display: block; cursor: pointer; }
+.sky-commerce .sky-choice .form-check-label::after { content: ""; position: absolute; inset: 0; }
+.sky-commerce .sky-choice:has(input:checked) { border-color: var(--sky-blue) !important; background: var(--sky-tint) !important; }
+.sky-commerce .sky-choice:has(input:disabled) .form-check-label { cursor: default; }
+.sky-commerce .sky-choice:focus-within { box-shadow: 0 0 0 4px rgba(43, 76, 157, .2); }
+
+/* Quantity stepper on a plan. */
+.sky-stepper { display: inline-flex; align-items: center; border: 1px solid #c3cede; border-radius: 999px; overflow: hidden; background: #fff; }
+.sky-stepper button { width: 44px; height: 44px; border: 0; background: transparent; font-size: 1.2rem; line-height: 1; color: var(--sky-blue); }
+.sky-stepper button:hover { background: var(--sky-tint); }
+.sky-stepper button:focus-visible { outline: 3px solid #2b4c9d; outline-offset: -3px; }
+.sky-plan__qty .sky-stepper input { width: 3rem; min-height: 44px; padding: 0; border: 0; border-radius: 0; text-align: center; font-weight: 700; -moz-appearance: textfield; appearance: textfield; }
+.sky-stepper input::-webkit-outer-spin-button, .sky-stepper input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+@media (prefers-reduced-motion: reduce) { .sky-commerce .form-control, .sky-commerce .form-select, .sky-commerce .sky-choice { transition: none; } }

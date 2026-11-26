@@ -49,7 +49,7 @@
     @media (max-width: 575.98px) { .sk-gallery[data-count="2"] .sk-gallery__track { grid-template-columns: minmax(0, 1fr); } }
     .sk-gallery__slide { margin: 0; aspect-ratio: 3 / 2; border-radius: 14px; overflow: hidden; background: #e2e8f0; box-shadow: 0 10px 28px rgba(15, 23, 42, 0.16); }
     .sk-gallery__open { display: block; width: 100%; height: 100%; padding: 0; border: 0; background: none; cursor: zoom-in; border-radius: inherit; }
-    .sk-gallery__open:focus-visible { outline: 3px solid #3b82f6; outline-offset: 3px; }
+    .sk-gallery__open:focus-visible { outline: 3px solid #1a6fb0; outline-offset: 3px; }
     .sk-gallery__open img { display: block; width: 100%; height: 100%; object-fit: cover; }
     .sk-gallery__caption { display: none; }
 
@@ -78,7 +78,7 @@
     .sk-lb__count { display: block; font-size: 0.875rem; opacity: 0.75; margin-top: 4px; }
     .sk-lb__btn { position: absolute; width: 48px; height: 48px; border-radius: 50%; border: 1px solid rgba(255, 255, 255, 0.4); background: rgba(255, 255, 255, 0.1); color: #fff; font-size: 1.25rem; display: grid; place-items: center; cursor: pointer; }
     .sk-lb__btn:hover { background: rgba(255, 255, 255, 0.25); }
-    .sk-lb__btn:focus-visible { outline: 3px solid #7db4ff; outline-offset: 3px; }
+    .sk-lb__btn:focus-visible { outline: 3px solid #7ccdee; outline-offset: 3px; }
     .sk-lb__close { top: 12px; right: 12px; } .sk-lb__prev { left: 10px; top: 50%; transform: translateY(-50%); } .sk-lb__next { right: 10px; top: 50%; transform: translateY(-50%); }
     @media (max-width: 575.98px) { .sk-lb__fig { padding: 56px 8px 8px; } .sk-lb__cap { padding: 8px 12px 18px; } .sk-lb__prev, .sk-lb__next { top: auto; bottom: 8px; transform: none; } .sk-lb__prev { left: 12px; } .sk-lb__next { right: 12px; } }
     @media (prefers-reduced-motion: reduce) { .sk-gallery__slide, .sk-gallery__open img { transition: none !important; } }

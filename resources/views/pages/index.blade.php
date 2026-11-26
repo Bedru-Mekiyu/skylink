@@ -4,8 +4,8 @@
 @push('styles')
     <style>
         :root {
-            --primary-blue:rgb(63, 122, 249);
-            --dark-blue: #4a90e2;
+            --primary-blue:rgb(26, 111, 176);
+            --dark-blue: #1a6fb0;
             --light-blue:rgb(212, 224, 244);
             --gray-bg: #f8f9fa;
         }
@@ -59,7 +59,7 @@
         }
 
         .btn-get-started {
-        background: linear-gradient(135deg, #3B82F6,rgb(72, 113, 248));
+        background: linear-gradient(135deg, #1a6fb0,#2b4c9d);
         color: white;
         border: none;
         padding: 12px 30px;
@@ -83,7 +83,7 @@
 
     .btn-get-started:hover {
         transform: translateY(-2px);
-        box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
+        box-shadow: 0 8px 25px rgba(26, 111, 176, 0.4);
         color: white;
     }
 
@@ -181,7 +181,7 @@
 }
 
 .services-label {
-  color: #4a90e2;
+  color: #1a6fb0;
   font-size: 14px;
   font-weight: 600;
   letter-spacing: 2px;
@@ -197,7 +197,7 @@
   transform: translateY(-50%);
   width: 60px;
   height: 2px;
-  background-color: #4a90e2;
+  background-color: #1a6fb0;
 }
 
 .services-title {
@@ -246,7 +246,7 @@
             color: white;
             transform: scale(1.06);
             z-index: 2;
-            box-shadow: 0 15px 40px #1e40af;
+            box-shadow: 0 15px 40px #2b4c9d;
         }
 
         .service-image {
@@ -265,17 +265,17 @@
         }
 
         /* The card passing through the middle of the section (set by the script below, one at a time).
-           Same sky-blue gradient as the site's buttons (.btn-view-more: #3a7bd5 -> rgb(0,136,255)), each stop darkened
+           Same sky-blue gradient as the site's buttons (.btn-view-more: #1a6fb0 -> rgb(26, 111, 176)), each stop darkened
            just enough that white text reaches 4.6:1 (AA needs 4.5:1). Only transform, colours and shadow change,
            so nothing moves in the layout. */
         .service-card.is-center {
-            --hl-from: #3775ca;
-            --hl-to: #0074d9;
+            --hl-from: #1a6fb0;
+            --hl-to: #2b4c9d;
             background: linear-gradient(135deg, var(--hl-from), var(--hl-to));
             color: #fff;
             transform: translateY(-6px) scale(1.12); /* steps forward out of the row */
             z-index: 3;
-            box-shadow: 0 14px 28px rgba(0, 116, 217, 0.4); /* stays inside the section's padding, which clips overflow */
+            box-shadow: 0 14px 28px rgba(43, 76, 157, 0.4); /* stays inside the section's padding, which clips overflow */
         }
 
         .service-card.is-center .service-image {
@@ -322,7 +322,7 @@
         }
         
         .news-tab {
-            color: #3B82F6;
+            color: #1a6fb0;
             font-weight: 600;
             font-size: 14px;
             text-transform: uppercase;
@@ -339,7 +339,7 @@
             left: 0;
             width: 60px;
             height: 3px;
-            background-color: #2196F3;
+            background-color: #1a6fb0;
         }
         
         .news-title {
@@ -381,7 +381,7 @@
             position: absolute;
             top: 15px;
             left: 15px;
-            background: #2196F3;
+            background: #1a6fb0;
             color: white;
             padding: 6px 12px;
             border-radius: 6px;
@@ -411,7 +411,7 @@
         }
         
         .meta-item i {
-            color: #2196F3;
+            color: #1a6fb0;
             font-size: 14px;
         }
         
@@ -431,7 +431,7 @@
         }
         
         .read-more {
-            color: #2196F3;
+            color: #1a6fb0;
             text-decoration: none;
             font-weight: 600;
             display: inline-flex;
@@ -442,7 +442,7 @@
         }
         
         .read-more:hover {
-            color: #1976D2;
+            color: #2b4c9d;
             gap: 12px;
         }
         
@@ -492,7 +492,7 @@
 }
 
 .portfolio-label {
-  color: #4a90e2;
+  color: #1a6fb0;
   font-size: 14px;
   font-weight: 600;
   letter-spacing: 2px;
@@ -508,7 +508,7 @@
   transform: translateY(-50%);
   width: 60px;
   height: 2px;
-  background-color: #4a90e2;
+  background-color: #1a6fb0;
 }
 
 .portfolio-title {
@@ -580,7 +580,7 @@
 }
 
 .product-label {
-  color: #4a90e2;
+  color: #1a6fb0;
   font-size: 14px;
   font-weight: 600;
   letter-spacing: 2px;
@@ -596,7 +596,7 @@
   transform: translateY(-50%);
   width: 60px;
   height: 2px;
-  background-color: #4a90e2;
+  background-color: #1a6fb0;
 }
 
 .product-title {
@@ -618,6 +618,17 @@
         .product-card:hover {
             transform: translateY(-5px);
         }
+        /* The whole card is the link. */
+        .products-track .product-card { position: relative; cursor: pointer; }
+        .products-track .product-card h5 a { color: inherit; text-decoration: none; }
+        .products-track .product-card:hover h5 a { color: #1a6fb0; }
+        .products-track .product-card:focus-within { outline: 3px solid #1a6fb0; outline-offset: -3px; }
+        .products-track:focus-within { animation-play-state: paused; }
+        @media (prefers-reduced-motion: reduce) {
+            .products-track { animation: none !important; }
+            .products-slider { overflow-x: auto !important; }
+            .product-card--repeat { display: none; }
+        }
 
         /* Products Slider */
 .products-slider {
@@ -638,7 +649,7 @@
 
 
 .btn-view-more {
-        background: linear-gradient(135deg, #3a7bd5,rgb(0, 136, 255));
+        background: linear-gradient(135deg, #1a6fb0,rgb(26, 111, 176));
         color: white;
         border: none;
         padding: 12px 30px;
@@ -647,14 +658,14 @@
         cursor: pointer;
         transition: all 0.3s ease;
         text-decoration: none;
-        box-shadow: 0 4px 15px rgba(58, 123, 213, 0.3);
+        box-shadow: 0 4px 15px rgba(26, 111, 176, 0.3);
         position: relative;
         overflow: hidden;
     }
     
     .btn-view-more:hover {
         transform: translateY(-3px);
-        box-shadow: 0 6px 20px rgba(58, 123, 213, 0.4);
+        box-shadow: 0 6px 20px rgba(26, 111, 176, 0.4);
     }
 
 @keyframes slideProducts {
@@ -692,14 +703,14 @@
         .line-long {
             width: 80px;
             height: 4px;
-            background: #17a2b8;
+            background: #1a6fb0;
             border-radius: 2px;
         }
 
         .line-short {
             width: 20px;
             height: 4px;
-            background: #17a2b8;
+            background: #1a6fb0;
             border-radius: 2px;
         }
 
@@ -759,19 +770,19 @@
             height: 70px;
             border-radius: 50%;
             margin-right: 20px;
-            border: 3px solid #17a2b8;
+            border: 3px solid #1a6fb0;
             transition: all 0.3s ease;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 2rem;
-            color: #17a2b8;
+            color: #1a6fb0;
             background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
-            box-shadow: 0 4px 15px rgba(23, 162, 184, 0.2);
+            box-shadow: 0 4px 15px rgba(26, 111, 176, 0.2);
         }
 
         .client-info h5 {
-            color: #17a2b8;
+            color: #1a6fb0;
             font-weight: 600;
             margin-bottom: 5px;
             font-size: 1.2rem;
@@ -856,7 +867,7 @@
 
         /* Newsletter */
         .newsletter {
-            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+            background: linear-gradient(135deg, #2b4c9d 0%, #1a6fb0 100%);
             color: white;
             padding: 3rem 0;
             text-align: center;
@@ -1338,19 +1349,26 @@ max-height: 20 vh;
         <div class="products-slider">
             <div class="products-track">
                 @php
+                    // Where each card leads. A page that is not published falls back to a list, never to a dead link.
+                    $cameraUrl = 'https://kirbgebeya.com/category/Cameras--Optics-G2i6n'; // goods are sold on the shop
+                    $shopUrl = \App\Models\Product::visible()->where('slug', 'e-commerce')->exists()
+                        ? route('products.detail', ['web-mobile-apps', 'e-commerce']) : route('products');
+                    $attendanceUrl = \App\Models\Service::visible()->where('slug', 'physical-security')->exists()
+                        ? route('services.detail', 'physical-security') : route('services');
                     $products = [
-                        ['name' => 'Cctv Camera', 'description' => 'High-definition surveillance camera', 'image' => asset('assets/images/cctv.jfif'), 'rating' => 5],
-                        ['name' => 'Attendance Tracker', 'description' => 'Biometric and RFID-based attendance', 'image' => asset('assets/images/attendance.jfif'), 'rating' => 4],
-                        ['name' => 'Security Camera', 'description' => 'Advanced indoor/outdoor camera', 'image' => asset('assets/images/cctv3.jfif'), 'rating' => 5],
-                        ['name' => 'Ecommerce Application', 'description' => 'Custom-built online store solutions', 'image' => asset('assets/images/ecommerce.jfif'), 'rating' => 5],
-                        ['name' => 'Cctv Camera', 'description' => 'Durable and weatherproof CCTV system', 'image' => asset('assets/images/cctv4.jfif'), 'rating' => 4]
+                        ['name' => 'Cctv Camera', 'description' => 'High-definition surveillance camera', 'url' => $cameraUrl, 'image' => asset('assets/images/cctv.jfif'), 'rating' => 5],
+                        ['name' => 'Attendance Tracker', 'description' => 'Biometric and RFID-based attendance', 'url' => $attendanceUrl, 'image' => asset('assets/images/attendance.jfif'), 'rating' => 4],
+                        ['name' => 'Security Camera', 'description' => 'Advanced indoor/outdoor camera', 'url' => $cameraUrl, 'image' => asset('assets/images/cctv3.jfif'), 'rating' => 5],
+                        ['name' => 'Ecommerce Application', 'description' => 'Custom-built online store solutions', 'url' => $shopUrl, 'image' => asset('assets/images/ecommerce.jfif'), 'rating' => 5],
+                        ['name' => 'Cctv Camera', 'description' => 'Durable and weatherproof CCTV system', 'url' => $cameraUrl, 'image' => asset('assets/images/cctv4.jfif'), 'rating' => 4]
                     ];
                 @endphp
                 
                 @foreach(array_merge($products, $products) as $product)
-                <div class="product-card">
+                @php($repeat = $loop->index >= count($products))
+                <div class="product-card {{ $repeat ? 'product-card--repeat' : '' }}" @if($repeat) aria-hidden="true" @endif>
                     <img src="{{ $product['image'] }}" alt="{{ $product['name'] }}" class="img-fluid mb-3" height="200" style="height: 200px; object-fit: contain;" loading="lazy" decoding="async">
-                    <h5>{{ $product['name'] }}</h5>
+                    <h5><a href="{{ $product['url'] }}" class="stretched-link"@if($repeat) tabindex="-1"@endif>{{ $product['name'] }}</a></h5>
                     <p class="text-muted">{{ $product['description'] }}</p>
                     
                 </div>
@@ -1359,7 +1377,7 @@ max-height: 20 vh;
             
         </div>
         <div class="text-center mt-5">
-            <a href="https://kirbgebeya.com/" class=" btn-view-more">
+            <a href="https://kirbgebeya.com/" class="btn-view-more">
                 View More Products
                 <i class="fas fa-arrow-right ml-2"></i>
             </a>
@@ -1375,9 +1393,6 @@ max-height: 20 vh;
         <div class="container">
 
         {{-- Shown here because the sign-up redirects back to #newsletter. --}}
-        @if (session('newsletter_status'))
-            <div class="alert alert-success" role="status" tabindex="-1" data-form-feedback>{{ session('newsletter_status') }}</div>
-        @endif
 
         @php($newsletterErrors = $errors->getBag('newsletter'))
         @php($guardErrors = $errors->getBag(\App\Http\Middleware\ProtectPublicForm::ERROR_BAG))
@@ -1495,7 +1510,6 @@ max-height: 20 vh;
         counter.dataset.animated = "true";
 
         const target = counter.getAttribute('data-target') || '0';
-        console.log('Counter target:', target);
         const isK = target.toLowerCase().includes('k');
         const isPlus = target.includes('+');
         const numericValue = parseFloat(target.replace(/[^\d.]/g, ''));

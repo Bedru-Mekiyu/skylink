@@ -146,7 +146,7 @@
         .news-video__thumb {
             position: relative;
             aspect-ratio: 9 / 12;
-            background: linear-gradient(160deg, #06122b, #1e3a8a 60%, #3B82F6);
+            background: linear-gradient(160deg, #06122b, #223c80 60%, #1a6fb0);
             display: flex;
             align-items: center;
             justify-content: center;

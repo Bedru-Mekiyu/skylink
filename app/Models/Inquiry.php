@@ -21,6 +21,7 @@ class Inquiry extends Model
         'quote' => 'Quote request',
         'service' => 'Service request',
         'subscription' => 'Plan subscription',
+        'cart_request' => 'Cart request',
     ];
 
     public const TYPES_AM = [
@@ -29,6 +30,7 @@ class Inquiry extends Model
         'quote' => 'የዋጋ ጥያቄ',
         'service' => 'የአገልግሎት ጥያቄ',
         'subscription' => 'የጥቅል ምዝገባ',
+        'cart_request' => 'የጋሪ ጥያቄ',
     ];
 
     public const STATUSES = [
@@ -39,7 +41,8 @@ class Inquiry extends Model
     ];
 
     protected $fillable = [
-        'type', 'name', 'email', 'phone', 'company', 'service', 'plan', 'message',
+        'type', 'name', 'email', 'phone', 'company', 'service', 'item_type', 'item_id',
+        'plan', 'billing_term', 'estimated_price', 'message',
         'language', 'source_page', 'ip_hash', 'user_agent',
     ];
 
@@ -95,5 +98,10 @@ class Inquiry extends Model
     public function scopeUnread(Builder $query): Builder
     {
         return $query->whereNull('read_at');
+    }
+
+    public function items()
+    {
+        return $this->hasMany(InquiryItem::class, 'inquiry_id');
     }
 }

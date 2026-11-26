@@ -1,115 +1,188 @@
 @extends('layouts.master')
 
-@section('content')
-<div class="container my-5">
-    <h1 class="text-center mb-4">Explore Our Products</h1>
+@section('title', 'Explore Our Products | Sky Link ICT Solutions')
+@section('description', 'Enterprise business tools, industry solutions, and cloud software systems designed for Ethiopian businesses.')
 
-    <!-- Search and Filter Controls -->
-    <div class="row mb-4 g-3">
-        <div class="col-md-6">
-            <input type="text" id="searchInput" class="form-control form-control-lg shadow-sm" placeholder="🔍 Search products...">
-        </div>
-        <div class="col-md-6">
-            <select id="categoryFilter" class="form-select form-select-lg shadow-sm">
-                <option value="all">📂 All Categories</option>
-                @foreach ($products as $category => $items)
-                    <option value="{{ $category }}">{{ ucfirst(str_replace('-', ' ', $category)) }}</option>
-                @endforeach
-            </select>
-        </div>
+@section('content')
+<div class="container py-4 py-md-5 sky-commerce sky-catalog">
+    {{-- Header --}}
+    <div class="text-center mb-5">
+        <h1 class="display-5 fw-bold text-dark">{{ __('Explore Our Software Products') }}</h1>
+        <p class="lead text-muted max-w-xl mx-auto">{{ __('Turnkey digital solutions engineered for education, real estate, hospitality, ERP, and office automation.') }}</p>
     </div>
 
-    <!-- Product Listing -->
-    <div id="productList">
-        @foreach ($products as $category => $items)
-            @foreach ($items as $product)
-                <div class="product-item row align-items-center mb-4 p-4 rounded-4 border shadow-sm bg-white"
-                     data-category="{{ $category }}"
-                     data-name="{{ strtolower($product['name']) }}">
-                    <div class="col-md-3 text-center">
-                        <img src="{{ $product['image'] }}" alt="{{ $product['name'] }}" class="img-fluid rounded-3 product-img" loading="lazy" onerror="this.onerror=null; this.src='{{ asset('assets/images/placeholder.png') }}';">
-                    </div>
-                    <div class="col-md-7">
-                        <h4 class="mb-1">{{ $product['name'] }}</h4>
-                        <p class="text-muted mb-2">{{ $product['description'] }}</p>
-                        <ul class="list-unstyled small">
-                            @if(is_array($product->features))
-                                @foreach ($product->features as $feature)
-                                    <li><i class="bi bi-check2-circle text-success me-2"></i>{{ $feature }}</li>
-                                @endforeach
-                            @else
-                                <p>No features available.</p>
-                            @endif
 
-                        </ul>
-                        @priceVisible($product)
-                        <span class="badge bg-info fs-6 mt-2 mb-3 text-dark">@price($product)</span>
-                        @endpriceVisible
-                    </div>
-                    <div class="col-md-2 text-end d-flex flex-column align-items-end justify-content-center">
-                        <a href="{{ url('products/'.$category.'/'.$product['slug']) }}" 
-                           class="btn btn-primary btn-lg fw-bold w-100 d-flex align-items-center justify-content-center gap-2 shadow detail-btn mt-2" 
-                           title="View Product Details">
-                            🔎 View Details
+    <div class="row g-4">
+        {{-- Left Sidebar (Reference Layout) --}}
+        <div class="col-lg-3">
+            <div class="card border-0 shadow-sm rounded-4 mb-4 overflow-hidden">
+                <div class="card-header bg-primary text-white py-3">
+                    <h6 class="mb-0 fw-bold"><i class="fas fa-boxes me-2"></i>{{ __('Product Categories') }}</h6>
+                </div>
+                <div class="list-group list-group-flush" id="productCatFilter">
+                    <button type="button" class="list-group-item list-group-item-action py-2 px-3 fw-bold text-primary bg-light" data-cat="all" aria-pressed="true">
+                        {{ __('All Categories') }}
+                    </button>
+                    @foreach ($products as $cat => $items)
+                        <button type="button" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center py-2 px-3" data-cat="{{ $cat }}" aria-pressed="false">
+                            <span>{{ $categories[$cat]->name ?? ucfirst(str_replace('-', ' ', $cat)) }}</span>
+                        </button>
+                    @endforeach
+                </div>
+            </div>
+
+            {{-- "Need Help? Contact Us" Box (Reference Feature) --}}
+            <div class="card border-0 shadow-sm rounded-4 p-4 text-center bg-light">
+                <div class="mb-3">
+                    <span class="d-inline-flex align-items-center justify-content-center bg-primary text-white rounded-circle" style="width: 50px; height: 50px;">
+                        <i class="fas fa-headset fa-lg"></i>
+                    </span>
+                </div>
+                <h6 class="fw-bold text-dark mb-1">{{ __('Need Help?') }}</h6>
+                <p class="small text-muted mb-3">{{ __('Speak with our software engineers for customized module demos.') }}</p>
+                <div class="d-grid gap-2">
+                    @foreach (config('company_contact.phones') as $cPhone)
+                        <a href="{{ \App\Support\PhoneNumber::tel($cPhone) }}" class="btn btn-outline-primary btn-sm rounded-pill py-2">
+                            <i class="fas fa-phone-alt me-1"></i> {{ \App\Support\PhoneNumber::international($cPhone) }}
                         </a>
+                    @endforeach
+                    <a href="{{ route('contact') }}" class="btn btn-primary btn-sm rounded-pill py-2">
+                        <i class="fas fa-envelope me-1"></i> {{ __('Contact Us') }}
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        {{-- Main Product Area --}}
+        <div class="col-lg-9">
+            {{-- Search & Sort Bar --}}
+            <div class="card border-0 shadow-sm rounded-4 p-3 mb-4 bg-white">
+                <div class="row g-2 align-items-center">
+                    <div class="col-md-7">
+                        <div class="input-group">
+                            <span class="input-group-text bg-light border-end-0"><i class="fas fa-search text-muted"></i></span>
+                            <input type="text" id="searchInput" class="form-control border-start-0 bg-light" placeholder="{{ __('Search products by name or features...') }}">
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <select id="sortSelect" class="form-select bg-light">
+                            <option value="featured">{{ __('Sort by: Featured') }}</option>
+                            <option value="name_asc">{{ __('Name: A to Z') }}</option>
+                            <option value="name_desc">{{ __('Name: Z to A') }}</option>
+                            @if(\App\Support\PriceVisibility::globalEnabled())
+                                <option value="price_asc">{{ __('Price: Low to High') }}</option>
+                                <option value="price_desc">{{ __('Price: High to Low') }}</option>
+                            @endif
+                        </select>
                     </div>
                 </div>
-            @endforeach
-        @endforeach
+            </div>
+
+            {{-- Product Grid --}}
+            <div class="row g-4" id="productsGrid">
+                @foreach ($products as $catKey => $items)
+                    @foreach ($items as $product)
+                        @php
+                            $defaultOpt = $product->options->where('is_active', true)->sortBy('sort_order')->first() ?? $product->options->first();
+                            $featuresList = is_array($product->features) ? array_slice($product->features, 0, 3) : [];
+                            $quoteOnly = ($categories[$catKey] ?? null)?->isQuoteOnly() ?? false;
+                            $priceAmount = $quoteOnly ? 0 : ($defaultOpt?->price_amount ?? ($product->price ?? 0));
+                        @endphp
+                        <div class="col-md-6 col-xl-4 product-card-col"
+                             data-cat="{{ $catKey }}"
+                             data-name="{{ strtolower($product->name) }}"
+                             data-price="{{ $priceAmount }}">
+                            @include('partials.catalog-card', [
+                                'url' => route('products.detail', ['category' => $catKey, 'slug' => $product->slug]),
+                                'image' => $product->image,
+                                'category' => $categories[$catKey]->name ?? ucfirst(str_replace('-', ' ', $catKey)),
+                                'title' => $product->name,
+                                'description' => $product->description,
+                                'features' => $featuresList,
+                                'option' => $defaultOpt,
+                                'item' => $product,
+                                'itemType' => 'product',
+                                'quoteOnly' => $quoteOnly,
+                            ])
+                        </div>
+                    @endforeach
+                @endforeach
+            </div>
+
+            <div id="noProductsFound" class="alert alert-info text-center rounded-4 py-4 d-none">
+                {{ __('No products match your search or filter criteria.') }}
+            </div>
+        </div>
     </div>
 </div>
 
-<!-- Custom Styles -->
-<style>
-    .product-img {
-        max-height: 160px;
-        transition: transform 0.4s ease;
-    }
-    .product-item:hover .product-img {
-        transform: scale(1.05);
-    }
-
-    .detail-btn {
-        transition: all 0.3s ease;
-        font-size: 1rem;
-        padding: 0.6rem 1rem;
-        border-radius: 1rem;
-    }
-
-    .detail-btn:hover {
-        background-color: #0a58ca;
-        color: #fff;
-    }
-</style>
-
-<!-- JavaScript for Filtering & Search -->
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const searchInput = document.getElementById('searchInput');
-        const categoryFilter = document.getElementById('categoryFilter');
-        const products = document.querySelectorAll('.product-item');
+document.addEventListener('DOMContentLoaded', function () {
+    const searchInput = document.getElementById('searchInput');
+    const sortSelect = document.getElementById('sortSelect');
+    const catButtons = document.querySelectorAll('#productCatFilter button');
+    const grid = document.getElementById('productsGrid');
+    const noProducts = document.getElementById('noProductsFound');
 
-        function filterProducts() {
-            const searchTerm = searchInput.value.toLowerCase();
-            const selectedCategory = categoryFilter.value;
+    let currentCat = 'all';
 
-            products.forEach(item => {
-                const name = item.getAttribute('data-name');
-                const category = item.getAttribute('data-category');
+    function filterAndSort() {
+        const query = searchInput.value.toLowerCase().trim();
+        const cards = Array.from(grid.querySelectorAll('.product-card-col'));
+        let visibleCount = 0;
 
-                const matchesSearch = name.includes(searchTerm);
-                const matchesCategory = selectedCategory === 'all' || selectedCategory === category;
+        cards.forEach(card => {
+            const cat = card.getAttribute('data-cat');
+            const name = card.getAttribute('data-name');
+            const matchesCat = (currentCat === 'all' || cat === currentCat);
+            const matchesQuery = (!query || name.includes(query));
 
-                if (matchesSearch && matchesCategory) {
-                    item.style.display = 'flex';
-                } else {
-                    item.style.display = 'none';
+            if (matchesCat && matchesQuery) {
+                card.classList.remove('d-none');
+                visibleCount++;
+            } else {
+                card.classList.add('d-none');
+            }
+        });
+
+        // Sort visible
+        const sortVal = sortSelect.value;
+        if (sortVal !== 'featured') {
+            const visibleCards = cards.filter(c => !c.classList.contains('d-none'));
+            visibleCards.sort((a, b) => {
+                if (sortVal === 'name_asc') {
+                    return a.getAttribute('data-name').localeCompare(b.getAttribute('data-name'));
+                } else if (sortVal === 'name_desc') {
+                    return b.getAttribute('data-name').localeCompare(a.getAttribute('data-name'));
+                } else if (sortVal === 'price_asc') {
+                    return parseFloat(a.getAttribute('data-price') || 0) - parseFloat(b.getAttribute('data-price') || 0);
+                } else if (sortVal === 'price_desc') {
+                    return parseFloat(b.getAttribute('data-price') || 0) - parseFloat(a.getAttribute('data-price') || 0);
                 }
+                return 0;
             });
+            visibleCards.forEach(c => grid.appendChild(c));
         }
 
-        searchInput.addEventListener('input', filterProducts);
-        categoryFilter.addEventListener('change', filterProducts);
+        if (visibleCount === 0) {
+            noProducts.classList.remove('d-none');
+        } else {
+            noProducts.classList.add('d-none');
+        }
+    }
+
+    searchInput.addEventListener('input', filterAndSort);
+    sortSelect.addEventListener('change', filterAndSort);
+
+    catButtons.forEach(btn => {
+        btn.addEventListener('click', function () {
+            catButtons.forEach(b => { b.classList.remove('bg-light', 'text-primary', 'fw-bold'); b.setAttribute('aria-pressed', 'false'); });
+            this.classList.add('bg-light', 'text-primary', 'fw-bold');
+            this.setAttribute('aria-pressed', 'true');
+            currentCat = this.getAttribute('data-cat');
+            filterAndSort();
+        });
     });
+});
 </script>
 @endsection

@@ -4,7 +4,7 @@
 @push('styles')
     <style>
         :root {
-            --primary-blue: #4285f4;
+            --primary-blue: #1a6fb0;
             --dark-purple: #2d1b69;
             --light-blue-bg: #e3f2fd;
         }
@@ -129,7 +129,7 @@
 
         .form-control:focus {
             border-color: var(--primary-blue);
-            box-shadow: 0 0 0 3px rgba(66, 133, 244, 0.1);
+            box-shadow: 0 0 0 3px rgba(26, 111, 176, 0.1);
             background: white;
         }
 
@@ -149,18 +149,18 @@
             font-weight: 600;
             font-size: 16px;
             transition: all 0.3s ease;
-            box-shadow: 0 8px 20px rgba(66, 133, 244, 0.3);
+            box-shadow: 0 8px 20px rgba(26, 111, 176, 0.3);
         }
 
         .btn-submit:hover {
-            background: #1976d2;
+            background: #2b4c9d;
             transform: translateY(-2px);
-            box-shadow: 0 12px 25px rgba(66, 133, 244, 0.4);
+            box-shadow: 0 12px 25px rgba(26, 111, 176, 0.4);
         }
 
         /* Map Section */
         .map-section {
-            background: linear-gradient(135deg, var(--primary-blue) 0%, #1976d2 100%);
+            background: linear-gradient(135deg, var(--primary-blue) 0%, #2b4c9d 100%);
             padding: 20px 0;
             color: white;
         }
@@ -364,11 +364,15 @@
                                     <label class="form-label" for="cf-name">Full Name *</label>
                                     <input type="text" class="form-control @error('name') is-invalid @enderror" id="cf-name" name="name" value="{{ old('name') }}" maxlength="120" autocomplete="name" required>
                                 </div>
+                                @php
+                                    $presetType = in_array(request()->query('type'), ['contact', 'support', 'quote'], true) ? request()->query('type') : 'contact';
+                                    $presetService = is_string(request()->query('service')) ? mb_substr(request()->query('service'), 0, 120) : '';
+                                @endphp
                                 <div class="form-group col-sm-6 mb-3">
                                     <label class="form-label" for="cf-type">Topic *</label>
                                     <select class="form-control @error('type') is-invalid @enderror" id="cf-type" name="type" required>
                                         @foreach (['contact' => 'General question', 'support' => 'Support request', 'quote' => 'Quote request'] as $value => $label)
-                                            <option value="{{ $value }}" @selected(old('type', 'contact') === $value)>{{ $label }}</option>
+                                            <option value="{{ $value }}" @selected(old('type', $presetType) === $value)>{{ $label }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -390,7 +394,7 @@
                                 </div>
                                 <div class="form-group col-sm-6 mb-3">
                                     <label class="form-label" for="cf-service">Service (for quotes)</label>
-                                    <input type="text" class="form-control @error('service') is-invalid @enderror" id="cf-service" name="service" value="{{ old('service') }}" maxlength="120" placeholder="e.g. Website, CCTV, Network">
+                                    <input type="text" class="form-control @error('service') is-invalid @enderror" id="cf-service" name="service" value="{{ old('service', $presetService) }}" maxlength="120" placeholder="e.g. Website, CCTV, Network">
                                 </div>
                             </div>
                             <div class="form-group mb-4">

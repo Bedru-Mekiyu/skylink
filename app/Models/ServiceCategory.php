@@ -11,10 +11,28 @@ class ServiceCategory extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['slug', 'name', 'card_title', 'filter_label', 'description', 'image', 'sort_order', 'is_published'];
+    protected $fillable = [
+        'slug',
+        'name',
+        'card_title',
+        'filter_label',
+        'description',
+        'image',
+        'sort_order',
+        'is_published',
+        'is_archived',
+        'header_title',
+        'header_subtitle',
+        'header_image',
+        'header_cta_text',
+        'name_am',
+        'description_am',
+        'pricing_mode',
+    ];
 
     protected $casts = [
         'is_published' => 'boolean',
+        'is_archived' => 'boolean',
         'sort_order' => 'integer',
     ];
 

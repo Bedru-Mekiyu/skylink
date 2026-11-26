@@ -28,13 +28,13 @@
     padding: 8px 22px 8px 10px;
     border-radius: 50px;
     background: #fff;
-    color: #1e40af;
+    color: #2b4c9d;
     font-weight: 700;
     text-decoration: none;
     box-shadow: 0 10px 30px rgba(4, 12, 34, 0.4);
 }
-.sky-video-fallback__btn:hover { color: #1e40af; transform: translateY(-1px); }
-.sky-video-fallback__btn:focus-visible { outline: 3px solid #93c5fd; outline-offset: 3px; }
+.sky-video-fallback__btn:hover { color: #2b4c9d; transform: translateY(-1px); }
+.sky-video-fallback__btn:focus-visible { outline: 3px solid #7ccdee; outline-offset: 3px; }
 .sky-video-fallback__icon {
     display: inline-flex;
     align-items: center;
@@ -42,7 +42,7 @@
     width: 32px;
     height: 32px;
     border-radius: 50%;
-    background: #3B82F6;
+    background: #1a6fb0;
     color: #fff;
     font-size: 0.75rem;
     padding-left: 2px;

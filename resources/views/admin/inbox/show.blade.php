@@ -11,8 +11,11 @@
         'Email' => $inquiry->email,
         'Phone' => $inquiry->phone,
         'Company' => $inquiry->company,
-        'Service' => $inquiry->service,
+        'Service / Item' => $inquiry->service,
+        'Item Type' => $inquiry->item_type ? ucfirst($inquiry->item_type) : null,
         'Plan' => $inquiry->plan,
+        'Billing Term' => $inquiry->billing_term ? ucfirst(str_replace('-', ' ', $inquiry->billing_term)) : null,
+        'Estimated Price' => $inquiry->estimated_price,
         'Sent from page' => $inquiry->source_page,
         'Received' => $fmt($inquiry->created_at).' (Addis Ababa)',
     ], fn ($v) => filled($v));
@@ -45,6 +48,41 @@
                         </dd>
                     @endforeach
                 </dl>
+
+                @if ($inquiry->items && $inquiry->items->isNotEmpty())
+                    <h3 class="h6 text-muted mt-3 mb-2">Requested Catalog Items ({{ $inquiry->items->count() }})</h3>
+                    <div class="table-responsive mb-3">
+                        <table class="table table-sm table-bordered align-middle">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Item</th>
+                                    <th>Tier / Option</th>
+                                    <th>Term</th>
+                                    <th class="text-center">Qty</th>
+                                    <th class="text-end">Price</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($inquiry->items as $item)
+                                    <tr>
+                                        <td class="fw-semibold">{{ $item->item_name }}</td>
+                                        <td>{{ $item->option_name ?? '—' }}</td>
+                                        <td>{{ $item->billing_term ? ucfirst($item->billing_term) : '—' }}</td>
+                                        <td class="text-center">{{ $item->quantity }}</td>
+                                        <td class="text-end">
+                                            @if ($item->is_price_visible && $item->unit_price_amount !== null)
+                                                {{ $item->currency }} {{ number_format($item->unit_price_amount * $item->quantity, 2) }}
+                                            @else
+                                                <span class="badge bg-light text-muted border">Quote</span>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                @endif
+
                 <h3 class="h6 text-muted">Message</h3>
                 <div class="inbox-message" lang="{{ $inquiry->language }}">{{ $inquiry->message ?: '—' }}</div>
             </div>

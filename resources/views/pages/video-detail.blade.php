@@ -12,7 +12,7 @@
     .sky-lite::before { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(4,12,34,.15), rgba(4,12,34,.55)); }
     .sky-lite__play { position: relative; display: inline-flex; align-items: center; justify-content: center; width: 72px; height: 72px; border-radius: 50%; background: #fff; color: #06122b; font-size: 26px; padding-left: 5px; box-shadow: 0 8px 25px rgba(0,0,0,.35); transition: transform .2s ease; }
     .sky-lite:hover .sky-lite__play, .sky-lite:focus-visible .sky-lite__play { transform: scale(1.08); }
-    .sky-lite:focus-visible { outline: 3px solid #3f7af9; outline-offset: -3px; }
+    .sky-lite:focus-visible { outline: 3px solid #1a6fb0; outline-offset: -3px; }
     .sky-player--unknown { aspect-ratio: 16 / 9; width: min(100%, 800px); }
     /* These styles are great and will remain the same */
     .video-detail-section {

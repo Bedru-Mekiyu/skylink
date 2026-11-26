@@ -47,8 +47,10 @@
     a.small { display: inline-flex; align-items: center; min-height: 44px; }
 }
 </style>
+    <link rel="stylesheet" href="{{ asset('assets/css/sky-brand.css') }}?v={{ @filemtime(public_path('assets/css/sky-brand.css')) }}">
 </head>
 <body class="font-sans text-gray-900 antialiased">
+        <div style="position:fixed;top:12px;left:12px;z-index:50">@include('partials.back-button')</div>
     {{ $slot }}
 </body>
 </html>

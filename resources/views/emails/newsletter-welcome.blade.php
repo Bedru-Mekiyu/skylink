@@ -10,7 +10,7 @@
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:600px;margin:0 auto;background:#ffffff;border-radius:10px;border:1px solid #e5e7eb;">
     <tr>
         <td style="padding:22px 24px 8px;">
-            <div style="font-size:18px;font-weight:bold;color:#1e40af;">Sky Link Technologies</div>
+            <div style="font-size:18px;font-weight:bold;color:#2b4c9d;">Sky Link Technologies</div>
         </td>
     </tr>
     <tr>

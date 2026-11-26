@@ -4,12 +4,6 @@
 @section('page-title', 'Newsletter Subscribers')
 
 @section('content')
-@if(session('success'))
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-        {{ session('success') }}
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-@endif
 @include('admin.partials.record-list', [
     'rows' => $subscribers, 'routes' => 'admin.subscribers', 'label' => 'subscriber',
     'nameOf' => fn ($r) => $r->email,

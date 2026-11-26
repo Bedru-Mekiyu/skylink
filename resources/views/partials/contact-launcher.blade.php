@@ -25,7 +25,7 @@
 
 <style>
     .sk-contact {
-        --sk-blue: var(--primary-blue, rgb(63, 122, 249));
+        --sk-blue: var(--primary-blue, rgb(26, 111, 176));
         --sk-size: 56px;
         /* Same 20px corner inset as the Tawk bubble on the opposite side. */
         --sk-left: calc(20px + env(safe-area-inset-left, 0px));
@@ -55,7 +55,7 @@
 
     .sk-contact__launcher:hover {
         transform: translateY(-2px);
-        box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
+        box-shadow: 0 8px 25px rgba(26, 111, 176, 0.4);
     }
 
     .sk-contact__launcher:focus-visible {
@@ -152,7 +152,7 @@
     }
 
     .sk-contact__status .fa-check-circle {
-        color: #3B82F6;
+        color: #1a6fb0;
     }
 
     .sk-contact__flag {
@@ -182,8 +182,8 @@
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        background: rgba(59, 130, 246, 0.1);
-        color: #3B82F6;
+        background: rgba(26, 111, 176, 0.1);
+        color: #1a6fb0;
         font-size: 1.1rem;
         text-decoration: none;
         transition: background 0.2s ease, color 0.2s ease;
@@ -210,7 +210,7 @@
     }
 
     .sk-contact__row > .fas {
-        color: #3B82F6;
+        color: #1a6fb0;
         width: 18px;
         text-align: center;
         flex: none;
@@ -225,7 +225,7 @@
     }
 
     a.sk-contact__value:hover {
-        color: #3B82F6;
+        color: #1a6fb0;
     }
 
     .sk-contact__copy {
@@ -245,8 +245,8 @@
     }
 
     .sk-contact__copy:hover {
-        background: rgba(59, 130, 246, 0.12);
-        color: #3B82F6;
+        background: rgba(26, 111, 176, 0.12);
+        color: #1a6fb0;
     }
 
     .sk-contact__copy .fa-check,
@@ -259,8 +259,8 @@
     }
 
     .sk-contact__copy.is-copied {
-        background: rgba(59, 130, 246, 0.12);
-        color: #3B82F6;
+        background: rgba(26, 111, 176, 0.12);
+        color: #1a6fb0;
     }
 
     /* "Copied" confirmation bubble above the copy button. */
@@ -285,7 +285,7 @@
 
     .sk-contact a:focus-visible,
     .sk-contact__copy:focus-visible {
-        outline: 2px solid #3B82F6;
+        outline: 2px solid #1a6fb0;
         outline-offset: 2px;
     }
 

@@ -181,18 +181,18 @@
     .news-panel__title { float: none; width: auto; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-muted); margin-bottom: 0.6rem; padding: 0; }
     .news-editor { border: 1px solid #dee2e6; border-radius: 0.5rem; background: #fff; }
     .news-editor.is-invalid { border-color: #dc3545; }
-    .news-editor:focus-within { border-color: #86b7fe; box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25); }
+    .news-editor:focus-within { border-color: #7ccdee; box-shadow: 0 0 0 0.25rem rgba(26, 111, 176, 0.25); }
     .news-editor__toolbar { display: flex; flex-wrap: wrap; gap: 4px; padding: 6px; border-bottom: 1px solid #dee2e6; background: #f8f9fa; border-radius: 0.5rem 0.5rem 0 0; position: sticky; top: 57px; z-index: 2; }
     .news-editor__toolbar .btn { min-width: 36px; min-height: 36px; font-weight: 600; }
-    .news-editor__toolbar .btn[aria-pressed="true"] { background: #dbeafe; border-color: #93c5fd; color: #1e40af; }
-    .news-editor__toolbar .btn:focus-visible { outline: 3px solid #3B82F6; outline-offset: 1px; }
+    .news-editor__toolbar .btn[aria-pressed="true"] { background: #dbeafe; border-color: #7ccdee; color: #2b4c9d; }
+    .news-editor__toolbar .btn:focus-visible { outline: 3px solid #1a6fb0; outline-offset: 1px; }
     .news-editor__sep { width: 1px; background: #dee2e6; margin: 4px 2px; }
     .news-editor__area { min-height: 320px; max-height: 70vh; overflow-y: auto; padding: 14px 16px; line-height: 1.75; outline: none; }
     .news-editor__area[lang="am"] { font-family: var(--font-ui); font-size: 1.05rem; line-height: 1.95; }
     .news-editor__area:empty::before { content: 'Write the article here…'; color: #9ca3af; }
     .news-editor__area h2 { font-size: 1.4rem; margin: 1rem 0 0.5rem; }
     .news-editor__area h3 { font-size: 1.2rem; margin: 1rem 0 0.5rem; }
-    .news-editor__area a { color: #2563eb; text-decoration: underline; }
+    .news-editor__area a { color: #2b4c9d; text-decoration: underline; }
     .news-similar-live:empty { display: none; }
     .news-similar-live { color: #92400e; background: #fffbeb; border: 1px solid #fde68a; border-radius: 0.4rem; padding: 6px 10px; }
     .is-saving .spinner-border { display: inline-block !important; }

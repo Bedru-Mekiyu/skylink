@@ -29,7 +29,7 @@
     }
 
     .hero-service-tag {
-        color: #3B82F6;
+        color: #1a6fb0;
         font-size: 18px;
         font-weight: 600;
         margin-bottom: 15px;
@@ -47,7 +47,7 @@
 }
 
     .categories-dropdown {
-        background: #3B82F6;
+        background: #1a6fb0;
         color: white;
         border: none;
         padding: 10px 18px;
@@ -64,7 +64,7 @@
     }
 
     .categories-dropdown:hover {
-        background: #1E40AF;
+        background: #2b4c9d;
         transform: translateY(-2px);
     }
 
@@ -81,7 +81,7 @@
     }
 
     .hero-title .tech-text {
-        color: #3B82F6;
+        color: #1a6fb0;
     }
 
     .hero-description {
@@ -111,12 +111,12 @@
     }
 
     .search-input:focus {
-        border-color: #3B82F6;
-        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        border-color: #1a6fb0;
+        box-shadow: 0 0 0 3px rgba(26, 111, 176, 0.1);
     }
 
     .search-btn {
-        background: #3B82F6;
+        background: #1a6fb0;
         color: white;
         border: none;
         padding: 15px 25px;
@@ -127,7 +127,7 @@
     }
 
     .search-btn:hover {
-        background: #1E40AF;
+        background: #2b4c9d;
         transform: translateY(-1px);
     }
 
@@ -155,7 +155,7 @@
 
     .search-result-item:hover {
         background: #f8f9fa;
-        color: #3B82F6;
+        color: #1a6fb0;
     }
 
     .search-result-item:last-child {
@@ -182,10 +182,10 @@
            left and a soft glow around the edge. */
         background:
             radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0) 55%),
-            linear-gradient(135deg, #3B82F6 0%, #2F6CE5 45%, #1E40AF 100%);
+            linear-gradient(135deg, #1a6fb0 0%, #1a6fb0 45%, #2b4c9d 100%);
         box-shadow:
-            0 24px 60px -12px rgba(30, 64, 175, 0.38),
-            0 0 0 10px rgba(59, 130, 246, 0.06),
+            0 24px 60px -12px rgba(43, 76, 157, 0.38),
+            0 0 0 10px rgba(26, 111, 176, 0.06),
             inset 0 0 0 1px rgba(255, 255, 255, 0.12);
     }
 
@@ -197,8 +197,8 @@
 
     .tech-orbit__ring--outer {
         inset: 4%;
-        border: 1px solid rgba(59, 130, 246, 0.2);
-        box-shadow: 0 0 24px rgba(59, 130, 246, 0.08);
+        border: 1px solid rgba(26, 111, 176, 0.2);
+        box-shadow: 0 0 24px rgba(26, 111, 176, 0.08);
     }
 
     .tech-orbit__ring--inner {
@@ -245,7 +245,7 @@
     }
 
     .hero-social-icon i {
-        color: #3B82F6;
+        color: #1a6fb0;
         font-size: 18px;
     }
 
@@ -302,7 +302,7 @@
         background: linear-gradient(150deg, rgba(255, 255, 255, 0.97), rgba(239, 245, 255, 0.86));
         border: 1px solid rgba(255, 255, 255, 0.9);
         box-shadow:
-            0 12px 28px -8px rgba(30, 64, 175, 0.28),
+            0 12px 28px -8px rgba(43, 76, 157, 0.28),
             0 2px 6px rgba(15, 23, 42, 0.06),
             inset 0 1px 0 #fff;
         transition: box-shadow 0.3s ease;
@@ -311,13 +311,13 @@
     .tech-icon:hover .tech-icon__badge,
     .tech-icon:focus-visible .tech-icon__badge {
         box-shadow:
-            0 16px 34px -8px rgba(30, 64, 175, 0.38),
-            0 0 0 6px rgba(59, 130, 246, 0.16),
+            0 16px 34px -8px rgba(43, 76, 157, 0.38),
+            0 0 0 6px rgba(26, 111, 176, 0.16),
             inset 0 1px 0 #fff;
     }
 
     .tech-icon:focus-visible .tech-icon__badge {
-        outline: 2px solid #1E40AF;
+        outline: 2px solid #2b4c9d;
         outline-offset: 3px;
     }
 
@@ -335,7 +335,7 @@
         transform: translateX(-50%);
         padding: 3px 10px;
         border-radius: 999px;
-        background: #1E40AF;
+        background: #2b4c9d;
         color: #fff;
         font-size: 13px;
         font-weight: 600;
@@ -507,62 +507,13 @@
 
     .service-tab.active,
     .service-tab:hover {
-        background: #3B82F6;
+        background: #1a6fb0;
         color: rgb(216, 219, 220);
         transform: translateY(-2px);
     }
 
-    .service-card {
-        background: white;
-        overflow: hidden;
-        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-        transition: all 0.3s ease;
-        margin-bottom: 30px;
-        opacity: 1;
-        transform: translateY(0);
-    }
+    .service-card.hidden { display: none !important; }
 
-    .service-card.hidden {
-        display: none !important;
-    }
-
-    .service-card:hover {
-        transform: translateY(-10px);
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-    }
-
-    .service-card img {
-        width: 100%;
-        height: 200px;
-        object-fit: cover;
-        transition: all 0.3s ease;
-    }
-
-    .service-card:hover img {
-        transform: scale(1.05);
-    }
-
-    .service-card-body {
-        padding: 25px;
-    }
-
-    .service-card h5 {
-        font-weight: 600;
-        margin-bottom: 10px;
-        color: #333;
-    }
-
-    .service-card p {
-        color: #666;
-        font-size: 0.9rem;
-        margin-bottom: 20px;
-    }
-
-    .service-card-footer {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
 
     
 
@@ -583,7 +534,7 @@
   }
 
   .filter-bar .filter-btn.active {
-    background-color: #0d6efd;
+    background-color: #1a6fb0;
     color: #fff;
   }
 
@@ -643,14 +594,14 @@
         .line-long {
             width: 80px;
             height: 4px;
-            background: #17a2b8;
+            background: #1a6fb0;
             border-radius: 2px;
         }
 
         .line-short {
             width: 20px;
             height: 4px;
-            background: #17a2b8;
+            background: #1a6fb0;
             border-radius: 2px;
         }
 
@@ -710,19 +661,19 @@
             height: 70px;
             border-radius: 50%;
             margin-right: 20px;
-            border: 3px solid #17a2b8;
+            border: 3px solid #1a6fb0;
             transition: all 0.3s ease;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 2rem;
-            color: #17a2b8;
+            color: #1a6fb0;
             background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
-            box-shadow: 0 4px 15px rgba(23, 162, 184, 0.2);
+            box-shadow: 0 4px 15px rgba(26, 111, 176, 0.2);
         }
 
         .client-info h5 {
-            color: #17a2b8;
+            color: #1a6fb0;
             font-weight: 600;
             margin-bottom: 5px;
             font-size: 1.2rem;
@@ -825,7 +776,7 @@
     .contact-icon {
         width: 60px;
         height: 60px;
-        background: #3B82F6;
+        background: #1a6fb0;
         border-radius: 50%;
         display: flex;
         align-items: center;
@@ -836,7 +787,7 @@
     }
 
     .contact-form {
-        background: rgb(26, 137, 255);
+        background: rgb(26, 111, 176);
         padding: 40px;
         color: white;
     }
@@ -1032,7 +983,7 @@
 
 <!-- Service Cards -->
 <div class="container">
-  <div class="row" id="service-cards">
+  <div class="row sky-commerce sky-catalog" id="service-cards">
     @php
       // Cards: published categories in the admin's order (Admin > Service Categories).
       $services = $serviceCards->map(fn ($c) => [
@@ -1046,23 +997,19 @@
 
     @foreach($services as $service)
   <div class="col-md-6 col-lg-3 mb-4 service-card" data-category="{{ $service['category'] }}">
-    <div class="card h-100 shadow-sm border-0 overflow-hidden">
-      <div style="aspect-ratio: 16/9; overflow: hidden;">
-        @if (str_starts_with($service['raw'], 'assets/'))
-          @include('partials.picture', ['src' => $service['raw'], 'alt' => $service['title'], 'sizes' => '(max-width: 767px) 100vw, (max-width: 991px) 50vw, 25vw', 'class' => 'w-100 h-90 object-fit-cover'])
-        @else
-          <img src="{{ $service['img'] }}" alt="{{ $service['title'] }}" class="w-100 h-90 object-fit-cover" loading="lazy" decoding="async">
-        @endif
+    <article class="sky-card">
+      <div class="sky-card__media">
+          @if (str_starts_with($service['raw'], 'assets/'))
+            @include('partials.picture', ['src' => $service['raw'], 'alt' => $service['title'], 'sizes' => '(max-width: 767px) 100vw, (max-width: 991px) 50vw, 25vw', 'class' => 'w-100 h-90 object-fit-cover'])
+          @else
+            <img src="{{ $service['img'] }}" alt="{{ $service['title'] }}" class="w-100 h-90 object-fit-cover" loading="lazy" decoding="async">
+          @endif
       </div>
-      <div class="card-body d-flex flex-column">
-        <h5 class="card-title fw-bold">{{ $service['title'] }}</h5>
-        <p class="card-text flex-grow-1">{{ $service['desc'] }}</p>
-        <a href="{{ route('services.category', ['category' => $service['category']]) }}"
-           class="text-decoration-none text-primary fw-semibold mt-2">
-          Learn more →
-        </a>
+      <div class="sky-card__body">
+        <h3 class="sky-card__title"><a href="{{ route('services.category', ['category' => $service['category']]) }}" class="stretched-link">{{ $service['title'] }}</a></h3>
+        <p class="sky-card__desc">{{ $service['desc'] }}</p>
       </div>
-    </div>
+    </article>
   </div>
 @endforeach
 
@@ -1103,7 +1050,7 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-6">
-            <h5 class="mb-4" style="font-weight: 500; color: #1076f3;">REQUEST A QUOTE</h5>
+            <h5 class="mb-4" style="font-weight: 500; color: #1a6fb0;">REQUEST A QUOTE</h5>
 
                 <div class="contact-info fade-in">
                     
@@ -1138,7 +1085,7 @@
                             </div>
                             <div>
                                 <h5 style="font-weight: 600; margin-bottom: 5px;">Call to ask any Question</h5>
-                                <p style="color: #3B82F6; font-weight: 600; margin: 0;"><a class="tel-nowrap" style="color: inherit; text-decoration: none;" href="{{ \App\Support\PhoneNumber::tel(config('company_contact.phones')[0]) }}">{{ \App\Support\PhoneNumber::international(config('company_contact.phones')[0]) }}</a></p>
+                                <p style="color: #1a6fb0; font-weight: 600; margin: 0;"><a class="tel-nowrap" style="color: inherit; text-decoration: none;" href="{{ \App\Support\PhoneNumber::tel(config('company_contact.phones')[0]) }}">{{ \App\Support\PhoneNumber::international(config('company_contact.phones')[0]) }}</a></p>
                             </div>
                         </div>
                     </div>
@@ -1228,214 +1175,75 @@
         const searchInput = document.getElementById('searchInput');
         const searchBtn = document.getElementById('searchBtn');
         const searchResults = document.getElementById('searchResults');
-        const serviceItems = document.querySelectorAll('.service-item');
+        const serviceCards = document.querySelectorAll('.service-card');
 
         function performSearch(query) {
             const results = [];
-            serviceItems.forEach(item => {
-                const title = item.querySelector('h5').textContent.toLowerCase();
-                const description = item.querySelector('p').textContent.toLowerCase();
-                const keywords = item.getAttribute('data-keywords').toLowerCase();
+            serviceCards.forEach(card => {
+                const titleEl = card.querySelector('.sky-card__title');
+                const descEl = card.querySelector('.sky-card__desc');
+                const title = titleEl ? titleEl.textContent.toLowerCase() : '';
+                const desc = descEl ? descEl.textContent.toLowerCase() : '';
+                const cat = card.getAttribute('data-category') || '';
                 
-                if (title.includes(query.toLowerCase()) || 
-                    description.includes(query.toLowerCase()) || 
-                    keywords.includes(query.toLowerCase())) {
+                if (title.includes(query.toLowerCase()) || desc.includes(query.toLowerCase()) || cat.includes(query.toLowerCase())) {
+                    card.style.display = 'block';
                     results.push({
-                        title: item.querySelector('h5').textContent,
-                        description: item.querySelector('p').textContent,
-                        element: item
+                        title: titleEl ? titleEl.textContent.trim() : '',
+                        description: descEl ? descEl.textContent.trim() : '',
+                        link: card.querySelector('a') ? card.querySelector('a').getAttribute('href') : '#'
                     });
+                } else {
+                    card.style.display = 'none';
                 }
             });
             return results;
         }
 
         function displaySearchResults(results) {
+            if (!searchResults) return;
             if (results.length === 0) {
-                searchResults.innerHTML = '<div class="search-result-item">No services found</div>';
+                searchResults.innerHTML = '<div class="p-2 text-muted small">No services found</div>';
             } else {
-                searchResults.innerHTML = results.map(result => 
-                    `<div class="search-result-item" data-title="${result.title}">
-                        <strong>${result.title}</strong><br>
-                        <small>${result.description.substring(0, 80)}...</small>
-                    </div>`
+                searchResults.innerHTML = results.slice(0, 5).map(result => 
+                    `<a href="${result.link}" class="d-block p-2 text-decoration-none border-bottom search-result-item" style="color: #333;">
+                        <strong class="text-primary">${result.title}</strong><br>
+                        <small class="text-muted">${result.description.substring(0, 70)}...</small>
+                    </a>`
                 ).join('');
             }
             searchResults.style.display = 'block';
         }
 
-        searchInput.addEventListener('input', function() {
-            const query = this.value.trim();
-            if (query.length > 0) {
-                const results = performSearch(query);
-                displaySearchResults(results);
-            } else {
-                searchResults.style.display = 'none';
-            }
-        });
-
-        searchBtn.addEventListener('click', function() {
-            const query = searchInput.value.trim();
-            if (query) {
-                const results = performSearch(query);
-                displaySearchResults(results);
-                
-                // Filter services based on search and rearrange
-                filterAndRearrangeServices(results.map(r => r.element));
-                
-                // Scroll to services section
-                document.getElementById('services').scrollIntoView({ behavior: 'smooth' });
-            }
-        });
-
-        // Click on search results
-        searchResults.addEventListener('click', function(e) {
-            if (e.target.classList.contains('search-result-item')) {
-                const title = e.target.getAttribute('data-title');
-                searchInput.value = title;
-                searchResults.style.display = 'none';
-                
-                // Filter and highlight the selected service
-                const matchingItems = [];
-                serviceItems.forEach(item => {
-                    if (item.querySelector('h5').textContent === title) {
-                        matchingItems.push(item);
-                    }
-                });
-                
-                filterAndRearrangeServices(matchingItems);
-                document.getElementById('services').scrollIntoView({ behavior: 'smooth' });
-            }
-        });
-
-        // Hide search results when clicking outside
-        document.addEventListener('click', function(e) {
-            if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) {
-                searchResults.style.display = 'none';
-            }
-        });
-
-        // Function to filter and rearrange services
-        function filterAndRearrangeServices(visibleItems) {
-            const servicesGrid = document.getElementById('servicesGrid');
-            
-            // Hide all items first
-            serviceItems.forEach(item => {
-                item.classList.add('hidden');
-            });
-            
-            // Clear the grid and re-append only visible items
-            const allItems = Array.from(serviceItems);
-            allItems.forEach(item => {
-                if (servicesGrid.contains(item)) {
-                    servicesGrid.removeChild(item);
+        if (searchInput) {
+            searchInput.addEventListener('input', function() {
+                const query = this.value.trim();
+                if (query.length > 0) {
+                    const results = performSearch(query);
+                    displaySearchResults(results);
+                } else {
+                    if (searchResults) searchResults.style.display = 'none';
+                    serviceCards.forEach(card => card.style.display = 'block');
                 }
-            });
-            
-            // Add visible items back to the grid in order
-            visibleItems.forEach(item => {
-                item.classList.remove('hidden');
-                servicesGrid.appendChild(item);
             });
         }
 
-        // Service tabs functionality - Updated to rearrange services
-        document.querySelectorAll('.service-tab').forEach(tab => {
-            tab.addEventListener('click', function() {
-                // Remove active class from all tabs
-                document.querySelectorAll('.service-tab').forEach(t => t.classList.remove('active'));
-                // Add active class to clicked tab
-                this.classList.add('active');
-                
-                const filter = this.getAttribute('data-filter');
-                const visibleItems = [];
-                
-                serviceItems.forEach(item => {
-                    const category = item.getAttribute('data-category');
-                    const title = item.querySelector('h5').textContent.toLowerCase();
-                    
-                    // Check if filter matches category or if it's "all"
-                    let shouldShow = false;
-                    
-                    if (filter === 'all') {
-                        shouldShow = true;
-                    } else if (category === filter) {
-                        shouldShow = true;
-                    } else {
-                        // Also check if the filter word is in the title
-                        shouldShow = title.includes(filter.toLowerCase());
-                    }
-                    
-                    if (shouldShow) {
-                        visibleItems.push(item);
-                    }
-                });
-                
-                if (filter === 'all') {
-                    // Show all items in original order
-                    const servicesGrid = document.getElementById('servicesGrid');
-                    const allItems = Array.from(serviceItems);
-                    
-                    // Clear grid
-                    allItems.forEach(item => {
-                        if (servicesGrid.contains(item)) {
-                            servicesGrid.removeChild(item);
-                        }
-                    });
-                    
-                    // Re-add all items in original order
-                    allItems.forEach(item => {
-                        item.classList.remove('hidden');
-                        servicesGrid.appendChild(item);
-                    });
-                } else {
-                    filterAndRearrangeServices(visibleItems);
+        if (searchBtn) {
+            searchBtn.addEventListener('click', function() {
+                const query = searchInput ? searchInput.value.trim() : '';
+                if (query) {
+                    performSearch(query);
+                    const servicesSec = document.getElementById('services');
+                    if (servicesSec) servicesSec.scrollIntoView({ behavior: 'smooth' });
                 }
-                
-                // Clear search when filtering
-                searchInput.value = '';
-                searchResults.style.display = 'none';
             });
-        });
+        }
 
-        // Categories dropdown filtering - Updated to rearrange services
-        document.querySelectorAll('.categories-dropdown + .dropdown-menu .dropdown-item').forEach(item => {
-            item.addEventListener('click', function(e) {
-                e.preventDefault();
-                const filter = this.getAttribute('data-filter');
-                
-                // Update active tab
-                document.querySelectorAll('.service-tab').forEach(t => t.classList.remove('active'));
-                const matchingTab = document.querySelector(`[data-filter="${filter}"]`);
-                if (matchingTab) {
-                    matchingTab.classList.add('active');
-                }
-                
-                // Filter services and rearrange
-                const visibleItems = [];
-                serviceItems.forEach(serviceItem => {
-                    const category = serviceItem.getAttribute('data-category');
-                    const title = serviceItem.querySelector('h5').textContent.toLowerCase();
-                    
-                    let shouldShow = false;
-                    
-                    if (category === filter) {
-                        shouldShow = true;
-                    } else {
-                        // Check if the filter word is in the title
-                        shouldShow = title.includes(filter.toLowerCase());
-                    }
-                    
-                    if (shouldShow) {
-                        visibleItems.push(serviceItem);
-                    }
-                });
-                
-                filterAndRearrangeServices(visibleItems);
-                
-                // Scroll to services
-                document.getElementById('services').scrollIntoView({ behavior: 'smooth' });
-            });
+        // Hide search results when clicking outside
+        document.addEventListener('click', function(e) {
+            if (searchResults && searchInput && !searchInput.contains(e.target) && !searchResults.contains(e.target)) {
+                searchResults.style.display = 'none';
+            }
         });
 
         
@@ -1502,7 +1310,7 @@
                         heartIcon.classList.remove('fas');
                         heartIcon.classList.add('far');
                         this.style.background = 'white';
-                        heartIcon.style.color = '#3B82F6';
+                        heartIcon.style.color = '#1a6fb0';
                     }
                 } else if (iconClass.contains('fa-bell')) {
                     // (demo pop-up removed: the site has no notifications)
@@ -1525,7 +1333,6 @@
         // Mega dropdown interactions
         
 
-        console.log('All functionality loaded successfully!');
     });
 
 

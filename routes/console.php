@@ -27,3 +27,6 @@ Artisan::command('inspire', function () {
 
 // Privacy: anonymise website messages older than CONTACT_RETENTION_MONTHS (default 24).
 \Illuminate\Support\Facades\Schedule::command('inquiries:anonymize')->monthlyOn(1, '03:00');
+
+// Recurring plans: create the next order and email its payment link. Does nothing unless RENEWAL_REMINDERS_ENABLED=true.
+\Illuminate\Support\Facades\Schedule::command('billing:renew')->dailyAt('08:00')->withoutOverlapping();

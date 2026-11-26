@@ -27,7 +27,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         // Public pages keep their data in a short cache; any change to this content rebuilds it (see App\Support\PublicCache).
-        foreach ([\App\Models\Product::class, \App\Models\Service::class, \App\Models\ServiceCategory::class, \App\Models\Portfolio::class, \App\Models\News::class, \App\Models\NewsCategory::class, \App\Models\Video::class, \App\Models\SiteSetting::class] as $model) {
+        foreach ([\App\Models\Product::class, \App\Models\Service::class, \App\Models\ItemOption::class, \App\Models\ServiceCategory::class, \App\Models\Portfolio::class, \App\Models\News::class, \App\Models\NewsCategory::class, \App\Models\Video::class, \App\Models\SiteSetting::class] as $model) {
             foreach (['saved', 'deleted'] as $event) {
                 $model::$event(fn () => \App\Support\PublicCache::bust());
             }

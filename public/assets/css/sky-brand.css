@@ -1,0 +1,95 @@
+/* Sky Link colours, taken from the logo. Change them here.
+   sky   #26abe2  lightest end of the logo: decoration, and text on dark backgrounds only (too light on white)
+   blue  #1a6fb0  buttons, links, selected things (white text on it reads at 5.3:1)
+   deep  #2b4c9d  darkest end of the logo: gradients, hover, badges
+   dark  #223c80  pressed
+   Green, red and amber keep their meaning (success, danger, warning) and are not brand colours. */
+:root {
+    --brand-sky: #26abe2;
+    --brand-blue: #1a6fb0;
+    --brand-deep: #2b4c9d;
+    --brand-dark: #223c80;
+    --brand-light: #7ccdee;
+    --brand-tint: #eaf6fc;
+    --brand-gradient: linear-gradient(135deg, #1a6fb0, #2b4c9d);
+
+    /* the names the pages already use */
+    --primary-blue: #1a6fb0;
+    --news-blue: #1a6fb0;
+    --sidebar-link-active: #1a6fb0;
+
+    /* Bootstrap */
+    --bs-blue: #1a6fb0;
+    --bs-primary: #1a6fb0;
+    --bs-primary-rgb: 26, 111, 176;
+    --bs-primary-bg-subtle: #eaf6fc;
+    --bs-primary-border-subtle: #b5ddf2;
+    --bs-primary-text-emphasis: #223c80;
+    --bs-info: #26abe2;
+    --bs-info-rgb: 38, 171, 226;
+    --bs-link-color: #1a6fb0;
+    --bs-link-color-rgb: 26, 111, 176;
+    --bs-link-hover-color: #2b4c9d;
+    --bs-link-hover-color-rgb: 43, 76, 157;
+    --bs-focus-ring-color: rgba(26, 111, 176, .25);
+}
+.sky-commerce, .sky-catalog { --sky-blue: #1a6fb0; --sky-tint: #f2f9fd; }
+
+.btn-primary, .btn-info {
+    --bs-btn-color: #fff; --bs-btn-bg: #1a6fb0; --bs-btn-border-color: #1a6fb0;
+    --bs-btn-hover-color: #fff; --bs-btn-hover-bg: #2b4c9d; --bs-btn-hover-border-color: #2b4c9d;
+    --bs-btn-active-color: #fff; --bs-btn-active-bg: #223c80; --bs-btn-active-border-color: #223c80;
+    --bs-btn-disabled-color: #fff; --bs-btn-disabled-bg: #1a6fb0; --bs-btn-disabled-border-color: #1a6fb0;
+    --bs-btn-focus-shadow-rgb: 26, 111, 176;
+}
+.btn-outline-primary, .btn-outline-info {
+    --bs-btn-color: #1a6fb0; --bs-btn-border-color: #1a6fb0;
+    --bs-btn-hover-color: #fff; --bs-btn-hover-bg: #1a6fb0; --bs-btn-hover-border-color: #1a6fb0;
+    --bs-btn-active-color: #fff; --bs-btn-active-bg: #2b4c9d; --bs-btn-active-border-color: #2b4c9d;
+    --bs-btn-disabled-color: #1a6fb0; --bs-btn-disabled-border-color: #1a6fb0;
+    --bs-btn-focus-shadow-rgb: 26, 111, 176;
+}
+.btn-link { --bs-btn-color: #1a6fb0; --bs-btn-hover-color: #2b4c9d; --bs-btn-active-color: #223c80; }
+.text-primary, .text-info { color: #1a6fb0 !important; }
+.bg-primary { background-color: #1a6fb0 !important; }
+.bg-info { background-color: #26abe2 !important; color: #0b1f3a; }
+.badge.bg-info, .badge.bg-info-subtle { color: #0b1f3a !important; }
+.border-primary { border-color: #1a6fb0 !important; }
+.alert-info { --bs-alert-bg: #eaf6fc; --bs-alert-border-color: #b5ddf2; --bs-alert-color: #1d3a7a; }
+.form-control:focus, .form-select:focus { border-color: #1a6fb0; box-shadow: 0 0 0 .25rem rgba(26, 111, 176, .2); }
+.form-check-input:checked { background-color: #1a6fb0; border-color: #1a6fb0; }
+.page-link { --bs-pagination-color: #1a6fb0; --bs-pagination-active-bg: #1a6fb0; --bs-pagination-active-border-color: #1a6fb0; }
+.pagination { --bs-pagination-color: #1a6fb0; --bs-pagination-active-bg: #1a6fb0; --bs-pagination-active-border-color: #1a6fb0; }
+.dropdown-menu { --bs-dropdown-link-active-bg: #1a6fb0; }
+.list-group { --bs-list-group-active-bg: #1a6fb0; --bs-list-group-active-border-color: #1a6fb0; }
+.nav-pills { --bs-nav-pills-link-active-bg: #1a6fb0; }
+.progress, .progress-stacked { --bs-progress-bar-bg: #1a6fb0; }
+.accordion { --bs-accordion-active-bg: #eaf6fc; --bs-accordion-active-color: #223c80; --bs-accordion-btn-focus-border-color: #1a6fb0; }
+
+/* Main buttons and panels carry the logo's gradient. */
+.sky-commerce .btn-primary, .sky-commerce .card-header.bg-primary, .sky-commerce span.bg-primary.rounded-circle { background: var(--brand-gradient) !important; }
+.sky-commerce .btn-primary:hover, .sky-commerce .btn-primary:focus, .sky-commerce .btn-primary:active { background: linear-gradient(135deg, #2b4c9d, #223c80) !important; }
+.sky-commerce .btn-outline-primary:hover { background: var(--brand-tint); color: var(--brand-deep); }
+
+/* The cart count on the navbar is a brand badge, not an alarm. */
+.nav-cart-badge.badge { background-color: var(--brand-deep) !important; color: #fff; }
+::selection { background: #bfe4f6; color: #0b1f3a; }
+
+/* names on grey cards need the deeper logo blue to stay readable */
+h5.brand-name { color: var(--brand-deep) !important; }
+
+/* Way back, beside the logo: a full 44px touch target at every screen size. */
+.sky-nav-start { display: flex; align-items: center; gap: .5rem; min-width: 0; }
+.sky-back { display: inline-flex; flex: 0 0 auto; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 999px;
+    border: 1px solid var(--bs-primary-border-subtle); background: var(--brand-tint); color: var(--brand-deep); text-decoration: none; }
+.sky-back:hover { background: var(--brand-blue); border-color: var(--brand-blue); color: #fff; }
+.sky-back:focus-visible { outline: 3px solid var(--brand-deep); outline-offset: 2px; }
+/* On phones the logo makes room for the arrow, keeping its shape. */
+@media (max-width: 575.98px) {
+    .sky-nav-start { gap: .35rem; }
+    .sky-nav-start .logo-img { height: 40px !important; width: auto !important; max-width: 108px; object-fit: contain; margin-right: 0 !important; }
+}
+@media (max-width: 340px) { .sky-nav-start .logo-img { height: 32px !important; max-width: 86px; } }
+
+/* Where the full menu is on screen (laptops and up) the arrow is not needed. Sign-in has no menu, so it keeps it. */
+@media (min-width: 992px) { .sky-nav-start .sky-back { display: none; } }

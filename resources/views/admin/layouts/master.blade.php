@@ -19,7 +19,7 @@
         --sidebar-bg: #111827;
         --sidebar-link-color: #9CA3AF;
         --sidebar-link-hover: #F9FAFB;
-        --sidebar-link-active: #3B82F6;
+        --sidebar-link-active: #1a6fb0;
         --content-bg: #F9FAFB;
         --navbar-bg: #FFFFFF;
         --text-color: #1F2937;
@@ -71,10 +71,10 @@
     .stat-card-icon { display: flex; align-items: center; justify-content: center; width: 3.5rem; height: 3.5rem; border-radius: 50%; font-size: 1.5rem; color: #fff; }
     .stat-card-content .stat-label { font-size: 0.85rem; font-weight: 500; text-transform: uppercase; color: var(--text-muted); }
     .stat-card-content .stat-value { font-size: 1.75rem; font-weight: 700; color: var(--text-color); }
-    .stat-card-icon.bg-primary { background-color: #3B82F6; }
+    .stat-card-icon.bg-primary { background-color: #1a6fb0; }
     .stat-card-icon.bg-success { background-color: #10B981; }
     .stat-card-icon.bg-warning { background-color: #F59E0B; }
-    .stat-card-icon.bg-info { background-color: #38BDF8; }
+    .stat-card-icon.bg-info { background-color: #1a6fb0; }
     .placeholder-card-body { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 250px; background-color: #fff; border-top: 1px solid var(--border-color); text-align: center; }
     @keyframes slideInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
     .row > [class*='col-'] { animation: slideInUp 0.5s ease-out forwards; }
@@ -114,9 +114,17 @@
 
  <link href="{{ asset('assets/css/sky-confirm.css') }}" rel="stylesheet">
 @stack('styles')
+    <link rel="stylesheet" href="{{ asset('assets/css/sky-brand.css') }}?v={{ @filemtime(public_path('assets/css/sky-brand.css')) }}">
 </head>
 <body>
-    @php($adminUnreadInbox = \App\Models\Inquiry::unread()->count())
+    @php
+        $adminUnreadInbox = \App\Models\Inquiry::unread()->count();
+        $authUser = Auth::user();
+        $isSuperAdmin = $authUser && $authUser->hasRole('super_admin');
+        $isContentEditor = $authUser && $authUser->hasRole(['super_admin', 'content_editor']);
+        $isSales = $authUser && $authUser->hasRole(['super_admin', 'sales']);
+        $isFinance = $authUser && $authUser->hasRole(['super_admin', 'finance']);
+    @endphp
     
     <div class="main-layout">
         <!-- ===== DESKTOP SIDEBAR ===== -->
@@ -130,27 +138,63 @@
 
             <ul class="nav flex-column">
                 <li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}" href="{{ route('admin.dashboard') }}"><i class="fas fa-tachometer-alt fa-fw"></i> Dashboard</a></li>
-                <li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.inbox.*') ? 'active' : '' }}" href="{{ route('admin.inbox.index') }}"><i class="fas fa-inbox fa-fw"></i> Inbox @if ($adminUnreadInbox)<span class="badge rounded-pill text-bg-danger ms-auto">{{ $adminUnreadInbox }}<span class="visually-hidden"> unread</span></span>@endif</a></li>
-                <li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.anniversary.*') ? 'active' : '' }}" href="{{ route('admin.anniversary.edit') }}"><i class="fas fa-champagne-glasses fa-fw"></i> Anniversary Ceremony</a></li>
-                <li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.hero-video.*') ? 'active' : '' }}" href="{{ route('admin.hero-video.edit') }}"><i class="fas fa-film fa-fw"></i> Homepage Video</a></li>
-                <li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.partners.*') ? 'active' : '' }}" href="{{ route('admin.partners.index') }}"><i class="fas fa-handshake fa-fw"></i> Partners</a></li>
-                <li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.gallery.*') ? 'active' : '' }}" href="{{ route('admin.gallery.index') }}"><i class="fas fa-images fa-fw"></i> Gallery</a></li>
-                <li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.testimonials.*') ? 'active' : '' }}" href="{{ route('admin.testimonials.index') }}"><i class="fas fa-comment-dots fa-fw"></i> Testimonials</a></li>
-                <li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.departments.*') ? 'active' : '' }}" href="{{ route('admin.departments.index') }}"><i class="fas fa-people-group fa-fw"></i> Departments</a></li>
-                <li class="sidebar-heading mt-2">Content</li>
-                <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="collapse" href="#contentCollapseDesktop"><i class="fas fa-file-alt fa-fw"></i> Manage Content <i class="fas fa-chevron-down ms-auto"></i></a>
-                    <div class="collapse {{ request()->routeIs('admin.portfolio.*', 'admin.news.*', 'admin.videos.*') ? 'show' : '' }}" id="contentCollapseDesktop">
-                        <ul class="nav flex-column"><li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.portfolio.*') ? 'active' : '' }}" href="{{ route('admin.portfolio.index') }}">Portfolio</a></li><li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.news.*') ? 'active' : '' }}" href="{{ route('admin.news.index') }}">News</a></li><li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.videos.*') ? 'active' : '' }}" href="{{ route('admin.videos.index') }}">Videos</a></li></ul>
-                    </div>
-                </li>
-                <li class="sidebar-heading mt-2">Management</li>
-                <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="collapse" href="#managementCollapseDesktop"><i class="fas fa-cogs fa-fw"></i> Site Management <i class="fas fa-chevron-down ms-auto"></i></a>
-                    <div class="collapse {{ request()->routeIs('admin.services.*', 'admin.service-categories.*', 'admin.products.*', 'admin.subscribers.*', 'admin.contact-messages.*', 'admin.settings.*') ? 'show' : '' }}" id="managementCollapseDesktop">
-                        <ul class="nav flex-column"><li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.services.*') ? 'active' : '' }}" href="{{ route('admin.services.index') }}">Services</a></li><li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.service-categories.*') ? 'active' : '' }}" href="{{ route('admin.service-categories.index') }}">Service Categories</a></li><li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.products.*') ? 'active' : '' }}" href="{{ route('admin.products.index') }}">Products</a></li><li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.subscribers.*') ? 'active' : '' }}" href="{{ route('admin.subscribers.index') }}">Subscribers</a></li><li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.contact-messages.*') ? 'active' : '' }}" href="{{ route('admin.contact-messages.index') }}">Messages</a></li><li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.settings.*') ? 'active' : '' }}" href="{{ route('admin.settings.edit') }}">Settings</a></li></ul>
-                    </div>
-                </li>
+
+                @if($isSales)
+                    <li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.inbox.*') ? 'active' : '' }}" href="{{ route('admin.inbox.index') }}"><i class="fas fa-inbox fa-fw"></i> Inbox @if ($adminUnreadInbox)<span class="badge rounded-pill text-bg-danger ms-auto">{{ $adminUnreadInbox }}<span class="visually-hidden"> unread</span></span>@endif</a></li>
+                @endif
+
+                @if($isFinance)
+                    <li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.orders.*') ? 'active' : '' }}" href="{{ route('admin.orders.index') }}"><i class="fas fa-shopping-bag fa-fw"></i> Orders & Payments</a></li>
+                    <li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.prices.*') ? 'active' : '' }}" href="{{ route('admin.prices.index') }}"><i class="fas fa-tags fa-fw"></i> Prices Overview</a></li>
+                    <li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.billing.*') ? 'active' : '' }}" href="{{ route('admin.billing.index') }}"><i class="fas fa-rotate fa-fw"></i> Recurring Plans</a></li>
+                @endif
+
+                @if($isSales)
+                    <li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.subscribers.*') ? 'active' : '' }}" href="{{ route('admin.subscribers.index') }}"><i class="fas fa-address-book fa-fw"></i> Subscribers</a></li>
+                    <li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.contact-messages.*') ? 'active' : '' }}" href="{{ route('admin.contact-messages.index') }}"><i class="fas fa-envelope fa-fw"></i> Messages</a></li>
+                @endif
+
+                @if($isContentEditor)
+                    <li class="sidebar-heading mt-2">Marketing & Media</li>
+                    <li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.partners.*') ? 'active' : '' }}" href="{{ route('admin.partners.index') }}"><i class="fas fa-handshake fa-fw"></i> Partners</a></li>
+                    <li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.gallery.*') ? 'active' : '' }}" href="{{ route('admin.gallery.index') }}"><i class="fas fa-images fa-fw"></i> Gallery</a></li>
+                    <li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.testimonials.*') ? 'active' : '' }}" href="{{ route('admin.testimonials.index') }}"><i class="fas fa-comment-dots fa-fw"></i> Testimonials</a></li>
+                    <li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.departments.*') ? 'active' : '' }}" href="{{ route('admin.departments.index') }}"><i class="fas fa-people-group fa-fw"></i> Departments</a></li>
+
+                    <li class="sidebar-heading mt-2">Content</li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="collapse" href="#contentCollapseDesktop"><i class="fas fa-file-alt fa-fw"></i> Manage Content <i class="fas fa-chevron-down ms-auto"></i></a>
+                        <div class="collapse {{ request()->routeIs('admin.portfolio.*', 'admin.news.*', 'admin.videos.*', 'admin.hero-video.*') ? 'show' : '' }}" id="contentCollapseDesktop">
+                            <ul class="nav flex-column">
+                                <li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.portfolio.*') ? 'active' : '' }}" href="{{ route('admin.portfolio.index') }}">Portfolio</a></li>
+                                <li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.news.*') ? 'active' : '' }}" href="{{ route('admin.news.index') }}">News</a></li>
+                                <li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.videos.*') ? 'active' : '' }}" href="{{ route('admin.videos.index') }}">Videos</a></li>
+                                <li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.hero-video.*') ? 'active' : '' }}" href="{{ route('admin.hero-video.edit') }}">Homepage Video</a></li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="sidebar-heading mt-2">Catalog</li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="collapse" href="#catalogCollapseDesktop"><i class="fas fa-boxes fa-fw"></i> Catalog & Services <i class="fas fa-chevron-down ms-auto"></i></a>
+                        <div class="collapse {{ request()->routeIs('admin.services.*', 'admin.service-categories.*', 'admin.products.*') ? 'show' : '' }}" id="catalogCollapseDesktop">
+                            <ul class="nav flex-column">
+                                <li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.services.*') ? 'active' : '' }}" href="{{ route('admin.services.index') }}">Services</a></li>
+                                <li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.service-categories.*') ? 'active' : '' }}" href="{{ route('admin.service-categories.index') }}">Service Categories</a></li>
+                                <li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.products.*') ? 'active' : '' }}" href="{{ route('admin.products.index') }}">Products</a></li>
+                                <li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.product-categories.*') ? 'active' : '' }}" href="{{ route('admin.product-categories.index') }}">Product Categories</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                @endif
+
+                @if($isSuperAdmin)
+                    <li class="sidebar-heading mt-2">Administration</li>
+                    <li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.staff.*') ? 'active' : '' }}" href="{{ route('admin.staff.index') }}"><i class="fas fa-users-cog fa-fw"></i> Staff & Roles</a></li>
+                    <li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.audit-logs.*') ? 'active' : '' }}" href="{{ route('admin.audit-logs.index') }}"><i class="fas fa-history fa-fw"></i> Audit Logs</a></li>
+                    <li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.anniversary.*') ? 'active' : '' }}" href="{{ route('admin.anniversary.edit') }}"><i class="fas fa-champagne-glasses fa-fw"></i> Anniversary Ceremony</a></li>
+                    <li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.settings.*') ? 'active' : '' }}" href="{{ route('admin.settings.edit') }}"><i class="fas fa-sliders-h fa-fw"></i> Settings</a></li>
+                @endif
             </ul>
             <div class="mt-auto"><hr class="my-3" style="border-color: rgba(255,255,255,0.1);"><ul class="nav flex-column p-2"><li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.profile.*') ? 'active' : '' }}" href="{{ route('admin.profile.edit') }}"><i class="fas fa-user-circle fa-fw"></i> My Profile</a></li><li class="nav-item"><a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="fas fa-sign-out-alt fa-fw"></i> Logout</a></li></ul></div>
         </nav>
@@ -170,27 +214,63 @@
             <div class="offcanvas-body d-flex flex-column p-0">
                 <ul class="nav flex-column">
                     <li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}" href="{{ route('admin.dashboard') }}"><i class="fas fa-tachometer-alt fa-fw"></i> Dashboard</a></li>
-                <li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.inbox.*') ? 'active' : '' }}" href="{{ route('admin.inbox.index') }}"><i class="fas fa-inbox fa-fw"></i> Inbox @if ($adminUnreadInbox)<span class="badge rounded-pill text-bg-danger ms-auto">{{ $adminUnreadInbox }}<span class="visually-hidden"> unread</span></span>@endif</a></li>
-                <li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.anniversary.*') ? 'active' : '' }}" href="{{ route('admin.anniversary.edit') }}"><i class="fas fa-champagne-glasses fa-fw"></i> Anniversary Ceremony</a></li>
-                <li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.hero-video.*') ? 'active' : '' }}" href="{{ route('admin.hero-video.edit') }}"><i class="fas fa-film fa-fw"></i> Homepage Video</a></li>
-                <li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.partners.*') ? 'active' : '' }}" href="{{ route('admin.partners.index') }}"><i class="fas fa-handshake fa-fw"></i> Partners</a></li>
-                <li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.gallery.*') ? 'active' : '' }}" href="{{ route('admin.gallery.index') }}"><i class="fas fa-images fa-fw"></i> Gallery</a></li>
-                <li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.testimonials.*') ? 'active' : '' }}" href="{{ route('admin.testimonials.index') }}"><i class="fas fa-comment-dots fa-fw"></i> Testimonials</a></li>
-                <li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.departments.*') ? 'active' : '' }}" href="{{ route('admin.departments.index') }}"><i class="fas fa-people-group fa-fw"></i> Departments</a></li>
-                    <li class="sidebar-heading mt-2">Content</li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-bs-toggle="collapse" href="#contentCollapseMobile"><i class="fas fa-file-alt fa-fw"></i> Manage Content <i class="fas fa-chevron-down ms-auto"></i></a>
-                        <div class="collapse {{ request()->routeIs('admin.portfolio.*', 'admin.news.*', 'admin.videos.*') ? 'show' : '' }}" id="contentCollapseMobile">
-                            <ul class="nav flex-column"><li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.portfolio.*') ? 'active' : '' }}" href="{{ route('admin.portfolio.index') }}">Portfolio</a></li><li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.news.*') ? 'active' : '' }}" href="{{ route('admin.news.index') }}">News</a></li><li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.videos.*') ? 'active' : '' }}" href="{{ route('admin.videos.index') }}">Videos</a></li></ul>
-                        </div>
-                    </li>
-                    <li class="sidebar-heading mt-2">Management</li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-bs-toggle="collapse" href="#managementCollapseMobile"><i class="fas fa-cogs fa-fw"></i> Site Management <i class="fas fa-chevron-down ms-auto"></i></a>
-                        <div class="collapse {{ request()->routeIs('admin.services.*', 'admin.service-categories.*', 'admin.products.*', 'admin.subscribers.*', 'admin.contact-messages.*', 'admin.settings.*') ? 'show' : '' }}" id="managementCollapseMobile">
-                            <ul class="nav flex-column"><li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.services.*') ? 'active' : '' }}" href="{{ route('admin.services.index') }}">Services</a></li><li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.service-categories.*') ? 'active' : '' }}" href="{{ route('admin.service-categories.index') }}">Service Categories</a></li><li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.products.*') ? 'active' : '' }}" href="{{ route('admin.products.index') }}">Products</a></li><li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.subscribers.*') ? 'active' : '' }}" href="{{ route('admin.subscribers.index') }}">Subscribers</a></li><li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.contact-messages.*') ? 'active' : '' }}" href="{{ route('admin.contact-messages.index') }}">Messages</a></li><li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.settings.*') ? 'active' : '' }}" href="{{ route('admin.settings.edit') }}">Settings</a></li></ul>
-                        </div>
-                    </li>
+
+                    @if($isSales)
+                        <li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.inbox.*') ? 'active' : '' }}" href="{{ route('admin.inbox.index') }}"><i class="fas fa-inbox fa-fw"></i> Inbox @if ($adminUnreadInbox)<span class="badge rounded-pill text-bg-danger ms-auto">{{ $adminUnreadInbox }}<span class="visually-hidden"> unread</span></span>@endif</a></li>
+                    @endif
+
+                    @if($isFinance)
+                        <li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.orders.*') ? 'active' : '' }}" href="{{ route('admin.orders.index') }}"><i class="fas fa-shopping-bag fa-fw"></i> Orders & Payments</a></li>
+                        <li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.prices.*') ? 'active' : '' }}" href="{{ route('admin.prices.index') }}"><i class="fas fa-tags fa-fw"></i> Prices Overview</a></li>
+                        <li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.billing.*') ? 'active' : '' }}" href="{{ route('admin.billing.index') }}"><i class="fas fa-rotate fa-fw"></i> Recurring Plans</a></li>
+                    @endif
+
+                    @if($isSales)
+                        <li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.subscribers.*') ? 'active' : '' }}" href="{{ route('admin.subscribers.index') }}"><i class="fas fa-address-book fa-fw"></i> Subscribers</a></li>
+                        <li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.contact-messages.*') ? 'active' : '' }}" href="{{ route('admin.contact-messages.index') }}"><i class="fas fa-envelope fa-fw"></i> Messages</a></li>
+                    @endif
+
+                    @if($isContentEditor)
+                        <li class="sidebar-heading mt-2">Marketing & Media</li>
+                        <li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.partners.*') ? 'active' : '' }}" href="{{ route('admin.partners.index') }}"><i class="fas fa-handshake fa-fw"></i> Partners</a></li>
+                        <li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.gallery.*') ? 'active' : '' }}" href="{{ route('admin.gallery.index') }}"><i class="fas fa-images fa-fw"></i> Gallery</a></li>
+                        <li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.testimonials.*') ? 'active' : '' }}" href="{{ route('admin.testimonials.index') }}"><i class="fas fa-comment-dots fa-fw"></i> Testimonials</a></li>
+                        <li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.departments.*') ? 'active' : '' }}" href="{{ route('admin.departments.index') }}"><i class="fas fa-people-group fa-fw"></i> Departments</a></li>
+
+                        <li class="sidebar-heading mt-2">Content</li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="collapse" href="#contentCollapseMobile"><i class="fas fa-file-alt fa-fw"></i> Manage Content <i class="fas fa-chevron-down ms-auto"></i></a>
+                            <div class="collapse {{ request()->routeIs('admin.portfolio.*', 'admin.news.*', 'admin.videos.*', 'admin.hero-video.*') ? 'show' : '' }}" id="contentCollapseMobile">
+                                <ul class="nav flex-column">
+                                    <li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.portfolio.*') ? 'active' : '' }}" href="{{ route('admin.portfolio.index') }}">Portfolio</a></li>
+                                    <li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.news.*') ? 'active' : '' }}" href="{{ route('admin.news.index') }}">News</a></li>
+                                    <li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.videos.*') ? 'active' : '' }}" href="{{ route('admin.videos.index') }}">Videos</a></li>
+                                    <li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.hero-video.*') ? 'active' : '' }}" href="{{ route('admin.hero-video.edit') }}">Homepage Video</a></li>
+                                </ul>
+                            </div>
+                        </li>
+
+                        <li class="sidebar-heading mt-2">Catalog</li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="collapse" href="#managementCollapseMobile"><i class="fas fa-boxes fa-fw"></i> Catalog & Services <i class="fas fa-chevron-down ms-auto"></i></a>
+                            <div class="collapse {{ request()->routeIs('admin.services.*', 'admin.service-categories.*', 'admin.products.*') ? 'show' : '' }}" id="managementCollapseMobile">
+                                <ul class="nav flex-column">
+                                    <li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.services.*') ? 'active' : '' }}" href="{{ route('admin.services.index') }}">Services</a></li>
+                                    <li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.service-categories.*') ? 'active' : '' }}" href="{{ route('admin.service-categories.index') }}">Service Categories</a></li>
+                                    <li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.products.*') ? 'active' : '' }}" href="{{ route('admin.products.index') }}">Products</a></li>
+                                <li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.product-categories.*') ? 'active' : '' }}" href="{{ route('admin.product-categories.index') }}">Product Categories</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                    @endif
+
+                    @if($isSuperAdmin)
+                        <li class="sidebar-heading mt-2">Administration</li>
+                        <li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.staff.*') ? 'active' : '' }}" href="{{ route('admin.staff.index') }}"><i class="fas fa-users-cog fa-fw"></i> Staff & Roles</a></li>
+                        <li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.audit-logs.*') ? 'active' : '' }}" href="{{ route('admin.audit-logs.index') }}"><i class="fas fa-history fa-fw"></i> Audit Logs</a></li>
+                        <li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.anniversary.*') ? 'active' : '' }}" href="{{ route('admin.anniversary.edit') }}"><i class="fas fa-champagne-glasses fa-fw"></i> Anniversary Ceremony</a></li>
+                        <li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.settings.*') ? 'active' : '' }}" href="{{ route('admin.settings.edit') }}"><i class="fas fa-sliders-h fa-fw"></i> Settings</a></li>
+                    @endif
                 </ul>
                 <div class="mt-auto"><hr class="my-3" style="border-color: rgba(255,255,255,0.1);"><ul class="nav flex-column p-2"><li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.profile.*') ? 'active' : '' }}" href="{{ route('admin.profile.edit') }}"><i class="fas fa-user-circle fa-fw"></i> My Profile</a></li><li class="nav-item"><a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="fas fa-sign-out-alt fa-fw"></i> Logout</a></li></ul></div>
             </div>
@@ -198,9 +278,24 @@
 
         <!-- ===== MAIN CONTENT ===== -->
         <main class="main-content">
-            <nav class="navbar navbar-light top-nav px-3"><button class="navbar-toggler border-0 d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu"><i class="fas fa-bars"></i></button><div class="ms-auto"><div class="dropdown"><button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown"><i class="fas fa-user-circle me-1"></i> {{ Auth::user()->name ?? 'Admin' }}</button><ul class="dropdown-menu dropdown-menu-end"><li><a class="dropdown-item" href="{{ route('admin.profile.edit') }}"><i class="fas fa-user-edit me-2"></i>My Profile</a></li><li><a class="dropdown-item" href="{{ url('/') }}" target="_blank" rel="noopener"><i class="fas fa-eye me-2"></i>View Site</a></li><li><hr class="dropdown-divider"></li><li><a class="dropdown-item text-danger" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li></ul></div></div></nav>
-            <div class="p-4"><div class="d-flex justify-content-between align-items-center mb-4"><h1 class="h3 mb-0">@yield('page-title', 'Dashboard')</h1></div>@if(session('success'))<div class="alert alert-success alert-dismissible fade show" role="alert"><i class="fas fa-check-circle me-2"></i>{{ session('success') }}<button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>@endif @if(session('error'))<div class="alert alert-danger alert-dismissible fade show" role="alert"><i class="fas fa-exclamation-circle me-2"></i>{{ session('error') }}<button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>@endif
-                @yield('content')
+            <nav class="navbar navbar-light top-nav px-3">
+                <button class="navbar-toggler border-0 d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu"><i class="fas fa-bars"></i></button>
+                <div class="ms-auto d-flex align-items-center">
+                    <span class="badge bg-primary-subtle text-primary border border-primary-subtle rounded-pill me-2 px-2 py-1" style="font-size: 11px;">
+                        <i class="fas fa-shield-alt me-1"></i>{{ Auth::user()->primary_role ?? 'Super Admin' }}
+                    </span>
+                    <div class="dropdown">
+                        <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown"><i class="fas fa-user-circle me-1"></i> {{ Auth::user()->name ?? 'Admin' }}</button>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="{{ route('admin.profile.edit') }}"><i class="fas fa-user-edit me-2"></i>My Profile</a></li>
+                            <li><a class="dropdown-item" href="{{ url('/') }}" target="_blank" rel="noopener"><i class="fas fa-eye me-2"></i>View Site</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item text-danger" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <div class="p-4"><div class="d-flex justify-content-between align-items-center mb-4"><h1 class="h3 mb-0">@yield('page-title', 'Dashboard')</h1></div>                @yield('content')
             </div>
         </main>
     </div>
@@ -208,6 +303,7 @@
     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none"> @csrf </form>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="{{ asset('assets/js/sky-confirm.js') }}"></script>
+    <script src="{{ asset('assets/js/sky-sidebar.js') }}?v={{ @filemtime(public_path('assets/js/sky-sidebar.js')) }}"></script>
     <script>
     // Double-submit protection for every admin form (POST/PUT/DELETE): after the first real submit the buttons are locked.
     document.addEventListener('submit', function (e) {
@@ -217,6 +313,7 @@
     });
     window.addEventListener('pageshow', function () { [].forEach.call(document.querySelectorAll('form[data-locked]'), function (f) { delete f.dataset.locked; [].forEach.call(f.querySelectorAll('button[type=submit]'), function (b) { b.removeAttribute('aria-disabled'); b.style.pointerEvents = ''; b.style.opacity = ''; }); }); });
     </script>
+@include('partials.toasts')
 @stack('scripts')
 </body>
 </html>

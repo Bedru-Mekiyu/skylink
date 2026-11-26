@@ -36,7 +36,7 @@
                                     @endif
                                 </div>
                                 <div class="client-info">
-                                    <h5>{{ $t['name'] }}</h5>
+                                    <h5 class="brand-name">{{ $t['name'] }}</h5>
                                     @if ($t['role'])<p class="profession">{{ $t['role'] }}</p>@endif
                                     @if ($t['rating'])<p class="profession" aria-label="{{ $t['rating'] }} out of 5 stars" style="letter-spacing:2px;color:#f5a623">{{ str_repeat('★', $t['rating']) }}</p>@endif
                                 </div>

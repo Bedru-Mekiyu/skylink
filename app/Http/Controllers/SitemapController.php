@@ -34,10 +34,10 @@ class SitemapController extends Controller
             foreach (ServiceCategory::query()->where('is_published', true)->get() as $c) {
                 $dynamic[] = ['/services/category/'.$c->slug, $day($c->updated_at)];
             }
-            foreach (Service::query()->whereNotNull('slug')->get() as $s) {
+            foreach (Service::visible()->whereNotNull('slug')->get() as $s) {
                 $dynamic[] = ['/services/detail/'.$s->slug, $day($s->updated_at)];
             }
-            foreach (Product::query()->whereNotNull('slug')->get() as $p) {
+            foreach (Product::visible()->whereNotNull('slug')->get() as $p) {
                 $dynamic[] = ['/products/'.rawurlencode((string) $p->category).'/'.$p->slug, $day($p->updated_at)];
             }
             foreach (Video::query()->whereNotNull('slug')->get() as $v) {

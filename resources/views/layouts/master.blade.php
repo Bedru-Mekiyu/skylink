@@ -43,7 +43,7 @@
     }
 
     .social-icon:hover {
-        color: #3B82F6;
+        color: #1a6fb0;
     }
 
 
@@ -98,7 +98,7 @@
     }
 
     .nav-link:hover {
-        color: #3B82F6 !important;
+        color: #1a6fb0 !important;
     }
 
     .nav-link.active {
@@ -113,12 +113,12 @@
         left: 0;
         width: 100%;
         height: 2px;
-        background: #3B82F6;
+        background: #1a6fb0;
     }
 
     /* Logo = home link: visible keyboard focus. */
     .navbar-home-link:focus-visible {
-        outline: 2px solid #3B82F6;
+        outline: 2px solid #1a6fb0;
         outline-offset: 3px;
         border-radius: 10px;
     }
@@ -140,7 +140,7 @@
     }
 
     .nav-contact i {
-        color: #3B82F6;
+        color: #1a6fb0;
         width: 14px;
         text-align: center;
         font-size: 11px;
@@ -153,11 +153,11 @@
     }
 
     .nav-contact a:hover {
-        color: #3B82F6;
+        color: #1a6fb0;
     }
 
     .nav-contact a:focus-visible {
-        outline: 2px solid #3B82F6;
+        outline: 2px solid #1a6fb0;
         outline-offset: 2px;
         border-radius: 3px;
     }
@@ -264,15 +264,15 @@
     }
 
     .mega-dropdown-item:hover {
-        color: #3B82F6;
+        color: #1a6fb0;
         transform: translateX(10px);
-        border-bottom-color: #3B82F6;
+        border-bottom-color: #1a6fb0;
     }
 
     .mega-dropdown-item i {
         margin-right: 10px;
         width: 20px;
-        color: #3B82F6;
+        color: #1a6fb0;
     }
     
         /* Footer */
@@ -486,6 +486,8 @@
    
     @stack('styles')
     <link rel="stylesheet" href="{{ asset('assets/css/sky-img.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/sky-commerce.css') }}?v={{ @filemtime(public_path('assets/css/sky-commerce.css')) }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/sky-brand.css') }}?v={{ @filemtime(public_path('assets/css/sky-brand.css')) }}">
     <noscript><style>img[loading="lazy"]{opacity:1 !important}</style></noscript>
     <script>document.documentElement.classList.add('js');</script>
     @php
@@ -510,15 +512,31 @@
 <!-- Main Navbar -->
         <nav class="navbar navbar-expand-lg navbar-custom" id="mainNavbar">
             <div class="container">
-                <a href="{{ route('home') }}" class="navbar-home-link d-flex align-items-center text-decoration-none" aria-label="Sky Link ICT Solutions - Home">
+                <div class="sky-nav-start">
+                    @include('partials.back-button')
+                    <a href="{{ route('home') }}" class="navbar-home-link d-flex align-items-center text-decoration-none" aria-label="Sky Link ICT Solutions - Home">
                     <img src="{{ asset('assets/images/skylink-logo.webp') }}" alt="Sky Link Technologies" class="logo-img me-2">
                     
                 </a>
+                </div>
 
                 
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+                @php
+                    $navCartCount = app(\App\Services\CartService::class)->count();
+                @endphp
+                <div class="d-flex align-items-center gap-2">
+                    <a href="{{ route('cart.index') }}" class="nav-cart-btn d-lg-none position-relative p-2 text-decoration-none text-primary" aria-label="{{ __('Request Cart (:count items)', ['count' => $navCartCount]) }}" title="{{ __('Request Cart') }}" style="min-width: 44px; min-height: 44px; display: inline-flex; align-items: center; justify-content: center;">
+                        <i class="fas fa-shopping-cart fs-5"></i>
+                        <span class="position-absolute top-0 end-0 translate-middle-y badge rounded-pill bg-danger nav-cart-badge" style="font-size: 0.7rem; padding: 0.25em 0.5em; {{ $navCartCount > 0 ? '' : 'display: none;' }}">
+                            <span class="cart-count-val">{{ $navCartCount }}</span>
+                            <span class="visually-hidden">items in cart</span>
+                        </span>
+                    </a>
+
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
                 
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav mx-auto">
@@ -567,7 +585,7 @@
                 <div class="mega-dropdown-section">
                     <h6><a href="{{ route('services.category', ['category' => 'enterprise-network']) }}">Enterprise Network Solution</a></h6>
                     <a href="{{ route('services.detail', ['subcategory' => 'enterprise-network']) }}" class="mega-dropdown-item"><i class="fas fa-network-wired"></i> Enterprise Network Overview</a>
-                    <a href="{{ route('services.detail', ['subcategory' => 'network-wlan']) }}" class="mega-dropdown-item"><i class="fas fa-wifi"></i> Network & WLAN Solution</a>
+                    <a href="{{ route('services.detail', ['subcategory' => 'network-lan']) }}" class="mega-dropdown-item"><i class="fas fa-wifi"></i> Network & WLAN Solution</a>
                 </div>
 
                 <!-- Consulting & Training -->
@@ -576,7 +594,7 @@
                     <a href="{{ route('services.detail', ['subcategory' => 'smart-projects']) }}" class="mega-dropdown-item"><i class="fas fa-project-diagram"></i> Smart City Projects</a>
                     <a href="{{ route('services.detail', ['subcategory' => 'product-dev']) }}" class="mega-dropdown-item"><i class="fas fa-cogs"></i> Product Development</a>
                     <a href="{{ route('services.detail', ['subcategory' => 'business-strategy']) }}" class="mega-dropdown-item"><i class="fas fa-chart-line"></i> Business Strategy</a>
-                    <a href="{{ route('services.detail', ['subcategory' => 'erp-consult']) }}" class="mega-dropdown-item"><i class="fas fa-database"></i> ERP Consultancy</a>
+                    <a href="{{ route('services.detail', ['subcategory' => 'erp-consultancy']) }}" class="mega-dropdown-item"><i class="fas fa-database"></i> ERP Consultancy</a>
                 </div>
 
                 <!-- ICT Support -->
@@ -688,6 +706,17 @@
                         </div>
                     </div>
 
+                    {{-- Desktop Cart Button --}}
+                    <div class="d-none d-lg-block ms-3">
+                        <a href="{{ route('cart.index') }}" class="btn btn-outline-primary position-relative d-inline-flex align-items-center gap-2 rounded-pill px-3 py-1 shadow-sm" aria-label="{{ __('Request Cart (:count items)', ['count' => $navCartCount]) }}" title="{{ __('Request Cart') }}">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span class="fw-semibold">{{ __('Cart') }}</span>
+                            <span class="badge rounded-pill bg-danger text-white nav-cart-badge ms-1" style="{{ $navCartCount > 0 ? '' : 'display: none;' }}">
+                                <span class="cart-count-val">{{ $navCartCount }}</span>
+                            </span>
+                        </a>
+                    </div>
+
                 </div>
             </div>
         </nav>
@@ -793,6 +822,10 @@ s0.parentNode.insertBefore(s1,s0);
         @include('partials.anniversary.scripts')
     @endif
     <script src="{{ asset('assets/js/sky-img.js') }}" defer></script>
+    @include('partials.toasts')
+    <link rel="stylesheet" href="{{ asset('assets/css/sky-confirm.css') }}?v={{ @filemtime(public_path('assets/css/sky-confirm.css')) }}">
+    <script src="{{ asset('assets/js/sky-confirm.js') }}?v={{ @filemtime(public_path('assets/js/sky-confirm.js')) }}"></script>
+    <script src="{{ asset('assets/js/cart-enhancement.js') }}?v={{ @filemtime(public_path('assets/js/cart-enhancement.js')) }}" defer></script>
     @stack('scripts')
 </body>
 </html>

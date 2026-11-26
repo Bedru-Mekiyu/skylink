@@ -15,8 +15,13 @@ class AdminMiddleware
     public function handle(Request $request, Closure $next)
 {
 
-       if (Auth::check() && Auth::user()->is_admin)
- {
+        if (Auth::check() && Auth::user()->is_admin) {
+            if (isset(Auth::user()->is_active) && !Auth::user()->is_active) {
+                Auth::logout();
+                $request->session()->invalidate();
+                $request->session()->regenerateToken();
+                abort(403, 'Your account has been deactivated.');
+            }
             return $next($request);
         }
 

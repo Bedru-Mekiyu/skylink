@@ -13,7 +13,7 @@
 
     .project-card:hover {
         transform: translateY(-4px);
-        box-shadow: 0 14px 34px rgba(30, 64, 175, 0.16);
+        box-shadow: 0 14px 34px rgba(43, 76, 157, 0.16);
     }
 
     .project-card__media {
@@ -69,8 +69,8 @@
         gap: 8px;
         padding: 9px 20px;
         border-radius: 50px;
-        background: rgba(59, 130, 246, 0.1);
-        color: #3B82F6;
+        background: rgba(26, 111, 176, 0.1);
+        color: #1a6fb0;
         font-weight: 600;
         font-size: 0.9rem;
         text-decoration: none;
@@ -78,12 +78,12 @@
     }
 
     .project-card__link:hover {
-        background: #3B82F6;
+        background: #1a6fb0;
         color: #fff;
     }
 
     .project-card__link:focus-visible {
-        outline: 3px solid #3B82F6;
+        outline: 3px solid #1a6fb0;
         outline-offset: 3px;
     }
 

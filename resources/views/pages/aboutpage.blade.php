@@ -68,7 +68,7 @@
         position: absolute;
         inset: 0;
         background:
-            linear-gradient(115deg, rgba(59, 130, 246, 0.42) 0%, rgba(59, 130, 246, 0.12) 45%, rgba(59, 130, 246, 0) 70%),
+            linear-gradient(115deg, rgba(26, 111, 176, 0.42) 0%, rgba(26, 111, 176, 0.12) 45%, rgba(26, 111, 176, 0) 70%),
             linear-gradient(180deg, rgba(4, 12, 34, 0.30) 0%, rgba(4, 12, 34, 0.42) 45%, rgba(4, 12, 34, 0.82) 100%);
     }
 
@@ -200,7 +200,7 @@
     }
 
     .section-tag {
-        color: #3B82F6;
+        color: #1a6fb0;
         font-size: 14px;
         font-weight: 600;
         text-transform: uppercase;
@@ -230,7 +230,7 @@
     }
 
     .video-title {
-        color: #3B82F6;
+        color: #1a6fb0;
         font-size: 24px;
         font-weight: 700;
         margin-bottom: 40px;
@@ -258,7 +258,7 @@
     .video-thumbnail:focus-visible {
         outline: 3px solid #fff;
         outline-offset: -6px;
-        box-shadow: inset 0 0 0 6px #0d6efd;
+        box-shadow: inset 0 0 0 6px #1a6fb0;
     }
 
     .play-button {
@@ -284,7 +284,7 @@
 
     .play-button i {
         font-size: 24px;
-        color: #3B82F6;
+        color: #1a6fb0;
         margin-left: 3px;
     }
 
@@ -377,7 +377,7 @@ object-position: 50% 15%;
     .team-name {
         font-size: 20px;
         font-weight: 600;
-        color: #3B82F6;
+        color: #1a6fb0;
         margin-bottom: 5px;
     }
 
@@ -431,7 +431,7 @@ object-position: 50% 15%;
     }
 
     .award-category span {
-        color: #3B82F6;
+        color: #1a6fb0;
         font-size: 14px;
         font-weight: 500;
     }
@@ -500,7 +500,7 @@ object-position: 50% 15%;
     }
     
     .skylink-gradient-primary {
-        background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
+        background: linear-gradient(135deg, #223c80 0%, #2b4c9d 100%);
     }
     
     .skylink-gradient-secondary {
@@ -532,7 +532,7 @@ object-position: 50% 15%;
     }
     
     .skylink-text-gradient {
-        background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
+        background: linear-gradient(135deg, #223c80 0%, #2b4c9d 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
@@ -851,12 +851,12 @@ We lead the market by creating disciplined culture that will have much bigger ef
                 <div style="display: flex; align-items: center;">
                     <div style="width: 45%; text-align: right; padding-right: 25px;">
                         <div class="skylink-card" style="border-radius: 10px; padding: 15px; position: relative; overflow: hidden;">
-                            <div style="position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);"></div>
+                            <div style="position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(135deg, #223c80 0%, #2b4c9d 100%);"></div>
                             <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin-bottom: 5px;">IT Consultancy</h3>
-                            <p style="color: #2563eb; font-weight: 600; font-size: 0.9rem;">Dec 2021</p>
+                            <p style="color: #2b4c9d; font-weight: 600; font-size: 0.9rem;">Dec 2021</p>
                         </div>
                     </div>
-                    <div style="width: 20px; height: 20px; background: #2563eb; border-radius: 50%; border: 3px solid #0f172a; position: relative; z-index: 10;"></div>
+                    <div style="width: 20px; height: 20px; background: #2b4c9d; border-radius: 50%; border: 3px solid #0f172a; position: relative; z-index: 10;"></div>
                     <div style="width: 45%;"></div>
                 </div>
 
@@ -877,12 +877,12 @@ We lead the market by creating disciplined culture that will have much bigger ef
                 <div style="display: flex; align-items: center;">
                     <div style="width: 45%; text-align: right; padding-right: 25px;">
                         <div class="skylink-card" style="border-radius: 10px; padding: 15px; position: relative; overflow: hidden;">
-                            <div style="position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);"></div>
+                            <div style="position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(135deg, #223c80 0%, #2b4c9d 100%);"></div>
                             <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin-bottom: 5px;">ERP Software</h3>
-                            <p style="color: #2563eb; font-weight: 600; font-size: 0.9rem;">Jun 2022</p>
+                            <p style="color: #2b4c9d; font-weight: 600; font-size: 0.9rem;">Jun 2022</p>
                         </div>
                     </div>
-                    <div style="width: 20px; height: 20px; background: #2563eb; border-radius: 50%; border: 3px solid #0f172a; position: relative; z-index: 10;"></div>
+                    <div style="width: 20px; height: 20px; background: #2b4c9d; border-radius: 50%; border: 3px solid #0f172a; position: relative; z-index: 10;"></div>
                     <div style="width: 45%;"></div>
                 </div>
 
@@ -903,12 +903,12 @@ We lead the market by creating disciplined culture that will have much bigger ef
                 <div style="display: flex; align-items: center;">
                     <div style="width: 45%; text-align: right; padding-right: 25px;">
                         <div class="skylink-card" style="border-radius: 10px; padding: 15px; position: relative; overflow: hidden;">
-                            <div style="position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);"></div>
+                            <div style="position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(135deg, #223c80 0%, #2b4c9d 100%);"></div>
                             <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin-bottom: 5px;">Network & Cyber Security</h3>
-                            <p style="color: #2563eb; font-weight: 600; font-size: 0.9rem;">July 2023</p>
+                            <p style="color: #2b4c9d; font-weight: 600; font-size: 0.9rem;">July 2023</p>
                         </div>
                     </div>
-                    <div style="width: 20px; height: 20px; background: #2563eb; border-radius: 50%; border: 3px solid #0f172a; position: relative; z-index: 10;"></div>
+                    <div style="width: 20px; height: 20px; background: #2b4c9d; border-radius: 50%; border: 3px solid #0f172a; position: relative; z-index: 10;"></div>
                     <div style="width: 45%;"></div>
                 </div>
 
@@ -928,12 +928,12 @@ We lead the market by creating disciplined culture that will have much bigger ef
                 <div style="display: flex; align-items: center;">
                     <div style="width: 45%; text-align: right; padding-right: 25px;">
                         <div class="skylink-card" style="border-radius: 10px; padding: 15px; position: relative; overflow: hidden;">
-                            <div style="position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);"></div>
+                            <div style="position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(135deg, #223c80 0%, #2b4c9d 100%);"></div>
                             <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin-bottom: 5px;">Interior Design</h3>
-                            <p style="color: #2563eb; font-weight: 600; font-size: 0.9rem;">Sept 2024</p>
+                            <p style="color: #2b4c9d; font-weight: 600; font-size: 0.9rem;">Sept 2024</p>
                         </div>
                     </div>
-                    <div style="width: 20px; height: 20px; background: #2563eb; border-radius: 50%; border: 3px solid #0f172a; position: relative; z-index: 10;"></div>
+                    <div style="width: 20px; height: 20px; background: #2b4c9d; border-radius: 50%; border: 3px solid #0f172a; position: relative; z-index: 10;"></div>
                     <div style="width: 45%;"></div>
                 </div>
             </div>
@@ -942,14 +942,14 @@ We lead the market by creating disciplined culture that will have much bigger ef
         {{-- Compact Mobile Timeline --}}
         <div class="skylink-timeline-mobile">
             <div style="position: relative;">
-                <div style="position: absolute; left: 10px; top: 0; bottom: 0; width: 2px; background: linear-gradient(to bottom, #2563eb, #94a3b8); border-radius: 1px;"></div>
+                <div style="position: absolute; left: 10px; top: 0; bottom: 0; width: 2px; background: linear-gradient(to bottom, #2b4c9d, #94a3b8); border-radius: 1px;"></div>
                 
                 <div style="display: flex; flex-direction: column; gap: 20px;">
                     <div style="display: flex; align-items: flex-start;">
-                        <div style="width: 16px; height: 16px; background: #2563eb; border-radius: 50%; border: 3px solid #0f172a; position: relative; z-index: 10; flex-shrink: 0; margin-top: 5px;"></div>
+                        <div style="width: 16px; height: 16px; background: #2b4c9d; border-radius: 50%; border: 3px solid #0f172a; position: relative; z-index: 10; flex-shrink: 0; margin-top: 5px;"></div>
                         <div style="margin-left: 15px; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); border-radius: 8px; padding: 12px; border: 1px solid rgba(255,255,255,0.2); flex: 1;">
                             <h3 style="font-size: 1rem; font-weight: 700; color: #0f172a; margin-bottom: 3px;">IT Consultancy</h3>
-                            <p style="color: #2563eb; font-weight: 600; font-size: 0.875rem;">Dec 2021</p>
+                            <p style="color: #2b4c9d; font-weight: 600; font-size: 0.875rem;">Dec 2021</p>
                         </div>
                     </div>
 
@@ -962,10 +962,10 @@ We lead the market by creating disciplined culture that will have much bigger ef
                     </div>
 
                     <div style="display: flex; align-items: flex-start;">
-                        <div style="width: 16px; height: 16px; background: #2563eb; border-radius: 50%; border: 3px solid #0f172a; position: relative; z-index: 10; flex-shrink: 0; margin-top: 5px;"></div>
+                        <div style="width: 16px; height: 16px; background: #2b4c9d; border-radius: 50%; border: 3px solid #0f172a; position: relative; z-index: 10; flex-shrink: 0; margin-top: 5px;"></div>
                         <div style="margin-left: 15px; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); border-radius: 8px; padding: 12px; border: 1px solid rgba(255,255,255,0.2); flex: 1;">
                             <h3 style="font-size: 1rem; font-weight: 700; color: #0f172a; margin-bottom: 3px;">ERP Software</h3>
-                            <p style="color: #2563eb; font-weight: 600; font-size: 0.875rem;">Jun 2016</p>
+                            <p style="color: #2b4c9d; font-weight: 600; font-size: 0.875rem;">Jun 2016</p>
                         </div>
                     </div>
 
@@ -978,10 +978,10 @@ We lead the market by creating disciplined culture that will have much bigger ef
                     </div>
 
                     <div style="display: flex; align-items: flex-start;">
-                        <div style="width: 16px; height: 16px; background: #2563eb; border-radius: 50%; border: 3px solid #0f172a; position: relative; z-index: 10; flex-shrink: 0; margin-top: 5px;"></div>
+                        <div style="width: 16px; height: 16px; background: #2b4c9d; border-radius: 50%; border: 3px solid #0f172a; position: relative; z-index: 10; flex-shrink: 0; margin-top: 5px;"></div>
                         <div style="margin-left: 15px; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); border-radius: 8px; padding: 12px; border: 1px solid rgba(255,255,255,0.2); flex: 1;">
                             <h3 style="font-size: 1rem; font-weight: 700; color: #0f172a; margin-bottom: 3px;">Network & Cyber Security</h3>
-                            <p style="color: #2563eb; font-weight: 600; font-size: 0.875rem;">July 2023</p>
+                            <p style="color: #2b4c9d; font-weight: 600; font-size: 0.875rem;">July 2023</p>
                         </div>
                     </div>
 
@@ -1011,7 +1011,7 @@ We lead the market by creating disciplined culture that will have much bigger ef
                     graphic design, and IT fundamentals.
                 </p>
                 <p style="font-size: 1rem; color: #475569; line-height: 1.6;">
-                    <span style="background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-weight: 600;">Empower yourself and your team with SkyLink.</span>
+                    <span style="background: linear-gradient(135deg, #223c80 0%, #2b4c9d 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-weight: 600;">Empower yourself and your team with SkyLink.</span>
                 </p>
             </div>
         </div>
@@ -1021,7 +1021,7 @@ We lead the market by creating disciplined culture that will have much bigger ef
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; position: relative; z-index: 10;">
                 {{-- Meet & Consult --}}
                 <div style="text-align: center;">
-                    <div class="skylink-icon" style="width: 70px; height: 70px; margin: 0 auto 15px; background: linear-gradient(135deg, #4f6fc5 0%, #578af7 100%); border-radius: 15px; display: flex; align-items: center; justify-content: center; box-shadow: 0 5px 15px rgba(37, 99, 235, 0.3);">
+                    <div class="skylink-icon" style="width: 70px; height: 70px; margin: 0 auto 15px; background: linear-gradient(135deg, #1a6fb0 0%, #7ccdee 100%); border-radius: 15px; display: flex; align-items: center; justify-content: center; box-shadow: 0 5px 15px rgba(43, 76, 157, 0.3);">
                         <svg style="width: 35px; height: 35px; color: white;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
                         </svg>
@@ -1043,7 +1043,7 @@ We lead the market by creating disciplined culture that will have much bigger ef
 
                 {{-- Implement --}}
                 <div style="text-align: center;">
-                    <div class="skylink-icon" style="width: 70px; height: 70px; margin: 0 auto 15px; background: linear-gradient(135deg, #4f6fc5 0%, #578af7 100%); border-radius: 15px; display: flex; align-items: center; justify-content: center; box-shadow: 0 5px 15px rgba(37, 99, 235, 0.3);">
+                    <div class="skylink-icon" style="width: 70px; height: 70px; margin: 0 auto 15px; background: linear-gradient(135deg, #1a6fb0 0%, #7ccdee 100%); border-radius: 15px; display: flex; align-items: center; justify-content: center; box-shadow: 0 5px 15px rgba(43, 76, 157, 0.3);">
                         <svg style="width: 35px; height: 35px; color: white;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
@@ -1066,7 +1066,7 @@ We lead the market by creating disciplined culture that will have much bigger ef
 
                 {{-- Support --}}
                 <div style="text-align: center;">
-                    <div class="skylink-icon" style="width: 70px; height: 70px; margin: 0 auto 15px; background: linear-gradient(135deg, #4f6fc5 0%, #578af7 100%); border-radius: 15px; display: flex; align-items: center; justify-content: center; box-shadow: 0 5px 15px rgba(37, 99, 235, 0.3);">
+                    <div class="skylink-icon" style="width: 70px; height: 70px; margin: 0 auto 15px; background: linear-gradient(135deg, #1a6fb0 0%, #7ccdee 100%); border-radius: 15px; display: flex; align-items: center; justify-content: center; box-shadow: 0 5px 15px rgba(43, 76, 157, 0.3);">
                         <svg style="width: 35px; height: 35px; color: white;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192L5.636 18.364M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"></path>
                         </svg>

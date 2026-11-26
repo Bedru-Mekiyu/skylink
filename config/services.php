@@ -35,4 +35,17 @@ return [
         ],
     ],
 
+    // Keys live in the environment only. Payment also needs the admin switch (Admin > Settings).
+    'chapa' => [
+        'enabled' => env('CHAPA_ENABLED', false),
+        'secret_key' => env('CHAPA_SECRET_KEY'),
+        'webhook_secret' => env('CHAPA_WEBHOOK_SECRET'),
+        'base_url' => env('CHAPA_BASE_URL', 'https://api.chapa.co/v1'),
+    ],
+
+    // Emailed payment links for recurring plans. Needs the scheduler cron.
+    'renewals' => [
+        'reminders_enabled' => env('RENEWAL_REMINDERS_ENABLED', false),
+    ],
+
 ];

@@ -57,7 +57,7 @@
             @if ($heroBuiltPoster)
             /* poster.jpg replaces the 27075.jpg fallback. The base ends in the
                stats-section blue so the fractional bottom edge shows no dark seam. */
-            background-image: linear-gradient(to bottom, #06122b 80%, var(--primary-blue, rgb(63, 122, 249)));
+            background-image: linear-gradient(to bottom, #06122b 80%, var(--primary-blue, rgb(26, 111, 176)));
             @endif
         }
 
@@ -146,7 +146,7 @@
             right: 0;
             bottom: -1px;
             height: 120px;
-            background: linear-gradient(to bottom, rgba(63, 122, 249, 0), var(--primary-blue, rgb(63, 122, 249)));
+            background: linear-gradient(to bottom, rgba(26, 111, 176, 0), var(--primary-blue, rgb(26, 111, 176)));
         }
 
         /* No controls or browser overlays on the background video: the iOS

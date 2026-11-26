@@ -16,18 +16,20 @@ return Application::configure(basePath: dirname(__DIR__))
 
         // Needed by Auth::logoutOtherDevices(): after a password change, other sessions of the account stop being valid.
         $middleware->web(append: [\Illuminate\Session\Middleware\AuthenticateSession::class]);
+
+        // Exclude external webhooks (e.g. Chapa payment notifications) from CSRF
+        $middleware->validateCsrfTokens(except: [
+            'webhooks/*',
+        ]);
         
         // 2. Use the alias() method to register your route middleware
         // This is the new replacement for the $routeMiddleware array
         $middleware->alias([
             'admin' => AdminMiddleware::class,
+            'role' => \App\Http\Middleware\CheckAdminRole::class,
             'bust.public.cache' => \App\Http\Middleware\BustPublicCache::class,
             // Honeypot + time-to-submit check for public forms (see ProtectPublicForm).
             'form.guard' => \App\Http\Middleware\ProtectPublicForm::class,
-            
-            // You can add other aliases here too, for example:
-            // 'auth' => \App\Http\Middleware\Authenticate::class, // Already registered by default
-            // 'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class, // Already registered by default
         ]);
 
     })

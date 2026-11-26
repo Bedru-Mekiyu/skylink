@@ -94,6 +94,9 @@ class ServiceCategoryAdminController extends Controller
         ]);
         unset($data['image']);
         $data['is_published'] = $request->boolean('is_published');
+        if ($request->user()->hasRole('finance')) {
+            $data['pricing_mode'] = $request->boolean('quote_only') ? 'quote_only' : 'priced';
+        }
 
         return $data;
     }

@@ -46,11 +46,11 @@
         .about-intro__more { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; font: 500 0.8125rem/1 var(--font-body); letter-spacing: 0.2em; text-transform: uppercase; color: #0f2a5c; text-decoration: none; }
         .about-intro__arrow { display: inline-block; transition: transform 0.25s ease; }
         .about-intro__more:hover .about-intro__arrow, .about-intro__more:focus-visible .about-intro__arrow { transform: translateX(6px); }
-        .about-intro__more:focus-visible { outline: 3px solid #3b82f6; outline-offset: 4px; border-radius: 4px; }
+        .about-intro__more:focus-visible { outline: 3px solid #1a6fb0; outline-offset: 4px; border-radius: 4px; }
         .about-intro__text { margin: 0 0 24px; font-size: clamp(1rem, 0.96rem + 0.2vw, 1.0625rem); line-height: 1.8; color: #5f6b7a; }
         .about-intro__points { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 24px; }
         .about-intro__points li { display: flex; align-items: center; gap: 10px; min-height: 28px; }
-        .about-intro__points i { color: #3b82f6; font-size: 0.9rem; width: 16px; text-align: center; }
+        .about-intro__points i { color: #1a6fb0; font-size: 0.9rem; width: 16px; text-align: center; }
         .about-intro__points span { font-weight: 500; color: #1e293b; font-size: 0.9375rem; }
         @media (max-width: 991.98px) {
             .about-intro__wrap { grid-template-columns: minmax(0, 1fr); }

@@ -121,6 +121,7 @@
             message: el.getAttribute('data-sky-confirm'),
             title: el.getAttribute('data-sky-title') || undefined,
             confirmLabel: el.getAttribute('data-sky-ok') || undefined,
+            cancelLabel: el.getAttribute('data-sky-cancel-label') || undefined,
             variant: el.getAttribute('data-sky-variant') || 'danger'
         };
     }

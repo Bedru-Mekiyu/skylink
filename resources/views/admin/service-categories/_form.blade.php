@@ -34,7 +34,11 @@
         <div class="form-text">Lower numbers come first.</div>
     </div>
     <div class="col-md-3 d-flex align-items-center">
-        <div class="form-check mt-3">
+        <div class="form-check mb-3">
+    <input class="form-check-input" type="checkbox" id="quote_only" name="quote_only" value="1" @checked(old('quote_only', $category->pricing_mode === 'quote_only')) @disabled(! auth()->user()->hasRole('finance'))>
+    <label class="form-check-label" for="quote_only">Priced per project: hide prices for every service here and link to the support form</label>
+</div>
+<div class="form-check mt-3">
             <input type="hidden" name="is_published" value="0">
             <input class="form-check-input" type="checkbox" id="is_published" name="is_published" value="1"
                    @checked(old('is_published', $category->is_published))>

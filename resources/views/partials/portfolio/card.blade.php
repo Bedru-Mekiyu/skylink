@@ -59,7 +59,7 @@
         display: none;
     }
     .has-hover-clips .project-card__clip-badge { display: inline-block; }
-    .project-card[data-project-clip]:focus-visible { outline: 3px solid #3B82F6; outline-offset: 4px; }
+    .project-card[data-project-clip]:focus-visible { outline: 3px solid #1a6fb0; outline-offset: 4px; }
     @media (prefers-reduced-motion: reduce) {
         .project-card__clip { display: none; }
     }

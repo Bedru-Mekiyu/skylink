@@ -15,7 +15,7 @@ use Illuminate\Validation\Rule;
 class InquiryRequest extends FormRequest
 {
     /** Form positions on the site pages (the URL fragment after a redirect). */
-    public const ANCHORS = ['contact-form', 'quote-form', 'service-form', 'subscribe-form'];
+    public const ANCHORS = ['contact-form', 'quote-form', 'service-form', 'subscribe-form', 'apply-modal', 'product-form'];
 
     public function authorize(): bool
     {
@@ -38,9 +38,13 @@ class InquiryRequest extends FormRequest
             'service' => in_array($type, ['quote', 'service'], true)
                 ? ['required', 'string', 'max:120']
                 : ['nullable', 'string', 'max:120'],
+            'item_type' => ['nullable', 'string', Rule::in(['service', 'product'])],
+            'item_id' => ['nullable', 'integer', 'min:1'],
             'plan' => $type === 'subscription'
                 ? ['required', 'string', 'max:50', 'regex:/^[A-Za-z0-9_-]+$/']
                 : ['nullable', 'string', 'max:50', 'regex:/^[A-Za-z0-9_-]+$/'],
+            'billing_term' => ['nullable', 'string', Rule::in(['monthly', 'quarterly', 'semi-annually', 'annually', 'project-based', 'one-time'])],
+            'estimated_price' => ['nullable', 'string', 'max:60'],
             'message' => $type === 'subscription'
                 ? ['nullable', 'string', 'max:5000']
                 : ['required', 'string', 'min:5', 'max:5000'],
@@ -71,7 +75,7 @@ class InquiryRequest extends FormRequest
     protected function prepareForValidation(): void
     {
         $clean = [];
-        foreach (['name', 'email', 'phone', 'company', 'service', 'plan', 'message'] as $field) {
+        foreach (['name', 'email', 'phone', 'company', 'service', 'item_type', 'plan', 'billing_term', 'estimated_price', 'message'] as $field) {
             if (is_string($this->input($field))) {
                 $clean[$field] = trim($this->input($field));
             }

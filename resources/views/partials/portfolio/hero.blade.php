@@ -106,7 +106,7 @@
         inset: 0;
         background:
             linear-gradient(90deg, rgba(4, 12, 34, 0.78) 0%, rgba(4, 12, 34, 0.55) 40%, rgba(4, 12, 34, 0.15) 75%, rgba(4, 12, 34, 0) 100%),
-            linear-gradient(115deg, rgba(59, 130, 246, 0.38) 0%, rgba(59, 130, 246, 0.1) 45%, rgba(59, 130, 246, 0) 70%),
+            linear-gradient(115deg, rgba(26, 111, 176, 0.38) 0%, rgba(26, 111, 176, 0.1) 45%, rgba(26, 111, 176, 0) 70%),
             linear-gradient(180deg, rgba(4, 12, 34, 0.45) 0%, rgba(4, 12, 34, 0.6) 45%, rgba(4, 12, 34, 0.9) 100%);
     }
 
@@ -132,9 +132,9 @@
     /* No picture at all: navy gradient with a light dot grid (as on /news). */
     .pf-hero--poster .pf-hero__media {
         background:
-            radial-gradient(circle at 1px 1px, rgba(147, 197, 253, 0.22) 1px, transparent 0) 0 0 / 22px 22px,
-            radial-gradient(ellipse at 20% 10%, rgba(59, 130, 246, 0.55), transparent 55%),
-            radial-gradient(ellipse at 90% 90%, rgba(30, 64, 175, 0.6), transparent 60%),
+            radial-gradient(circle at 1px 1px, rgba(124, 205, 238, 0.22) 1px, transparent 0) 0 0 / 22px 22px,
+            radial-gradient(ellipse at 20% 10%, rgba(26, 111, 176, 0.55), transparent 55%),
+            radial-gradient(ellipse at 90% 90%, rgba(43, 76, 157, 0.6), transparent 60%),
             linear-gradient(160deg, #0b1f4d 0%, #06122b 70%);
     }
 
@@ -179,15 +179,15 @@
         padding: 10px 26px;
         border-radius: 50px;
         background: #fff;
-        color: #1e40af;
+        color: #2b4c9d;
         font-weight: 700;
         text-decoration: none;
         box-shadow: 0 10px 30px rgba(4, 12, 34, 0.35);
         transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
 
-    .pf-hero__cta:hover { color: #1e40af; transform: translateY(-2px); box-shadow: 0 14px 34px rgba(4, 12, 34, 0.45); }
-    .pf-hero__cta:focus-visible { outline: 3px solid #93c5fd; outline-offset: 4px; }
+    .pf-hero__cta:hover { color: #2b4c9d; transform: translateY(-2px); box-shadow: 0 14px 34px rgba(4, 12, 34, 0.45); }
+    .pf-hero__cta:focus-visible { outline: 3px solid #7ccdee; outline-offset: 4px; }
 
     @media (max-width: 575.98px) {
         .pf-hero { min-height: 420px; padding: 72px 0 84px; }

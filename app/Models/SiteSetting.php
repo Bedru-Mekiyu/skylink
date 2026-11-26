@@ -12,17 +12,24 @@ class SiteSetting extends Model
 
     public const CACHE_PREFIX = 'site_settings.';
 
+    protected static array $runtimeCache = [];
+
     public static function get(string $key, mixed $default = null): mixed
     {
-        try {
-            if (! Schema::hasTable('site_settings')) {
-                return $default;
-            }
+        if (array_key_exists($key, static::$runtimeCache)) {
+            return static::$runtimeCache[$key];
+        }
 
-            return Cache::remember(self::CACHE_PREFIX . $key, 300, function () use ($key, $default) {
+        try {
+            $val = Cache::remember(self::CACHE_PREFIX . $key, 300, function () use ($key, $default) {
+                if (! Schema::hasTable('site_settings')) {
+                    return $default;
+                }
                 $setting = self::where('key', $key)->first();
                 return $setting ? $setting->value : $default;
             });
+            static::$runtimeCache[$key] = $val;
+            return $val;
         } catch (\Throwable) {
             return $default;
         }
@@ -35,12 +42,23 @@ class SiteSetting extends Model
             ['value' => (string) $value]
         );
 
+        unset(static::$runtimeCache[$key]);
         Cache::forget(self::CACHE_PREFIX . $key);
+    }
+
+    public static function clearRuntimeCache(): void
+    {
+        static::$runtimeCache = [];
     }
 
     public static function showPrices(): bool
     {
         $val = self::get('show_prices', '1');
         return $val === '1' || $val === 'true' || $val === true || $val === 1;
+    }
+
+    public static function taxNote(): string
+    {
+        return trim((string) self::get('tax_note', ''));
     }
 }

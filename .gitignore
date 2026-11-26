@@ -42,3 +42,6 @@ Thumbs.db
 /.local-router.php
 *.mp4
 !/public/assets/videos/**/*.mp4
+
+# Content exports: never committed
+/content-export/

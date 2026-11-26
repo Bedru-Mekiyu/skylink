@@ -35,8 +35,7 @@
                                 <a href="{{ route('services.category', ['category' => $category->slug]) }}" class="btn btn-sm btn-outline-secondary" target="_blank" rel="noopener">👁️ View</a>
                                 <form action="{{ route('admin.service-categories.destroy', $category) }}" method="POST"
                                       data-sky-confirm="Delete the category “{{ $category->card_heading }}”? This cannot be undone."
-                                      data-sky-title="Delete category?" data-sky-ok="Delete" data-sky-variant="danger"
-                                      onsubmit="return confirm('Delete the category “{{ addslashes($category->card_heading) }}”? This cannot be undone.');">
+                                      data-sky-title="Delete category?" data-sky-ok="Delete" data-sky-variant="danger">
                                     @csrf @method('DELETE')
                                     <button type="submit" class="btn btn-sm btn-outline-danger">🗑️ Delete</button>
                                 </form>

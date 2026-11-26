@@ -1,15 +1,15 @@
 {{-- Shared styles for /news and /news/{slug}. Included inside @push('styles'). --}}
 <style>
     .news-page {
-        --news-blue: #3B82F6;
-        --news-blue-soft: rgba(59, 130, 246, 0.1);
+        --news-blue: #1a6fb0;
+        --news-blue-soft: rgba(26, 111, 176, 0.1);
         --news-navy: #06122b;
         --news-ink: #1f2937;
         --news-muted: #6b7280;
         --news-bg: #f8f9fa;
         --news-radius: 20px;
         --news-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
-        --news-shadow-hover: 0 14px 34px rgba(30, 64, 175, 0.16);
+        --news-shadow-hover: 0 14px 34px rgba(43, 76, 157, 0.16);
         background: var(--news-bg);
         color: var(--news-ink);
     }
@@ -54,7 +54,7 @@
         inset: 0;
         z-index: -1;
         background:
-            linear-gradient(115deg, rgba(59, 130, 246, 0.45) 0%, rgba(59, 130, 246, 0.1) 45%, rgba(59, 130, 246, 0) 70%),
+            linear-gradient(115deg, rgba(26, 111, 176, 0.45) 0%, rgba(26, 111, 176, 0.1) 45%, rgba(26, 111, 176, 0) 70%),
             linear-gradient(180deg, rgba(4, 12, 34, 0.45) 0%, rgba(4, 12, 34, 0.6) 50%, rgba(4, 12, 34, 0.88) 100%);
     }
 
@@ -136,7 +136,7 @@
     .news-chip:hover,
     .news-chip:focus-visible {
         color: var(--news-blue);
-        border-bottom-color: rgba(59, 130, 246, 0.35);
+        border-bottom-color: rgba(26, 111, 176, 0.35);
     }
 
     .news-chip[aria-current="page"] {
@@ -156,7 +156,7 @@
 
     .news-search:focus-within {
         border-color: var(--news-blue);
-        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+        box-shadow: 0 0 0 3px rgba(26, 111, 176, 0.2);
     }
 
     .news-search input {
@@ -381,7 +381,7 @@
         gap: 8px;
         padding: 11px 24px;
         border-radius: 50px;
-        background: linear-gradient(135deg, #3B82F6, rgb(72, 113, 248));
+        background: linear-gradient(135deg, #1a6fb0, #2b4c9d);
         color: #fff;
         font-weight: 600;
         text-decoration: none;

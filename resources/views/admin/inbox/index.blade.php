@@ -153,12 +153,12 @@
     .inbox-head .inbox-bulk { grid-column: 6; justify-self: end; white-space: nowrap; text-transform: none; letter-spacing: 0; }
     .inbox-row { border-bottom: 1px solid var(--border-color); min-height: 64px; }
     .inbox-row:last-child { border-bottom: 0; }
-    .inbox-row:hover { background: rgba(63, 122, 249, 0.04); }
+    .inbox-row:hover { background: rgba(26, 111, 176, 0.04); }
     .inbox-unread { background: #f8fbff; }
     .inbox-unread .inbox-name { font-weight: 700; }
     .inbox-name { font-weight: 600; }
-    .inbox-dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: #2563eb; margin-right: 7px; vertical-align: middle; }
-    .inbox-chip { display: inline-block; padding: 0.1rem 0.55rem; border-radius: 999px; background: #eef3ff; color: #2447a8; font-size: 0.8rem; font-weight: 600; white-space: nowrap; }
+    .inbox-dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: #2b4c9d; margin-right: 7px; vertical-align: middle; }
+    .inbox-chip { display: inline-block; padding: 0.1rem 0.55rem; border-radius: 999px; background: #eef3ff; color: #2b4c9d; font-size: 0.8rem; font-weight: 600; white-space: nowrap; }
     .inbox-snippet { min-width: 0; overflow: hidden; text-overflow: ellipsis; color: var(--text-muted); }
     .inbox-date { text-align: right; white-space: nowrap; }
     .inbox-del { justify-self: end; }

@@ -117,7 +117,7 @@
         position: absolute;
         inset: 0;
         background:
-            linear-gradient(115deg, rgba(59, 130, 246, 0.42) 0%, rgba(59, 130, 246, 0.12) 45%, rgba(59, 130, 246, 0) 70%),
+            linear-gradient(115deg, rgba(26, 111, 176, 0.42) 0%, rgba(26, 111, 176, 0.12) 45%, rgba(26, 111, 176, 0) 70%),
             linear-gradient(180deg, rgba(4, 12, 34, 0.45) 0%, rgba(4, 12, 34, 0.6) 45%, rgba(4, 12, 34, 0.86) 100%);
     }
 
@@ -138,9 +138,9 @@
     /* No photo: navy gradient with a light dot grid (as on /news). */
     .page-banner--plain .page-banner__media {
         background:
-            radial-gradient(circle at 1px 1px, rgba(147, 197, 253, 0.22) 1px, transparent 0) 0 0 / 22px 22px,
-            radial-gradient(ellipse at 20% 10%, rgba(59, 130, 246, 0.55), transparent 55%),
-            radial-gradient(ellipse at 90% 90%, rgba(30, 64, 175, 0.6), transparent 60%),
+            radial-gradient(circle at 1px 1px, rgba(124, 205, 238, 0.22) 1px, transparent 0) 0 0 / 22px 22px,
+            radial-gradient(ellipse at 20% 10%, rgba(26, 111, 176, 0.55), transparent 55%),
+            radial-gradient(ellipse at 90% 90%, rgba(43, 76, 157, 0.6), transparent 60%),
             linear-gradient(160deg, #0b1f4d 0%, #06122b 70%);
     }
 

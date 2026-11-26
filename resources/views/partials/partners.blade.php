@@ -37,7 +37,7 @@
     .partners-slider--still { white-space: normal; text-align: center; }
     .partners-slider--still .partners-track { flex-wrap: wrap; justify-content: center; width: 100%; }
     .partner-link { display: inline-flex; border-radius: 4px; }
-    .partner-link:focus-visible { outline: 3px solid #3B82F6; outline-offset: 2px; }
+    .partner-link:focus-visible { outline: 3px solid #1a6fb0; outline-offset: 2px; }
     @media (prefers-reduced-motion: reduce) {
         .partners-slider { white-space: normal; text-align: center; }
         .partners-track, .partners-track.is-loop { animation: none; flex-wrap: wrap; justify-content: center; width: 100%; row-gap: 16px; }
