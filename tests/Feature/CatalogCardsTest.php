@@ -108,13 +108,11 @@ class CatalogCardsTest extends TestCase
         }
     }
 
-    public function test_the_services_search_reads_the_names_and_texts_the_cards_actually_have(): void
+    public function test_the_services_page_has_no_search_box(): void
     {
-        $this->category(['slug' => 'search-cat', 'name' => 'Searchable', 'description' => 'Find me']);
+        $this->category(['slug' => 'search-cat', 'name' => 'Searchable']);
 
-        $html = $this->get('/services')->assertOk()->assertSee('sky-card__title', false)->getContent();
-
-        $this->assertStringContainsString("card.querySelector('.sky-card__title')", $html);
-        $this->assertStringContainsString("card.querySelector('.sky-card__desc')", $html);
+        $this->get('/services')->assertOk()->assertSee('sky-card__title', false)->assertSee('class="filter-btn', false)
+            ->assertDontSee('searchInput', false)->assertDontSee('searchBtn', false)->assertDontSee('search-container', false);
     }
 }

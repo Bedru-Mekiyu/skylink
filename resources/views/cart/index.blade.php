@@ -9,9 +9,6 @@
         <h1 class="h2 fw-bold text-primary mb-0">
             <i class="fas fa-shopping-cart me-2"></i>{{ __('Request Cart') }}
         </h1>
-        <a href="{{ route('services') }}" class="btn btn-outline-secondary btn-sm">
-            <i class="fas fa-arrow-left me-1"></i>{{ __('Continue Browsing') }}
-        </a>
     </div>
 
 

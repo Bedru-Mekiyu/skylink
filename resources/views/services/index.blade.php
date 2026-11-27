@@ -92,76 +92,6 @@
         max-width: 500px;
     }
 
-    .search-container {
-        display: flex;
-        max-width: 400px;
-        margin-bottom: 40px;
-        position: relative;
-    }
-
-    .search-input {
-        flex: 1;
-        padding: 15px 20px;
-        border: 1px solid #e9ecef;
-        border-right: none;
-        border-radius: 8px 0 0 8px;
-        font-size: 14px;
-        outline: none;
-        transition: all 0.3s ease;
-    }
-
-    .search-input:focus {
-        border-color: #1a6fb0;
-        box-shadow: 0 0 0 3px rgba(26, 111, 176, 0.1);
-    }
-
-    .search-btn {
-        background: #1a6fb0;
-        color: white;
-        border: none;
-        padding: 15px 25px;
-        border-radius: 0 8px 8px 0;
-        font-weight: 500;
-        cursor: pointer;
-        transition: all 0.3s ease;
-    }
-
-    .search-btn:hover {
-        background: #2b4c9d;
-        transform: translateY(-1px);
-    }
-
-    .search-results {
-        position: absolute;
-        top: 100%;
-        left: 0;
-        right: 0;
-        background: white;
-        border: 1px solid #e9ecef;
-        border-radius: 8px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-        max-height: 300px;
-        overflow-y: auto;
-        z-index: 1000;
-        display: none;
-    }
-
-    .search-result-item {
-        padding: 12px 20px;
-        border-bottom: 1px solid #f8f9fa;
-        cursor: pointer;
-        transition: all 0.3s ease;
-    }
-
-    .search-result-item:hover {
-        background: #f8f9fa;
-        color: #1a6fb0;
-    }
-
-    .search-result-item:last-child {
-        border-bottom: none;
-    }
-
     /* Technology orbit: circle, rings and logos live in one square box in the
        right-hand column, so they stay together at every width. */
     .tech-orbit {
@@ -849,10 +779,6 @@
             width: min(260px, 100% - 72px);
         }
  
-        .search-container {
-            max-width: 100%;
-        }
-
         .contact-info {
             padding-right: 0;
             margin-bottom: 40px;
@@ -912,13 +838,6 @@
                         At Skylink Technologies, we craft innovative digital solutions that connect, automate, and elevate your business. From custom software to secure IT infrastructure, we deliver excellence—every step of the way.
                     </p>
                     
-                    <div class="search-container">
-                        <input type="text" class="search-input" id="searchInput" placeholder='e.g. "software services"'>
-                        <button class="search-btn" id="searchBtn">
-                            <i class="fas fa-search"></i> Search
-                        </button>
-                        <div class="search-results" id="searchResults"></div>
-                    </div>
                 </div>
             </div>
 
@@ -1171,82 +1090,6 @@
           
         });
 
-        // Search functionality
-        const searchInput = document.getElementById('searchInput');
-        const searchBtn = document.getElementById('searchBtn');
-        const searchResults = document.getElementById('searchResults');
-        const serviceCards = document.querySelectorAll('.service-card');
-
-        function performSearch(query) {
-            const results = [];
-            serviceCards.forEach(card => {
-                const titleEl = card.querySelector('.sky-card__title');
-                const descEl = card.querySelector('.sky-card__desc');
-                const title = titleEl ? titleEl.textContent.toLowerCase() : '';
-                const desc = descEl ? descEl.textContent.toLowerCase() : '';
-                const cat = card.getAttribute('data-category') || '';
-                
-                if (title.includes(query.toLowerCase()) || desc.includes(query.toLowerCase()) || cat.includes(query.toLowerCase())) {
-                    card.style.display = 'block';
-                    results.push({
-                        title: titleEl ? titleEl.textContent.trim() : '',
-                        description: descEl ? descEl.textContent.trim() : '',
-                        link: card.querySelector('a') ? card.querySelector('a').getAttribute('href') : '#'
-                    });
-                } else {
-                    card.style.display = 'none';
-                }
-            });
-            return results;
-        }
-
-        function displaySearchResults(results) {
-            if (!searchResults) return;
-            if (results.length === 0) {
-                searchResults.innerHTML = '<div class="p-2 text-muted small">No services found</div>';
-            } else {
-                searchResults.innerHTML = results.slice(0, 5).map(result => 
-                    `<a href="${result.link}" class="d-block p-2 text-decoration-none border-bottom search-result-item" style="color: #333;">
-                        <strong class="text-primary">${result.title}</strong><br>
-                        <small class="text-muted">${result.description.substring(0, 70)}...</small>
-                    </a>`
-                ).join('');
-            }
-            searchResults.style.display = 'block';
-        }
-
-        if (searchInput) {
-            searchInput.addEventListener('input', function() {
-                const query = this.value.trim();
-                if (query.length > 0) {
-                    const results = performSearch(query);
-                    displaySearchResults(results);
-                } else {
-                    if (searchResults) searchResults.style.display = 'none';
-                    serviceCards.forEach(card => card.style.display = 'block');
-                }
-            });
-        }
-
-        if (searchBtn) {
-            searchBtn.addEventListener('click', function() {
-                const query = searchInput ? searchInput.value.trim() : '';
-                if (query) {
-                    performSearch(query);
-                    const servicesSec = document.getElementById('services');
-                    if (servicesSec) servicesSec.scrollIntoView({ behavior: 'smooth' });
-                }
-            });
-        }
-
-        // Hide search results when clicking outside
-        document.addEventListener('click', function(e) {
-            if (searchResults && searchInput && !searchInput.contains(e.target) && !searchResults.contains(e.target)) {
-                searchResults.style.display = 'none';
-            }
-        });
-
-        
         // Contact form submission
         // The quote form now really submits (InquiryController). Only disable
         // the button while it is sending, so it cannot be sent twice.

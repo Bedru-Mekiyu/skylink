@@ -20,9 +20,6 @@
                     <h6 class="mb-0 fw-bold"><i class="fas fa-boxes me-2"></i>{{ __('Product Categories') }}</h6>
                 </div>
                 <div class="list-group list-group-flush" id="productCatFilter">
-                    <button type="button" class="list-group-item list-group-item-action py-2 px-3 fw-bold text-primary bg-light" data-cat="all" aria-pressed="true">
-                        {{ __('All Categories') }}
-                    </button>
                     @foreach ($products as $cat => $items)
                         <button type="button" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center py-2 px-3" data-cat="{{ $cat }}" aria-pressed="false">
                             <span>{{ $categories[$cat]->name ?? ucfirst(str_replace('-', ' ', $cat)) }}</span>
@@ -55,29 +52,6 @@
 
         {{-- Main Product Area --}}
         <div class="col-lg-9">
-            {{-- Search & Sort Bar --}}
-            <div class="card border-0 shadow-sm rounded-4 p-3 mb-4 bg-white">
-                <div class="row g-2 align-items-center">
-                    <div class="col-md-7">
-                        <div class="input-group">
-                            <span class="input-group-text bg-light border-end-0"><i class="fas fa-search text-muted"></i></span>
-                            <input type="text" id="searchInput" class="form-control border-start-0 bg-light" placeholder="{{ __('Search products by name or features...') }}">
-                        </div>
-                    </div>
-                    <div class="col-md-5">
-                        <select id="sortSelect" class="form-select bg-light">
-                            <option value="featured">{{ __('Sort by: Featured') }}</option>
-                            <option value="name_asc">{{ __('Name: A to Z') }}</option>
-                            <option value="name_desc">{{ __('Name: Z to A') }}</option>
-                            @if(\App\Support\PriceVisibility::globalEnabled())
-                                <option value="price_asc">{{ __('Price: Low to High') }}</option>
-                                <option value="price_desc">{{ __('Price: High to Low') }}</option>
-                            @endif
-                        </select>
-                    </div>
-                </div>
-            </div>
-
             {{-- Product Grid --}}
             <div class="row g-4" id="productsGrid">
                 @foreach ($products as $catKey => $items)
@@ -86,12 +60,9 @@
                             $defaultOpt = $product->options->where('is_active', true)->sortBy('sort_order')->first() ?? $product->options->first();
                             $featuresList = is_array($product->features) ? array_slice($product->features, 0, 3) : [];
                             $quoteOnly = ($categories[$catKey] ?? null)?->isQuoteOnly() ?? false;
-                            $priceAmount = $quoteOnly ? 0 : ($defaultOpt?->price_amount ?? ($product->price ?? 0));
                         @endphp
                         <div class="col-md-6 col-xl-4 product-card-col"
-                             data-cat="{{ $catKey }}"
-                             data-name="{{ strtolower($product->name) }}"
-                             data-price="{{ $priceAmount }}">
+                             data-cat="{{ $catKey }}">
                             @include('partials.catalog-card', [
                                 'url' => route('products.detail', ['category' => $catKey, 'slug' => $product->slug]),
                                 'image' => $product->image,
@@ -108,81 +79,38 @@
                     @endforeach
                 @endforeach
             </div>
-
-            <div id="noProductsFound" class="alert alert-info text-center rounded-4 py-4 d-none">
-                {{ __('No products match your search or filter criteria.') }}
-            </div>
         </div>
     </div>
 </div>
 
 <script>
+/* The sidebar is the only filter. All products show at first; a category narrows the list, pressing it again shows all.
+   A link such as /products#business-tools (from a product page) opens with that category chosen. */
 document.addEventListener('DOMContentLoaded', function () {
-    const searchInput = document.getElementById('searchInput');
-    const sortSelect = document.getElementById('sortSelect');
-    const catButtons = document.querySelectorAll('#productCatFilter button');
-    const grid = document.getElementById('productsGrid');
-    const noProducts = document.getElementById('noProductsFound');
+    const buttons = Array.from(document.querySelectorAll('#productCatFilter button'));
+    const cards = document.querySelectorAll('#productsGrid .product-card-col');
 
-    let currentCat = 'all';
-
-    function filterAndSort() {
-        const query = searchInput.value.toLowerCase().trim();
-        const cards = Array.from(grid.querySelectorAll('.product-card-col'));
-        let visibleCount = 0;
-
-        cards.forEach(card => {
-            const cat = card.getAttribute('data-cat');
-            const name = card.getAttribute('data-name');
-            const matchesCat = (currentCat === 'all' || cat === currentCat);
-            const matchesQuery = (!query || name.includes(query));
-
-            if (matchesCat && matchesQuery) {
-                card.classList.remove('d-none');
-                visibleCount++;
-            } else {
-                card.classList.add('d-none');
-            }
+    function show(category) {
+        buttons.forEach(button => {
+            const chosen = button.dataset.cat === category;
+            ['bg-light', 'text-primary', 'fw-bold'].forEach(name => button.classList.toggle(name, chosen));
+            button.setAttribute('aria-pressed', chosen ? 'true' : 'false');
         });
-
-        // Sort visible
-        const sortVal = sortSelect.value;
-        if (sortVal !== 'featured') {
-            const visibleCards = cards.filter(c => !c.classList.contains('d-none'));
-            visibleCards.sort((a, b) => {
-                if (sortVal === 'name_asc') {
-                    return a.getAttribute('data-name').localeCompare(b.getAttribute('data-name'));
-                } else if (sortVal === 'name_desc') {
-                    return b.getAttribute('data-name').localeCompare(a.getAttribute('data-name'));
-                } else if (sortVal === 'price_asc') {
-                    return parseFloat(a.getAttribute('data-price') || 0) - parseFloat(b.getAttribute('data-price') || 0);
-                } else if (sortVal === 'price_desc') {
-                    return parseFloat(b.getAttribute('data-price') || 0) - parseFloat(a.getAttribute('data-price') || 0);
-                }
-                return 0;
-            });
-            visibleCards.forEach(c => grid.appendChild(c));
-        }
-
-        if (visibleCount === 0) {
-            noProducts.classList.remove('d-none');
-        } else {
-            noProducts.classList.add('d-none');
-        }
+        cards.forEach(card => card.classList.toggle('d-none', category !== null && card.dataset.cat !== category));
     }
 
-    searchInput.addEventListener('input', filterAndSort);
-    sortSelect.addEventListener('change', filterAndSort);
+    buttons.forEach(button => button.addEventListener('click', () => {
+        const next = button.getAttribute('aria-pressed') === 'true' ? null : button.dataset.cat;
+        history.replaceState(null, '', next ? '#' + next : location.pathname);
+        show(next);
+    }));
 
-    catButtons.forEach(btn => {
-        btn.addEventListener('click', function () {
-            catButtons.forEach(b => { b.classList.remove('bg-light', 'text-primary', 'fw-bold'); b.setAttribute('aria-pressed', 'false'); });
-            this.classList.add('bg-light', 'text-primary', 'fw-bold');
-            this.setAttribute('aria-pressed', 'true');
-            currentCat = this.getAttribute('data-cat');
-            filterAndSort();
-        });
-    });
+    function fromAddress() {
+        const wanted = decodeURIComponent(location.hash.slice(1));
+        show(buttons.some(button => button.dataset.cat === wanted) ? wanted : null);
+    }
+    window.addEventListener('hashchange', fromAddress);
+    fromAddress();
 });
 </script>
 @endsection

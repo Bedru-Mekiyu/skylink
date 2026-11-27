@@ -54,11 +54,6 @@
                     <h2 class="h3 fw-bold text-dark mb-1">{{ ucfirst(str_replace('-', ' ', $category)) }}</h2>
                     <p class="text-muted small mb-0">{{ __('Showing active services and technical solutions') }}</p>
                 </div>
-                <div>
-                    <a href="{{ route('services') }}" class="btn btn-outline-secondary btn-sm rounded-pill px-3">
-                        {{ __('View All Categories') }}
-                    </a>
-                </div>
             </div>
 
             <div class="row g-4">
