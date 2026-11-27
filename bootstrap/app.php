@@ -16,6 +16,7 @@ return Application::configure(basePath: dirname(__DIR__))
 
         // Needed by Auth::logoutOtherDevices(): after a password change, other sessions of the account stop being valid.
         $middleware->web(append: [\Illuminate\Session\Middleware\AuthenticateSession::class]);
+        $middleware->web(append: [\App\Http\Middleware\RememberBrowsedPage::class]);
 
         // Exclude external webhooks (e.g. Chapa payment notifications) from CSRF
         $middleware->validateCsrfTokens(except: [

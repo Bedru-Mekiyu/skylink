@@ -93,3 +93,12 @@ h5.brand-name { color: var(--brand-deep) !important; }
 
 /* Where the full menu is on screen (laptops and up) the arrow is not needed. Sign-in has no menu, so it keeps it. */
 @media (min-width: 992px) { .sky-nav-start .sky-back { display: none; } }
+
+/* Cart: the way back to what the customer was looking at. */
+.sky-return { display: inline-flex; align-items: center; gap: .5rem; max-width: 100%; min-height: 44px; padding: .4rem 1.1rem; margin-bottom: 1rem;
+    border: 1px solid var(--bs-primary-border-subtle); border-radius: 999px; background: var(--brand-tint); color: var(--brand-deep);
+    font-size: .9rem; font-weight: 600; text-decoration: none; transition: background-color .15s ease, color .15s ease; }
+.sky-return span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sky-return:hover { background: var(--brand-blue); border-color: var(--brand-blue); color: #fff; }
+.sky-return:focus-visible { outline: 3px solid var(--brand-deep); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) { .sky-return { transition: none; } }

@@ -5,6 +5,7 @@
 
 @section('content')
 <div class="container py-5 cart-container sky-commerce">
+    @include('partials.return-link')
     <div class="d-flex align-items-center justify-content-between mb-4 flex-wrap gap-2">
         <h1 class="h2 fw-bold text-primary mb-0">
             <i class="fas fa-shopping-cart me-2"></i>{{ __('Request Cart') }}
